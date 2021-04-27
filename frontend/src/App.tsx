@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <Navbar></Navbar>
       <Box minWidth={1080} display="flex" justifyContent="center">
-        <Box mt={16} width={1080}>
+        <Box width={1080}>
           <Router></Router>
         </Box>
       </Box>
