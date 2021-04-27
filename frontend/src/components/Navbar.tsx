@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@material-ui/core';
 import React from 'react';
-import '../css/navbar.css';
+import './navbar.css';
 
 const Navbar = () => {
   return (
