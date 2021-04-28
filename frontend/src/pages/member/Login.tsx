@@ -1,5 +1,5 @@
 import { Box } from '@material-ui/core';
-import SignIn from '../components/member/login/SignIn';
+import SignIn from '../../components/member/login/SignIn';
 
 const Login = () => {
   return (

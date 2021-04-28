@@ -7,8 +7,8 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Login from '../pages/Login';
-import Regist from '../pages/Regist';
+import Login from '../pages/member/Login';
+import Regist from '../pages/member/Regist';
 
 const index = () => {
   return (

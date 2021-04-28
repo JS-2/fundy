@@ -1,8 +1,8 @@
 import { Box } from '@material-ui/core';
 import { useState } from 'react';
-import { User } from '../api/user';
-import AuthEmail from '../components/member/regist/AuthEmail';
-import SignUp from '../components/member/regist/SignUp';
+import { User } from '../../api/user';
+import AuthEmail from '../../components/member/regist/AuthEmail';
+import SignUp from '../../components/member/regist/SignUp';
 
 const Regist = () => {
   const [user, setUser] = useState<User>(new User());
