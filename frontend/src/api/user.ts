@@ -1,12 +1,8 @@
 export class User {
     email: string;
     password: string;
-<<<<<<< HEAD
-  
-=======
     nickName?: string;
 
->>>>>>> 4e78605be0258142bed22bd276e8562f83ed235b
     constructor(email: string = '', password: string = '') {
       this.email = email;
       this.password = password;
@@ -15,8 +11,6 @@ export class User {
 
 export const loginSubmit = (user: User) => {
     console.log(user);
-<<<<<<< HEAD
-=======
 }
 
 export const registSubmit = (user: User) => {
@@ -35,5 +29,5 @@ export const validatePassword = (password: string): boolean => {
 
 export const validateNickName = (nickName: string): boolean => {
   return nickName.length >= 2 && nickName.length <= 16 ? true : false;
->>>>>>> 4e78605be0258142bed22bd276e8562f83ed235b
+
 }
