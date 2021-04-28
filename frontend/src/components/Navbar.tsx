@@ -1,6 +1,8 @@
 import { Box, Button, Grid } from '@material-ui/core';
 import React from 'react';
-import './navbar.css';
+import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
+import './Navbar.css';
 
 const Navbar = () => {
   return (
@@ -10,10 +12,12 @@ const Navbar = () => {
         width="100%"
         maxWidth={1440}
         minWidth={1080}
+        my={4}
+        px={4}
         justifyContent="space-between"
       >
         <Box display="flex">
-          <Box className="logo" ml={3} mr={5}>
+          <Box className="logo" mr={5}>
             fundy
           </Box>
           <Box mx={3} className="nbg">
@@ -27,11 +31,23 @@ const Navbar = () => {
           </Box>
         </Box>
         <Box display="flex">
-          <Box mx={2} className="nbg user">
-            로그인
+          <Box mx={2}>
+            <Link
+              to="/login"
+              className="nbg user"
+              style={{ textDecoration: 'none' }}
+            >
+              로그인
+            </Link>
           </Box>
-          <Box mx={2} className="nbg user">
-            회원가입
+          <Box mx={2}>
+            <Link
+              to="/regist"
+              className="nbg user"
+              style={{ textDecoration: 'none' }}
+            >
+              회원가입
+            </Link>
           </Box>
         </Box>
       </Box>

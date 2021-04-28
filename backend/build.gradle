@@ -27,6 +27,12 @@ repositories {
 
 dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+<<<<<<< HEAD
+=======
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+>>>>>>> 4e78605be0258142bed22bd276e8562f83ed235b
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

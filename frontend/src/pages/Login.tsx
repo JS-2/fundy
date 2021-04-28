@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Box,
   Button,
@@ -64,6 +65,16 @@ const Login = () => {
             </Button>
           </Grid>
         </Grid>
+=======
+import { Box } from '@material-ui/core';
+import SignIn from '../components/member/login/SignIn';
+
+const Login = () => {
+  return (
+    <Box display="flex" justifyContent="center">
+      <Box mt={10} width={480}>
+        <SignIn />
+>>>>>>> 4e78605be0258142bed22bd276e8562f83ed235b
       </Box>
     </Box>
   );
