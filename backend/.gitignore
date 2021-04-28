@@ -62,6 +62,8 @@ hs_err_pid*
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
+.idea/modules
+.idea/modules.xml
 
 # JIRA plugin
 atlassian-ide-plugin.xml
