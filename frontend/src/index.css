@@ -23,14 +23,30 @@ code {
   src: url(./assets/fonts/NanumBarunGothic.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: NanumBarunGothicBold;
+  src: url(./assets/fonts/NanumBarunGothicBold.ttf) format('truetype');
+}
+
 .logo {
   font-family: Shrikhand;
-  color: #f74a64;
   text-align: center;
   font-size: 2em;
+  color: #f74a64;
 }
 
 .nbg {
-  font-family: NanumBarunGothic;
-  text-align: center;
+  font-family: NanumBarunGothic !important;
+  text-align: center !important;
+}
+
+.nbg_bold {
+  font-family: NanumBarunGothicBold !important;
+  text-align: center !important;
+}
+
+.btn_main {
+  background-color: #f74a64 !important;
+  color: white !important;
+  font-size: 1em !important;
 }
