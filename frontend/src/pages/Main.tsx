@@ -15,7 +15,15 @@ import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Grid, Paper, Box } from "@material-ui/core";
+import FundCard from "../components/Fundcard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper.scss";
+import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
+import './Main.css';
+import Banner from "../components/Banner";
 
+// Install modules
+SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -38,165 +46,352 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <h3> 메인 페이지</h3>
+        <div id="bannerArea">
+          <Banner></Banner>
+        </div>
+
+      
+
+        <div className="area" id="">
+
+        <div className="" id="topFundArea">
        
-     
-    
-
-        <div>
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <Paper>xs</Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper>xs</Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper>xs</Paper>
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <Paper>xs</Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper>xs=6</Paper>
-            </Grid>
-            <Grid item xs>
-              <Paper>xs</Paper>
-            </Grid>
-          </Grid>
-        </div>
-
-        <div className="col-md-12" id="banner" style={{backgroundColor:"#cc8877", borderRadius:"20px", height:"300px"}}>
-          
-          <h1>배너영역</h1>
-        </div>
-        <div className="Container">
-          <div className="row"></div>
           <h3 id="headText">인기 펀딩</h3>
 
           <Grid container spacing={3}>
-          <Grid item xs={4}>
-          <Card style={{ padding: "0", height: "400px",  display: "block" }} >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="펀딩 카드 이미지"
-                height="200"
-                image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
-                title="Card Image"
-              />
-              <CardContent style={{padding:"5px"}}>
-              <Chip color="primary" label="D-12" />
-                <Typography gutterBottom variant="h6" component="h6" style={{fontWeight:"bold", whiteSpace: "nowrap", width:"inherit", overflow: "hidden", textOverflow: "ellipsis"}}>
-                  2021 싸피싸피 데뷔 1주년 기념 펀딩입니다
-              
-                </Typography>
-                
-                <Typography variant="body2" color="textSecondary" component="p">
-                  HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
-                  미공개 포토카드와 영상통화 기회를 놓치지 마세요!
-                </Typography>
-                <table style={{width:"100%"}} >
-                  <tr>
-                    <td><p>302,230,230원</p></td>
-                    <td style={{textAlign:"right"}}><p>70%</p></td>
+            <Grid item xs={4}>
+              <Card style={{ padding: "0", height: "400px", display: "block" }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="200"
+                    image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
+                    title="Card Image"
+                  />
+                  <CardContent style={{ padding: "5px" }}>
+                    <Chip color="primary" label="D-12" />
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      component="h6"
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        width: "inherit",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      2021 싸피싸피 데뷔 1주년 기념 펀딩입니다
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
+                      미공개 포토카드와 영상통화 기회를 놓치지 마세요!
+                    </Typography>
+                    <table style={{ width: "100%" }}>
+                      <tr>
+                        <td>
+                          <p>302,230,230원</p>
+                        </td>
+                        <td style={{ textAlign: "right" }}>
+                          <p>70%</p>
+                        </td>
                       </tr>
-                </table>
-                
-                <BorderLinearProgress variant="determinate" value={70} />
-              </CardContent>
-            </CardActionArea>
-          </Card>
-          </Grid>
+                    </table>
 
+                    <BorderLinearProgress variant="determinate" value={70} />
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
 
-          <Grid item xs={4}>
-          <Card style={{ padding: "0", height: "400px",  display: "block" }} >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="펀딩 카드 이미지"
-                height="200"
-                image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
-                title="Card Image"
-              />
-              <CardContent style={{padding:"5px"}}>
-              <Chip color="primary" label="D-12" />
-                <Typography gutterBottom variant="h6" component="h6" style={{fontWeight:"bold", whiteSpace: "nowrap", width:"inherit", overflow: "hidden", textOverflow: "ellipsis"}}>
-                  2021 싸피싸피 데뷔 1주년 기념 펀딩입니다
-              
-                </Typography>
-                
-                <Typography variant="body2" color="textSecondary" component="p">
-                  HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
-                  미공개 포토카드와 영상통화 기회를 놓치지 마세요!
-                </Typography>
-                <table style={{width:"100%"}} >
-                  <tr>
-                    <td><p>302,230,230원</p></td>
-                    <td style={{textAlign:"right"}}><p>70%</p></td>
+            <Grid item xs={4}>
+              <Card style={{ padding: "0", height: "400px", display: "block" }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="200"
+                    image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
+                    title="Card Image"
+                  />
+                  <CardContent style={{ padding: "5px" }}>
+                    <Chip color="primary" label="D-12" />
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      component="h6"
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        width: "inherit",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      2021 싸피싸피 데뷔 1주년 기념 펀딩입니다
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
+                      미공개 포토카드와 영상통화 기회를 놓치지 마세요!
+                    </Typography>
+                    <table style={{ width: "100%" }}>
+                      <tr>
+                        <td>
+                          <p>302,230,230원</p>
+                        </td>
+                        <td style={{ textAlign: "right" }}>
+                          <p>70%</p>
+                        </td>
                       </tr>
-                </table>
-                
-                <BorderLinearProgress variant="determinate" value={70} />
-              </CardContent>
-            </CardActionArea>
-          </Card>
+                    </table>
+
+                    <BorderLinearProgress variant="determinate" value={70} />
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+
+            <Grid item xs={4}>
+              <FundCard></FundCard>
+            </Grid>
           </Grid>
 
+          </div>
 
-          <Grid item xs={4}>
-          <Card style={{ padding: "0", height: "400px",  display: "block" }} >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                alt="펀딩 카드 이미지"
-                height="200"
-                image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
-                title="Card Image"
-              />
-              <CardContent style={{padding:"5px"}}>
-              <Chip color="primary" label="D-12" />
-                <Typography gutterBottom variant="h6" component="h6" style={{fontWeight:"bold", whiteSpace: "nowrap", width:"inherit", overflow: "hidden", textOverflow: "ellipsis"}}>
-                  2021 싸피싸피 데뷔 1주년 기념 펀딩입니다
-              
-                </Typography>
-                
-                <Typography variant="body2" color="textSecondary" component="p">
-                  HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
-                  미공개 포토카드와 영상통화 기회를 놓치지 마세요!
-                </Typography>
-                <table style={{width:"100%"}} >
-                  <tr>
-                    <td><p>302,230,230원</p></td>
-                    <td style={{textAlign:"right"}}><p>70%</p></td>
-                      </tr>
-                </table>
-                
-                <BorderLinearProgress variant="determinate" value={70} />
-              </CardContent>
-            </CardActionArea>
-          </Card>
-          </Grid>
+          <div className="" id="idolArea">
 
-
-     
-
-
-          </Grid>
-          
           <h3>아이돌</h3>
-          <p>아이돌 카드</p> <p>아이돌 카드</p> <p>아이돌 카드</p>
+
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={3}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            <SwiperSlide>
+              <Card style={{ padding: "0", height: "600px", display: "block" }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="400"
+                    image="https://d1o7cxaf8di5ts.cloudfront.net/file/brand/182/1522221709550_624.PNG"
+                    title="Card Image"
+                  />
+                  <CardContent style={{ padding: "5px" }}>
+                    <Typography
+                      gutterBottom
+                      variant="h3"
+                      component="h3"
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        width: "inherit",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      태민
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
+                      미공개 포토카드와 영상통화 기회를 놓치지 마세요!
+                    </Typography>
+                    <table style={{ width: "100%" }}>
+                      <tr>
+                        <td>
+                          <p>302,230,230원</p>
+                        </td>
+                        <td style={{ textAlign: "right" }}>
+                          <p>70%</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </SwiperSlide>
+            <SwiperSlide>
+              {" "}
+              <Card style={{ padding: "0", height: "600px", display: "block" }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="400"
+                    image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
+                    title="Card Image"
+                  />
+                  <CardContent
+                    style={{ padding: "5px", backgroundColor: "grey" }}
+                  >
+                    <Typography
+                      gutterBottom
+                      variant="h3"
+                      component="h3"
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        width: "inherit",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      태민
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
+                      미공개 포토카드와 영상통화 기회를 놓치지 마세요!
+                    </Typography>
+                    <table style={{ width: "100%" }}>
+                      <tr>
+                        <td>
+                          <p>302,230,230원</p>
+                        </td>
+                        <td style={{ textAlign: "right" }}>
+                          <p>70%</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </SwiperSlide>
+            <SwiperSlide>
+              {" "}
+              <Card style={{ padding: "0", height: "600px", display: "block" }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="400"
+                    image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
+                    title="Card Image"
+                  />
+                  <CardContent
+                    style={{ padding: "5px", backgroundColor: "grey" }}
+                  >
+                    <Typography
+                      gutterBottom
+                      variant="h3"
+                      component="h3"
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        width: "inherit",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      태민
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
+                      미공개 포토카드와 영상통화 기회를 놓치지 마세요!
+                    </Typography>
+                    <table style={{ width: "100%" }}>
+                      <tr>
+                        <td>
+                          <p>302,230,230원</p>
+                        </td>
+                        <td style={{ textAlign: "right" }}>
+                          <p>70%</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </SwiperSlide>
+            <SwiperSlide>
+              {" "}
+              <Card style={{ padding: "0", height: "600px", display: "block" }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="400"
+                    image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
+                    title="Card Image"
+                  />
+                  <CardContent
+                    style={{ padding: "5px", backgroundColor: "grey" }}
+                  >
+                    <Typography
+                      gutterBottom
+                      variant="h3"
+                      component="h3"
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        width: "inherit",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      태민
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판
+                      미공개 포토카드와 영상통화 기회를 놓치지 마세요!
+                    </Typography>
+                    <table style={{ width: "100%" }}>
+                      <tr>
+                        <td>
+                          <p>302,230,230원</p>
+                        </td>
+                        <td style={{ textAlign: "right" }}>
+                          <p>70%</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </SwiperSlide>
+          </Swiper>
+
+          </div>
           <h3>스토어</h3>
           <p>아이템 카드</p>
+
+
         </div>
       </div>
     );
   }
 }
-
-
 
 export default Main;

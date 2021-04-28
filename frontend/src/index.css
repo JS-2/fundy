@@ -50,3 +50,7 @@ code {
   color: white !important;
   font-size: 1em !important;
 }
+
+h1,h2,h3,h4,h5,h6,p{
+  font-family: NanumBarunGothic !important;
+}
