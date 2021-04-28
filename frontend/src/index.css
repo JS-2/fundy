@@ -35,6 +35,13 @@ code {
   color: #f74a64;
 }
 
+.large_logo {
+  font-family: Shrikhand;
+  text-align: center;
+  font-size: 4em;
+  color: #f74a64;
+}
+
 .nbg {
   font-family: NanumBarunGothic !important;
   text-align: center !important;
@@ -49,4 +56,8 @@ code {
   background-color: #f74a64 !important;
   color: white !important;
   font-size: 1em !important;
+}
+
+.disabled_input {
+  background-color: rgba(0, 0, 0, 0.05);
 }
