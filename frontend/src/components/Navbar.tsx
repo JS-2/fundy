@@ -14,24 +14,24 @@ const Navbar = () => {
       >
         <Box display="flex">
           <Box className="logo" ml={3} mr={5}>
-            fundy
+          <a id="logoAnchor" href="/">fundy</a>
           </Box>
           <Box mx={3} className="nbg">
-            펀딩
+            <a href="/funding">펀딩</a>
           </Box>
           <Box mx={3} className="nbg">
-            아이돌
+          <a href="/idol">아이돌</a>
           </Box>
           <Box mx={3} className="nbg">
-            스토어
+          <a href="/store">스토어</a>
           </Box>
         </Box>
         <Box display="flex">
           <Box mx={2} className="nbg user">
-            로그인
+          <a href="/login">로그인</a>
           </Box>
           <Box mx={2} className="nbg user">
-            회원가입
+          <a href="/register">회원가입</a>
           </Box>
         </Box>
       </Box>

@@ -15,3 +15,8 @@
 .area{
     margin-bottom: 100px
 }
+
+.headText{
+    font-size: 24px !important;
+    font-weight: bold;
+}

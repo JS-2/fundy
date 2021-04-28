@@ -56,7 +56,7 @@ class Main extends Component {
 
         <div className="" id="topFundArea">
        
-          <h3 id="headText">인기 펀딩</h3>
+          <h3 className="headText">인기 펀딩</h3>
 
           <Grid container spacing={3}>
             <Grid item xs={4}>
@@ -172,7 +172,7 @@ class Main extends Component {
 
           <div className="" id="idolArea">
 
-          <h3>아이돌</h3>
+          <h3 className="headText">아이돌</h3>
 
           <Swiper
             spaceBetween={20}
@@ -384,7 +384,7 @@ class Main extends Component {
           </Swiper>
 
           </div>
-          <h3>스토어</h3>
+          <h3 className="headText">스토어</h3>
           <p>아이템 카드</p>
 
 

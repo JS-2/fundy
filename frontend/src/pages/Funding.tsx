@@ -16,7 +16,6 @@ import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Grid, Paper, Box } from "@material-ui/core";
 import FundCard from "../components/Fundcard";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
 import './Main.css';
