@@ -1,9 +1,19 @@
 package com.ilovefundy.dto.funding;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+@Data
+@Entity
 public class FundingDto {
+    @Id
+    @GeneratedValue
     private int funding_id;
+
     private int donation_id;
     private int idol_id;
     private int user_id;
