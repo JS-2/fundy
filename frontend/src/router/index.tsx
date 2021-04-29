@@ -6,7 +6,7 @@ import {
   Switch,
   Route,
   BrowserRouter,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Login from '../pages/member/Login';
@@ -19,15 +19,15 @@ const index = () => {
   return (
     <BrowserRouter>
       <Navbar />
-      <Box minWidth={720} display="flex" justifyContent="center">
-        <Box width={720} px={4}>
+      <Box minWidth={1080} display="flex" justifyContent="center">
+        <Box width={1080} px={4}>
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/regist" component={Regist} exact />
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/funding" component={Funding} exact />
-            <Route path="/" component={Main} exact/>
-            <Redirect from="*" to="/"/>
+            <Route path="/" component={Main} exact />
+            <Redirect from="*" to="/" />
           </Switch>
         </Box>
       </Box>
