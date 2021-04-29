@@ -4,15 +4,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/swiper.scss";
 import SwiperCore, { Navigation, Pagination, Autoplay,SwiperOptions  } from 'swiper';
+
 import './Banner.css';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
+
 
 const swiperParams: SwiperOptions = {
     slidesPerView: 3,
     spaceBetween: 50,
   };
   
+
 
 const Banner = () => {
   return (

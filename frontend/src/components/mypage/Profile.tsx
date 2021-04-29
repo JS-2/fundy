@@ -13,7 +13,7 @@ const Profile = () => {
   return (
     <div>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
-        나의 프로필
+        나의 프로필aaa jaesungKim!
       </Box>
       <Card variant="outlined">
         <CardContent>

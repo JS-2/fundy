@@ -32,7 +32,7 @@ code {
   font-family: Shrikhand;
   text-align: center;
   font-size: 2em;
-  color: #f74a64;
+  color: #f74a64 !important;
 }
 
 .large_logo {
@@ -57,4 +57,8 @@ code {
 
 .disabled_input {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+h1,h2,h3,h4,h5,h6,p{
+  font-family: NanumBarunGothic !important;
 }
