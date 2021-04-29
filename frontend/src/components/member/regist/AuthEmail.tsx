@@ -16,7 +16,7 @@ const AuthEmail = (props: Props) => {
     <Grid container spacing={2}>
       <Grid
         item
-        className={classNames('large_logo mb-5', styles.large_logo)}
+        className={classNames('large_logo main_color mb-5', styles.large_logo)}
         xs={12}
       >
         fundy
