@@ -9,16 +9,18 @@ import {
 import Navbar from '../components/Navbar';
 import Login from '../pages/member/Login';
 import Regist from '../pages/member/Regist';
+import Mypage from '../pages/mypage/Mypage';
 
 const index = () => {
   return (
     <BrowserRouter>
       <Navbar />
-      <Box minWidth={1080} display="flex" justifyContent="center">
-        <Box width={1080}>
+      <Box minWidth={720} display="flex" justifyContent="center">
+        <Box width={720} px={4}>
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/regist" component={Regist} exact />
+            <Route path="/mypage" component={Mypage} exact />
           </Switch>
         </Box>
       </Box>
