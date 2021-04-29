@@ -1,7 +1,18 @@
 package com.ilovefundy.dto.funding;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Data
+@Entity
 public class FundingRegisterDto {
+    @Id
+    @GeneratedValue
     private int funding_register_id;
+
     private int user_id;
 
     //프로필 인증

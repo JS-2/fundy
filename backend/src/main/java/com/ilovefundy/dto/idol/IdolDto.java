@@ -2,9 +2,17 @@ package com.ilovefundy.dto.idol;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 @Data
+@Entity
 public class IdolDto {
+    @Id
+    @GeneratedValue
     private int idol_id;
+
     private String idol_name;
     private String idol_picture;
     private String idol_birthday;
