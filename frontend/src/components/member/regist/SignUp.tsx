@@ -31,7 +31,7 @@ const SignUp = (props: Props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid className="large_logo mb-5" item xs={12}>
+      <Grid className="large_logo main_color mb-5" item xs={12}>
         fundy
       </Grid>
       <Grid item xs={12}>
