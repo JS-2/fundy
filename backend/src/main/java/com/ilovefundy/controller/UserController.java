@@ -3,6 +3,7 @@ package com.ilovefundy.controller;
 import com.ilovefundy.model.user.SignupRequest;
 
 import com.ilovefundy.service.UserService;
+import com.ilovefundy.utils.EncryptionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -19,25 +22,30 @@ import java.util.regex.Pattern;
 @RestController
 public class UserController {
     private final UserService userService;
+//    private final UserDao userDao;
 
     @PostMapping("/user/login")
     public ResponseEntity<Object> login(@RequestBody Object user) {
-        Optional<Object> userOpt = null;
+        Map<String, Object> resultMap = new HashMap<>();
+        String encPassword = EncryptionUtils.encryptSHA256("1234"/*user.getUserPassword()*/);
+        Optional<Object> userOpt = null;/*userDao.findUserByEmailAndPassword(user.getUserEmail(), encPassword);*/
 
         // 유저 정보가 존재
         if(userOpt.isPresent()) {
-            return new ResponseEntity(HttpStatus.OK);
+            // UserEmail 을 PK로 하는 JWT 를 생성
+            resultMap.put("token", userService.getToken(userOpt.get()));
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         // 유저 정보가 없음
         else {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
     }
 
     @PostMapping("/user/signup")
     public ResponseEntity<Object> signup(@RequestBody @Valid SignupRequest request, @ApiIgnore Errors errors) {
-        // Form Validation에 에러가 발생
+        // Form Validation 에 에러가 발생
         if(errors.hasErrors()) {
             Object message = userService.validateHandling(errors);
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -52,6 +60,7 @@ public class UserController {
         }
         // 회원가입
         else {
+            // 이메일 인증 코드
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
