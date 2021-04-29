@@ -6,12 +6,12 @@ import './Navbar.css';
 
 const Navbar = () => {
   return (
-    <Box justifyContent="center" className="nav" minWidth={1080}>
+    <Box justifyContent="center" className="nav" minWidth={720}>
       <Box
         display="flex"
         width="100%"
         maxWidth={1440}
-        minWidth={1080}
+        minWidth={720}
         my={4}
         px={4}
         justifyContent="space-between"

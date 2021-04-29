@@ -44,18 +44,15 @@ code {
 
 .nbg {
   font-family: NanumBarunGothic !important;
-  text-align: center !important;
 }
 
 .nbg_bold {
   font-family: NanumBarunGothicBold !important;
-  text-align: center !important;
 }
 
 .btn_main {
   background-color: #f74a64 !important;
   color: white !important;
-  font-size: 1em !important;
 }
 
 .disabled_input {
