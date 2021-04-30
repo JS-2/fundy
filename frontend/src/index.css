@@ -32,21 +32,41 @@ code {
   font-family: Shrikhand;
   text-align: center;
   font-size: 2em;
-  color: #f74a64;
+}
+
+.large_logo {
+  font-family: Shrikhand;
+  text-align: center;
+  font-size: 4em;
 }
 
 .nbg {
   font-family: NanumBarunGothic !important;
-  text-align: center !important;
 }
 
 .nbg_bold {
   font-family: NanumBarunGothicBold !important;
-  text-align: center !important;
 }
 
 .btn_main {
   background-color: #f74a64 !important;
   color: white !important;
-  font-size: 1em !important;
+}
+
+.main_color {
+  color: #f74a64;
+}
+
+.disabled_input {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: NanumBarunGothic !important;
 }

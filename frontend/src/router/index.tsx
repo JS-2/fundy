@@ -1,13 +1,39 @@
+import { Box } from '@material-ui/core';
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from '../pages/Login';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  BrowserRouter,
+  Redirect,
+} from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Login from '../pages/member/Login';
+import Regist from '../pages/member/Regist';
+import Mypage from '../pages/mypage/Mypage';
+import Main from '../pages/Main';
+import Funding from '../pages/Funding';
+import MyFunding from '../pages/mypage/MyFunding';
+
 const index = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/login" component={Login} exact />
-      </Switch>
-    </Router>
+    <BrowserRouter>
+      <Navbar />
+      <Box minWidth={1080} display="flex" justifyContent="center">
+        <Box width={1080} px={4}>
+          <Switch>
+            <Route path="/login" component={Login} exact />
+            <Route path="/regist" component={Regist} exact />
+            <Route path="/mypage" component={Mypage} exact />
+            <Route path="/mypage/:funding_id" component={MyFunding} exact />
+            <Route path="/funding" component={Funding} exact />
+            <Route path="/" component={Main} exact />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </Box>
+      </Box>
+    </BrowserRouter>
   );
 };
 

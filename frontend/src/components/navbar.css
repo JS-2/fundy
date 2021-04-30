@@ -1,11 +1,15 @@
+a{
+  text-decoration: none !important;
+  color:#212529 !important;
+}
+
 .nav {
   top: 0;
   left: 0;
   right: 0;
-  line-height: 110px;
+  line-height: 40px;
 }
 
-.user {
-  color: grey;
-  font-size: 0.9em;
+#logoAnchor{
+  color: #f74a64 !important
 }
