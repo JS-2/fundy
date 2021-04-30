@@ -15,6 +15,7 @@ import Mypage from '../pages/mypage/Mypage';
 import Main from '../pages/Main';
 import Funding from '../pages/Funding';
 import MyFunding from '../pages/mypage/MyFunding';
+import IdolList from '../pages/idol/IdolList';
 
 const index = () => {
   return (
@@ -28,6 +29,7 @@ const index = () => {
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/mypage/:funding_id" component={MyFunding} exact />
             <Route path="/funding" component={Funding} exact />
+            <Route path="/idol" component={IdolList} exact />
             <Route path="/" component={Main} exact />
             <Redirect from="*" to="/" />
           </Switch>
