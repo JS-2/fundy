@@ -105,7 +105,7 @@ public class UserController {
 
     @PatchMapping("/user/{user_id}/password")
     public ResponseEntity<Object> patchPassword(@PathVariable int user_id, @RequestBody @Valid SignupRequest user,
-                                              Errors errors) {
+                                              @ApiIgnore Errors errors) {
         // 유효성 체크
         if(errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
