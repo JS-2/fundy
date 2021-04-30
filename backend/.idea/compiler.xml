@@ -10,5 +10,9 @@
         <module name="fundy.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="fundy.main" target="1.8" />
+      <module name="fundy.test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
