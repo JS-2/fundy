@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,9 +16,13 @@ import javax.persistence.Id;
 public class PayInfo {
     @Id
     @GeneratedValue
-    private int paymentId;
+    @Column(name = "payment_id")
+    private Integer paymentId;
 
-    private int userId;
-    private int fundingId;
+    @Column(name = "user_id")
+    private Integer userId;
+    @Column(name = "funding_id")
+    private Integer fundingId;
+    @Column(name = "pay_amount")
     private long payAmount; // 펀딩 결제 금액
 }
