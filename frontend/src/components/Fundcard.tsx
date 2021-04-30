@@ -16,6 +16,9 @@ import {
   import LinearProgress from "@material-ui/core/LinearProgress";
   import { Grid, Paper, Box } from "@material-ui/core";
 import './Fundcard.css';
+import { withRouter } from 'react-router-dom';
+
+
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -34,9 +37,16 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-const FundCard = () => {
+const FundCard = withRouter(({ history, ...props }) => {
+
+  const redirect = () => {
+    console.log("redirecting...");
+    const url = 'funding/detail/1234';
+    history.push(url);
+  };
+
     return (
-        <Card style={{ padding: "0", height: "400px",  display: "block" }} >
+        <Card onClick={redirect} style={{ padding: "0", height: "400px",  display: "block" }} >
         <CardActionArea>
           <CardMedia
             component="img"
@@ -68,7 +78,7 @@ const FundCard = () => {
         </CardActionArea>
       </Card>
     );
-  };
+  });
   
   export default FundCard;
   

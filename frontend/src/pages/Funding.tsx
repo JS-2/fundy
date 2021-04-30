@@ -18,8 +18,9 @@ import { Grid, Paper, Box } from "@material-ui/core";
 import FundCard from "../components/Fundcard";
 import "swiper/swiper.scss";
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
-import './Main.css';
+import { withRouter } from 'react-router-dom';
 import Banner from "../components/Banner";
+import FundCreate from "../pages/funding/FundCreate";
 
 // Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -41,7 +42,9 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-class Main extends Component {
+
+
+class Funding extends Component {
   render() {
     return (
       <div>
@@ -56,6 +59,8 @@ class Main extends Component {
         <div className="" id="topFundArea">
        
           <h3 id="headText">펀딩 목록</h3>
+
+          <button > 펀딩 작성하기<a id="logoAnchor" href="/funding/create">sss</a></button>
 
           <Grid container spacing={3}>
             <Grid item xs={4}>
@@ -191,4 +196,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Funding;

@@ -14,6 +14,9 @@ import Regist from '../pages/member/Regist';
 import Mypage from '../pages/mypage/Mypage';
 import Main from '../pages/Main';
 import Funding from '../pages/Funding';
+import FundingDetail from '../pages/funding/FundingDetail';
+import FundCreate from '../pages/funding/FundCreate';
+import { Create } from '@material-ui/icons';
 
 const index = () => {
   return (
@@ -26,6 +29,8 @@ const index = () => {
             <Route path="/regist" component={Regist} exact />
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/funding" component={Funding} exact />
+            <Route path="/funding/detail/:num" component={FundingDetail} />
+            <Route path="/funding/create" component={FundCreate} />
             <Route path="/" component={Main} exact />
             <Redirect from="*" to="/" />
           </Switch>
