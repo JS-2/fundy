@@ -19,7 +19,7 @@ const SignIn = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item className="large_logo mb-5" xs={12}>
+      <Grid item className="large_logo main_color mb-5" xs={12}>
         fundy
       </Grid>
       <Grid item xs={12}>

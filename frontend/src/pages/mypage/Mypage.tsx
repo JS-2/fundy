@@ -1,10 +1,12 @@
 import React from 'react';
-import Profile from '../../components/mypage/Profile';
+import FundingList from '../../components/mypage/mypage/FundingList';
+import Profile from '../../components/mypage/mypage/Profile';
 
 const Mypage = () => {
   return (
     <div>
-      <Profile></Profile>
+      <Profile />
+      <FundingList />
     </div>
   );
 };
