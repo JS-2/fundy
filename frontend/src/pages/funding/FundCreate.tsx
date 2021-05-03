@@ -1,10 +1,19 @@
 import React from 'react';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { TextField, Box, Grid, Button, Dialog, DialogTitle } from '@material-ui/core';
+import { TextField, Box, Grid, Button, Dialog, DialogTitle, FormControlLabel, Radio, FormLabel, FormControl, RadioGroup } from '@material-ui/core';
 import { Editor } from '@toast-ui/react-editor';
 import DaumPostcode from 'react-daum-postcode';
 import './FundCreate.css';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
+
+
 
 const FundCreate = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -59,9 +68,12 @@ const FundCreate = () => {
     const handleClose = (value: string) => {
         setOpen(false);
     };
+
+
     return (
         <div className="container">
             <h3>펀딩 작성하기</h3>
+
             <Button variant="contained" color="primary">
                 기부
             </Button>
@@ -75,7 +87,25 @@ const FundCreate = () => {
                 <TextField className="col-md-12" style={{width:"100%"}} label="아이돌 리스트" placeholder="우리 아이돌만의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트" variant="outlined" />
 
             <div className="row">
-                <TextField className="col-md-6" style={{width:"100%"}} label="펀딩 목표 금액" placeholder="목표금액(원)" variant="outlined" />
+
+            <KeyboardDatePicker
+          margin="normal"
+          id="date-picker-dialog"
+          label="Date picker dialog"
+          format="MM/dd/yyyy"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+                
+                <TextField className="col-md-6" style={{width:"100%"}} label="펀딩 목표 금액" 
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          placeholder="목표금액(원)" variant="outlined" />
                 <TextField className="col-md-6" style={{width:"100%"}} label="기간" variant="outlined" />
             </div>
 
@@ -94,11 +124,12 @@ const FundCreate = () => {
             </Box>
 
             <Editor
-                initialValue="원하는 문장을 입력해주세요.."
+                //initialValue="원하는 문장을 입력해주세요.."
                 previewStyle="vertical"
                 height="500px"
                 initialEditType="wysiwyg"
                 useCommandShortcut={true}
+                placeholder="펀딩에 대해 상세하게 설명해주세요."
             />
             <Button variant="contained" color="primary" >
                 신청
