@@ -14,6 +14,9 @@ import Regist from '../pages/member/Regist';
 import Mypage from '../pages/mypage/Mypage';
 import Main from '../pages/Main';
 import Funding from '../pages/Funding';
+import FundingDetail from '../pages/funding/FundingDetail';
+import FundCreate from '../pages/funding/FundCreate';
+import { Create } from '@material-ui/icons';
 import MyFunding from '../pages/mypage/MyFunding';
 import IdolList from '../pages/idol/IdolList';
 
@@ -29,6 +32,8 @@ const index = () => {
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/mypage/:funding_id" component={MyFunding} exact />
             <Route path="/funding" component={Funding} exact />
+            <Route path="/funding/detail/:num" component={FundingDetail} />
+            <Route path="/funding/create" component={FundCreate} />
             <Route path="/idol" component={IdolList} exact />
             <Route path="/" component={Main} exact />
             <Redirect from="*" to="/" />

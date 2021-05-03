@@ -8,6 +8,7 @@ import SwiperCore, { Navigation, Pagination, Autoplay,SwiperOptions  } from 'swi
 import './Banner.css';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
+import banner1 from '../assets/img/Banner.png';
 
 
 const swiperParams: SwiperOptions = {
@@ -34,12 +35,15 @@ const Banner = () => {
         className="col-md-12"
         id="banner"
         style={{
-          backgroundColor: "#cc8877",
           borderRadius: "10px",
           height: "300px",
         }}
       >
-        <h1>배너영역1</h1>
+
+        
+        <img src={banner1} style={{
+          width: "100%",
+        }}></img>
       </div></SwiperSlide>
     <SwiperSlide>        <div
         className="col-md-12"

@@ -4,8 +4,9 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { TextField, Box, Grid, Button, Dialog, DialogTitle } from '@material-ui/core';
 import { Editor } from '@toast-ui/react-editor';
 import DaumPostcode from 'react-daum-postcode';
+import './FundCreate.css';
 
-const create = () => {
+const FundCreate = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [open, setOpen] = React.useState(false);
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -59,7 +60,7 @@ const create = () => {
         setOpen(false);
     };
     return (
-        <Grid>
+        <div className="container">
             <h3>펀딩 작성하기</h3>
             <Button variant="contained" color="primary">
                 기부
@@ -67,20 +68,27 @@ const create = () => {
             <Button variant="contained" color="primary">
                 기본 펀딩
             </Button>
-            <Box>
-                <TextField label="펀딩 제목" placeholder="우리 아이돌만의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트" variant="outlined" />
-            </Box>
-            <Box>
-                <TextField label="펀딩 목표 금액" placeholder="목표금액(원)" variant="outlined" />
-                <TextField label="기간" variant="outlined" />
-            </Box>
-            <Box>
-                <TextField label="기부처 주소" disabled variant="outlined" />
-                <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        
+                <TextField className="col-md-12" style={{width:"100%"}} label="펀딩 제목" placeholder="우리 아이돌만의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트" variant="outlined" />
+    
+        
+                <TextField className="col-md-12" style={{width:"100%"}} label="아이돌 리스트" placeholder="우리 아이돌만의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트" variant="outlined" />
+
+            <div className="row">
+                <TextField className="col-md-6" style={{width:"100%"}} label="펀딩 목표 금액" placeholder="목표금액(원)" variant="outlined" />
+                <TextField className="col-md-6" style={{width:"100%"}} label="기간" variant="outlined" />
+            </div>
+
+            <div className="row">
+            <TextField  className="col-md-10" label="기부처 주소" disabled variant="outlined" />
+ 
+                <Button className="col-md-2" variant="contained" color="primary" onClick={handleClickOpen}>
                     검색
             </Button>
-                <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-            </Box>
+            <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+
+            </div>
+            
             <Box>
                 <TextField label="기부 상세 내용" variant="outlined" multiline></TextField>
             </Box>
@@ -95,7 +103,7 @@ const create = () => {
             <Button variant="contained" color="primary" >
                 신청
             </Button>
-        </Grid>
+        </div>
     );
 };
-export default create;
+export default FundCreate;
