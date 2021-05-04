@@ -3,6 +3,7 @@ import Chart from '../../components/Chart';
 import IdolFunding from '../../components/idol/idolDetail/IdolFunding';
 import IdolInfo from '../../components/idol/idolDetail/IdolInfo';
 import IdolMembers from '../../components/idol/idolDetail/IdolMembers';
+import FundingMap from '../../components/idol/idolDetail/FundingMap';
 
 const IdolDetail = () => {
   return (
@@ -11,6 +12,7 @@ const IdolDetail = () => {
       <IdolMembers />
       <IdolFunding />
       <Chart />
+      <FundingMap />
     </div>
   );
 };
