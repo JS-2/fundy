@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Funding {
+public class FundingProject {
     @Id
     @GeneratedValue
     @Column(name = "funding_id")
