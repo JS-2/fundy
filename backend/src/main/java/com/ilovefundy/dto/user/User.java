@@ -2,7 +2,9 @@ package com.ilovefundy.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.dto.idol.Idol;
+import com.ilovefundy.dto.pay.PayInfo;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
@@ -38,6 +40,19 @@ public class User implements UserDetails {
                 joinColumns = @JoinColumn(name="user_id"),
                 inverseJoinColumns = @JoinColumn(name="idol_id"))
     private Set<Idol> idols = new LinkedHashSet<>();
+
+    @BatchSize(size=10)
+//    @JsonManagedReference
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name="my_funding",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="funding_id"))
+    private Set<FundingProject> fundings = new LinkedHashSet<>();
+
+    @BatchSize(size=10)
+//    @JsonBackReference
+    @OneToMany(mappedBy = "user")
+    private List<PayInfo> fundingPays = new ArrayList<>();
 
     @Column(name = "user_email")
     private String userEmail;
@@ -126,7 +141,17 @@ public class User implements UserDetails {
         }
     }
 
-    private enum Level { // 플러스 표시는 문자더블로 표기
-        A, B, C, D, AA, BB, CC;
+    public enum Level { // 플러스 표시는 문자더블로 표기
+        A("A"), B("B"), C("C"), D("D"), AA("AA"), BB("BB"), CC("CC");
+
+        private String value;
+
+        private Level(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 }

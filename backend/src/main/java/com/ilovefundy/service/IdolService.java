@@ -17,7 +17,6 @@ public class IdolService {
     public List<Idol> getIdolList(int page, int per_page) {
         Page<Idol> pages = idolDao.findAll(PageRequest
                                             .of(page, per_page));
-        System.out.println(pages.getContent());
         return pages.getContent();
     }
 

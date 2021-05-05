@@ -2,10 +2,13 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.user.LoginReq;
 import com.ilovefundy.model.user.SignupRequest;
 
+import com.ilovefundy.model.user.UserInfo;
 import com.ilovefundy.service.UserService;
 import com.ilovefundy.utils.EncryptionUtils;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +25,14 @@ import java.util.*;
 public class UserController {
     private final UserService userService;
 
+    @ApiOperation(value = "로그인", notes = "이메일과 패스워드를 입력으로 받아 로그인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "로그인 성공. OK !!", response = UserInfo.class),
+            @ApiResponse(code = 401, message = "유저정보가 없음. UNAUTHORIZED !!")
+    })
     @PostMapping("/user/login")
-    public ResponseEntity<Object> login(@RequestBody User user) {
+    public ResponseEntity<Object> login(@ApiParam(value = "이메일 패스워드", required = true)
+                                            @RequestBody LoginReq user) {
         Map<String, Object> result = new HashMap<>();
         String encPassword = EncryptionUtils.encryptSHA256(user.getUserPassword());
         Optional<User> userOpt = userService.checkEmailAndPassword(user.getUserEmail(), encPassword);
@@ -31,8 +40,9 @@ public class UserController {
         // 유저 정보가 존재
         if(userOpt.isPresent()) {
             // UserEmail 을 PK로 하는 JWT 를 생성
+            UserInfo userInfo = userService.getUserInfo(userOpt.get().getUserId());
             result.put("token", userService.getToken(userOpt.get()));
-            result.put("user", userOpt);
+            result.put("user", userInfo);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         // 유저 정보가 없음
@@ -43,6 +53,12 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "회원가입", notes = "사용자 정보를 입력으로 받아 회원가입")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원가입 성공. OK !!"),
+            @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
+            @ApiResponse(code = 409, message = "중복되는 이메일 or 닉네임. CONFLICT !!")
+    })
     @PostMapping("/user/signup")
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignupRequest request, @ApiIgnore Errors errors) {
         Map<String, Object> result = new HashMap<>();
@@ -64,16 +80,28 @@ public class UserController {
         // 회원가입
         else {
             userService.signUp(request);
+            result.put("message", "회원가입 성공!");
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
+    @ApiOperation(value = "사용자정보", notes = "사용자 정보 반환")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "사용자 정보. OK !!", response = UserInfo.class),
+    })
     @GetMapping("/user/{user_id}")
     public ResponseEntity<Object> userInfo(@PathVariable int user_id) {
-        User user = userService.getUserInfo(user_id);
+        UserInfo user = userService.getUserInfo(user_id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "닉네임 변경",
+                notes = "로그인된 사용자의 닉네임 변경 Request Body Example : {\"nickname\" : \"김우식\"}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "닉네임 변경 성공. OK !!"),
+            @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
+            @ApiResponse(code = 409, message = "중복되는 닉네임. CONFLICT !!")
+    })
     @PatchMapping("/user/{user_id}/nickname")
     public ResponseEntity<Object> patchNickname(@PathVariable int user_id, @RequestBody Map<String, String> req) {
         String nickname = req.get("nickname");
@@ -93,6 +121,13 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "닉네임 중복 확인",
+            notes = "회원가입 시 닉네임 중복 확인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "사용 가능한 닉네임. OK !!"),
+            @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
+            @ApiResponse(code = 409, message = "중복되는 닉네임. CONFLICT !!")
+    })
     @GetMapping("/user/check-nickname/{nickname}")
     public ResponseEntity<Object> checkNickname(@PathVariable String nickname) {
         Map<String, Object> result = new HashMap<>();
@@ -110,6 +145,11 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "주소 변경",
+            notes = "로그인된 사용자의 주소 변경 Request Body Example : {\"address\" : \"강북구 수유동\"}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "주소 변경 성공. OK !!"),
+    })
     @PatchMapping("/user/{user_id}/address")
     public ResponseEntity<Object> patchAddress(@PathVariable int user_id, @RequestBody Map<String, String> req) {
         Map<String, Object> result = new HashMap<>();
@@ -119,6 +159,12 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "비밀번호 변경",
+            notes = "로그인된 사용자의 비밀번호 변경 Request Body Example : {\"password\" : \"qwer!@1234\"}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "비밀번호 변경 성공. OK !!"),
+            @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
+    })
     @PatchMapping("/user/{user_id}/password")
     public ResponseEntity<Object> patchPassword(@PathVariable int user_id, @RequestBody Map<String, String> req) {
         Map<String, Object> result = new HashMap<>();
@@ -134,6 +180,11 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "프로필 사진 변경",
+            notes = "로그인된 사용자의 프로필 사진 변경 Request Body Example : {\"picture\" : \"사진경로\"}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "프로필 사진 변경 성공. OK !!")
+    })
     @PatchMapping("/user/{user_id}/user-picture")
     public ResponseEntity<Object> patchPicture(@PathVariable int user_id, @RequestBody Map<String, String> req) {
         Map<String, Object> result = new HashMap<>();
@@ -144,6 +195,11 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "회원 삭제",
+            notes = "회원 정보 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원 정보 삭제 성공. NO_CONTENT !!")
+    })
     @DeleteMapping("/user/{user_id}")
     public ResponseEntity<Object> deleteUser(@PathVariable int user_id) {
         Map<String, Object> result = new HashMap<>();
@@ -153,45 +209,87 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "사용자 펀딩내역 리스트",
+            notes = "사용자가 펀딩했던 정보(프로젝트, 금액) 리스트")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "펀딩내역 리스트 반환. OK !!")
+    })
     @GetMapping("/user/{user_id}/funding")
-    public ResponseEntity<Object> fundingList(@PathVariable int user_id) {
+    public ResponseEntity<Object> fundingPayList(@PathVariable int user_id) {
         // 사용자 펀딩내역 리스트
-//        List<Funding>
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Object> fundingPayList = userService.getFundingPayList(user_id);
+        return new ResponseEntity<>(fundingPayList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "사용자 개설 펀딩 리스트",
+            notes = "사용자가 개설한 펀딩의 리스트")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "개설 펀딩 리스트 반환. OK !!")
+    })
     @GetMapping("/user/{user_id}/registered-funding")
     public ResponseEntity<Object> registeredFundingList(@PathVariable int user_id) {
         // 사용자 개설 펀딩 리스트
+        // 펀딩 프로젝트 테이블에 저장된 user_id 로 가져옴 = fundingDao에서 구현
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ApiOperation(value = "사용자 관심 펀딩 리스트",
+            notes = "사용자가 관심목록에 넣은 펀딩의 리스트")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 펀딩 리스트 반환. OK !!")
+    })
     @GetMapping("/user/{user_id}/my-funding")
     public ResponseEntity<Object> myFundingList(@PathVariable int user_id) {
         // 사용자 관심펀딩 리스트
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Object> myFundingList = userService.getMyFundingList(user_id);
+        return new ResponseEntity<>(myFundingList, HttpStatus.OK);
     }
 
-    @PostMapping("/user/{user_id}/my-funding")
-    public ResponseEntity<Object> createMyFunding(@PathVariable int user_id, @RequestBody Object funding) {
+    @ApiOperation(value = "사용자 관심 펀딩 추가",
+            notes = "사용자가 펀딩을 관심목록에 추가")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 펀딩 추가. CREATED !!")
+    })
+    @PostMapping("/user/{user_id}/my-funding/{funding_id}")
+    public ResponseEntity<Object> createMyFunding(@PathVariable int user_id, @PathVariable int funding_id) {
+        Map<String, Object> result = new HashMap<>();
         // 관심펀딩 추가
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        userService.addMyFunding(user_id, funding_id);
+        result.put("message", "관심 펀딩을 추가하였습니다");
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "사용자 관심 펀딩 삭제",
+            notes = "사용자가 펀딩을 관심목록에서 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 펀딩 삭제. NO_CONTENT !!")
+    })
     @DeleteMapping("/user/{user_id}/my-funding/{funding_id}")
     public ResponseEntity<Object> deleteMyFunding(@PathVariable int user_id, @PathVariable int funding_id) {
+        Map<String, Object> result = new HashMap<>();
         // 관심펀딩 삭제
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        userService.removeMyFunding(user_id, funding_id);
+        result.put("message", "관심 펀딩을 삭제하였습니다");
+        return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "사용자 관심 아이돌 리스트",
+            notes = "사용자가 관심목록에 넣은 아이돌의 리스트")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 아이돌 리스트 반환. OK !!")
+    })
     @GetMapping("/user/{user_id}/my-idol")
     public ResponseEntity<Object> myIdolList(@PathVariable int user_id) {
         // 사용자 관심아이돌 리스트
         Set<Idol> myIdolList = userService.getMyIdolList(user_id);
-//        User user = userService.getUserInfo(user_id);
         return new ResponseEntity<>(myIdolList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "사용자 관심 아이돌 추가",
+            notes = "사용자가 아이돌을 관심목록에 추가")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 아이돌 추가. CREATED !!")
+    })
     @PostMapping("/user/{user_id}/my-idol/{idol_id}")
     public ResponseEntity<Object> addMyIdol(@PathVariable int user_id, @PathVariable int idol_id) {
         Map<String, Object> result = new HashMap<>();
@@ -201,6 +299,11 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "사용자 관심 아이돌 삭제",
+            notes = "사용자가 아이돌을 관심목록에서 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "관심 아이돌 삭제. NO_CONTENT !!")
+    })
     @DeleteMapping("/user/{user_id}/my-idol/{idol_id}")
     public ResponseEntity<Object> deleteMyIdol(@PathVariable int user_id, @PathVariable int idol_id) {
         Map<String, Object> result = new HashMap<>();

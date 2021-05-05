@@ -1,10 +1,14 @@
 package com.ilovefundy.service;
 
+import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.dto.idol.Idol;
+import com.ilovefundy.dto.pay.PayInfo;
 import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.user.SignupRequest;
+import com.ilovefundy.model.user.UserInfo;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +20,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -24,6 +29,7 @@ import java.util.regex.Pattern;
 public class UserService {
     private final UserDao userDao;
     private final IdolDao idolDao;
+    private final FundingDao fundingDao;
     private final JwtTokenProvider jwtTokenProvider;
     private final EntityManager em;
 
@@ -67,8 +73,16 @@ public class UserService {
         userDao.save(user);
     }
 
-    public User getUserInfo(int user_id) {
-        return userDao.findByUserId(user_id);
+    public UserInfo getUserInfo(int user_id) {
+        User user = userDao.findByUserId(user_id);
+        UserInfo newUser = new UserInfo();
+        newUser.setUserId(user.getUserId());
+        newUser.setUserPicture(user.getUserPicture());
+        newUser.setUserNickname(user.getUserNickname());
+        newUser.setUserEmail(user.getUserNickname());
+        newUser.setUserAddress(user.getUserAddress());
+        newUser.setUserLevel(user.getUserLevel().getValue());
+        return newUser;
     }
 
     public boolean checkNickname(String nickname) {
@@ -107,6 +121,72 @@ public class UserService {
         userDao.deleteById(user_id);
     }
 
+    public List<Object> getFundingPayList(int user_id) {
+        User user = userDao.findByUserId(user_id);
+        List<PayInfo> userPayInfo = user.getFundingPays();
+        List<Object> result = new LinkedList<>();
+        for(PayInfo pay : userPayInfo) {
+            Map<String, Object> tmpFunding = new HashMap<>();
+            tmpFunding.put("fundingId", pay.getFunding().getFundingId());
+            tmpFunding.put("fundingName", pay.getFunding().getFundingName());
+            tmpFunding.put("fundingType", pay.getFunding().getFundingType());
+            tmpFunding.put("idolName", pay.getFunding().getIdolName());
+            tmpFunding.put("fundingGoalAmount", pay.getFunding().getFundingGoalAmount());
+            tmpFunding.put("fundingEndTime", pay.getFunding().getFundingEndTime());
+            tmpFunding.put("fundingStatement", LocalDateTime.now().isBefore(pay.getFunding().getFundingEndTime()) ? "진행중" : "종료");
+            tmpFunding.put("payAmount", pay.getPayAmount());
+            result.add(tmpFunding);
+        }
+        return result;
+    }
+
+    public List<Object> getMyFundingList(int user_id) {
+        User user = userDao.findByUserId(user_id);
+        Set<FundingProject> myFunding = user.getFundings();
+        List<Object> result = new LinkedList<>();
+        for(FundingProject funding : myFunding) {
+            Map<String, Object> tmpFunding = new HashMap<>();
+            tmpFunding.put("fundingId", funding.getFundingId());
+            tmpFunding.put("fundingName", funding.getFundingName());
+            tmpFunding.put("fudningThumbnail", funding.getFundingThumbnail());
+            int remainDay =  funding.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+            tmpFunding.put("fundingRemainDay", remainDay);
+            int amount = 0;
+            List<PayInfo> payInfo = funding.getUserPays();
+            for(PayInfo pay : payInfo) {
+                amount += pay.getPayAmount();
+            }
+            int achievementRate = 0;
+            if(funding.getFundingGoalAmount() != 0) {
+                achievementRate = 100 * amount / funding.getFundingGoalAmount();
+            }
+            tmpFunding.put("fundingAchievementRate", achievementRate);
+            result.add(tmpFunding);
+        }
+        return result;
+    }
+
+    @Transactional
+    public void addMyFunding(int user_id, int funding_id) {
+        User user = userDao.getOne(user_id);
+        FundingProject funding = fundingDao.getOne(funding_id);
+//        if(user.getFundings() == null) {
+//            user.setFundings(new LinkedHashSet<>());
+//        }
+        user.getFundings().add(funding);
+        funding.getUsers().add(user);
+        userDao.save(user);
+    }
+
+    @Transactional
+    public void removeMyFunding(int user_id, int funding_id) {
+        User user = userDao.getOne(user_id);
+        FundingProject funding = fundingDao.getOne(funding_id);
+        user.getFundings().remove(funding);
+        funding.getUsers().remove(user);
+        userDao.save(user);
+    }
+
     public Set<Idol> getMyIdolList(int user_id) {
         User user = userDao.findByUserId(user_id);
         return user.getIdols();
@@ -115,18 +195,19 @@ public class UserService {
     @Transactional
     public void addMyIdol(int user_id, int idol_id) {
         User user = userDao.getOne(user_id);
-        Idol idol = idolDao.findByIdolId(idol_id);
-        if(user.getIdols() == null) {
-            user.setIdols(new LinkedHashSet<>());
-        }
+        Idol idol = idolDao.getOne(idol_id);
+//        if(user.getIdols() == null) {
+//            user.setIdols(new LinkedHashSet<>());
+//        }
         user.getIdols().add(idol);
         idol.getUsers().add(user);
         userDao.save(user);
     }
 
+    @Transactional
     public void removeMyIdol(int user_id, int idol_id) {
         User user = userDao.getOne(user_id);
-        Idol idol = idolDao.findByIdolId(idol_id);
+        Idol idol = idolDao.getOne(idol_id);
         user.getIdols().remove(idol);
         idol.getUsers().remove(user);
         userDao.save(user);
