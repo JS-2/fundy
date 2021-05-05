@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.user.SignupRequest;
 
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = {"*"})
 @RequiredArgsConstructor
@@ -156,8 +154,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{user_id}/funding")
-    public ResponseEntity<Object> fundingList(@PathVariable int user_id,
-                                              @RequestParam(defaultValue = "1") int page, int per_page) {
+    public ResponseEntity<Object> fundingList(@PathVariable int user_id) {
         // 사용자 펀딩내역 리스트
 //        List<Funding>
         return new ResponseEntity<>(HttpStatus.OK);
@@ -188,22 +185,28 @@ public class UserController {
     }
 
     @GetMapping("/user/{user_id}/my-idol")
-    public ResponseEntity<Object> myIdolList(@PathVariable int user_id,
-                                             @RequestParam(defaultValue = "1") int page, int per_page) {
+    public ResponseEntity<Object> myIdolList(@PathVariable int user_id) {
         // 사용자 관심아이돌 리스트
-//        List<Idol> myIdolList =
-        return new ResponseEntity<>(HttpStatus.OK);
+        Set<Idol> myIdolList = userService.getMyIdolList(user_id);
+//        User user = userService.getUserInfo(user_id);
+        return new ResponseEntity<>(myIdolList, HttpStatus.OK);
     }
 
-    @PostMapping("/user/{user_id}/my-idol")
-    public ResponseEntity<Object> createMyIdol(@PathVariable int user_id, @RequestBody Object idol) {
+    @PostMapping("/user/{user_id}/my-idol/{idol_id}")
+    public ResponseEntity<Object> addMyIdol(@PathVariable int user_id, @PathVariable int idol_id) {
+        Map<String, Object> result = new HashMap<>();
         // 관심아이돌 추가
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        userService.addMyIdol(user_id, idol_id);
+        result.put("message", "관심 아이돌을 추가하였습니다");
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/user/{user_id}/my-idol/{idol_id}")
     public ResponseEntity<Object> deleteMyIdol(@PathVariable int user_id, @PathVariable int idol_id) {
+        Map<String, Object> result = new HashMap<>();
         // 관심아이돌 삭제
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        userService.removeMyIdol(user_id, idol_id);
+        result.put("message", "관심 아이돌에서 삭제하였습니다");
+        return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
 }

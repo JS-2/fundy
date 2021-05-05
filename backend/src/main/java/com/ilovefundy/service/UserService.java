@@ -1,6 +1,6 @@
 package com.ilovefundy.service;
 
-import com.ilovefundy.dao.user.MyIdolDao;
+import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
@@ -8,13 +8,14 @@ import com.ilovefundy.model.user.SignupRequest;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -22,8 +23,9 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDao userDao;
-    private final MyIdolDao myIdolDao;
+    private final IdolDao idolDao;
     private final JwtTokenProvider jwtTokenProvider;
+    private final EntityManager em;
 
     // Form Validation 에러 메세지를 Map 에 담아 반환
     public Map<String, String> validateHandling(Errors errors) {
@@ -105,7 +107,28 @@ public class UserService {
         userDao.deleteById(user_id);
     }
 
-//    public List<Idol> getMyIdolList(int page, int per_page) {
-////        Page<Idol> pages = myIdolDao.
-//    }
+    public Set<Idol> getMyIdolList(int user_id) {
+        User user = userDao.findByUserId(user_id);
+        return user.getIdols();
+    }
+
+    @Transactional
+    public void addMyIdol(int user_id, int idol_id) {
+        User user = userDao.getOne(user_id);
+        Idol idol = idolDao.findByIdolId(idol_id);
+        if(user.getIdols() == null) {
+            user.setIdols(new LinkedHashSet<>());
+        }
+        user.getIdols().add(idol);
+        idol.getUsers().add(user);
+        userDao.save(user);
+    }
+
+    public void removeMyIdol(int user_id, int idol_id) {
+        User user = userDao.getOne(user_id);
+        Idol idol = idolDao.findByIdolId(idol_id);
+        user.getIdols().remove(idol);
+        idol.getUsers().remove(user);
+        userDao.save(user);
+    }
 }
