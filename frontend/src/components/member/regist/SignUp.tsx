@@ -1,7 +1,7 @@
 import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { User } from '../../../common/types';
 import {
-  User,
   registSubmit,
   validateId,
   validatePassword,
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const SignUp = (props: Props) => {
-  const [user, setUser] = useState<User>({ ...props.user, nickName: '' });
+  const [user, setUser] = useState<User>({ ...props.user, nickname: '' });
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [validateds, setValidateds] = useState<boolean[]>([
     false,
@@ -61,7 +61,7 @@ const SignUp = (props: Props) => {
           }}
           helperText={
             user.password != '' && !validateds[0]
-              ? '비밀번호는 8자 이상으로 입력해주세요.'
+              ? '비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8글자 이상의 비밀번호여야 합니다.'
               : ''
           }
           type="password"
@@ -90,19 +90,19 @@ const SignUp = (props: Props) => {
       <Grid item xs={12}>
         <TextField
           fullWidth
-          value={user.nickName}
-          error={user.nickName != '' && !validateds[2]}
+          value={user.nickname}
+          error={user.nickname != '' && !validateds[2]}
           onChange={(e) => {
             if (validateds[2] !== validateNickName(e.target.value)) {
               let newValidateds = [...validateds];
               newValidateds[2] = !newValidateds[2];
               setValidateds(newValidateds);
             }
-            setUser({ ...user, nickName: e.target.value });
+            setUser({ ...user, nickname: e.target.value });
           }}
           helperText={
-            user.nickName != '' && !validateds[2]
-              ? '닉네임는 2자 이상, 16자 이하로 입력해주세요.'
+            user.nickname != '' && !validateds[2]
+              ? '닉네임은 영문 or 한글이 포함된 2~8글자 사이여야 합니다.'
               : ''
           }
           label="닉네임"

@@ -6,15 +6,12 @@ import {
   TextField,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import {
-  User,
-  loginSubmit,
-  validateId,
-  validatePassword,
-} from '../../../api/user';
+
+import { loginSubmit, validateId, validatePassword } from '../../../api/user';
+import { User } from '../../../common/types';
 
 const SignIn = () => {
-  const [user, setUser] = useState<User>(new User());
+  const [user, setUser] = useState<User>({ email: '', password: '' });
   const [validateds, setValidateds] = useState<boolean[]>([false, false]);
 
   return (

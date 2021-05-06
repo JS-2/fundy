@@ -1,11 +1,15 @@
 import { Box } from '@material-ui/core';
 import { useState } from 'react';
-import { User } from '../../api/user';
+import { User } from '../../common/types';
 import AuthEmail from '../../components/member/regist/AuthEmail';
 import SignUp from '../../components/member/regist/SignUp';
 
 const Regist = () => {
-  const [user, setUser] = useState<User>(new User());
+  const [user, setUser] = useState<User>({
+    email: '',
+    password: '',
+    nickname: '',
+  });
   const [certified, setCertified] = useState<boolean>(false);
 
   const setUserEmail = (email: string): void => {
