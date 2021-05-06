@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @CrossOrigin(origins = {"*"})
@@ -24,4 +25,16 @@ public class FundingNoticeService {
     }
 
     public FundingNotice getFundingNotice(int id) { return fundingNoticeDao.findByFundingNoticeId(id); }
+
+    public void addFundingNotice(FundingNotice fundingNotice) {
+        fundingNoticeDao.save(fundingNotice);
+    }
+
+//    public void editFundingNotice(FundingNotice fundingNotice) {
+//        fundingNoticeDao.save(fundingNotice);
+//    }
+
+    public void deleteFundingNotice(int funding_notice_id) {
+        fundingNoticeDao.deleteById(funding_notice_id);
+    }
 }
