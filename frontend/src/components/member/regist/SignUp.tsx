@@ -1,25 +1,28 @@
 import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { User } from '../../../common/types';
+import { RegistUser } from '../../../common/types';
 import {
   registSubmit,
   validateId,
   validatePassword,
   validateNickName,
 } from '../../../api/user';
+import { useHistory } from 'react-router';
 
 interface Props {
-  user: User;
+  user: RegistUser;
 }
 
 const SignUp = (props: Props) => {
-  const [user, setUser] = useState<User>({ ...props.user, nickname: '' });
+  const [user, setUser] = useState<RegistUser>({ ...props.user, nickname: '' });
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [validateds, setValidateds] = useState<boolean[]>([
     false,
     false,
     false,
   ]);
+
+  const history = useHistory();
 
   useEffect(() => {
     if (validateds[1] !== (confirmPassword === user.password)) {
@@ -116,7 +119,7 @@ const SignUp = (props: Props) => {
           variant="contained"
           size="large"
           onClick={() => {
-            registSubmit(user);
+            registSubmit(user, history);
           }}
           fullWidth
           className={

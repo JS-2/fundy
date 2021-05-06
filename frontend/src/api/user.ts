@@ -1,20 +1,27 @@
-import { User } from "../common/types";
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import { LoginUser, RegistUser } from "../common/types";
+import { AxiosError } from 'axios';
+import axiosInstance from './axiosConfig';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from '../reducers/user'
 
-const instance = axios.create();
-
-export const loginSubmit = (user: User) => {
-  instance
-    .post('user/signup', user)
-    .then(() => { console.log('ok') })
+export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHistory>, dispatch: ReturnType<typeof useDispatch>) => {
+  console.log(user);
+  axiosInstance
+    .post('user/login', user)
+    .then((response) => {
+      dispatch(setUser(response.data.user, response.data.token));
+      history.push('/');
+    })
     .catch((e: AxiosError) => { console.log(e.response!.status) });
 }
 
-export const registSubmit = (user: User) => {
-  instance
+export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHistory>) => {
+  console.log(user);
+  axiosInstance
     .post('user/signup', user)
-    .then(() => { console.log('ok') })
-    .catch((e: AxiosError) => { console.log(e.response!.status) });
+    .then(() => { history.push('/'); })
+    .catch((e: AxiosError) => { console.log(e) });
 }
 
 export const validateId = (id: string): boolean => {
