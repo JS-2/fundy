@@ -1,24 +1,30 @@
 package com.ilovefundy.dto.funding;
 
+import com.ilovefundy.dto.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "funding_register")
+@DynamicInsert
+@DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor
 public class FundingRegister {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "funding_register_id")
     private Integer fundingRegisterId;
 
-    @Column(name = "user_id")
-    private Integer userId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "user_id")
+    private User user;
 
     //프로필 인증
     @Column(name = "funding_regter_name")

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface FundingDao extends JpaRepository<FundingProject, Integer> {
     //펀딩 상세보기
     FundingProject findByFundingId(int id);
+
+
 }
