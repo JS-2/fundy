@@ -19,6 +19,7 @@ import FundCreate from '../pages/funding/FundCreate';
 import { Create } from '@material-ui/icons';
 import MyFunding from '../pages/mypage/MyFunding';
 import IdolList from '../pages/idol/IdolList';
+import FundPayment from '../pages/funding/FundPayment';
 
 const index = () => {
   return (
@@ -34,6 +35,7 @@ const index = () => {
             <Route path="/funding" component={Funding} exact />
             <Route path="/funding/create" component={FundCreate} exact/>
             <Route path="/funding/detail/:num" component={FundingDetail} exact/>
+            <Route path="/funding/detail/:num/payment" component={FundPayment} exact/>
             <Route path="/idol" component={IdolList} exact />
             <Route path="/" component={Main} exact />
             <Redirect from="*" to="/" />

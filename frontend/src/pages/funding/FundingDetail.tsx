@@ -11,12 +11,12 @@ import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Grid, Paper, Box } from "@material-ui/core";
-import "swiper/swiper.scss";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SwipeableViews from 'react-swipeable-views';
-import Qna from "../../components/fundingDetail/Qna";
+import Qna from "../../components/fundingDetail/FundingQna";
+import Board from "../../components/fundingDetail/FundingBoard"
 
 
 
@@ -112,6 +112,11 @@ interface TabPanelProps {
             </table>
             <BorderLinearProgress variant="determinate" value={70} />
             <Button variant="contained" color="primary">펀딩하기</Button>
+            <a id="logoAnchor" href="/payment">
+                <Button variant="outlined" color="primary">
+                  펀딩하기
+                </Button>
+              </a>
 
             </div>
             </div>
@@ -161,7 +166,7 @@ interface TabPanelProps {
 <hr />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
+            <Board></Board>
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <Qna/>
