@@ -1,12 +1,16 @@
 package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
+import com.ilovefundy.dao.FundingRegisterDao;
 import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.dto.funding.FundingProject;
+import com.ilovefundy.dto.funding.FundingRegister;
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.pay.PayInfo;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.user.FanAuth;
+import com.ilovefundy.model.user.ProfileAuth;
 import com.ilovefundy.model.user.SignupRequest;
 import com.ilovefundy.model.user.UserInfo;
 import com.ilovefundy.security.JwtTokenProvider;
@@ -30,6 +34,7 @@ public class UserService {
     private final UserDao userDao;
     private final IdolDao idolDao;
     private final FundingDao fundingDao;
+    private final FundingRegisterDao fundingRegisterDao;
     private final JwtTokenProvider jwtTokenProvider;
     private final EntityManager em;
 
@@ -211,5 +216,50 @@ public class UserService {
         user.getIdols().remove(idol);
         idol.getUsers().remove(user);
         userDao.save(user);
+    }
+
+    @Transactional
+    // 팬 활동 인증 등록
+    public void createFanAuth(FanAuth fanAuth) {
+        int user_id = fanAuth.getUserId();
+        User user = userDao.getOne(user_id);
+        Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user_id);
+        // 인증 등록을 처음 하는 경우
+        if(!fundingRegisterOpt.isPresent()) {
+            FundingRegister fundingRegister = new FundingRegister();
+            fundingRegister.setUser(user);
+            fundingRegister.setOfficialFanHistory(fanAuth.getFanHistory());
+            fundingRegisterDao.save(fundingRegister);
+        }
+        // 프로필 인증으로 이미 정보가 있는 경우
+        else {
+            fundingRegisterOpt.get().setOfficialFanHistory(fanAuth.getFanHistory());
+            fundingRegisterDao.save(fundingRegisterOpt.get());
+        }
+    }
+
+    @Transactional
+    public void createProfileAuth(ProfileAuth profileAuth) {
+        int user_id = profileAuth.getUserId();
+        User user = userDao.getOne(user_id);
+        Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user_id);
+        // 인증 등록을 처음 하는 경우
+        if(!fundingRegisterOpt.isPresent()) {
+            FundingRegister fundingRegister = new FundingRegister();
+            fundingRegister.setUser(user);
+            fundingRegister.setFundingRegisterName(profileAuth.getName());
+            fundingRegister.setFundingRegisterPicture(profileAuth.getProfilePicture());
+            fundingRegister.setFundingRegisterAge(profileAuth.getAge());
+            fundingRegister.setFundingRegisterHistory(profileAuth.getProfileHistory());
+            fundingRegisterDao.save(fundingRegister);
+        }
+        // 프로필 인증으로 이미 정보가 있는 경우
+        else {
+            fundingRegisterOpt.get().setFundingRegisterName(profileAuth.getName());
+            fundingRegisterOpt.get().setFundingRegisterPicture(profileAuth.getProfilePicture());
+            fundingRegisterOpt.get().setFundingRegisterAge(profileAuth.getAge());
+            fundingRegisterOpt.get().setFundingRegisterHistory(profileAuth.getProfileHistory());
+            fundingRegisterDao.save(fundingRegisterOpt.get());
+        }
     }
 }

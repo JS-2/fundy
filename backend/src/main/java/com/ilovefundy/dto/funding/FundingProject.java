@@ -75,13 +75,13 @@ public class FundingProject {
     @ColumnDefault("'N'")
     private YesOrNo isGoodFunding; // 굿프로젝트 여부
 
-    private enum FundingType{
+    public enum FundingType{
         Donation, Basic;
     }
-    private enum FundingConfirm {
+    public enum FundingConfirm {
         Wait, Approve, Decline;
     }
-    private enum YesOrNo {
+    public enum YesOrNo {
         Y, N;
     }
 }
