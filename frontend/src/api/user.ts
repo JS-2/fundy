@@ -1,20 +1,20 @@
-export class User {
-    email: string;
-    password: string;
-    nickName?: string;
+import { User } from "../common/types";
+import axios, { AxiosError, AxiosInstance } from 'axios';
 
-    constructor(email: string = '', password: string = '') {
-      this.email = email;
-      this.password = password;
-    }
-}
+const instance = axios.create();
 
 export const loginSubmit = (user: User) => {
-    console.log(user);
+  instance
+    .post('user/signup', user)
+    .then(() => { console.log('ok') })
+    .catch((e: AxiosError) => { console.log(e.response!.status) });
 }
 
 export const registSubmit = (user: User) => {
-    console.log(user);
+  instance
+    .post('user/signup', user)
+    .then(() => { console.log('ok') })
+    .catch((e: AxiosError) => { console.log(e.response!.status) });
 }
 
 export const validateId = (id: string): boolean => {
@@ -24,10 +24,10 @@ export const validateId = (id: string): boolean => {
 }
 
 export const validatePassword = (password: string): boolean => {
-  return password.length >= 8 ? true : false;
+  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/.test(password) ? true : false;
 }
 
 export const validateNickName = (nickName: string): boolean => {
-  return nickName.length >= 2 && nickName.length <= 16 ? true : false;
+  return /^[ㄱ-ㅎ|가-힣|a-z]{2,8}$/.test(nickName) ? true : false;
 
 }
