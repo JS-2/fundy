@@ -32,8 +32,8 @@ const index = () => {
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/mypage/:funding_id" component={MyFunding} exact />
             <Route path="/funding" component={Funding} exact />
-            <Route path="/funding/detail/:num" component={FundingDetail} />
-            <Route path="/funding/create" component={FundCreate} />
+            <Route path="/funding/create" component={FundCreate} exact/>
+            <Route path="/funding/detail/:num" component={FundingDetail} exact/>
             <Route path="/idol" component={IdolList} exact />
             <Route path="/" component={Main} exact />
             <Redirect from="*" to="/" />

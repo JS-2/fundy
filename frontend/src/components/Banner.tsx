@@ -35,23 +35,28 @@ const Banner = () => {
         className="col-md-12"
         id="banner"
         style={{
-          borderRadius: "10px",
-          height: "300px",
+          borderRadius: "20px",
+          height: "350px",
+          padding: "0px",
         }}
       >
 
         
         <img src={banner1} style={{
           width: "100%",
+          
+          
         }}></img>
-      </div></SwiperSlide>
+      </div>
+      </SwiperSlide>
+
     <SwiperSlide>        <div
         className="col-md-12"
         id="banner"
         style={{
           backgroundColor: "#44848c",
           borderRadius: "20px",
-          height: "300px",
+          height: "350px",
         }}
       >
         <h1>배너영역2</h1>
