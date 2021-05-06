@@ -79,7 +79,7 @@ public class UserService {
         newUser.setUserId(user.getUserId());
         newUser.setUserPicture(user.getUserPicture());
         newUser.setUserNickname(user.getUserNickname());
-        newUser.setUserEmail(user.getUserNickname());
+        newUser.setUserEmail(user.getUserEmail());
         newUser.setUserAddress(user.getUserAddress());
         newUser.setUserLevel(user.getUserLevel().getValue());
         return newUser;
