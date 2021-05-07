@@ -9,3 +9,17 @@
   color: grey;
   font-size: 0.9em;
 }
+
+.swiper-button-next{
+  color: red !important;
+  font-size: 22px !important;
+ 
+  padding: 30px !important;
+
+}
+
+.swiper-button-prev{
+  color: red !important;
+  font-size: none !important;
+  padding: 30px !important;
+}
