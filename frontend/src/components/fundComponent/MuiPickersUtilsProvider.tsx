@@ -20,7 +20,7 @@ export default function DatePickers() {
   const classes = useStyles();
 
   return (
-    <form className={classes.container} noValidate>
+    <form className="input" noValidate>
       <TextField
         id="date"
         label="펀딩 마감 기한"
