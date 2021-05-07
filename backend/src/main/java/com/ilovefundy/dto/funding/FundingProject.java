@@ -1,21 +1,44 @@
 package com.ilovefundy.dto.funding;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilovefundy.dto.pay.PayInfo;
+import com.ilovefundy.dto.user.User;
+import lombok.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
-@Data
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="fundingId")
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Funding {
+public class FundingProject {
     @Id
     @GeneratedValue
     @Column(name = "funding_id")
     private Integer fundingId;
+
+    @BatchSize(size=10)
+//    @JsonBackReference
+    @JsonIgnore
+    @ManyToMany(mappedBy = "fundings")
+    private Set<User> users = new LinkedHashSet<>();
+
+    @BatchSize(size=10)
+//    @JsonBackReference
+//    @JsonIgnore
+    @OneToMany(mappedBy = "funding")
+    private List<PayInfo> userPays = new ArrayList<>();
 
     @Column(name = "donation_id")
     private Integer donationId;
@@ -25,6 +48,7 @@ public class Funding {
     private Integer userId;
 
     @Column(name = "funding_type")
+    @ColumnDefault("1")
     private FundingType fundingType; // 펀딩 타입
     @Column(name = "funding_name")
     private String fundingName;
@@ -41,20 +65,23 @@ public class Funding {
     @Column(name = "funding_thumbnail")
     private String fundingThumbnail;
     @Column(name = "is_Donate")
+    @ColumnDefault("0")
     private boolean isDonate; // 기부 옵션 선택 여부
     @Column(name = "is_Confirm")
+    @ColumnDefault("0")
     private FundingConfirm isConfirm; // 펀딩 승인 여부
     @Column(name = "is_good_funding")
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'N'")
     private YesOrNo isGoodFunding; // 굿프로젝트 여부
 
-    private enum FundingType{
+    public enum FundingType{
         Donation, Basic;
     }
-    private enum FundingConfirm {
+    public enum FundingConfirm {
         Wait, Approve, Decline;
     }
-    private enum YesOrNo {
+    public enum YesOrNo {
         Y, N;
     }
 }

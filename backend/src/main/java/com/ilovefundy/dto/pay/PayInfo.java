@@ -1,13 +1,13 @@
 package com.ilovefundy.dto.pay;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ilovefundy.dto.funding.FundingProject;
+import com.ilovefundy.dto.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -15,14 +15,19 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class PayInfo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
     private Integer paymentId;
 
-    @Column(name = "user_id")
-    private Integer userId;
-    @Column(name = "funding_id")
-    private Integer fundingId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+//    @JsonIgnore
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "funding_id")
+    private FundingProject funding;
+
     @Column(name = "pay_amount")
     private long payAmount; // 펀딩 결제 금액
 }

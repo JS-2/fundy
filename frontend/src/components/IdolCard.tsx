@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import React, { useState } from 'react';
 
-const IdolSearchItem = () => {
+const IdolCard = () => {
   const [isOver, setIsOver] = useState(false);
 
   return (
@@ -57,4 +57,4 @@ const IdolSearchItem = () => {
   );
 };
 
-export default IdolSearchItem;
+export default IdolCard;
