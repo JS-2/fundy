@@ -23,7 +23,6 @@ const SignIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  console.log(useSelector((state: rootState) => state.userReducer));
   return (
     <Grid container spacing={2}>
       <Grid item className="large_logo main_color mb-5" xs={12}>

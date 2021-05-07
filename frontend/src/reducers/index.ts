@@ -12,9 +12,10 @@ const rootReducer = combineReducers({
 
 const persistedState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState')!)
-    : {}
+    : { userReducer:{ user:null, token:null } }
   
 const store = createStore(rootReducer, persistedState);
+
 
 store.subscribe(() => {
   localStorage.setItem('reduxState', JSON.stringify(store.getState()));

@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import axiosInstance from './axiosConfig';
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from '../reducers/user'
+import { setUser, logout } from '../reducers/user'
 
 export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHistory>, dispatch: ReturnType<typeof useDispatch>) => {
   console.log(user);
@@ -22,6 +22,12 @@ export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHis
     .post('user/signup', user)
     .then(() => { history.push('/'); })
     .catch((e: AxiosError) => { console.log(e) });
+}
+
+export const logoutSubmit = (dispatch: ReturnType<typeof useDispatch>, history: ReturnType<typeof useHistory>) => {
+  dispatch(logout());
+  window.location.href='/';
+  // history.push('/');
 }
 
 export const validateId = (id: string): boolean => {
