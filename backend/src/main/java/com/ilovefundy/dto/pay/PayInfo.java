@@ -11,7 +11,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "pay_info")
 @AllArgsConstructor
 @NoArgsConstructor
 public class PayInfo {
