@@ -12,6 +12,7 @@ import {
   FormLabel,
   FormControl,
   RadioGroup,
+  Box,
 } from "@material-ui/core";
 import { withStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { Editor } from "@toast-ui/react-editor";
@@ -24,19 +25,35 @@ import SearchButton from '@material-ui/icons/Search';
 import { useState } from "react";
 
 
-interface State{
-  fundType: number;
-  idolNumber: number;
-  fundname:string;
-  fundShortInfo:string;
-  fundImgUrl: string;
-  fundMoney:number;
-  fundDate: string;
-  location: string;
-  fundDetail:string;
-}
 
 const FundCreate = () => {
+  const [fundType, setFundType] = useState("");
+  const [idolId, setIdolId] = useState("");
+  const [fundName, setFundName] = useState<string>("");
+  const [fundShortInfo, setFundShortInfo] = useState<string>("");
+  const [pictures, setPictures] = useState([]);
+  const [location, setLocation] = useState<string>("");
+  const [locationDetail, setLocationDetail] = useState<string>("");
+  const [fundMoney, setFundMoney] = useState("");
+  const [fundDate, setFundDate] = useState<string>("");
+  const [fundDetail, setFundDetail] = useState("");
+
+  const onSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    console.log({
+        fundType,idolId,fundName,fundShortInfo,pictures,location,locationDetail,fundMoney,fundDate,fundDetail
+    });
+};
+
+
+  
+  const onlocation = (address: string) => {
+    setLocation(address);
+  }
+
+
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -51,6 +68,7 @@ const FundCreate = () => {
 
 
   function SimpleDialog(props: SimpleDialogProps) {
+  
     const { onClose, selectedValue, open } = props;
     // const { onClose, open } = props;
 
@@ -64,11 +82,15 @@ const FundCreate = () => {
         aria-labelledby="simple-dialog-title"
         open={open}
       >
-        <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+        <DialogTitle id="simple-dialog-title">기부처 주소 입력</DialogTitle>
         <DaumPostcode width="500px" onComplete={handleComplete} />
       </Dialog>
     );
   }
+
+  const onDrop = (picture: any) => {
+    setPictures(pictures.concat(picture));
+  };
 
   const LightTooltip = withStyles((theme: Theme) => ({
     tooltip: {
@@ -97,24 +119,59 @@ const FundCreate = () => {
     console.log(fullAddress);
 
     selectedValue = fullAddress;
+    handleClose(fullAddress);
+    onlocation(fullAddress);
+    
+
 
   };
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = (value: string) => {
     setOpen(false);
   };
 
-  const [value, setValue] = React.useState("female");
+  const [value, setValue] = React.useState("basic");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+  const onChangeFundType = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setFundType(e.target.value);
   };
 
-  const state = { location: "" };
+  const onChangeFundName =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setFundName(e.target.value);
+  }
+  const onChangeIdolId =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setIdolId(e.target.value);
+  }
+  const onChangeFundShortInfo =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setFundShortInfo(e.target.value);
+  }
+
+  const onChangeImgUrl =(e: { target: { value: any; }; }) => {
+   onDrop(e.target.value);
+  }
+
+  const onChangeLocation =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setLocation(e.target.value);
+  }
+
+  const onChangeLocationDetail =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setLocationDetail(e.target.value);
+  }
+  const onChangeFundMoney =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setFundMoney(e.target.value);
+  }
+  const onChangeFundDate =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setFundDate(e.target.value);
+  }
+  const onChangeFundDetail =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setFundDetail(e.target.value);
+  }
+
+
+
 
   return (
     <div className="container">
@@ -124,23 +181,23 @@ const FundCreate = () => {
           <div className="row">
       <FormControl component="fieldset">
         <RadioGroup
-          aria-label="gender"
-          name="gender1"
-          value={value}
-          onChange={handleChange}
+          aria-label="type"
+          name="type"
+          value={fundType}
+          onChange={onChangeFundType}
         >
 
             <FormLabel component="legend">펀딩 종류</FormLabel>
             <LightTooltip title="아이돌의 이름으로 기부되는 펀딩입니다.">
               <FormControlLabel
-                value="donate"
+                value="1"
                 control={<Radio />}
                 label="기부 펀딩"
               />
             </LightTooltip>
             <LightTooltip title="일반적인 아이돌 펀딩입니다">
               <FormControlLabel
-                value="basic"
+                value="2"
                 control={<Radio />}
                 label="기본 펀딩"
               />
@@ -156,6 +213,8 @@ const FundCreate = () => {
         label="펀딩 제목"
         placeholder="싸피싸피의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트"
         variant="outlined"
+        value={fundName}
+        onChange={onChangeFundName}
       />
       </div>
       <div className="row">
@@ -166,13 +225,16 @@ const FundCreate = () => {
         label="아이돌 리스트"
         placeholder="싸피싸피"
         variant="outlined"
+        onChange={onChangeIdolId}
       />
       </div>
          <div className="row">
         <TextField
           className="col-md-12 input"
           label="펀딩 한줄 소개"
+          value={fundShortInfo}
           multiline
+          onChange={onChangeFundShortInfo}
         ></TextField>
       </div>
 
@@ -185,6 +247,7 @@ const FundCreate = () => {
           imgExtension={[".jpg", ".gif", ".png", ".gif"]}
           maxFileSize={5242880}
           withPreview={true}
+          onChange={onDrop}
         />
       </div>
 
@@ -193,14 +256,16 @@ const FundCreate = () => {
       <div className="row">
         <TextField
           className="col-md-6 input"
-          style={{ width: "100%" }}
+ 
           label="펀딩 목표 금액"
           type="number"
           InputLabelProps={{
             shrink: true,
           }}
           placeholder="목표금액(원)"
-          variant="outlined"
+          variant="outlined"  
+          value={fundMoney}
+          onChange={onChangeFundMoney}
         />
                 <div className="col-md-6 input">
         <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
@@ -209,16 +274,15 @@ const FundCreate = () => {
 
       <div className="row">
         <TextField
-          className="col-md-10 input"
+          className="col-md-11 input"
           label="기부처 주소"
-          disabled
+          onClick={handleClickOpen}
           variant="outlined"
-          value={state.location}
+          value={location}
         />
 
-        <IconButton aria-label="search">
-  <SearchButton 
-          onClick={handleClickOpen}>검색</SearchButton>
+        <IconButton aria-label="search" onClick={handleClickOpen}>
+  <SearchButton >검색</SearchButton>
 </IconButton>
         <SimpleDialog
           selectedValue={selectedValue}
@@ -226,24 +290,40 @@ const FundCreate = () => {
           onClose={handleClose}
         />
       </div>
+      <div className="row">
+      <TextField
+        className="col-md-11 input"
+        style={{ width: "100%" }}
+        label="상세 주소"
+        placeholder=""
+        variant="outlined"
+        value={locationDetail}
+        onChange={onChangeLocationDetail}
+      />
+      </div>
 
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-12 editor">
           <Editor
             //initialValue="원하는 문장을 입력해주세요.."
+
             previewStyle="vertical"
             height="500px"
             initialEditType="wysiwyg"
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
+
           />
         </div>
       </div>
+      <Box display="flex" justifyContent="flex-end" m={1} p={1} bgcolor="background.paper">
       <div className="buttonSubmit">
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={onSubmit}>
         신청
       </Button>
       </div>
+      </Box>
+   
 
     </div>
   );
@@ -253,3 +333,5 @@ export default FundCreate;
 function setState(arg0: (prevState: any, props: any) => { location: string }) {
   throw new Error("Function not implemented.");
 }
+
+

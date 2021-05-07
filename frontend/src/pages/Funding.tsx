@@ -53,14 +53,18 @@ class Funding extends Component {
 
         <div className="area" id="">
           <div className="" id="topFundArea">
-            <div className="row">
+            <div className="">
               <h3 className="headText">인기 펀딩 목록</h3>
+              <Box display="flex" justifyContent="flex-end">
               <a id="logoAnchor" href="/funding/create">
-                <Button variant="outlined" color="primary">
+                <Button variant="contained" color="primary">
                   펀딩 신청하기
                 </Button>
               </a>
+              </Box>
             </div>
+            </div>
+            <div className="row">
 
             <Grid container spacing={3}>
               <Grid item xs={4}>
@@ -77,6 +81,43 @@ class Funding extends Component {
               <Grid item xs={4}>
                 <FundCard></FundCard>
               </Grid>
+              <Grid item xs={4}>
+                <FundCard></FundCard>
+              </Grid>
+              <Grid item xs={4}>
+                <FundCard></FundCard>
+              </Grid>
+            </Grid>
+          </div>
+          <hr></hr>
+          <br></br><br></br><br></br>
+         
+          <br></br><br></br><br></br>
+
+
+          <div className="" id="topFundArea">
+            <div className="">
+              <h3 className="headText">신규 펀딩 목록</h3>
+              <Box display="flex" justifyContent="flex-end">
+              <a id="logoAnchor" href="/funding/create">
+                <Button variant="contained" color="primary">
+                  펀딩 신청하기
+                </Button>
+              </a>
+              </Box>
+            </div>
+            </div>
+            <div className="row">
+
+            <Grid container spacing={3}>
+              <Grid item xs={4}>
+              <FundCard></FundCard>
+              </Grid>
+
+              <Grid item xs={4}>
+              <FundCard></FundCard>
+              </Grid>
+
               <Grid item xs={4}>
                 <FundCard></FundCard>
               </Grid>
