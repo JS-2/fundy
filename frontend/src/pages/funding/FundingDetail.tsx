@@ -114,11 +114,13 @@ interface TabPanelProps {
             </table>
             <BorderLinearProgress variant="determinate" value={70} />
           
+            <Box display="flex" justifyContent="flex-end" m={1} p={1}>
             <a id="logoAnchor" href="1234/payment">
                 <Button variant="contained" color="primary">
                   펀딩하기
                 </Button>
               </a>
+              </Box>
 
             </div>
             </div>

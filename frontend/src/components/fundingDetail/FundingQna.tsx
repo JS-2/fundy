@@ -19,9 +19,17 @@ class App extends Component {
   render() {
     const { boards } = this.state;
     const list = boards.map(function (row) {
-      return row.brdno + row.brdwriter;
+      return +row.brdno + row.brdwriter;
     });
-    return <div> {list} </div>;
+    return(
+    <div>
+      <h1>문의하기</h1> 
+      {list}
+       
+        </div>
+    
+    
+    );
   }
 }
 
