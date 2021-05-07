@@ -1,16 +1,35 @@
 package com.ilovefundy.dto.idol;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilovefundy.dto.user.User;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
-@Data
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idolId")
+@Getter
+@Setter
 @Entity
 public class Idol {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idol_id")
     private Integer idolId;
+
+    @BatchSize(size=10)
+//    @JsonBackReference
+    @JsonIgnore
+    @ManyToMany(mappedBy = "idols")
+    private Set<User> users = new LinkedHashSet<>();
+
     @Column(name = "idol_name")
     private String idolName;
     @Column(name = "idol_picture")
@@ -28,10 +47,16 @@ public class Idol {
     private BloodType idolBlood;
     @Column(name = "idol_agency")
     private String idolAgency;
-    @Column(name = "idol_group_id")
-    private Integer idolGroupId; // 그룹아이디(idol_id 참조)
 
-    private enum BloodType {
+    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinColumn(name = "idol_group_id")
+    private Idol idolGroup; // 그룹아이디(idol_id 참조)
+
+    @BatchSize(size=10)
+    @OneToMany(mappedBy = "idolGroup", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    private List<Idol> members = new LinkedList<>();
+
+    public enum BloodType {
         A, B, O, AB;
     }
 }
