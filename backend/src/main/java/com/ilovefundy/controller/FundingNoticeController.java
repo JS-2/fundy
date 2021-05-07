@@ -45,10 +45,10 @@ public class FundingNoticeController {
     @ApiOperation(value = "펀딩 공지사항 등록")
     @ApiResponses(@ApiResponse(code = 201, message = "펀딩 공지사항 등록 성공!"))
     @PostMapping("/fundings/{funding_id}/notices")
-    public ResponseEntity<Object> fundingNoticeWrite(@RequestBody @Valid NoticeRequest request) {
+    public ResponseEntity<Object> fundingNoticeWrite(@PathVariable int funding_id, @RequestBody @Valid NoticeRequest request) {
         Map<String, Object> result = new HashMap<>();
         //공지사항 등록
-        fundingNoticeService.addFundingNotice(request);
+        fundingNoticeService.addFundingNotice(funding_id, request);
         result.put("message", "공지사항 등록 성공!");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

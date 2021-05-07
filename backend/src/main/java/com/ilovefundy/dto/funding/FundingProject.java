@@ -20,6 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "funding_project")
 @AllArgsConstructor
 @NoArgsConstructor
 public class FundingProject {
