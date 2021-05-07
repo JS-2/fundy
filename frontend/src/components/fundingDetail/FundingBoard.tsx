@@ -93,20 +93,6 @@ class FundingBoard extends Component {
     </table>
 
 
-        {" "}
-        <table>
-          {" "}
-          <tbody>
-            {" "}
-            <tr>
-              {" "}
-              <td width="50">No.</td> <td width="300">Title</td>{" "}
-              <td width="100">Name</td> <td width="100">Date</td>{" "}
-            </tr>{" "}
-        
-          </tbody>{" "}
-        </table>{" "}
-
 
       </div>
     );

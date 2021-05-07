@@ -21,6 +21,20 @@ import MuiPickersUtilsProvider from "../../components/fundComponent/MuiPickersUt
 import ImageUploader from "react-images-upload";
 import IconButton from '@material-ui/core/IconButton';
 import SearchButton from '@material-ui/icons/Search';
+import { useState } from "react";
+
+
+interface State{
+  fundType: number;
+  idolNumber: number;
+  fundname:string;
+  fundShortInfo:string;
+  fundImgUrl: string;
+  fundMoney:number;
+  fundDate: string;
+  location: string;
+  fundDetail:string;
+}
 
 const FundCreate = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -32,6 +46,9 @@ const FundCreate = () => {
     selectedValue: string;
     onClose: (value: string) => void;
   }
+
+
+
 
   function SimpleDialog(props: SimpleDialogProps) {
     const { onClose, selectedValue, open } = props;
@@ -80,6 +97,7 @@ const FundCreate = () => {
     console.log(fullAddress);
 
     selectedValue = fullAddress;
+
   };
 
   const handleClickOpen = () => {
