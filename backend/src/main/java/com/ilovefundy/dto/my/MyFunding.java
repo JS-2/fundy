@@ -4,11 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MyFunding {
-    private int fundingId;
-    private int userId;
+    @Column(name = "funding_id")
+    private Integer fundingId;
+    @Column(name = "user_id")
+    private Integer userId;
 }

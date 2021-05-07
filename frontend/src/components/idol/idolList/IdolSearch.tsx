@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import React from 'react';
-import IdolSearchItem from './IdolSearchItem';
+import IdolCard from '../../IdolCard';
 
 const IdolSearch = () => {
   return (
@@ -30,16 +30,16 @@ const IdolSearch = () => {
       </Box>
       <Grid container spacing={2}>
         <Grid item container xs={3} justify="center">
-          <IdolSearchItem />
+          <IdolCard />
         </Grid>
         <Grid item container xs={3} justify="center">
-          <IdolSearchItem />
+          <IdolCard />
         </Grid>
         <Grid item container xs={3} justify="center">
-          <IdolSearchItem />
+          <IdolCard />
         </Grid>
         <Grid item container xs={3} justify="center">
-          <IdolSearchItem />
+          <IdolCard />
         </Grid>
       </Grid>
     </div>

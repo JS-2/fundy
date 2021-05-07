@@ -6,16 +6,22 @@ import {
   TextField,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import {
-  User,
-  loginSubmit,
-  validateId,
-  validatePassword,
-} from '../../../api/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+
+import { loginSubmit, validateId, validatePassword } from '../../../api/user';
+import { LoginUser } from '../../../common/types';
+import { rootState } from '../../../reducers';
 
 const SignIn = () => {
-  const [user, setUser] = useState<User>(new User());
+  const [user, setUser] = useState<LoginUser>({
+    userEmail: '',
+    userPassword: '',
+  });
   const [validateds, setValidateds] = useState<boolean[]>([false, false]);
+
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <Grid container spacing={2}>
@@ -25,20 +31,20 @@ const SignIn = () => {
       <Grid item xs={12}>
         <TextField
           fullWidth
-          error={user.email != '' && !validateds[0]}
+          error={user.userEmail != '' && !validateds[0]}
           helperText={
-            user.email != '' && !validateds[0]
+            user.userEmail != '' && !validateds[0]
               ? '이메일 형식이 올바른지 확인해주세요.'
               : ''
           }
-          value={user.email}
+          value={user.userEmail}
           onChange={(e) => {
             if (validateds[0] !== validateId(e.target.value)) {
               let newValidateds = [...validateds];
               newValidateds[0] = !newValidateds[0];
               setValidateds(newValidateds);
             }
-            setUser({ ...user, email: e.target.value });
+            setUser({ ...user, userEmail: e.target.value });
           }}
           label="아이디(이메일)"
           variant="outlined"
@@ -47,18 +53,18 @@ const SignIn = () => {
       <Grid item xs={12}>
         <TextField
           fullWidth
-          value={user.password}
-          error={user.password != '' && !validateds[1]}
+          value={user.userPassword}
+          error={user.userPassword != '' && !validateds[1]}
           onChange={(e) => {
             if (validateds[1] !== validatePassword(e.target.value)) {
               let newValidateds = [...validateds];
               newValidateds[1] = !newValidateds[1];
               setValidateds(newValidateds);
             }
-            setUser({ ...user, password: e.target.value });
+            setUser({ ...user, userPassword: e.target.value });
           }}
           helperText={
-            user.password != '' && !validateds[1]
+            user.userPassword != '' && !validateds[1]
               ? '비밀번호는 8자 이상으로 입력해주세요.'
               : ''
           }
@@ -78,7 +84,7 @@ const SignIn = () => {
           size="large"
           fullWidth
           onClick={() => {
-            loginSubmit(user);
+            loginSubmit(user, history, dispatch);
           }}
           className={
             !validateds.includes(false) ? 'btn_main nbg_bold' : 'nbg_bold'
