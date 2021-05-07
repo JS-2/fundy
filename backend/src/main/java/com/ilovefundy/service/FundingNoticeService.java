@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = {"*"})
@@ -34,13 +35,14 @@ public class FundingNoticeService {
 //        fundingNoticeDao.save(fundingNotice);
 //    }
     public void addFundingNotice(int funding_id, NoticeRequest req) {
+//        LocalDateTime now = LocalDateTime.now();
         fundingDao.findByFundingId(funding_id);
         FundingNotice fundingNotice = new FundingNotice();
         fundingNotice.setFundingNoticeContent(req.getContent());
         fundingNotice.setFundingNoticeName(req.getTitle());
         fundingNotice.setFundingNoticeRegisterNickname(req.getNickname());
         fundingNotice.setRegisterPicture(req.getPicture());
-//        fundingNotice.setFundingNoticeRegTime(req.getTime());
+        fundingNotice.setFundingNoticeRegTime(LocalDateTime.now());
         fundingNoticeDao.save(fundingNotice);
     }
 
