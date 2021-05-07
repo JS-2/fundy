@@ -3,14 +3,14 @@ package com.ilovefundy.dto.pay;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.dto.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Getter
+@Setter
+@Table(name = "pay_info")
 @AllArgsConstructor
 @NoArgsConstructor
 public class PayInfo {
