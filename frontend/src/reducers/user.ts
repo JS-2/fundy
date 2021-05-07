@@ -1,5 +1,11 @@
 import { User, ResponseUser } from '../common/types'
 
+interface IUserAction {
+    type: string,
+    user?: User,
+    token?: string
+}
+
 // 액션 타입
 const LOGIN = 'USER/LOGIN';
 const LOGOUT = 'USER/LOGOUT';
@@ -22,7 +28,13 @@ export function setUser(_user: ResponseUser, token: string) {
     }
 }
 
-export default function reducer(state = {}, action:ReturnType<typeof setUser>) {
+export function logout() {
+    return {
+        type: LOGOUT
+    }
+}
+
+export default function reducer(state = {}, action:IUserAction) {
     switch (action.type) {
         case LOGIN:
             return { ...state, user: action.user, token: action.token };
