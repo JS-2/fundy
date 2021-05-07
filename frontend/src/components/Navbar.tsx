@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Button,
+  ClickAwayListener,
   Divider,
   Grid,
   IconButton,
@@ -95,40 +96,50 @@ const Navbar = () => {
                     <Avatar src={user.picture}></Avatar>
                   </IconButton>
                 </Box>
-                <Popper
-                  open={open}
-                  anchorEl={anchorEl}
-                  style={{ zIndex: 1, marginTop: -10 }}
-                >
-                  <Paper>
-                    <List style={{ width: 200 }}>
-                      <ListItem>
-                        <ListItemText
-                          primary={user.nickname}
-                          secondary={user.email}
-                        ></ListItemText>
-                      </ListItem>
-                      <Divider />
-                      <ListItem button onClick={handleMypageBtn}>
-                        <ListItemText primary="마이페이지"></ListItemText>
-                      </ListItem>
-                      <Divider />
-                      <ListItem
-                        button
-                        onClick={() => {
-                          logoutSubmit(dispatch, history);
-                        }}
-                      >
-                        <ListItemText primary="로그아웃"></ListItemText>
-                      </ListItem>
-                    </List>
-                  </Paper>
-                </Popper>
               </>
             )}
           </Box>
         </Box>
       </Box>
+      {user === null ? (
+        <></>
+      ) : (
+        <Popper
+          open={open}
+          anchorEl={anchorEl}
+          style={{ zIndex: 1, marginTop: -10 }}
+        >
+          <ClickAwayListener
+            onClickAway={() => {
+              setAnchorEl(null);
+            }}
+          >
+            <Paper>
+              <List style={{ width: 200 }}>
+                <ListItem>
+                  <ListItemText
+                    primary={user.nickname}
+                    secondary={user.email}
+                  ></ListItemText>
+                </ListItem>
+                <Divider />
+                <ListItem button onClick={handleMypageBtn}>
+                  <ListItemText primary="마이페이지"></ListItemText>
+                </ListItem>
+                <Divider />
+                <ListItem
+                  button
+                  onClick={() => {
+                    logoutSubmit(dispatch, history);
+                  }}
+                >
+                  <ListItemText primary="로그아웃"></ListItemText>
+                </ListItem>
+              </List>
+            </Paper>
+          </ClickAwayListener>
+        </Popper>
+      )}
     </>
   );
 };
