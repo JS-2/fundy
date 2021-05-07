@@ -25,10 +25,10 @@ public class AdminService {
                         (User.YesOrNo.N, PageRequest.of(page-1, per_page));
         for(FundingRegister auth : fundingRegisters) {
             User user = auth.getUser();
-            Map<String, Object> userInfo = new HashMap<>();
+            Map<String, Object> userInfo = new LinkedHashMap<>();
             userInfo.put("userId", user.getUserId());
             userInfo.put("userNickname", user.getUserNickname());
-            Map<String, Object> tmp = new HashMap<>();
+            Map<String, Object> tmp = new LinkedHashMap<>();
             tmp.put("user", userInfo);
             tmp.put("officialFanHistory", auth.getOfficialFanHistory());
             fanAuthList.add(tmp);
@@ -59,15 +59,15 @@ public class AdminService {
                 .findByUser_IsProfileAndFundingRegisterNameIsNotNull(User.YesOrNo.N, PageRequest.of(page-1, per_page));
         for(FundingRegister auth : fundingRegisters) {
             User user = auth.getUser();
-            Map<String, Object> userInfo = new HashMap<>();
+            Map<String, Object> userInfo = new LinkedHashMap<>();
             userInfo.put("userId", user.getUserId());
             userInfo.put("userNickname", user.getUserNickname());
-            Map<String, Object> profile = new HashMap<>();
+            Map<String, Object> profile = new LinkedHashMap<>();
             profile.put("profileName", auth.getFundingRegisterName());
             profile.put("profilePicture", auth.getFundingRegisterPicture());
             profile.put("profileAge", auth.getFundingRegisterAge());
             profile.put("profileHistory", auth.getFundingRegisterHistory());
-            Map<String, Object> tmp = new HashMap<>();
+            Map<String, Object> tmp = new LinkedHashMap<>();
             tmp.put("user", userInfo);
             tmp.put("profile", profile);
             profileAuthList.add(tmp);
