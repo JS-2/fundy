@@ -6,12 +6,14 @@ import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingRegister;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.funding.FundingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +36,21 @@ public class FundingService {
         FundingProject fundingProject = fundingDao.getOne(funding_id);
         fundingProject.setIsConfirm(isApprove ? FundingProject.FundingConfirm.Approve : FundingProject.FundingConfirm.Decline);
         fundingProject.setIsGoodFunding(isGoodProject == 'Y' ? FundingProject.YesOrNo.Y : FundingProject.YesOrNo.N);
+        fundingDao.save(fundingProject);
+    }
+
+    public void addFunding(FundingRequest req) {
+        FundingProject fundingProject = new FundingProject();
+        fundingProject.setFundingType(req.getFundingType());
+        fundingProject.setFundingName(req.getFundingName());
+        fundingProject.setIdolName(req.getIdolName());
+        fundingProject.setFundingGoalAmount(req.getGoalAmount());
+        fundingProject.setFundingStartTime(req.getStartTime());
+        fundingProject.setFundingEndTime(req.getEndTime());
+        fundingProject.setFundingThumbnail(req.getThumbnail());
+        fundingProject.setIsDonate(req.getIsDonate());
+        fundingProject.setIsConfirm(req.getIsConfirm());
+        fundingProject.setIsGoodFunding(req.getIsGoodFunding());
         fundingDao.save(fundingProject);
     }
 }
