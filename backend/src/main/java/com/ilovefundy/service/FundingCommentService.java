@@ -35,6 +35,12 @@ public class FundingCommentService {
         fundingCommentDao.save(fundingComment);
     }
 
+    public void updateFundingComment(int funding_comment_id, String content) {
+        FundingComment fundingComment = fundingCommentDao.findByFundingCommentId(funding_comment_id);
+        fundingComment.setFundingCommentContent(content);
+        fundingCommentDao.save(fundingComment);
+    }
+
     public void deleteFundingComment(int funding_comment_id) {
         fundingCommentDao.deleteById(funding_comment_id);
     }
