@@ -35,4 +35,8 @@ public class FundingCommentService {
         fundingCommentDao.save(fundingComment);
     }
 
+    public void deleteFundingComment(int funding_comment_id) {
+        fundingCommentDao.deleteById(funding_comment_id);
+    }
+
 }
