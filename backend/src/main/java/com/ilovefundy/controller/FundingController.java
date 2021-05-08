@@ -1,13 +1,22 @@
 package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingProject;
+import com.ilovefundy.model.funding.FundingRequest;
+import com.ilovefundy.model.funding.NoticeRequest;
 import com.ilovefundy.service.FundingService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"*"})
 @RequiredArgsConstructor
@@ -23,11 +32,15 @@ public class FundingController {
     }
 
     //펀딩 등록하기
-//    @PostMapping("/fundings")
-//    public ResponseEntity<Object> fundingRegist(@RequestBody @Valid FundingRegistRequest request, @ApiIgnore Errors errors){
-
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @ApiOperation(value = "펀딩 등록")
+    @ApiResponses(@ApiResponse(code = 201, message = "펀딩 등록 성공!"))
+    @PostMapping("/fundings")
+    public ResponseEntity<Object> fundingWrite(@RequestBody @Valid FundingRequest request){
+        Map<String, Object> result = new HashMap<>();
+        fundingService.addFunding(request);
+        result.put("message", "펀딩 등록 성공!");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     //펀딩 상세보기
     @GetMapping("/fundings/{funding_id}")
