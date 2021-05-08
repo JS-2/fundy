@@ -25,9 +25,13 @@ public class FundingController {
     private final FundingService fundingService;
 
     //전체 펀딩 리스트
+    @ApiOperation(value = "전체 펀딩 리스트")
+    @ApiResponses(@ApiResponse(code = 200, message = "펀딩 리스트 반환 성공!"))
     @GetMapping("/fundings")
     public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
+        Map<String, Object> result = new HashMap<>();
         List<FundingProject> fundingProjectList = fundingService.getFundingList(page-1, per_page);
+        result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
     }
 
@@ -43,6 +47,8 @@ public class FundingController {
     }
 
     //펀딩 상세보기
+    @ApiOperation(value = "펀딩 상세보기")
+    @ApiResponses(@ApiResponse(code = 200, message = "펀딩 상세보기 성공!"))
     @GetMapping("/fundings/{funding_id}")
     public ResponseEntity<Object> fundingInfo(@PathVariable int funding_id){
         FundingProject fundingProject = fundingService.getFunding(funding_id);
