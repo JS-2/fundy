@@ -1,0 +1,28 @@
+.foot{
+    background-color: #fc566f !important;
+    height: 400px;
+}
+
+
+#footAnchor{
+    color: white;
+    font-size: 50px;
+    text-decoration: none;
+    justify-content: center;
+    width: 100%;
+   
+}
+
+.teamInfo{
+    color: white;
+    font-size: 13px;
+}
+
+p{
+    margin-bottom: 5px;
+}
+
+.textInfo{
+    margin-left: 50px;
+    margin-top: 50px;
+}
