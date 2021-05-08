@@ -54,8 +54,18 @@ public class FundingNoticeController {
     }
 
     //펀딩 공지사항 수정
-//    @PatchMapping("/fundings/{funding_id}/notices/{funding_notice_id}")
-//    public ResponseEntity<Object> fundingNoticeEdit(@PathVariable int funding_notice_id, @RequestBody @Valid )
+    @ApiOperation(value = "펀딩 공지사항 수정")
+    @ApiResponses(@ApiResponse(code = 200, message = "펀딩 공지사항 수정 성공!"))
+    @PatchMapping("/fundings/notices/{funding_notice_id}")
+    public ResponseEntity<Object> fundingNoticeEdit(@PathVariable int funding_notice_id, @RequestBody @Valid Map<String, String> request){
+        Map<String, Object> result = new HashMap<>();
+        String title = request.get("title");
+        String content = request.get("content");
+        //공지사항 내용 수정
+        fundingNoticeService.editFundingNotice(funding_notice_id, title, content);
+        result.put("message", "공지사항이 수정되었습니다.");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 
     //펀딩 공지사항 삭제
