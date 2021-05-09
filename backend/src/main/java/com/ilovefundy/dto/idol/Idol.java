@@ -3,16 +3,14 @@ package com.ilovefundy.dto.idol;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilovefundy.dto.donation.Donation;
 import com.ilovefundy.dto.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idolId")
 @Getter
@@ -54,7 +52,11 @@ public class Idol {
 
     @BatchSize(size=10)
     @OneToMany(mappedBy = "idolGroup", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-    private List<Idol> members = new LinkedList<>();
+    private List<Idol> members = new ArrayList<>();
+
+    @BatchSize(size=10)
+    @OneToMany(mappedBy = "idol")
+    private List<Donation> donations = new ArrayList<>();
 
     public enum BloodType {
         A, B, O, AB;
