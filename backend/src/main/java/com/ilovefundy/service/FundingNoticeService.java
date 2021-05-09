@@ -4,6 +4,7 @@ import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingNoticeDao;
 import com.ilovefundy.dto.funding.FundingNotice;
 import com.ilovefundy.model.funding.NoticeRequest;
+import com.ilovefundy.model.funding.NoticeUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,11 +32,7 @@ public class FundingNoticeService {
 
     public FundingNotice getFundingNotice(int id) { return fundingNoticeDao.findByFundingNoticeId(id); }
 
-//    public void addFundingNotice(FundingNotice fundingNotice) {
-//        fundingNoticeDao.save(fundingNotice);
-//    }
     public void addFundingNotice(int funding_id, NoticeRequest req) {
-//        LocalDateTime now = LocalDateTime.now();
         fundingDao.findByFundingId(funding_id);
         FundingNotice fundingNotice = new FundingNotice();
         fundingNotice.setFundingNoticeContent(req.getContent());
@@ -46,9 +43,12 @@ public class FundingNoticeService {
         fundingNoticeDao.save(fundingNotice);
     }
 
-//    public void editFundingNotice(FundingNotice fundingNotice) {
-//        fundingNoticeDao.save(fundingNotice);
-//    }
+    public void editFundingNotice(int funding_notice_id, NoticeUpdateRequest req) {
+        FundingNotice fundingNotice = fundingNoticeDao.findByFundingNoticeId(funding_notice_id);
+        fundingNotice.setFundingNoticeName(req.getTitle());
+        fundingNotice.setFundingNoticeContent(req.getContent());
+        fundingNoticeDao.save(fundingNotice);
+    }
 
     public void deleteFundingNotice(int funding_notice_id) {
         fundingNoticeDao.deleteById(funding_notice_id);

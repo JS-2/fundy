@@ -2,6 +2,7 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingNotice;
 import com.ilovefundy.model.funding.NoticeRequest;
+import com.ilovefundy.model.funding.NoticeUpdateRequest;
 import com.ilovefundy.service.FundingNoticeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -54,8 +55,16 @@ public class FundingNoticeController {
     }
 
     //펀딩 공지사항 수정
-//    @PatchMapping("/fundings/{funding_id}/notices/{funding_notice_id}")
-//    public ResponseEntity<Object> fundingNoticeEdit(@PathVariable int funding_notice_id, @RequestBody @Valid )
+    @ApiOperation(value = "펀딩 공지사항 수정")
+    @ApiResponses(@ApiResponse(code = 200, message = "펀딩 공지사항 수정 성공!"))
+    @PatchMapping("/fundings/notices/{funding_notice_id}")
+    public ResponseEntity<Object> fundingNoticeEdit(@PathVariable int funding_notice_id, @RequestBody NoticeUpdateRequest request){
+        Map<String, Object> result = new HashMap<>();
+        //공지사항 내용 수정
+        fundingNoticeService.editFundingNotice(funding_notice_id, request);
+        result.put("message", "공지사항이 수정되었습니다.");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 
     //펀딩 공지사항 삭제

@@ -41,8 +41,8 @@ public class FundingProject {
     @OneToMany(mappedBy = "funding")
     private List<PayInfo> userPays = new ArrayList<>();
 
-    @Column(name = "donation_id")
-    private Integer donationId;
+    @Column(name = "donation_place_id")
+    private Integer donationPlaceId;
     @Column(name = "idol_id")
     private Integer idolId;
     @Column(name = "user_id")
@@ -67,7 +67,7 @@ public class FundingProject {
     private String fundingThumbnail;
     @Column(name = "is_Donate")
     @ColumnDefault("0")
-    private boolean isDonate; // 기부 옵션 선택 여부
+    private Boolean isDonate; // 기부 옵션 선택 여부
     @Column(name = "is_Confirm")
     @ColumnDefault("0")
     private FundingConfirm isConfirm; // 펀딩 승인 여부

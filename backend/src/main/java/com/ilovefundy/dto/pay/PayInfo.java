@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.dto.user.User;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -30,4 +32,12 @@ public class PayInfo {
 
     @Column(name = "pay_amount")
     private long payAmount; // 펀딩 결제 금액
+
+    @Column(name = "pay_datetime")
+    private LocalDateTime payDatetime;  // 펀딩 결제 시간
+
+    @PrePersist
+    public void payDatetime() {
+        this.payDatetime = LocalDateTime.now();
+    }
 }
