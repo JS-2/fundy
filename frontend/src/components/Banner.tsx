@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid, Hidden } from '@material-ui/core';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -43,6 +43,7 @@ const Banner = () => {
           style={{
             borderRadius: '10px',
             height: '400px',
+            overflow: 'hidden',
           }}
         >
           <img
@@ -62,6 +63,7 @@ const Banner = () => {
             borderRadius: '20px',
             height: '400px',
             padding: 0,
+            overflow: 'hidden',
           }}
         >
                    <img
@@ -81,12 +83,13 @@ const Banner = () => {
             borderRadius: '20px',
             padding: 0,
             height: '400px',
+            overflow: 'hidden',
           }}
         >
                    <img
             src={banner3}
             style={{
-              height: '100%',
+              width: '100%',
               alignContent: 'center'
             }}
           ></img>
@@ -101,12 +104,14 @@ const Banner = () => {
             borderRadius: '20px',
             height: '400px',
             padding: 0,
+            overflow: 'hidden',
           }}
         >
                    <img
             src={banner2}
             style={{
-              height: '100%',
+              width: '100%',
+              alignItems: 'center'
             }}
           ></img>
         </div></SwiperSlide>
