@@ -1,30 +1,31 @@
 package com.ilovefundy.dto.donation;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.ilovefundy.dto.idol.Idol;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Data
+
 @Entity
+@Getter
+@Setter
+@Table(name = "donation")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Donation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "donation_id")
     private Integer donationId;
 
-    @Column(name = "donation_name")
-    private String donationName;
-    @Column(name = "donation_address")
-    private String donationAddress;
-    @Column(name = "donation_total_amount")
-    private long donationTotalAmount; // 총기부금액
-    @Column(name = "account_number")
-    private String accountNumber; // 기부처 계좌번호
+    @ManyToOne
+    @JoinColumn(name = "idol_id")
+    private Idol idol;
+
+    @ManyToOne
+    @JoinColumn(name = "donation_place_id")
+    private DonationPlace donationPlace;
+
+    @Column(name = "idol_donation_amount")
+    private Long idolDonationAmount; //아이돌 기부금액
 }
