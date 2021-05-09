@@ -43,14 +43,13 @@ public class FundingService {
         FundingProject fundingProject = new FundingProject();
         fundingProject.setFundingType(req.getFundingType());
         fundingProject.setFundingName(req.getFundingName());
+        fundingProject.setFundingContent(req.getFundingContent());
         fundingProject.setIdolName(req.getIdolName());
         fundingProject.setFundingGoalAmount(req.getGoalAmount());
         fundingProject.setFundingStartTime(req.getStartTime());
         fundingProject.setFundingEndTime(req.getEndTime());
         fundingProject.setFundingThumbnail(req.getThumbnail());
         fundingProject.setIsDonate(req.getIsDonate());
-        fundingProject.setIsConfirm(req.getIsConfirm());
-        fundingProject.setIsGoodFunding(req.getIsGoodFunding());
         fundingDao.save(fundingProject);
     }
 }

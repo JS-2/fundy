@@ -2,6 +2,7 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingNotice;
 import com.ilovefundy.model.funding.NoticeRequest;
+import com.ilovefundy.model.funding.NoticeUpdateRequest;
 import com.ilovefundy.service.FundingNoticeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -57,12 +58,10 @@ public class FundingNoticeController {
     @ApiOperation(value = "펀딩 공지사항 수정")
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 공지사항 수정 성공!"))
     @PatchMapping("/fundings/notices/{funding_notice_id}")
-    public ResponseEntity<Object> fundingNoticeEdit(@PathVariable int funding_notice_id, @RequestBody @Valid Map<String, String> request){
+    public ResponseEntity<Object> fundingNoticeEdit(@PathVariable int funding_notice_id, @RequestBody NoticeUpdateRequest request){
         Map<String, Object> result = new HashMap<>();
-        String title = request.get("title");
-        String content = request.get("content");
         //공지사항 내용 수정
-        fundingNoticeService.editFundingNotice(funding_notice_id, title, content);
+        fundingNoticeService.editFundingNotice(funding_notice_id, request);
         result.put("message", "공지사항이 수정되었습니다.");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

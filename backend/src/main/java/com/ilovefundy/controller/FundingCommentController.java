@@ -47,11 +47,10 @@ public class FundingCommentController {
     @ApiOperation(value = "펀딩 댓글 수정")
     @ApiResponses({@ApiResponse(code = 200, message = "펀딩 댓글 수정 성공!")})
     @PatchMapping("/fundings/comments/{funding_comment_id}")
-    public ResponseEntity<Object> FundingCommentUpdate(@PathVariable int funding_comment_id, @RequestBody @Valid Map<String, String> req) {
+    public ResponseEntity<Object> FundingCommentUpdate(@PathVariable int funding_comment_id, @RequestBody CommentRequest request) {
         Map<String, Object> result = new HashMap<>();
-        String content = req.get("content");
         //댓글 수정
-        fundingCommentService.updateFundingComment(funding_comment_id, content);
+        fundingCommentService.updateFundingComment(funding_comment_id, request);
         result.put("message", "댓글이 수정되었습니다.");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

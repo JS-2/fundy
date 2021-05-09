@@ -1,6 +1,5 @@
 package com.ilovefundy.dto.funding;
 
-import com.ilovefundy.dto.user.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,14 +27,10 @@ public class FundingComment {
     @ManyToOne
     @JoinColumn(name = "funding_id")
     private FundingProject fundingId;
-
-    @OneToOne
-    @JoinColumn(name = "user_nickname")
-    private User userNickname;
-
-    @OneToOne
-    @JoinColumn(name = "user_picture")
-    private User userPicture;
+    @Column(name = "user_nickname")
+    private String userNickname;
+    @Column(name = "user_picture")
+    private String userPicture;
     @Column(name = "funding_comment_content")
     private String fundingCommentContent; // 댓글 내용
 
