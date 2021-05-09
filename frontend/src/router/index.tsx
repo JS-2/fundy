@@ -20,11 +20,14 @@ import { Create } from '@material-ui/icons';
 import MyFunding from '../pages/mypage/MyFunding';
 import IdolList from '../pages/idol/IdolList';
 import IdolDetail from '../pages/idol/IdolDetail';
+import FundPayment from '../pages/funding/FundPayment';
+import Footer from '../components/Footer';
 
 const index = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      
       <Box minWidth={1080} display="flex" justifyContent="center">
         <Box width={1080} px={4}>
           <Switch>
@@ -33,8 +36,9 @@ const index = () => {
             <Route path="/mypage" component={Mypage} exact />
             <Route path="/mypage/:funding_id" component={MyFunding} exact />
             <Route path="/funding" component={Funding} exact />
-            <Route path="/funding/detail/:num" component={FundingDetail} />
-            <Route path="/funding/create" component={FundCreate} />
+            <Route path="/funding/detail/:num" component={FundingDetail} exact/>
+            <Route path="/funding/detail/:num/payment" component={FundPayment} exact/>
+            <Route path="/funding/create" component={FundCreate} exact/>
             <Route path="/idol" component={IdolList} exact />
             <Route path="/idol/:idol_id" component={IdolDetail} exact />
             <Route path="/" component={Main} exact />
@@ -42,6 +46,7 @@ const index = () => {
           </Switch>
         </Box>
       </Box>
+      <Footer/>
     </BrowserRouter>
   );
 };
