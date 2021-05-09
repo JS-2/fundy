@@ -30,8 +30,4 @@ public class FundingRequest {
     String Thumbnail;
     @NotNull
     Boolean isDonate;
-    @NotNull
-    FundingProject.FundingConfirm isConfirm;
-    @NotNull
-    FundingProject.YesOrNo isGoodFunding;
 }

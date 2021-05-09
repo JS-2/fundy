@@ -4,6 +4,7 @@ import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingNoticeDao;
 import com.ilovefundy.dto.funding.FundingNotice;
 import com.ilovefundy.model.funding.NoticeRequest;
+import com.ilovefundy.model.funding.NoticeUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,10 +43,10 @@ public class FundingNoticeService {
         fundingNoticeDao.save(fundingNotice);
     }
 
-    public void editFundingNotice(int funding_notice_id, String title, String content) {
+    public void editFundingNotice(int funding_notice_id, NoticeUpdateRequest req) {
         FundingNotice fundingNotice = fundingNoticeDao.findByFundingNoticeId(funding_notice_id);
-        fundingNotice.setFundingNoticeName(title);
-        fundingNotice.setFundingNoticeContent(content);
+        fundingNotice.setFundingNoticeName(req.getTitle());
+        fundingNotice.setFundingNoticeContent(req.getContent());
         fundingNoticeDao.save(fundingNotice);
     }
 

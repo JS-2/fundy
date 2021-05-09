@@ -3,7 +3,6 @@ package com.ilovefundy.service;
 import com.ilovefundy.dao.FundingCommentDao;
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dto.funding.FundingComment;
-import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.model.funding.CommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,9 +34,9 @@ public class FundingCommentService {
         fundingCommentDao.save(fundingComment);
     }
 
-    public void updateFundingComment(int funding_comment_id, String content) {
+    public void updateFundingComment(int funding_comment_id, CommentRequest req) {
         FundingComment fundingComment = fundingCommentDao.findByFundingCommentId(funding_comment_id);
-        fundingComment.setFundingCommentContent(content);
+        fundingComment.setFundingCommentContent(req.getContent());
         fundingCommentDao.save(fundingComment);
     }
 
