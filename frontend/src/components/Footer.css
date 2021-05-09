@@ -1,8 +1,18 @@
 .foot{
-    background-color: #fc566f !important;
-    height: 400px;
+    background: linear-gradient(120deg, rgba(252,86,111,1) 50%, rgba(252,86,111,0.8) 100%);
+    height: 100%;
+    margin-top: 100px;
+    padding-bottom: 30px;
 }
 
+hr{
+    background-color:white;
+}
+
+span.teamInfoFoot{
+    color:white;
+    margin-right: 10px;
+}
 
 #footAnchor{
     color: white;
@@ -12,17 +22,49 @@
     width: 100%;
    
 }
+#footA{
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    justify-content: center;
+    width: 100%;
+    margin-left: 10px;
+   
+}
 
-.teamInfo{
+p.teamInfo{
     color: white;
     font-size: 13px;
+    margin-bottom: 5px !important;
 }
 
-p{
-    margin-bottom: 5px;
-}
 
 .textInfo{
-    margin-left: 50px;
-    margin-top: 50px;
+    margin-left: 120px;
+    margin-top: 40px;
+}
+
+a.footernbg{
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+.footernbg {
+    color: #fff;
+    text-decoration: none !important;
+    padding: 0px 10px;
+    padding-bottom: 0px;
+    position: relative;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+
+    
+  }
+  .footernbg:hover{
+    text-decoration: none !important;
+    color:white;
+  }
+
+
+.marginleft{
+    margin-left: 10px;
 }

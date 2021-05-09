@@ -1,5 +1,7 @@
-import React, { Component } from "react";
-class App extends Component {
+import React, { Component, useState, useCallback, useEffect } from 'react'
+import { GiftedChat } from 'react-native-gifted-chat'
+
+class FundingQna extends Component {
   state = {
     boards: [
       {
@@ -16,16 +18,24 @@ class App extends Component {
       },
     ],
   };
+
+
+  
   render() {
     const { boards } = this.state;
     const list = boards.map(function (row) {
       return +row.brdno + row.brdwriter;
     });
+
+    
+
+  
     return(
     <div>
       <h1>문의하기</h1> 
       {list}
-       
+
+   
         </div>
     
     
@@ -33,4 +43,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default FundingQna;

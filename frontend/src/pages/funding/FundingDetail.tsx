@@ -19,6 +19,7 @@ import Qna from "../../components/fundingDetail/FundingQna";
 import Board from "../../components/fundingDetail/FundingBoard"
 import FundingTerms from "../../components/fundingDetail/FundingTerms";
 import FundingInfo from "../../components/fundingDetail/FundingInfo";
+import "./FundingDetail.css"
 
 
 
@@ -96,15 +97,16 @@ interface TabPanelProps {
     return (
       <div  >
 
-        <div className="fundingHeader" style={{backgroundColor:"#dddddd"}}>
-            <h3 className="fundingTitle"style={{textAlign:"center"}}>이번달의 소녀 1집 데뷔 앨범 공식 펀딩</h3>
+        <div className="fundingHeader" style={{ }}>
+            <h3 className="fundingText">이번달의 소녀 1집 데뷔 앨범 공식 펀딩</h3>
+            <h5 className="fundingText">이번달의 소녀를 공식 후원하고 1집 데뷔앨범을 선착순으로 수령해보세요</h5>
 
             <div className="row">
-                <div className="col-md-8" style={{position:"relative", top:"130px"}} >
+                <div className="col-md-8" style={{position:"relative", top:"50px", left:"20px"}} >
                 <img width="100%" src="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"></img>
                 </div>
                 <div className="col-md-4" style={{position:"relative", top:"130px", paddingRight:"30px"}}>
-                <h5>이번달의 소녀를 공식 후원하고 1집 데뷔앨범을 선착순으로 수령해보세요</h5>
+                
                 
                 <table style={{width:"100%"}} >
               <tr>

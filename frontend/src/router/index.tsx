@@ -27,6 +27,7 @@ const index = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      
       <Box minWidth={1080} display="flex" justifyContent="center">
         <Box width={1080} px={4}>
           <Switch>

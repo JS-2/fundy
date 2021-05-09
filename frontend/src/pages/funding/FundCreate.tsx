@@ -20,11 +20,10 @@ import DaumPostcode from "react-daum-postcode";
 import "./FundCreate.css";
 import MuiPickersUtilsProvider from "../../components/fundComponent/MuiPickersUtilsProvider";
 import ImageUploader from "react-images-upload";
-import IconButton from '@material-ui/core/IconButton';
-import SearchButton from '@material-ui/icons/Search';
+import IconButton from "@material-ui/core/IconButton";
+import SearchButton from "@material-ui/icons/Search";
 import { useState } from "react";
-
-
+import ItemTable from "../../components/fundComponent/ItemTable";
 
 const FundCreate = () => {
   const [fundType, setFundType] = useState("");
@@ -38,21 +37,26 @@ const FundCreate = () => {
   const [fundDate, setFundDate] = useState<string>("");
   const [fundDetail, setFundDetail] = useState("");
 
-  const onSubmit = (e: { preventDefault: () => void; }) => {
+  const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     console.log({
-        fundType,idolId,fundName,fundShortInfo,pictures,location,locationDetail,fundMoney,fundDate,fundDetail
+      fundType,
+      idolId,
+      fundName,
+      fundShortInfo,
+      pictures,
+      location,
+      locationDetail,
+      fundMoney,
+      fundDate,
+      fundDetail,
     });
-};
+  };
 
-
-  
   const onlocation = (address: string) => {
     setLocation(address);
-  }
-
-
+  };
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
@@ -64,11 +68,7 @@ const FundCreate = () => {
     onClose: (value: string) => void;
   }
 
-
-
-
   function SimpleDialog(props: SimpleDialogProps) {
-  
     const { onClose, selectedValue, open } = props;
     // const { onClose, open } = props;
 
@@ -121,9 +121,6 @@ const FundCreate = () => {
     selectedValue = fullAddress;
     handleClose(fullAddress);
     onlocation(fullAddress);
-    
-
-
   };
 
   const handleClickOpen = () => {
@@ -132,43 +129,61 @@ const FundCreate = () => {
   const handleClose = (value: string) => {
     setOpen(false);
   };
-
   const [value, setValue] = React.useState("basic");
 
-  const onChangeFundType = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const onChangeFundType = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setFundType(e.target.value);
   };
 
-  const onChangeFundName =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const onChangeFundName = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setFundName(e.target.value);
-  }
-  const onChangeIdolId =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeIdolId = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setIdolId(e.target.value);
-  }
-  const onChangeFundShortInfo =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeFundShortInfo = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setFundShortInfo(e.target.value);
-  }
-
-  const onChangeImgUrl =(e: { target: { value: any; }; }) => {
-   onDrop(e.target.value);
-  }
-
-  const onChangeLocation =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeImgUrl = (e: { target: { value: any } }) => {
+    onDrop(e.target.value);
+  };
+  const onChangeLocation = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setLocation(e.target.value);
-  }
-
-  const onChangeLocationDetail =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeLocationDetail = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setLocationDetail(e.target.value);
-  }
-  const onChangeFundMoney =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeFundMoney = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setFundMoney(e.target.value);
-  }
-  const onChangeFundDate =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeFundDate = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setFundDate(e.target.value);
-  }
-  const onChangeFundDetail =(e: { target: { value: React.SetStateAction<string>; }; }) => {
+  };
+  const onChangeFundDetail = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setFundDetail(e.target.value);
-  }
+  };
+
+
+
+  
 
 
 
@@ -178,15 +193,14 @@ const FundCreate = () => {
       <h3>펀딩 작성하기</h3>
       <br></br>
       <hr></hr>
-          <div className="row">
-      <FormControl component="fieldset">
-        <RadioGroup
-          aria-label="type"
-          name="type"
-          value={fundType}
-          onChange={onChangeFundType}
-        >
-
+      <div className="row">
+        <FormControl component="fieldset">
+          <RadioGroup
+            aria-label="type"
+            name="type"
+            value={fundType}
+            onChange={onChangeFundType}
+          >
             <FormLabel component="legend">펀딩 종류</FormLabel>
             <LightTooltip title="아이돌의 이름으로 기부되는 펀딩입니다.">
               <FormControlLabel
@@ -202,33 +216,31 @@ const FundCreate = () => {
                 label="기본 펀딩"
               />
             </LightTooltip>
-         
-        </RadioGroup>
-      </FormControl>
+          </RadioGroup>
+        </FormControl>
       </div>
       <div className="row">
-      <TextField
-        className="col-md-12 input"
-        style={{ width: "100%" }}
-        label="펀딩 제목"
-        placeholder="싸피싸피의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트"
-        variant="outlined"
-        value={fundName}
-        onChange={onChangeFundName}
-      />
+        <TextField
+          className="col-md-12 input"
+          style={{ width: "100%" }}
+          label="펀딩 제목"
+          placeholder="싸피싸피의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트"
+          variant="outlined"
+          value={fundName}
+          onChange={onChangeFundName}
+        />
       </div>
       <div className="row">
-
-      <TextField
-        className="col-md-12 input"
-        style={{ width: "100%" }}
-        label="아이돌 리스트"
-        placeholder="싸피싸피"
-        variant="outlined"
-        onChange={onChangeIdolId}
-      />
+        <TextField
+          className="col-md-12 input"
+          style={{ width: "100%" }}
+          label="아이돌 리스트"
+          placeholder="싸피싸피"
+          variant="outlined"
+          onChange={onChangeIdolId}
+        />
       </div>
-         <div className="row">
+      <div className="row">
         <TextField
           className="col-md-12 input"
           label="펀딩 한줄 소개"
@@ -239,7 +251,7 @@ const FundCreate = () => {
       </div>
 
       <div>
-      <h5>펀딩 이미지 업로드</h5>
+        <h5>펀딩 이미지 업로드</h5>
         <ImageUploader
           withIcon={true}
           buttonText="이미지를 선택하세요"
@@ -251,27 +263,28 @@ const FundCreate = () => {
         />
       </div>
 
-   
-
       <div className="row">
         <TextField
           className="col-md-6 input"
- 
           label="펀딩 목표 금액"
           type="number"
           InputLabelProps={{
             shrink: true,
           }}
           placeholder="목표금액(원)"
-          variant="outlined"  
+          variant="outlined"
           value={fundMoney}
           onChange={onChangeFundMoney}
         />
-                <div className="col-md-6 input">
-        <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
-     </div>
-      </div>
 
+        <div className="col-md-6 input">
+          <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
+        </div>
+      </div>
+ 
+      <div className="row">
+
+    </div>
       <div className="row">
         <TextField
           className="col-md-11 input"
@@ -282,8 +295,8 @@ const FundCreate = () => {
         />
 
         <IconButton aria-label="search" onClick={handleClickOpen}>
-  <SearchButton >검색</SearchButton>
-</IconButton>
+          <SearchButton>검색</SearchButton>
+        </IconButton>
         <SimpleDialog
           selectedValue={selectedValue}
           open={open}
@@ -291,15 +304,15 @@ const FundCreate = () => {
         />
       </div>
       <div className="row">
-      <TextField
-        className="col-md-11 input"
-        style={{ width: "100%" }}
-        label="상세 주소"
-        placeholder=""
-        variant="outlined"
-        value={locationDetail}
-        onChange={onChangeLocationDetail}
-      />
+        <TextField
+          className="col-md-11 input"
+          style={{ width: "100%" }}
+          label="상세 주소"
+          placeholder=""
+          variant="outlined"
+          value={locationDetail}
+          onChange={onChangeLocationDetail}
+        />
       </div>
 
       <div className="row">
@@ -312,26 +325,24 @@ const FundCreate = () => {
             initialEditType="wysiwyg"
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
-
           />
         </div>
       </div>
-      <Box display="flex" justifyContent="flex-end" m={1} p={1} bgcolor="background.paper">
-      <div className="buttonSubmit">
-      <Button variant="contained" color="primary" onClick={onSubmit}>
-        신청
-      </Button>
-      </div>
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        m={1}
+        p={1}
+        bgcolor="background.paper"
+      >
+        <div className="buttonSubmit">
+          <Button variant="contained" color="primary" onClick={onSubmit}>
+            신청
+          </Button>
+        </div>
       </Box>
-   
-
     </div>
   );
 };
 
 export default FundCreate;
-function setState(arg0: (prevState: any, props: any) => { location: string }) {
-  throw new Error("Function not implemented.");
-}
-
-
