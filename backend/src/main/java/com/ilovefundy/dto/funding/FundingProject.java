@@ -41,8 +41,8 @@ public class FundingProject {
     @OneToMany(mappedBy = "funding")
     private List<PayInfo> userPays = new ArrayList<>();
 
-    @Column(name = "donation_id")
-    private Integer donationId;
+    @Column(name = "donation_place_id")
+    private Integer donationPlaceId;
     @Column(name = "idol_id")
     private Integer idolId;
     @Column(name = "user_id")
