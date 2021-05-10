@@ -39,7 +39,7 @@ export interface Idol {
     idolAgency: string;
     idolBirthday: string | null;
     idolBlood: string | null;
-    idolGroup_id: number;
+    idolGroupId: number;
     idolHeight: number | null;
     idolName: string;
     idolPicture: string;
