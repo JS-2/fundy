@@ -22,7 +22,7 @@ public class IdolController {
     private final IdolService idolService;
 
     @ApiOperation(value = "아이돌 리스트",
-            notes = "전체 아이돌 리스트를 반환한다. + (페이징처리, 이름으로 검색)")
+            notes = "전체 아이돌 리스트를 반환한다. + (페이징처리, 이름 or 그룹명으로 검색)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "아이돌 리스트. OK !!")
     })
@@ -31,21 +31,20 @@ public class IdolController {
                                            @RequestParam(required = false) String keyword) {
 
         List<Object> idolList = idolService.getIdolList(page-1, per_page, keyword);
-
-
         return new ResponseEntity<>(idolList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "아이돌 상세보기",
-            notes = "아이돌 상세보기")
+            notes = "아이돌 상세보기\n" +
+                    "Response Example : \n{ \"idolInfo\" : {아이돌 정보}, \n" +
+                                         "\"idolFundingProject : [해당 아이돌 펀딩 프로젝트 리스트]}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "아이돌 상세보기. OK !!")
     })
     @GetMapping("/idols/{idol_id}")
     public ResponseEntity<Object> idolDetail(@PathVariable int idol_id) {
-        Idol idol = idolService.getIdol(idol_id);
-
-        return new ResponseEntity<>(idol, HttpStatus.OK);
+        Map<String, Object> result = idolService.getIdol(idol_id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value = "아이돌 추가",
