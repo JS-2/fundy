@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Grid, Paper, Box } from '@material-ui/core';
-import './Fundcard.css';
+import './FundCard.css';
 import { useHistory, withRouter } from 'react-router-dom';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
