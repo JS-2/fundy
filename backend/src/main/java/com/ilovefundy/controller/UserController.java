@@ -2,10 +2,10 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
-import com.ilovefundy.model.user.LoginReq;
+import com.ilovefundy.model.user.LoginRequest;
 import com.ilovefundy.model.user.SignupRequest;
 
-import com.ilovefundy.model.user.UserInfo;
+import com.ilovefundy.model.user.UserResponse;
 import com.ilovefundy.service.UserService;
 import com.ilovefundy.utils.EncryptionUtils;
 import io.swagger.annotations.*;
@@ -27,12 +27,12 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "이메일과 패스워드를 입력으로 받아 로그인")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "로그인 성공. OK !!", response = UserInfo.class),
+            @ApiResponse(code = 200, message = "로그인 성공. OK !!", response = UserResponse.class),
             @ApiResponse(code = 401, message = "유저정보가 없음. UNAUTHORIZED !!")
     })
     @PostMapping("/user/login")
     public ResponseEntity<Object> login(@ApiParam(value = "이메일 패스워드", required = true)
-                                            @RequestBody LoginReq user) {
+                                            @RequestBody LoginRequest user) {
         Map<String, Object> result = new HashMap<>();
         String encPassword = EncryptionUtils.encryptSHA256(user.getUserPassword());
         Optional<User> userOpt = userService.checkEmailAndPassword(user.getUserEmail(), encPassword);
@@ -40,7 +40,7 @@ public class UserController {
         // 유저 정보가 존재
         if(userOpt.isPresent()) {
             // UserEmail 을 PK로 하는 JWT 를 생성
-            UserInfo userInfo = userService.getUserInfo(userOpt.get().getUserId());
+            UserResponse userInfo = userService.getUserInfo(userOpt.get().getUserId());
             result.put("token", userService.getToken(userOpt.get()));
             result.put("user", userInfo);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -87,11 +87,11 @@ public class UserController {
 
     @ApiOperation(value = "사용자정보", notes = "사용자 정보 반환")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "사용자 정보. OK !!", response = UserInfo.class),
+            @ApiResponse(code = 200, message = "사용자 정보. OK !!", response = UserResponse.class),
     })
     @GetMapping("/user/{user_id}")
     public ResponseEntity<Object> userInfo(@PathVariable int user_id) {
-        UserInfo user = userService.getUserInfo(user_id);
+        UserResponse user = userService.getUserInfo(user_id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

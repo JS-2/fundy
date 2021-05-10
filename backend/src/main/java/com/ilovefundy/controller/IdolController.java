@@ -1,7 +1,7 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.idol.Idol;
-import com.ilovefundy.model.idol.IdolReq;
+import com.ilovefundy.model.idol.IdolRequest;
+import com.ilovefundy.model.idol.IdolResponse;
 import com.ilovefundy.service.IdolService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -30,7 +30,7 @@ public class IdolController {
     public ResponseEntity<Object> idolList(@RequestParam(defaultValue = "1") int page, int per_page,
                                            @RequestParam(required = false) String keyword) {
 
-        List<Object> idolList = idolService.getIdolList(page-1, per_page, keyword);
+        List<IdolResponse> idolList = idolService.getIdolList(page-1, per_page, keyword);
         return new ResponseEntity<>(idolList, HttpStatus.OK);
     }
 
@@ -53,7 +53,7 @@ public class IdolController {
             @ApiResponse(code = 201, message = "아이돌 추가. CREATED !!")
     })
     @PostMapping("/idols")
-    public ResponseEntity<Object> addIdol(@RequestBody IdolReq idolReq) {
+    public ResponseEntity<Object> addIdol(@RequestBody IdolRequest idolReq) {
         Map<String, String> result = new HashMap<>();
         idolService.addIdol(idolReq);
         result.put("message", "아이돌 추가");
