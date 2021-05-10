@@ -74,7 +74,7 @@ public class IdolService {
             FundingListResponse fundingResponse = new FundingListResponse();
             fundingResponse.setFundingId(fundingProject.getFundingId());
             fundingResponse.setFundingName(fundingProject.getFundingName());
-//            fundingResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
+            fundingResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
             fundingResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
             int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
             fundingResponse.setFundingRemainDay(remainDay);
