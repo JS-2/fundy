@@ -12,7 +12,7 @@ import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.user.FanAuth;
 import com.ilovefundy.model.user.ProfileAuth;
 import com.ilovefundy.model.user.SignupRequest;
-import com.ilovefundy.model.user.UserInfo;
+import com.ilovefundy.model.user.UserResponse;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -78,9 +78,9 @@ public class UserService {
         userDao.save(user);
     }
 
-    public UserInfo getUserInfo(int user_id) {
+    public UserResponse getUserInfo(int user_id) {
         User user = userDao.findByUserId(user_id);
-        UserInfo newUser = new UserInfo();
+        UserResponse newUser = new UserResponse();
         newUser.setUserId(user.getUserId());
         newUser.setUserPicture(user.getUserPicture());
         newUser.setUserNickname(user.getUserNickname());
