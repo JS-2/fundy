@@ -152,11 +152,11 @@ public class UserService {
         List<Object> result = new LinkedList<>();
         for(FundingProject funding : myFunding) {
             Map<String, Object> tmpFunding = new HashMap<>();
-            tmpFunding.put("fundingId", funding.getFundingId());
-            tmpFunding.put("fundingName", funding.getFundingName());
-            tmpFunding.put("fudningThumbnail", funding.getFundingThumbnail());
+            tmpFunding.put("fundingProjectId", funding.getFundingId());
+            tmpFunding.put("fundingProjectName", funding.getFundingName());
+            tmpFunding.put("fundingProjectThumbnail", funding.getFundingThumbnail());
             int remainDay =  funding.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
-            tmpFunding.put("fundingRemainDay", remainDay);
+            tmpFunding.put("fundingProjectRemainDay", remainDay);
             int amount = 0;
             List<PayInfo> payInfo = funding.getUserPays();
             for(PayInfo pay : payInfo) {
@@ -166,7 +166,7 @@ public class UserService {
             if(funding.getFundingGoalAmount() != 0) {
                 achievementRate = 100 * amount / funding.getFundingGoalAmount();
             }
-            tmpFunding.put("fundingAchievementRate", achievementRate);
+            tmpFunding.put("fundingProjectAchievementRate", achievementRate);
             result.add(tmpFunding);
         }
         return result;
