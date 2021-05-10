@@ -9,7 +9,7 @@ const IdolMembers = () => {
         싸피스타 멤버
       </Box>
       <Grid container spacing={2}>
-        <Grid item container xs={3} justify="center">
+        {/* <Grid item container xs={3} justify="center">
           <IdolCard />
         </Grid>
         <Grid item container xs={3} justify="center">
@@ -20,7 +20,7 @@ const IdolMembers = () => {
         </Grid>
         <Grid item container xs={3} justify="center">
           <IdolCard />
-        </Grid>
+        </Grid> */}
       </Grid>
     </div>
   );
