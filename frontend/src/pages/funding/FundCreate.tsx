@@ -26,30 +26,30 @@ import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
 
 const FundCreate = () => {
-  const [fundType, setFundType] = useState("");
+  const [fundingType, setFundingType] = useState("");
   const [idolId, setIdolId] = useState("");
   const [fundName, setFundName] = useState<string>("");
   const [fundShortInfo, setFundShortInfo] = useState<string>("");
-  const [pictures, setPictures] = useState([]);
+  const [thumbnails, setThumbnails] = useState([]);
   const [location, setLocation] = useState<string>("");
   const [locationDetail, setLocationDetail] = useState<string>("");
-  const [fundMoney, setFundMoney] = useState("");
-  const [fundDate, setFundDate] = useState<string>("");
+  const [goalAmount, setGoalAmount] = useState("");
+  const [endTime, setEndTime] = useState<string>("");
   const [fundDetail, setFundDetail] = useState("");
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     console.log({
-      fundType,
+      fundingType,
       idolId,
       fundName,
       fundShortInfo,
-      pictures,
+      thumbnails,
       location,
       locationDetail,
-      fundMoney,
-      fundDate,
+      goalAmount,
+      endTime,
       fundDetail,
     });
   };
@@ -88,8 +88,8 @@ const FundCreate = () => {
     );
   }
 
-  const onDrop = (picture: any) => {
-    setPictures(pictures.concat(picture));
+  const onDrop = (thumbnail: any) => {
+    setThumbnails(thumbnails.concat(thumbnail));
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -131,10 +131,10 @@ const FundCreate = () => {
   };
   const [value, setValue] = React.useState("basic");
 
-  const onChangeFundType = (e: {
+  const onChangeFundingType = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setFundType(e.target.value);
+    setFundingType(e.target.value);
   };
 
   const onChangeFundName = (e: {
@@ -165,15 +165,15 @@ const FundCreate = () => {
   }) => {
     setLocationDetail(e.target.value);
   };
-  const onChangeFundMoney = (e: {
+  const onChangeGoalAmount = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setFundMoney(e.target.value);
+    setGoalAmount(e.target.value);
   };
-  const onChangeFundDate = (e: {
+  const onChangeEndTime = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setFundDate(e.target.value);
+    setEndTime(e.target.value);
   };
   const onChangeFundDetail = (e: {
     target: { value: React.SetStateAction<string> };
@@ -198,8 +198,8 @@ const FundCreate = () => {
           <RadioGroup
             aria-label="type"
             name="type"
-            value={fundType}
-            onChange={onChangeFundType}
+            value={fundingType}
+            onChange={onChangeFundingType}
           >
             <FormLabel component="legend">펀딩 종류</FormLabel>
             <LightTooltip title="아이돌의 이름으로 기부되는 펀딩입니다.">
@@ -273,8 +273,8 @@ const FundCreate = () => {
           }}
           placeholder="목표금액(원)"
           variant="outlined"
-          value={fundMoney}
-          onChange={onChangeFundMoney}
+          value={goalAmount}
+          onChange={onChangeGoalAmount}
         />
 
         <div className="col-md-6 input">
