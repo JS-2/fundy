@@ -4,7 +4,7 @@ import IdolFunding from '../../components/idol/idolDetail/IdolFunding';
 import IdolInfo from '../../components/idol/idolDetail/IdolInfo';
 import IdolMembers from '../../components/idol/idolDetail/IdolMembers';
 import FundingMap from '../../components/idol/idolDetail/FundingMap';
-import { Idol } from '../../common/types';
+import { Idol, IdolDetailInfo } from '../../common/types';
 import { getIdolInfo } from '../../api/idol';
 import { useParams } from 'react-router';
 
@@ -13,27 +13,27 @@ interface Params {
 }
 
 const IdolDetail = () => {
-  const [idolInfo, setIdolInfo] = useState<Idol>();
+  const [detailInfo, setDetailInfo] = useState<IdolDetailInfo>();
   const params: Params = useParams();
 
   useEffect(() => {
     console.log('idolDetailPage');
     getIdolInfo(Number(params.idol_id)).then((resp) => {
-      setIdolInfo(resp.data);
+      setDetailInfo(resp.data);
     });
   }, [params]);
 
   return (
     <div>
-      <IdolInfo idolInfo={idolInfo} />
-      {idolInfo?.idolId == idolInfo?.idolGroupId ? (
-        <IdolMembers idolInfo={idolInfo} />
+      <IdolInfo idolInfo={detailInfo?.idolInfo} />
+      {detailInfo?.idolInfo?.idolId == detailInfo?.idolInfo?.idolGroupId ? (
+        <IdolMembers idolInfo={detailInfo?.idolInfo} />
       ) : (
         <></>
       )}
-      <IdolFunding idolInfo={idolInfo} />
+      <IdolFunding idolInfo={detailInfo?.idolInfo} />
       <Chart />
-      <FundingMap idolInfo={idolInfo} />
+      <FundingMap idolInfo={detailInfo?.idolInfo} />
     </div>
   );
 };

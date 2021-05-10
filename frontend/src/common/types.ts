@@ -46,6 +46,10 @@ export interface Idol {
     idolWeight: number | null;
 }
 
+export interface IdolDetailInfo {
+  idolInfo: Idol;
+}
+
 export interface FundForm {
   fund_Type: number;
   idolNumber: number;
