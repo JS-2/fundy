@@ -1,0 +1,16 @@
+.nbg {
+    text-decoration: none !important;
+    color: #212529 !important;
+  }
+  
+  .nav {
+    top: 0;
+    left: 0;
+    right: 0;
+    line-height: 40px;
+  }
+  
+  #logoAnchor {
+    color: #f74a64 !important;
+  }
+  

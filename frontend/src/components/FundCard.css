@@ -1,0 +1,16 @@
+.nav {
+  top: 0;
+  left: 0;
+  right: 0;
+  line-height: 110px;
+}
+
+.user {
+  color: grey;
+  font-size: 0.9em;
+}
+
+
+.WithStyles\(ForwardRef\(LinearProgress\)\)-bar-29{
+ background-color:#f74a64 !important;
+}
