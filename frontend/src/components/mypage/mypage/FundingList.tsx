@@ -1,6 +1,6 @@
 import { Box, Button, Grid } from '@material-ui/core';
 import React from 'react';
-import FundCard from '../../Fundcard';
+import FundCard from '../../FundCard';
 
 const MyFunding = () => {
   return (

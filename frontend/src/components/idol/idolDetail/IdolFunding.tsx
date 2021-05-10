@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/swiper.scss';
 import { Idol } from '../../../common/types';
-import FundCard from '../../Fundcard';
+import FundCard from '../../FundCard';
 
 interface Props {
   idolInfo: Idol | undefined;

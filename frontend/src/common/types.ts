@@ -47,7 +47,7 @@ export interface Idol {
 }
 
 export interface FundForm {
-  fundType: number;
+  fund_Type: number;
   idolNumber: number;
   fundName: string;
   fundShortInfo: string;
