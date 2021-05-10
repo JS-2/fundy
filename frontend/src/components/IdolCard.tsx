@@ -7,13 +7,28 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { Idol } from '../common/types';
 
-const IdolCard = () => {
+interface Props {
+  idol: Idol;
+}
+const IdolCard = (props: Props) => {
   const [isOver, setIsOver] = useState(false);
+  const history = useHistory();
+  const toDetail = () => {
+    history.push('/idol/' + props.idol.idolId);
+  };
 
   return (
     <Card
-      style={{ width: '225px', height: '350px', position: 'relative' }}
+      onClick={toDetail}
+      style={{
+        width: '225px',
+        height: '350px',
+        position: 'relative',
+        cursor: 'pointer',
+      }}
       onMouseOver={() => {
         setIsOver(!isOver);
       }}
@@ -23,8 +38,8 @@ const IdolCard = () => {
     >
       <CardMedia
         component="img"
-        alt="펀딩 카드 이미지"
-        image="https://ibighit.com/bts/images/bts/profile/member-jhope.jpg"
+        alt="아이돌 카드 이미지"
+        image={props.idol.idolPicture}
         title="Card Image"
         height="375px"
         style={
@@ -50,7 +65,7 @@ const IdolCard = () => {
               : { transition: 'all 0.2s ease-out' }
           }
         >
-          이름
+          {props.idol.idolName}
         </div>
       </div>
     </Card>

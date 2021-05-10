@@ -33,3 +33,16 @@ export interface IUserState {
     user: User;
     token: string;
 }
+
+export interface Idol {
+    idolId: number;
+    idolAge: number | null;
+    idolAgency: string;
+    idolBirthday: string | null;
+    idolBlood: string | null;
+    idolGroup_id: number;
+    idolHeight: number | null;
+    idolName: string;
+    idolPicture: string;
+    idolWeight: number | null;
+}
