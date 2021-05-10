@@ -1,11 +1,20 @@
-.nav {
-  top: 0;
-  left: 0;
-  right: 0;
-  line-height: 95px;
-}
+
 
 .user {
   color: grey;
   font-size: 0.9em;
+}
+
+.swiper-button-next{
+  color: red !important;
+  font-size: 22px !important;
+ 
+  padding: 30px !important;
+
+}
+
+.swiper-button-prev{
+  color: red !important;
+  font-size: none !important;
+  padding: 30px !important;
 }

@@ -131,7 +131,7 @@ public class UserService {
         List<PayInfo> userPayInfo = user.getFundingPays();
         List<Object> result = new LinkedList<>();
         for(PayInfo pay : userPayInfo) {
-            Map<String, Object> tmpFunding = new HashMap<>();
+            Map<String, Object> tmpFunding = new LinkedHashMap<>();
             tmpFunding.put("fundingId", pay.getFunding().getFundingId());
             tmpFunding.put("fundingName", pay.getFunding().getFundingName());
             tmpFunding.put("fundingType", pay.getFunding().getFundingType());
@@ -139,6 +139,7 @@ public class UserService {
             tmpFunding.put("fundingGoalAmount", pay.getFunding().getFundingGoalAmount());
             tmpFunding.put("fundingEndTime", pay.getFunding().getFundingEndTime());
             tmpFunding.put("fundingStatement", LocalDateTime.now().isBefore(pay.getFunding().getFundingEndTime()) ? "진행중" : "종료");
+            tmpFunding.put("payDateTime", pay.getPayDatetime());
             tmpFunding.put("payAmount", pay.getPayAmount());
             result.add(tmpFunding);
         }

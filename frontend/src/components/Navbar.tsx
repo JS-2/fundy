@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import { logoutSubmit } from '../api/user';
 import { User } from '../common/types';
 import { rootState } from '../reducers';
-import './Navbar.css';
+import './NewNavBar.css';
 
 const Navbar = () => {
   const user: User = useSelector((state: rootState) => state.userReducer.user);
@@ -57,14 +57,14 @@ const Navbar = () => {
                 fundy
               </a>
             </Box>
-            <Box mx={3} className="nbg">
-              <a href="/funding">펀딩</a>
+            <Box mx={3}>
+              <a className="nbg" href="/funding">펀딩</a>
             </Box>
-            <Box mx={3} className="nbg">
-              <a href="/idol">아이돌</a>
+            <Box mx={3}>
+              <a className="nbg" href="/idol">아이돌</a>
             </Box>
-            <Box mx={3} className="nbg">
-              <a href="/store">스토어</a>
+            <Box mx={3}>
+              <a className="nbg" href="/store">스토어</a>
             </Box>
           </Box>
           <Box display="flex">

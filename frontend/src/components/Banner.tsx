@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Grid, Hidden } from '@material-ui/core';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -14,6 +14,10 @@ import './Banner.css';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import banner1 from '../assets/img/Banner.png';
+import banner2 from '../assets/img/cBanner.jpg';
+import banner3 from '../assets/img/nBanner.jpg';
+import { CenterFocusStrong } from '@material-ui/icons';
+
 
 const swiperParams: SwiperOptions = {
   slidesPerView: 3,
@@ -38,7 +42,8 @@ const Banner = () => {
           id="banner"
           style={{
             borderRadius: '10px',
-            height: '300px',
+            height: '400px',
+            overflow: 'hidden',
           }}
         >
           <img
@@ -50,21 +55,66 @@ const Banner = () => {
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        {' '}
         <div
           className="col-md-12"
           id="banner"
           style={{
             backgroundColor: '#44848c',
             borderRadius: '20px',
-            height: '300px',
+            height: '400px',
+            padding: 0,
+            overflow: 'hidden',
           }}
         >
-          <h1>배너영역2</h1>
+                   <img
+            src={banner2}
+            style={{
+              width: '100%',
+            }}
+          ></img>
         </div>
       </SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
+      <SwiperSlide>
+      <div
+          className="col-md-12"
+          id="banner"
+          style={{
+           // backgroundColor: '#44848c',
+            borderRadius: '20px',
+            padding: 0,
+            height: '400px',
+            overflow: 'hidden',
+          }}
+        >
+                   <img
+            src={banner3}
+            style={{
+              width: '100%',
+              alignContent: 'center'
+            }}
+          ></img>
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>     
+        <div
+          className="col-md-12"
+          id="banner"
+          style={{
+            //backgroundColor: '#44848c',
+            borderRadius: '20px',
+            height: '400px',
+            padding: 0,
+            overflow: 'hidden',
+          }}
+        >
+                   <img
+            src={banner2}
+            style={{
+              width: '100%',
+              alignItems: 'center'
+            }}
+          ></img>
+        </div></SwiperSlide>
     </Swiper>
   );
 };

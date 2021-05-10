@@ -1,0 +1,34 @@
+.boardComp {
+  margin-bottom: 20px;
+}
+
+.fundingHeader {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.fundingHeader::after {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: url("https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png") !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  -webkit-filter: brightness(70%) blur(4px);
+  opacity: 0.5;
+}
+
+
+.fundingText{
+    text-align: center;
+    padding-top:25px;
+    color: black;
+    text-shadow: 1px 1px 3px white;
+}
+
+
