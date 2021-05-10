@@ -22,7 +22,6 @@ public class DonationService {
     public List<Object> getIdolDonationList(int idol_id) {
         Idol idol = idolDao.findByIdolId(idol_id);
         List<Donation> idolDonationList = idol.getDonations();
-
         List<Object> result = new ArrayList<>();
         for(Donation donation : idolDonationList) {
             Map<String, Object> tmpDonation = new LinkedHashMap<>();
@@ -51,6 +50,7 @@ public class DonationService {
             List<Object> payList = new ArrayList<>();
             for(PayInfo pay : projectPayInfo) {
                 Map<String, Object> tmpPay = new LinkedHashMap<>();
+                tmpPay.put("userId", pay.getUser().getUserId());
                 tmpPay.put("userNickname", pay.getUser().getUserNickname());
                 tmpPay.put("payAmount", pay.getPayAmount());
                 tmpPay.put("payDatetime", pay.getPayDatetime());

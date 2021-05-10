@@ -17,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 public class DonationController {
-    DonationService donationService;
+    private final DonationService donationService;
 
     @GetMapping("/donation/{idol_id}")
     public ResponseEntity<Object> idolDonationList(@PathVariable int idol_id) {
@@ -26,8 +26,8 @@ public class DonationController {
     }
 
     @GetMapping("/donation/{idol_id}/{donation_id}")
-    public ResponseEntity<Object> idolDonationDetailList(@PathVariable int idol_id, @PathVariable int donation_id) {
-        List<Object> result = donationService.getIdolDonationDetailList(idol_id, donation_id);
+    public ResponseEntity<Object> idolDonationDetailList(@PathVariable int idol_id, @PathVariable int donation_place_id) {
+        List<Object> result = donationService.getIdolDonationDetailList(idol_id, donation_place_id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
