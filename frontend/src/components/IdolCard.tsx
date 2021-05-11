@@ -13,6 +13,7 @@ import { Idol } from '../common/types';
 interface Props {
   idol: Idol;
 }
+
 const IdolCard = (props: Props) => {
   const [isOver, setIsOver] = useState(false);
   const history = useHistory();
