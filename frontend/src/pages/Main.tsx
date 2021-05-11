@@ -55,15 +55,15 @@ class Main extends Component {
 
             <Grid container spacing={3}>
               <Grid item xs={4}>
-                <FundCard></FundCard>
+                <FundCard funding={null}></FundCard>
               </Grid>
 
               <Grid item xs={4}>
-                <FundCard></FundCard>
+                <FundCard funding={null}></FundCard>
               </Grid>
 
               <Grid item xs={4}>
-                <FundCard></FundCard>
+                <FundCard funding={null}></FundCard>
               </Grid>
             </Grid>
           </div>

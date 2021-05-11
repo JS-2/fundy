@@ -46,8 +46,14 @@ export interface Idol {
     idolWeight: number | null;
 }
 
+export interface IdolGroup {
+  idol: Idol;
+  members: Idol[];
+}
+
 export interface IdolDetailInfo {
-  idolInfo: Idol;
+  idolInfo: IdolGroup;
+  idolFundingProject: Funding[];
 }
 
 export interface FundForm {
@@ -60,4 +66,13 @@ export interface FundForm {
   fundDate: string;
   location: string;
   fundDetail: string;
+}
+
+export interface Funding {
+  fundingId: number,
+  fundingName: string,
+  fundingSubtitle: string | null,
+  fundingThumbnail: string
+  fundingRemainDay: number,
+  fundingAchievementRate: number
 }

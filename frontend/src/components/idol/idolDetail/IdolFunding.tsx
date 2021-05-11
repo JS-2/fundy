@@ -1,17 +1,21 @@
 import { Box, Button, Grid } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/swiper.scss';
-import { Idol } from '../../../common/types';
+import { Funding, Idol } from '../../../common/types';
 import FundCard from '../../FundCard';
 
 interface Props {
-  idolInfo: Idol | undefined;
+  funding: Funding[] | undefined;
 }
 
 const IdolFunding = (props: Props) => {
+  const [fundings, setFundings] = useState<Funding[]>();
+  useEffect(() => {
+    setFundings(props.funding);
+  }, [props]);
   return (
     <div>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
@@ -24,18 +28,11 @@ const IdolFunding = (props: Props) => {
         onSwiper={(swiper) => console.log(swiper)}
         navigation
       >
-        <SwiperSlide>
-          <FundCard></FundCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <FundCard></FundCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <FundCard></FundCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <FundCard></FundCard>
-        </SwiperSlide>
+        {fundings?.map((funding, i) => (
+          <SwiperSlide>
+            <FundCard funding={funding} key={i}></FundCard>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

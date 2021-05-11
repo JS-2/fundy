@@ -4,39 +4,71 @@ import {
   Card,
   CardContent,
   CardMedia,
+  IconButton,
   Table,
   TableCell,
   TableRow,
 } from '@material-ui/core';
-import React from 'react';
-import { Idol } from '../../../common/types';
+import React, { useEffect, useState } from 'react';
+import { Idol, User } from '../../../common/types';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { useSelector } from 'react-redux';
+import { rootState } from '../../../reducers';
+import { getFavorite, setFavorite } from '../../../api/user';
+import { useParams } from 'react-router';
 
 interface Props {
   idolInfo: Idol | undefined;
 }
 
+interface Params {
+  idol_id: string;
+}
+
 const IdolInfo = (props: Props) => {
-  console.log(props.idolInfo);
+  const [idolFavorite, setIdolFavorite] = useState<boolean>(false);
+  const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const params: Params = useParams();
+  console.log('props', props);
+  useEffect(() => {
+    getFavorite(user.user_id).then((resp) => {
+      console.log('resp data', resp.data);
+      const check = resp.data.find((e: Idol) => {
+        if (e.idolId == Number(params.idol_id)) {
+          return true;
+        }
+      });
+      if (check) setIdolFavorite(true);
+    });
+  }, [user]);
+
+  const handleFavorite = () => {
+    setFavorite(user.user_id, Number(params.idol_id), idolFavorite).then(
+      (resp) => {
+        console.log(resp.data.message);
+      }
+    );
+  };
+
   return (
     <div>
-      <Box display="flex" alignItems="center">
-        <div className="nbg_bold mx-4" style={{ fontSize: '2em' }}>
+      {idolFavorite ? <div>true</div> : <div>false</div>}
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <div className="nbg_bold" style={{ fontSize: '2em' }}>
           {props.idolInfo?.idolName}
         </div>
         <Button
-          disableElevation
-          disabled
           variant="contained"
-          className="btn_main py-0"
+          className="nbg_bold"
+          onClick={handleFavorite}
         >
-          {props.idolInfo?.idolId == props.idolInfo?.idolGroupId
-            ? '그룹'
-            : '멤버'}
+          관심 등록
         </Button>
       </Box>
       <Box display="flex" justifyContent="center">
         <Card>
-          <img src={props.idolInfo?.idolPicture} style={{ height: 400 }} />
+          <img src={props.idolInfo?.idolPicture} style={{ width: '100%' }} />
           {/* <img
             src="https://w.namu.la/s/4882104f184435e246e6ca88e9880a49969b947ba0bcafa3f9afce085dc99396bb3baa604b77f6278181652cef0f22a4a21693031fd5c7a8541291692f06132a3415f59db04e9ddd4305827a2cba26ce2dd3495fa3a48859bdd2ca15f0e0f0281a00773fcf4f9d72b26501b1039c1f7a"
             style={{ height: 400 }}
