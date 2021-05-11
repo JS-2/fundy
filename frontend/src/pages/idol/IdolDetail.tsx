@@ -25,15 +25,16 @@ const IdolDetail = () => {
 
   return (
     <div>
-      <IdolInfo idolInfo={detailInfo?.idolInfo} />
-      {detailInfo?.idolInfo?.idolId == detailInfo?.idolInfo?.idolGroupId ? (
+      <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
+      {detailInfo?.idolInfo.members !== undefined &&
+      detailInfo?.idolInfo.members.length !== 0 ? (
         <IdolMembers idolInfo={detailInfo?.idolInfo} />
       ) : (
         <></>
       )}
-      <IdolFunding idolInfo={detailInfo?.idolInfo} />
+      <IdolFunding funding={detailInfo?.idolFundingProject} />
       <Chart />
-      <FundingMap idolInfo={detailInfo?.idolInfo} />
+      <FundingMap idolInfo={detailInfo?.idolInfo.idol} />
     </div>
   );
 };

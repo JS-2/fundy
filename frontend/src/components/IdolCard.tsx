@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -9,6 +10,7 @@ import {
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Idol } from '../common/types';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 interface Props {
   idol: Idol;
@@ -50,23 +52,29 @@ const IdolCard = (props: Props) => {
       />
       <div
         className="nbg_bold"
-        style={{
-          position: 'absolute',
-          bottom: 5,
-          left: 10,
-          fontSize: '2em',
-          color: 'white',
-        }}
+        style={
+          isOver
+            ? {
+                position: 'absolute',
+                bottom: -25,
+                right: 12,
+                fontSize: '2.1em',
+                color: 'white',
+                opacity: 0,
+                transition: 'all 0.3s ease-out',
+              }
+            : {
+                position: 'absolute',
+                bottom: 5,
+                right: 12,
+                fontSize: '2.1em',
+                color: 'white',
+                opacity: 0.88,
+                transition: 'all 0.3s ease-out',
+              }
+        }
       >
-        <div
-          style={
-            isOver
-              ? { opacity: 0, transition: 'all 0.2s ease-out' }
-              : { transition: 'all 0.2s ease-out' }
-          }
-        >
-          {props.idol.idolName}
-        </div>
+        {props.idol.idolName}
       </div>
     </Card>
   );
