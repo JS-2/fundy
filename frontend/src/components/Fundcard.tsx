@@ -15,7 +15,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { Grid, Paper, Box } from '@material-ui/core';
 import './FundCard.css';
 import { useHistory, withRouter } from 'react-router-dom';
-import { Funding } from '../common/types';
+import { IFunding } from '../common/types';
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -34,11 +34,11 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 interface Props {
-  funding: Funding | null;
+  funding: IFunding | null;
 }
 
 const FundCard = (props: Props) => {
-  const [fundingInfo, setFundingInfo] = useState<Funding>();
+  const [fundingInfo, setFundingInfo] = useState<IFunding>();
   const history = useHistory();
 
   useEffect(() => {
