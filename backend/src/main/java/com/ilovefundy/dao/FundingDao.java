@@ -20,6 +20,9 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
     // 아이돌 or 그룹이 진행한 펀딩
     List<FundingProject> findByIdolId(int idol_id);
 
+    // 사용자 관심 펀딩
+    List<FundingProject> findByUserId(int user_id);
+
     // 아이돌 or 그룹이 진행한 펀딩 마감 시간 내림차순
     List<FundingProject> findByIdolIdOrderByFundingEndTimeDesc(int idol_id);
 }
