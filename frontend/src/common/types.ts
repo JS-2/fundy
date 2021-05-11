@@ -57,15 +57,30 @@ export interface IdolDetailInfo {
 }
 
 export interface FundForm {
-  fund_Type: number;
-  idolNumber: number;
-  fundName: string;
+  fundingId: number;
+  userPays: number[]|null;
+  donationPlaceId: number | null;
+  idolId: number;
+  userId: number;
+  fundingType: string| null;
+  fund_Type: number| null;
+  idolNumber: number| null;
+  fundingName: string;
+  idolName: string| null;
+  fundingGoalAmount: number;
+  fundingStartTime: string| null;
+  fundingEndTime: string| null;
   fundShortInfo: string;
+  fundingContent: string;
+  fundingThumbnail: string;
   fundImgUrl: string;
+  isDonate: boolean | null;
+  isConfirm: boolean | null;
   fundMoney: number;
-  fundDate: string;
-  location: string;
-  fundDetail: string;
+  fundDate: string |null;
+  location: string|null;
+  fundDetail: string|null;
+  isGoodFunding: boolean|null;
 }
 
 export interface Funding {

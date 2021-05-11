@@ -8,7 +8,7 @@ import { setUser, logout } from '../reducers/user'
 export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHistory>, dispatch: ReturnType<typeof useDispatch>) => {
   console.log(user);
   axiosInstance
-    .post('user/login', user)
+    .post('api/user/login', user)
     .then((response) => {
       dispatch(setUser(response.data.user, response.data.token));
       history.push('/');
@@ -19,7 +19,7 @@ export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHisto
 export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHistory>) => {
   console.log(user);
   axiosInstance
-    .post('user/signup', user)
+    .post('api/user/signup', user)
     .then(() => { history.push('/'); })
     .catch((e: AxiosError) => { console.log(e) });
 }

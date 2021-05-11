@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "codemirror/lib/codemirror.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -24,32 +24,35 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchButton from "@material-ui/icons/Search";
 import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
+import axios from "axios";
 
 const FundCreate = () => {
-  const [fundType, setFundType] = useState("");
+  const [fundingType, setFundingType] = useState("");
   const [idolId, setIdolId] = useState("");
   const [fundName, setFundName] = useState<string>("");
   const [fundShortInfo, setFundShortInfo] = useState<string>("");
-  const [pictures, setPictures] = useState([]);
+  const [thumbnails, setThumbnails] = useState([]);
   const [location, setLocation] = useState<string>("");
   const [locationDetail, setLocationDetail] = useState<string>("");
-  const [fundMoney, setFundMoney] = useState("");
-  const [fundDate, setFundDate] = useState<string>("");
+  const [goalAmount, setGoalAmount] = useState("");
+  const [endTime, setEndTime] = useState<string>("");
   const [fundDetail, setFundDetail] = useState("");
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    getEditor();
+    
 
     console.log({
-      fundType,
+      fundingType,
       idolId,
       fundName,
       fundShortInfo,
-      pictures,
+      thumbnails,
       location,
       locationDetail,
-      fundMoney,
-      fundDate,
+      goalAmount,
+      endTime,
       fundDetail,
     });
   };
@@ -88,8 +91,8 @@ const FundCreate = () => {
     );
   }
 
-  const onDrop = (picture: any) => {
-    setPictures(pictures.concat(picture));
+  const onDrop = (thumbnail: any) => {
+    setThumbnails(thumbnails.concat(thumbnail));
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -131,10 +134,10 @@ const FundCreate = () => {
   };
   const [value, setValue] = React.useState("basic");
 
-  const onChangeFundType = (e: {
+  const onChangeFundingType = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setFundType(e.target.value);
+    setFundingType(e.target.value);
   };
 
   const onChangeFundName = (e: {
@@ -165,15 +168,15 @@ const FundCreate = () => {
   }) => {
     setLocationDetail(e.target.value);
   };
-  const onChangeFundMoney = (e: {
+  const onChangeGoalAmount = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setFundMoney(e.target.value);
+    setGoalAmount(e.target.value);
   };
-  const onChangeFundDate = (e: {
+  const onChangeEndTime = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setFundDate(e.target.value);
+    setEndTime(e.target.value);
   };
   const onChangeFundDetail = (e: {
     target: { value: React.SetStateAction<string> };
@@ -181,12 +184,50 @@ const FundCreate = () => {
     setFundDetail(e.target.value);
   };
 
+  const editorRef: any = useRef();
 
+  const getEditor = () => {
+    const editorInstance = editorRef.current.getInstance();
+    const getContent_md = editorInstance.getMarkdown();
+    console.log(getContent_md);
+    const getContent_html = editorInstance.getHtml();
+    console.log(getContent_html);
+    
+  };
 
-  
+  const uploadImage = (blob: string | Blob) => {
+    let formData = new FormData();
 
+    formData.append("image", blob);
+    console.log(formData);
 
+    return axios("http://localhost:3001/api/imageupload", {
+      method: "POST",
+      data: formData,
+      headers: { "Content-type": "multipart/form-data" },
+    }).then((response: { data: any }) => {
+      if (response.data) {
+        return response.data;
+      }
 
+      throw new Error("Server or network error");
+    });
+  };
+
+  const onAddImageBlob = (
+    blob: any,
+    callback: (arg0: any, arg1: string) => void
+  ) => {
+    uploadImage(blob)
+      .then((response: any) => {
+        if (!response) {
+          throw new Error("Validation error");
+        } else callback(response, "alt text");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="container">
@@ -198,8 +239,8 @@ const FundCreate = () => {
           <RadioGroup
             aria-label="type"
             name="type"
-            value={fundType}
-            onChange={onChangeFundType}
+            value={fundingType}
+            onChange={onChangeFundingType}
           >
             <FormLabel component="legend">펀딩 종류</FormLabel>
             <LightTooltip title="아이돌의 이름으로 기부되는 펀딩입니다.">
@@ -273,18 +314,16 @@ const FundCreate = () => {
           }}
           placeholder="목표금액(원)"
           variant="outlined"
-          value={fundMoney}
-          onChange={onChangeFundMoney}
+          value={goalAmount}
+          onChange={onChangeGoalAmount}
         />
 
         <div className="col-md-6 input">
           <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
         </div>
       </div>
- 
-      <div className="row">
 
-    </div>
+      <div className="row"></div>
       <div className="row">
         <TextField
           className="col-md-11 input"
@@ -319,12 +358,20 @@ const FundCreate = () => {
         <div className="col-md-12 editor">
           <Editor
             //initialValue="원하는 문장을 입력해주세요.."
-
             previewStyle="vertical"
             height="500px"
             initialEditType="wysiwyg"
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
+            ref={editorRef}
+            hooks={{
+              addImageBlobHook: async (blob, callback) => {
+                  const uploadedImageURL = await uploadImage(blob);
+                  callback(uploadedImageURL, "alt text");
+                  return false;
+              }
+          }}
+            
           />
         </div>
       </div>
