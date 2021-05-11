@@ -74,5 +74,6 @@ export interface Funding {
   fundingSubtitle: string | null,
   fundingThumbnail: string
   fundingRemainDay: number,
-  fundingAchievementRate: number
+  fundingAchievementRate: number,
+  fundingAmount: string,
 }

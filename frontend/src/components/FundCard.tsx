@@ -88,7 +88,7 @@ const FundCard = (props: Props) => {
             {fundingInfo?.fundingSubtitle}
           </Typography>
           <Box my={1} display="flex" justifyContent="space-between">
-            <Box>302,230,230원</Box>
+            <Box>{fundingInfo?.fundingAmount}원</Box>
             <Box>{fundingInfo?.fundingAchievementRate}%</Box>
           </Box>
           <BorderLinearProgress
