@@ -9,6 +9,7 @@ import com.ilovefundy.dto.funding.FundingRegister;
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.pay.PayInfo;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
 import com.ilovefundy.model.user.FanAuth;
 import com.ilovefundy.model.user.ProfileAuth;
@@ -148,30 +149,14 @@ public class UserService {
         return result;
     }
 
-    public List<Object> getMyFundingList(int user_id) {
+    public List<FundingListResponse> getMyFundingList(int user_id) {
         User user = userDao.findByUserId(user_id);
         Set<FundingProject> myFunding = user.getFundings();
-        List<Object> result = new LinkedList<>();
+        List<FundingListResponse> myFundingListResponse = new LinkedList<>();
         for(FundingProject funding : myFunding) {
-            Map<String, Object> tmpFunding = new HashMap<>();
-            tmpFunding.put("fundingProjectId", funding.getFundingId());
-            tmpFunding.put("fundingProjectName", funding.getFundingName());
-            tmpFunding.put("fundingProjectThumbnail", funding.getFundingThumbnail());
-            int remainDay =  funding.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
-            tmpFunding.put("fundingProjectRemainDay", remainDay);
-            int amount = 0;
-            List<PayInfo> payInfo = funding.getUserPays();
-            for(PayInfo pay : payInfo) {
-                amount += pay.getPayAmount();
-            }
-            int achievementRate = 0;
-            if(funding.getFundingGoalAmount() != 0) {
-                achievementRate = 100 * amount / funding.getFundingGoalAmount();
-            }
-            tmpFunding.put("fundingProjectAchievementRate", achievementRate);
-            result.add(tmpFunding);
+            myFundingListResponse.add(SetterUtils.setFundingListResponse(funding));
         }
-        return result;
+        return myFundingListResponse;
     }
 
     @Transactional

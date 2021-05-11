@@ -2,6 +2,7 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
 import com.ilovefundy.model.user.LoginRequest;
 import com.ilovefundy.model.user.SignupRequest;
@@ -242,7 +243,7 @@ public class UserController {
     @GetMapping("/user/{user_id}/my-funding")
     public ResponseEntity<Object> myFundingList(@PathVariable int user_id) {
         // 사용자 관심펀딩 리스트
-        List<Object> myFundingList = userService.getMyFundingList(user_id);
+        List<FundingListResponse> myFundingList = userService.getMyFundingList(user_id);
         return new ResponseEntity<>(myFundingList, HttpStatus.OK);
     }
 
