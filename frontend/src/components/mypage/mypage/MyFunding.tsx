@@ -2,14 +2,13 @@ import { Box, Button, Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getFavoriteFundingList } from '../../../api/funding';
-import { User } from '../../../common/types';
-import Funding from '../../../pages/Funding';
+import { IFunding, User } from '../../../common/types';
 import { rootState } from '../../../reducers';
 import FundCard from '../../FundCard';
 
 const MyFunding = () => {
   const user: User = useSelector((state: rootState) => state.userReducer.user);
-  const [fundings, setFundings] = useState<Funding[]>();
+  const [fundings, setFundings] = useState<IFunding[]>();
 
   useEffect(() => {
     getFavoriteFundingList(user.user_id).then((resp) => {
