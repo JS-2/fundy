@@ -4,15 +4,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/swiper.scss';
-import { Funding, Idol } from '../../../common/types';
+import { IFunding, Idol } from '../../../common/types';
 import FundCard from '../../FundCard';
 
 interface Props {
-  funding: Funding[] | undefined;
+  funding: IFunding[] | undefined;
 }
 
 const IdolFunding = (props: Props) => {
-  const [fundings, setFundings] = useState<Funding[]>();
+  const [fundings, setFundings] = useState<IFunding[]>();
   useEffect(() => {
     setFundings(props.funding);
   }, [props]);

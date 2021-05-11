@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
   createStyles,
   makeStyles,
@@ -22,6 +22,8 @@ import { withRouter } from 'react-router-dom';
 import Banner from '../components/Banner';
 import FundCreate from '../pages/funding/FundCreate';
 import './Main.css';
+import { getFundingList } from '../api/funding';
+import { IFunding } from '../common/types';
 
 // Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -43,22 +45,33 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-class Funding extends Component {
-  render() {
-    return (
-      <div>
-        <div id="bannerArea">
-          <Banner></Banner>
-        </div>
+const Funding = () => {
+  const [fundings, setFundings] = useState<IFunding[]>();
 
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <FundCard funding={null}></FundCard>
-          </Grid>
-        </Grid>
+  useEffect(() => {
+    getFundingList().then((resp) => {
+      console.log(resp.data);
+      setFundings(resp.data);
+    });
+  }, []);
+
+  return (
+    <div>
+      <div id="bannerArea">
+        <Banner></Banner>
       </div>
-    );
-  }
-}
+      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+        모든 펀딩
+      </Box>
+      <Grid container spacing={3}>
+        {fundings?.map((funding: IFunding, i: number) => (
+          <Grid item xs={4}>
+            <FundCard funding={funding} key={funding.fundingId}></FundCard>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
+};
 
 export default Funding;

@@ -53,7 +53,7 @@ export interface IdolGroup {
 
 export interface IdolDetailInfo {
   idolInfo: IdolGroup;
-  idolFundingProject: Funding[];
+  idolFundingProject: IFunding[];
 }
 
 export interface FundForm {
@@ -68,7 +68,7 @@ export interface FundForm {
   fundDetail: string;
 }
 
-export interface Funding {
+export interface IFunding {
   fundingId: number,
   fundingName: string,
   fundingSubtitle: string | null,
