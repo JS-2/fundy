@@ -18,9 +18,13 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styles from './Profile.module.css';
 import classNames from 'classnames';
+import { User } from '../../../common/types';
+import { useSelector } from 'react-redux';
+import { rootState } from '../../../reducers';
 
 const Profile = () => {
   const [fold, setFold] = useState(true);
+  const user: User = useSelector((state: rootState) => state.userReducer.user);
 
   return (
     <div>
@@ -54,7 +58,7 @@ const Profile = () => {
                   className="nbg_bold"
                   style={{ fontSize: '1.4em' }}
                 >
-                  <Box mt={1}>김재성님</Box>
+                  <Box mt={1}>{user.nickname}님</Box>
                 </Grid>
                 <Grid
                   item
@@ -62,7 +66,7 @@ const Profile = () => {
                   className="nbg_bold"
                   style={{ fontSize: '1em', color: 'grey' }}
                 >
-                  example@example.com
+                  {user.email}
                 </Grid>
               </Box>
             </Grid>

@@ -39,15 +39,19 @@ export interface Idol {
     idolAgency: string;
     idolBirthday: string | null;
     idolBlood: string | null;
-    idolGroup_id: number;
+    idolGroupId: number;
     idolHeight: number | null;
     idolName: string;
     idolPicture: string;
     idolWeight: number | null;
 }
 
+export interface IdolDetailInfo {
+  idolInfo: Idol;
+}
+
 export interface FundForm {
-  fundType: number;
+  fund_Type: number;
   idolNumber: number;
   fundName: string;
   fundShortInfo: string;

@@ -4,9 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/swiper.scss';
-import FundCard from '../../Fundcard';
+import { Idol } from '../../../common/types';
+import FundCard from '../../FundCard';
 
-const IdolFunding = () => {
+interface Props {
+  idolInfo: Idol | undefined;
+}
+
+const IdolFunding = (props: Props) => {
   return (
     <div>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>

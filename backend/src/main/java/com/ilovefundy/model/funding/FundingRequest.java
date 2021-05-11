@@ -17,6 +17,10 @@ public class FundingRequest {
     @NotNull
     String fundingName;
     @NotNull
+    String fundingSubtitle;
+    @NotNull
+    String idolId;
+    @NotNull
     String idolName;
     @NotNull
     Integer goalAmount;
@@ -30,4 +34,6 @@ public class FundingRequest {
     String Thumbnail;
     @NotNull
     Boolean isDonate;
+
+    String DonationLocation;
 }

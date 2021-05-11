@@ -15,4 +15,6 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
     // 아이돌 기부 상세보기
     List<FundingProject> findByIdolIdAndDonationPlaceId(int idol_id, int donation_place_id);
 
+    // 아이돌이 진행한 펀딩
+    List<FundingProject> findByIdolId(int idol_id);
 }

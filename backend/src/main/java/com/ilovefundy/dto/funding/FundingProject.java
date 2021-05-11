@@ -43,6 +43,7 @@ public class FundingProject {
 
     @Column(name = "donation_place_id")
     private Integer donationPlaceId;
+
     @Column(name = "idol_id")
     private Integer idolId;
     @Column(name = "user_id")
@@ -53,6 +54,8 @@ public class FundingProject {
     private FundingType fundingType; // 펀딩 타입
     @Column(name = "funding_name")
     private String fundingName;
+    @Column(name = "funding_subtitle")
+    private String fundingSubtitle;
     @Column(name = "idol_name")
     private String idolName;
     @Column(name = "funding_goal_amount")

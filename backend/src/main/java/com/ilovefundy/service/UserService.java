@@ -12,7 +12,7 @@ import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.user.FanAuth;
 import com.ilovefundy.model.user.ProfileAuth;
 import com.ilovefundy.model.user.SignupRequest;
-import com.ilovefundy.model.user.UserInfo;
+import com.ilovefundy.model.user.UserResponse;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -78,9 +78,9 @@ public class UserService {
         userDao.save(user);
     }
 
-    public UserInfo getUserInfo(int user_id) {
+    public UserResponse getUserInfo(int user_id) {
         User user = userDao.findByUserId(user_id);
-        UserInfo newUser = new UserInfo();
+        UserResponse newUser = new UserResponse();
         newUser.setUserId(user.getUserId());
         newUser.setUserPicture(user.getUserPicture());
         newUser.setUserNickname(user.getUserNickname());
@@ -152,11 +152,11 @@ public class UserService {
         List<Object> result = new LinkedList<>();
         for(FundingProject funding : myFunding) {
             Map<String, Object> tmpFunding = new HashMap<>();
-            tmpFunding.put("fundingId", funding.getFundingId());
-            tmpFunding.put("fundingName", funding.getFundingName());
-            tmpFunding.put("fudningThumbnail", funding.getFundingThumbnail());
+            tmpFunding.put("fundingProjectId", funding.getFundingId());
+            tmpFunding.put("fundingProjectName", funding.getFundingName());
+            tmpFunding.put("fundingProjectThumbnail", funding.getFundingThumbnail());
             int remainDay =  funding.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
-            tmpFunding.put("fundingRemainDay", remainDay);
+            tmpFunding.put("fundingProjectRemainDay", remainDay);
             int amount = 0;
             List<PayInfo> payInfo = funding.getUserPays();
             for(PayInfo pay : payInfo) {
@@ -166,7 +166,7 @@ public class UserService {
             if(funding.getFundingGoalAmount() != 0) {
                 achievementRate = 100 * amount / funding.getFundingGoalAmount();
             }
-            tmpFunding.put("fundingAchievementRate", achievementRate);
+            tmpFunding.put("fundingProjectAchievementRate", achievementRate);
             result.add(tmpFunding);
         }
         return result;

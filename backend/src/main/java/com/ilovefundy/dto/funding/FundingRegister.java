@@ -26,7 +26,7 @@ public class FundingRegister {
     private User user;
 
     //프로필 인증
-    @Column(name = "funding_regter_name")
+    @Column(name = "funding_register_name")
     private String fundingRegisterName;
     @Column(name = "funding_register_picture")
     private String fundingRegisterPicture;

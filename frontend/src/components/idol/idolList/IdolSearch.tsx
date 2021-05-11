@@ -19,10 +19,6 @@ const IdolSearch = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    console.log('시작');
-  }, []);
-
-  useEffect(() => {
     getIdolList(page).then((response) => {
       setIdolList([...idolList, ...response.data]);
     });

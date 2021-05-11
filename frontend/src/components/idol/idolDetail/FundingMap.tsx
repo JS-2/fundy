@@ -1,13 +1,20 @@
 import { Opacity } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
+import { Idol } from '../../../common/types';
+
 declare global {
   interface Window {
     kakao: any;
   }
 }
 
+interface Props {
+  idolInfo: Idol | undefined;
+}
+
 const { kakao } = window;
-const FundingMap = () => {
+
+const FundingMap = (props: Props) => {
   useEffect(() => {
     const container = document.getElementById('myMap');
     const options = {

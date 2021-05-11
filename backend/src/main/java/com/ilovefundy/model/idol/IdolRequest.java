@@ -1,10 +1,11 @@
 package com.ilovefundy.model.idol;
 
+import com.ilovefundy.dto.idol.Idol;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class IdolReq {
+public class IdolRequest {
     @ApiModelProperty(example = "민영")
     private String idolName;
     @ApiModelProperty(example = "브레이브 엔터테인먼트")
@@ -14,7 +15,7 @@ public class IdolReq {
     @ApiModelProperty(example = "19900912")
     private String idolBirthDay;
     @ApiModelProperty(example = "AB")
-    private String idolBlood;
+    private Idol.BloodType idolBlood;
     @ApiModelProperty(example = "165")
     private Integer idolHeight;
     @ApiModelProperty(example = "50")

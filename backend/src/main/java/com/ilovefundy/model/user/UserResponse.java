@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class UserInfo {
+public class UserResponse {
     @ApiModelProperty(example = "1")
     private Integer userId;
     @ApiModelProperty(example = "msmf3@naver.com")

@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class LoginReq {
+public class LoginRequest {
     @ApiModelProperty(example = "msmf3@naver.com")
     private String userEmail;
     @ApiModelProperty(example = "qwer!1234")
