@@ -50,19 +50,9 @@ public class IdolService {
         idolInfo.put("idol", setIdolResponse(idol));
         // 그룹인 경우
         if(idol.getMembers() != null) {
-            List<MemberInfo> members = new LinkedList<>();
+            List<IdolResponse> members = new LinkedList<>();
             for(Idol member : idol.getMembers()) {
-                MemberInfo memberInfo = new MemberInfo();
-                memberInfo.setMemberId(member.getIdolId());
-                memberInfo.setMemberName(member.getIdolName());
-                memberInfo.setMemberPicture(member.getIdolPicture());
-                memberInfo.setMemberAgency(member.getIdolAgency());
-                memberInfo.setMemberAge(member.getIdolAge());
-                memberInfo.setMemberBirthday(member.getIdolBirthday());
-                memberInfo.setMemberBlood(member.getIdolBlood());
-                memberInfo.setMemberHeight(member.getIdolHeight());
-                memberInfo.setMemberWeight(member.getIdolWeight());
-                members.add(memberInfo);
+                members.add(setIdolResponse(member));
             }
             idolInfo.put("members", members);
         }
