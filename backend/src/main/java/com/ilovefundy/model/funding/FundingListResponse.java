@@ -17,6 +17,8 @@ public class FundingListResponse {
     private String fundingThumbnail;
     @ApiModelProperty(example = "5")
     private Integer fundingRemainDay;
+    @ApiModelProperty(example = "100,000")
+    private String fundingAmount;
     @ApiModelProperty(example = "35")
     private Integer fundingAchievementRate;
 }

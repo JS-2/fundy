@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   createStyles,
   makeStyles,
@@ -15,7 +15,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { Grid, Paper, Box } from '@material-ui/core';
 import './FundCard.css';
 import { useHistory, withRouter } from 'react-router-dom';
-
+import { Funding } from '../common/types';
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -33,8 +33,20 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-const FundCard = () => {
+interface Props {
+  funding: Funding | null;
+}
+
+const FundCard = (props: Props) => {
+  const [fundingInfo, setFundingInfo] = useState<Funding>();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log('props.funding', props.funding);
+    if (props.funding !== null) {
+      setFundingInfo(props.funding);
+    }
+  }, [props]);
 
   const redirect = () => {
     console.log('redirecting...');
@@ -52,11 +64,11 @@ const FundCard = () => {
           component="img"
           alt="펀딩 카드 이미지"
           height="200"
-          image="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"
+          image={fundingInfo?.fundingThumbnail}
           title="Card Image"
         />
         <CardContent style={{ padding: '5px' }}>
-          <Chip color="primary" label="D-12" />
+          <Chip color="primary" label={'D-' + fundingInfo?.fundingRemainDay} />
           <Typography
             gutterBottom
             variant="h6"
@@ -69,18 +81,20 @@ const FundCard = () => {
               textOverflow: 'ellipsis',
             }}
           >
-            2021 싸피싸피 데뷔 1주년 기념 펀딩입니다
+            {fundingInfo?.fundingName}
           </Typography>
 
           <Typography variant="body2" color="textSecondary" component="p">
-            HOT ISSUE [ISSUE MAKER]을 메이크스타에서 구입하고 한정판 미공개
-            포토카드와 영상통화 기회를 놓치지 마세요!
+            {fundingInfo?.fundingSubtitle}
           </Typography>
           <Box my={1} display="flex" justifyContent="space-between">
-            <Box>302,230,230원</Box>
-            <Box>70%</Box>
+            <Box>{fundingInfo?.fundingAmount}원</Box>
+            <Box>{fundingInfo?.fundingAchievementRate}%</Box>
           </Box>
-          <BorderLinearProgress variant="determinate" value={70} />
+          <BorderLinearProgress
+            variant="determinate"
+            value={fundingInfo?.fundingAchievementRate}
+          />
         </CardContent>
       </CardActionArea>
     </Card>

@@ -14,13 +14,13 @@ const MyFunding = () => {
       </Button>
       <Grid className="mt-2" container spacing={2}>
         <Grid item xs={4}>
-          <FundCard></FundCard>
+          <FundCard funding={null}></FundCard>
         </Grid>
         <Grid item xs={4}>
-          <FundCard></FundCard>
+          <FundCard funding={null}></FundCard>
         </Grid>
         <Grid item xs={4}>
-          <FundCard></FundCard>
+          <FundCard funding={null}></FundCard>
         </Grid>
       </Grid>
     </div>

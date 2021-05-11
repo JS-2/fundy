@@ -1,5 +1,5 @@
 import { LoginUser, RegistUser } from "../common/types";
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import axiosInstance from './axiosConfig';
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -43,4 +43,19 @@ export const validatePassword = (password: string): boolean => {
 export const validateNickName = (nickName: string): boolean => {
   return /^[ㄱ-ㅎ|가-힣|a-z]{2,8}$/.test(nickName) ? true : false;
 
+}
+
+export const getFavorite = (user_id: number) => {
+  return axiosInstance
+      .get('/user/' + user_id + '/my-idol');
+}
+
+export const setFavorite = (user_id: number, idol_id: number, favorite: boolean) => {
+  if (!favorite) {
+    return axiosInstance
+      .post('/user/' + user_id + '/my-idol/' + idol_id)
+  } else {
+    return axiosInstance
+      .delete('/user/' + user_id + '/my-idol/' + idol_id)
+  }
 }
