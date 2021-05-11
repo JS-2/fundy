@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "codemirror/lib/codemirror.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -24,6 +24,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchButton from "@material-ui/icons/Search";
 import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
+import axios from "axios";
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState("");
@@ -39,6 +40,8 @@ const FundCreate = () => {
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    getEditor();
+    
 
     console.log({
       fundingType,
@@ -181,12 +184,50 @@ const FundCreate = () => {
     setFundDetail(e.target.value);
   };
 
+  const editorRef: any = useRef();
 
+  const getEditor = () => {
+    const editorInstance = editorRef.current.getInstance();
+    const getContent_md = editorInstance.getMarkdown();
+    console.log(getContent_md);
+    const getContent_html = editorInstance.getHtml();
+    console.log(getContent_html);
+    
+  };
 
-  
+  const uploadImage = (blob: string | Blob) => {
+    let formData = new FormData();
 
+    formData.append("image", blob);
+    console.log(formData);
 
+    return axios("http://localhost:3001/api/imageupload", {
+      method: "POST",
+      data: formData,
+      headers: { "Content-type": "multipart/form-data" },
+    }).then((response: { data: any }) => {
+      if (response.data) {
+        return response.data;
+      }
 
+      throw new Error("Server or network error");
+    });
+  };
+
+  const onAddImageBlob = (
+    blob: any,
+    callback: (arg0: any, arg1: string) => void
+  ) => {
+    uploadImage(blob)
+      .then((response: any) => {
+        if (!response) {
+          throw new Error("Validation error");
+        } else callback(response, "alt text");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="container">
@@ -281,10 +322,8 @@ const FundCreate = () => {
           <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
         </div>
       </div>
- 
-      <div className="row">
 
-    </div>
+      <div className="row"></div>
       <div className="row">
         <TextField
           className="col-md-11 input"
@@ -319,12 +358,20 @@ const FundCreate = () => {
         <div className="col-md-12 editor">
           <Editor
             //initialValue="원하는 문장을 입력해주세요.."
-
             previewStyle="vertical"
             height="500px"
             initialEditType="wysiwyg"
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
+            ref={editorRef}
+            hooks={{
+              addImageBlobHook: async (blob, callback) => {
+                  const uploadedImageURL = await uploadImage(blob);
+                  callback(uploadedImageURL, "alt text");
+                  return false;
+              }
+          }}
+            
           />
         </div>
       </div>
