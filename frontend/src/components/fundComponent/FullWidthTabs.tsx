@@ -67,14 +67,14 @@ export default function FullWidthTabs() {
 
   return (
     <div className={classes.root}>
-     <AppBar position="static" color="default" style={{marginTop:"200px"}}>
+     <AppBar position="static" color="default" style={{marginTop:"0px"}}>
           <Tabs
             value={value}
             onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
+            indicatorColor="secondary"
+            textColor="secondary"
             variant="fullWidth"
-            aria-label="full width tabs example"
+            aria-label="funding tabs"
           >
             <Tab label="펀딩 스토리" {...a11yProps(0)} />
             <Tab label="공지사항" {...a11yProps(1)} />

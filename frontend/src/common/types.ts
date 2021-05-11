@@ -74,7 +74,7 @@ export interface FundForm {
   fundingContent: string;
   fundingThumbnail: string;
   fundImgUrl: string;
-  isDonate: boolean;
+  isDonate: boolean | null;
   isConfirm: boolean | null;
   fundMoney: number;
   fundDate: string |null;
