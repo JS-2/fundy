@@ -2,6 +2,7 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.idol.IdolResponse;
 import com.ilovefundy.model.user.LoginRequest;
 import com.ilovefundy.model.user.SignupRequest;
 
@@ -281,7 +282,7 @@ public class UserController {
     @GetMapping("/user/{user_id}/my-idol")
     public ResponseEntity<Object> myIdolList(@PathVariable int user_id) {
         // 사용자 관심아이돌 리스트
-        Set<Idol> myIdolList = userService.getMyIdolList(user_id);
+        List<IdolResponse> myIdolList = userService.getMyIdolList(user_id);
         return new ResponseEntity<>(myIdolList, HttpStatus.OK);
     }
 
