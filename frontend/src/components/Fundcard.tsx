@@ -42,7 +42,6 @@ const FundCard = (props: Props) => {
   const history = useHistory();
 
   useEffect(() => {
-    console.log('props.funding', props.funding);
     if (props.funding !== null) {
       setFundingInfo(props.funding);
     }
