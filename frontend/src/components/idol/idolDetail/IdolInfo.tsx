@@ -31,6 +31,7 @@ const IdolInfo = (props: Props) => {
   const user: User = useSelector((state: rootState) => state.userReducer.user);
   const params: Params = useParams();
   console.log('props', props);
+
   useEffect(() => {
     getFavorite(user.user_id).then((resp) => {
       console.log('resp data', resp.data);
@@ -40,20 +41,20 @@ const IdolInfo = (props: Props) => {
         }
       });
       if (check) setIdolFavorite(true);
+      else setIdolFavorite(false);
     });
-  }, [user]);
+  }, [props]);
 
   const handleFavorite = () => {
     setFavorite(user.user_id, Number(params.idol_id), idolFavorite).then(
       (resp) => {
-        console.log(resp.data.message);
+        setIdolFavorite(!idolFavorite);
       }
     );
   };
 
   return (
     <div>
-      {idolFavorite ? <div>true</div> : <div>false</div>}
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <div className="nbg_bold" style={{ fontSize: '2em' }}>
           {props.idolInfo?.idolName}
@@ -61,9 +62,10 @@ const IdolInfo = (props: Props) => {
         <Button
           variant="contained"
           className="nbg_bold"
+          color={idolFavorite ? 'secondary' : 'default'}
           onClick={handleFavorite}
         >
-          관심 등록
+          관심 {idolFavorite ? '해제' : '등록'}
         </Button>
       </Box>
       <Box display="flex" justifyContent="center">

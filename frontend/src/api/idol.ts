@@ -1,11 +1,12 @@
 import axiosInstance from "./axiosConfig"
 
-export const getIdolList = (page: number) => {
-    const per_page = 4;
+export const getIdolList = (keyword: string | null = null, page: number) => {
+    const per_page = 8;
     
     return axiosInstance
         .get('/idols', {
             params: {
+                keyword,
                 page,
                 per_page,
             }

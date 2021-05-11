@@ -16,10 +16,13 @@ const IdolSearch = () => {
   const [idolList, setIdolList] = useState<Idol[]>([]);
   const [page, setPage] = useState<number>(1);
   const [isBottom, setIsBottom] = useState(false);
+  const [keyword, setKeyword] = useState<string>();
+  const [searchWord, setSearchWord] = useState<string>('');
+
   const containerRef = useRef(null);
 
   useEffect(() => {
-    getIdolList(page).then((response) => {
+    getIdolList(keyword, page).then((response) => {
       setIdolList([...idolList, ...response.data]);
     });
   }, [page]);
@@ -44,8 +47,19 @@ const IdolSearch = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(callback, options);
-    if (containerRef.current) observer.observe(containerRef.current!);
-  }, [containerRef, options]);
+    if (containerRef.current) {
+      observer.observe(containerRef.current!);
+    }
+    return () => observer && observer.disconnect();
+  }, [containerRef]);
+
+  const handleSearch = () => {
+    setKeyword(searchWord);
+    setIdolList([]);
+    setTimeout(() => {
+      setPage(1);
+    }, 500);
+  };
 
   return (
     <div>
@@ -58,8 +72,21 @@ const IdolSearch = () => {
         alignContent="center"
         justifyContent="flex-end"
       >
-        <TextField variant="outlined" size="small"></TextField>
-        <Button className="ml-2" disableElevation variant="contained">
+        <TextField
+          variant="outlined"
+          size="small"
+          value={searchWord}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setSearchWord(e.target.value);
+          }}
+        ></TextField>
+        <Button
+          className="ml-2"
+          disableElevation
+          variant="contained"
+          onClick={handleSearch}
+        >
           {' '}
           검색{' '}
         </Button>
