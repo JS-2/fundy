@@ -1,8 +1,8 @@
 package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingProject;
+import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.funding.FundingRequest;
-import com.ilovefundy.model.funding.NoticeRequest;
 import com.ilovefundy.service.FundingService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.beans.PropertyEditorSupport;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class FundingController {
     @GetMapping("/fundings")
     public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
         Map<String, Object> result = new HashMap<>();
-        List<FundingProject> fundingProjectList = fundingService.getFundingList(page-1, per_page);
+        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page);
         result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
     }

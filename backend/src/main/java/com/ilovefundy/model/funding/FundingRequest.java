@@ -15,6 +15,8 @@ public class FundingRequest {
     @NotNull
     FundingProject.FundingType fundingType;
     @NotNull
+    Integer userId;
+    @NotNull
     String fundingName;
     @NotNull
     String fundingSubtitle;
