@@ -2,10 +2,15 @@ package com.ilovefundy.utils;
 
 import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.dto.idol.Idol;
+import com.ilovefundy.dto.pay.PayInfo;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
+import com.ilovefundy.model.user.MyRegisteredFundingResponse;
+import com.ilovefundy.model.user.PayInfoResponse;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SetterUtils {
     public static IdolResponse setIdolResponse(Idol idol) {
@@ -36,5 +41,35 @@ public class SetterUtils {
         int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
         fundingResponse.setFundingAchievementRate(achievementRate);
         return fundingResponse;
+    }
+
+    public static MyRegisteredFundingResponse setMyRegisteredFundingResponse(FundingProject fundingProject) {
+        MyRegisteredFundingResponse myRegisteredFundingResponse = new MyRegisteredFundingResponse();
+        myRegisteredFundingResponse.setFundingId(fundingProject.getFundingId());
+        myRegisteredFundingResponse.setFundingName(fundingProject.getFundingName());
+        myRegisteredFundingResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
+        myRegisteredFundingResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
+        int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+        myRegisteredFundingResponse.setFundingRemainDay(remainDay);
+        int amount = CalculationUtils.getFundingAmount(fundingProject);
+        myRegisteredFundingResponse.setFundingAmount(String.format("%,d", amount));
+        int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
+        myRegisteredFundingResponse.setFundingAchievementRate(achievementRate);
+        myRegisteredFundingResponse.setIsConfirm(fundingProject.getIsConfirm());
+        return myRegisteredFundingResponse;
+    }
+
+    public static PayInfoResponse setMyPayInfo(PayInfo payInfo) {
+        PayInfoResponse payInfoResponse = new PayInfoResponse();
+        FundingProject funding = payInfo.getFunding();
+        payInfoResponse.setFundingId(funding.getFundingId());
+        payInfoResponse.setFundingName(funding.getFundingName());
+        payInfoResponse.setFundingSubtitle(funding.getFundingSubtitle());
+        payInfoResponse.setUserNickname(payInfo.getUser().getUserNickname());
+        payInfoResponse.setFundingStatement(LocalDateTime.now().isBefore(funding.getFundingEndTime()) ? "진행중" : "종료");
+        payInfoResponse.setPayAmount(String.format("%,d", payInfo.getPayAmount()));
+        payInfoResponse.setPayDatetime(payInfo.getPayDatetime());
+        payInfoResponse.setFundingEndTime(funding.getFundingEndTime());
+        return payInfoResponse;
     }
 }

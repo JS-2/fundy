@@ -4,10 +4,8 @@ import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
-import com.ilovefundy.model.user.LoginRequest;
-import com.ilovefundy.model.user.SignupRequest;
+import com.ilovefundy.model.user.*;
 
-import com.ilovefundy.model.user.UserResponse;
 import com.ilovefundy.service.UserService;
 import com.ilovefundy.utils.EncryptionUtils;
 import io.swagger.annotations.*;
@@ -214,31 +212,31 @@ public class UserController {
     @ApiOperation(value = "사용자 펀딩내역 리스트",
             notes = "사용자가 펀딩했던 정보(프로젝트, 금액) 리스트")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "펀딩내역 리스트 반환. OK !!")
+            @ApiResponse(code = 200, message = "펀딩내역 리스트 반환. OK !!", response = PayInfoResponse.class)
     })
     @GetMapping("/user/{user_id}/funding")
     public ResponseEntity<Object> fundingPayList(@PathVariable int user_id) {
         // 사용자 펀딩내역 리스트
-        List<Object> fundingPayList = userService.getFundingPayList(user_id);
+        List<PayInfoResponse> fundingPayList = userService.getFundingPayList(user_id);
         return new ResponseEntity<>(fundingPayList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "사용자 개설 펀딩 리스트",
             notes = "사용자가 개설한 펀딩의 리스트")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "개설 펀딩 리스트 반환. OK !!")
+            @ApiResponse(code = 200, message = "개설 펀딩 리스트 반환. OK !!", response = MyRegisteredFundingResponse.class)
     })
     @GetMapping("/user/{user_id}/registered-funding")
     public ResponseEntity<Object> registeredFundingList(@PathVariable int user_id) {
         // 사용자 개설 펀딩 리스트
-        // 펀딩 프로젝트 테이블에 저장된 user_id 로 가져옴 = fundingDao에서 구현
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<MyRegisteredFundingResponse> myRegisteredFundingList = userService.getMyRegisteredFundingList(user_id);
+        return new ResponseEntity<>(myRegisteredFundingList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "사용자 관심 펀딩 리스트",
             notes = "사용자가 관심목록에 넣은 펀딩의 리스트")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "관심 펀딩 리스트 반환. OK !!")
+            @ApiResponse(code = 200, message = "관심 펀딩 리스트 반환. OK !!", response = FundingListResponse.class)
     })
     @GetMapping("/user/{user_id}/my-funding")
     public ResponseEntity<Object> myFundingList(@PathVariable int user_id) {
@@ -278,7 +276,7 @@ public class UserController {
     @ApiOperation(value = "사용자 관심 아이돌 리스트",
             notes = "사용자가 관심목록에 넣은 아이돌의 리스트")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "관심 아이돌 리스트 반환. OK !!")
+            @ApiResponse(code = 200, message = "관심 아이돌 리스트 반환. OK !!", response = IdolResponse.class)
     })
     @GetMapping("/user/{user_id}/my-idol")
     public ResponseEntity<Object> myIdolList(@PathVariable int user_id) {
