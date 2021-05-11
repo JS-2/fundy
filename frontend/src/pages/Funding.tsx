@@ -1,3 +1,4 @@
+
 import React, { Component, useEffect, useState } from 'react';
 import {
   createStyles,
@@ -25,7 +26,6 @@ import './Main.css';
 import { getFundingList } from '../api/funding';
 import { IFunding } from '../common/types';
 
-// Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
@@ -36,11 +36,11 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     colorPrimary: {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+        theme.palette.grey[theme.palette.type === "light" ? 200 : 700],
     },
     bar: {
       borderRadius: 5,
-      backgroundColor: '#1a90ff',
+      backgroundColor: "#1a90ff",
     },
   })
 )(LinearProgress);

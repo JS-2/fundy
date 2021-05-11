@@ -9,11 +9,9 @@ import com.ilovefundy.dto.funding.FundingRegister;
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.pay.PayInfo;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
-import com.ilovefundy.model.user.FanAuth;
-import com.ilovefundy.model.user.ProfileAuth;
-import com.ilovefundy.model.user.SignupRequest;
-import com.ilovefundy.model.user.UserResponse;
+import com.ilovefundy.model.user.*;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
 import com.ilovefundy.utils.SetterUtils;
@@ -128,59 +126,39 @@ public class UserService {
         userDao.deleteById(user_id);
     }
 
-    public List<Object> getFundingPayList(int user_id) {
+    public List<PayInfoResponse> getFundingPayList(int user_id) {
         User user = userDao.findByUserId(user_id);
         List<PayInfo> userPayInfo = user.getFundingPays();
-        List<Object> result = new LinkedList<>();
-        for(PayInfo pay : userPayInfo) {
-            Map<String, Object> tmpFunding = new LinkedHashMap<>();
-            tmpFunding.put("fundingId", pay.getFunding().getFundingId());
-            tmpFunding.put("fundingName", pay.getFunding().getFundingName());
-            tmpFunding.put("fundingType", pay.getFunding().getFundingType());
-            tmpFunding.put("idolName", pay.getFunding().getIdolName());
-            tmpFunding.put("fundingGoalAmount", pay.getFunding().getFundingGoalAmount());
-            tmpFunding.put("fundingEndTime", pay.getFunding().getFundingEndTime());
-            tmpFunding.put("fundingStatement", LocalDateTime.now().isBefore(pay.getFunding().getFundingEndTime()) ? "진행중" : "종료");
-            tmpFunding.put("payDateTime", pay.getPayDatetime());
-            tmpFunding.put("payAmount", pay.getPayAmount());
-            result.add(tmpFunding);
+        List<PayInfoResponse> myPayInfoResponseList = new LinkedList<>();
+        for(PayInfo payInfo : userPayInfo) {
+            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo));
         }
-        return result;
+        return myPayInfoResponseList;
     }
 
-    public List<Object> getMyFundingList(int user_id) {
+    public List<MyRegisteredFundingResponse> getMyRegisteredFundingList(int user_id) {
+        List<FundingProject> myRegisteredFunding = fundingDao.findByUserId(user_id);
+        List<MyRegisteredFundingResponse> myRegisteredFundingList = new LinkedList<>();
+        for(FundingProject fundingProject : myRegisteredFunding) {
+            myRegisteredFundingList.add(SetterUtils.setMyRegisteredFundingResponse(fundingProject));
+        }
+        return myRegisteredFundingList;
+    }
+
+    public List<FundingListResponse> getMyFundingList(int user_id) {
         User user = userDao.findByUserId(user_id);
         Set<FundingProject> myFunding = user.getFundings();
-        List<Object> result = new LinkedList<>();
-        for(FundingProject funding : myFunding) {
-            Map<String, Object> tmpFunding = new HashMap<>();
-            tmpFunding.put("fundingProjectId", funding.getFundingId());
-            tmpFunding.put("fundingProjectName", funding.getFundingName());
-            tmpFunding.put("fundingProjectThumbnail", funding.getFundingThumbnail());
-            int remainDay =  funding.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
-            tmpFunding.put("fundingProjectRemainDay", remainDay);
-            int amount = 0;
-            List<PayInfo> payInfo = funding.getUserPays();
-            for(PayInfo pay : payInfo) {
-                amount += pay.getPayAmount();
-            }
-            int achievementRate = 0;
-            if(funding.getFundingGoalAmount() != 0) {
-                achievementRate = 100 * amount / funding.getFundingGoalAmount();
-            }
-            tmpFunding.put("fundingProjectAchievementRate", achievementRate);
-            result.add(tmpFunding);
+        List<FundingListResponse> myFundingListResponse = new LinkedList<>();
+        for(FundingProject fundingProject : myFunding) {
+            myFundingListResponse.add(SetterUtils.setFundingListResponse(fundingProject));
         }
-        return result;
+        return myFundingListResponse;
     }
 
     @Transactional
     public void addMyFunding(int user_id, int funding_id) {
         User user = userDao.getOne(user_id);
         FundingProject funding = fundingDao.getOne(funding_id);
-//        if(user.getFundings() == null) {
-//            user.setFundings(new LinkedHashSet<>());
-//        }
         user.getFundings().add(funding);
         funding.getUsers().add(user);
         userDao.save(user);
@@ -209,9 +187,6 @@ public class UserService {
     public void addMyIdol(int user_id, int idol_id) {
         User user = userDao.getOne(user_id);
         Idol idol = idolDao.getOne(idol_id);
-//        if(user.getIdols() == null) {
-//            user.setIdols(new LinkedHashSet<>());
-//        }
         user.getIdols().add(idol);
         idol.getUsers().add(user);
         userDao.save(user);

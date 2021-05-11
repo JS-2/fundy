@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 interface Props {
   idol: Idol;
 }
+
 const IdolCard = (props: Props) => {
   const [isOver, setIsOver] = useState(false);
   const history = useHistory();

@@ -1,27 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   createStyles,
   makeStyles,
   Theme,
   useTheme,
-  withStyles, 
+  withStyles,
 } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Grid, Paper, Box } from "@material-ui/core";
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import SwipeableViews from 'react-swipeable-views';
-import Qna from "../../components/fundingDetail/FundingQna";
-import Board from "../../components/fundingDetail/FundingBoard"
-import FundingTerms from "../../components/fundingDetail/FundingTerms";
-import FundingInfo from "../../components/fundingDetail/FundingInfo";
-import "./FundingDetail.css"
-
-
+import "./FundingDetail.css";
+import { getFundDetail } from "../../api/fund";
+import FullWidthTabs from "../../components/fundComponent/FullWidthTabs";
+import { FundForm } from "../../common/types";
+import { useParams } from "react-router-dom";
+import { Height } from "@material-ui/icons";
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -35,138 +28,87 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     bar: {
       borderRadius: 5,
-      backgroundColor: "#1a90ff",
+      background:
+        "linear-gradient(90deg, rgba(252,86,111,0.6225840678068102) 0%, rgba(252,86,111,1) 100%)",
     },
   })
 )(LinearProgress);
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    dir?: string;
-    index: any;
-    value: any;
+const FundingDetail = () => {
+  const [Fund, setFund] = useState<FundForm>();
+  interface Params {
+    fund_id: string;
   }
-  
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-  
-    return (
+  const params: Params = useParams();
+  interface Props {
+    fundInfo: FundForm | undefined;
+  }
+
+  useEffect(() => {
+    console.log("fundDetailPage");
+    getFundDetail(Number(1)).then((response) => {
+      setFund(response.data);
+    });
+  }, [params]);
+
+  console.log("hihi");
+  console.log({ Fund });
+
+  return (
+    <div>
       <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`full-width-tabpanel-${index}`}
-        aria-labelledby={`full-width-tab-${index}`}
-        {...other}
+        className="fundingHeader"
+        //style={{ background: `url(${Fund?.fundingThumbnail})`}}
       >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
-  
-  function a11yProps(index: any) {
-    return {
-      id: `full-width-tab-${index}`,
-      'aria-controls': `full-width-tabpanel-${index}`,
-    };
-  }
-  
-  const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-      backgroundColor: theme.palette.background.paper,
-      width: 500,
-    },
-  }));
-  
-  export default function FullWidthTabs() {
-    const classes = useStyles();
-    const theme = useTheme();
-    const [value, setValue] = React.useState(0);
-  
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-      setValue(newValue);
-    };
-  
-    const handleChangeIndex = (index: number) => {
-      setValue(index);
-    };
-  
-    return (
-      <div  >
+        <div className="none">
+        <h3 className="fundingText">{Fund?.fundingName}</h3>
+        <h5 className="fundingText">
+          트와이스를 공식 후원하고 1집 데뷔앨범을 선착순으로 수령해보세요
+        </h5>
+        <p>{Fund?.fundingContent}</p>
 
-        <div className="fundingHeader" style={{ }}>
-            <h3 className="fundingText">이번달의 소녀 1집 데뷔 앨범 공식 펀딩</h3>
-            <h5 className="fundingText">이번달의 소녀를 공식 후원하고 1집 데뷔앨범을 선착순으로 수령해보세요</h5>
-
-            <div className="row">
-                <div className="col-md-8" style={{position:"relative", top:"50px", left:"20px"}} >
-                <img width="100%" src="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png"></img>
-                </div>
-                <div className="col-md-4" style={{position:"relative", top:"130px", paddingRight:"30px"}}>
-                
-                
-                <table style={{width:"100%"}} >
+        <div className="row">
+          <div className="col-md-8 imgArea">
+            <img id="fundImg" width="100%" src={Fund?.fundingThumbnail}></img>
+          </div>
+          <div className="col-md-4 fundingInfo">
+    
+                  <p>{Fund?.idolName}</p>
+              
+            <table style={{ width: "100%" }}>
               <tr>
-                <td><h6>302,230,230원</h6></td>
-                <td style={{textAlign:"right"}}><h6>70%</h6></td>
-                  </tr>
+                
+                <td style={{ textAlign: "right" }}>
+                  <h5>목표금액: {Fund?.fundingGoalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h5>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>{Fund?.fundingName}</p>
+                </td>
+                <td style={{ textAlign: "right" }}>
+                  <h3 className="fundRate">70%</h3>
+                </td>
+              </tr>
             </table>
             <BorderLinearProgress variant="determinate" value={70} />
-          
+
             <Box display="flex" justifyContent="flex-end" m={1} p={1}>
-            <a id="logoAnchor" href="1234/payment">
+              <a id="logoAnchor" href="1234/payment">
                 <Button variant="contained" color="primary">
                   펀딩하기
                 </Button>
               </a>
-              </Box>
-
-            </div>
-            </div>
+            </Box>
+          </div>
         </div>
-        <AppBar position="static" color="default" style={{marginTop:"200px"}}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab label="펀딩 스토리" {...a11yProps(0)} />
-            <Tab label="공지사항" {...a11yProps(1)} />
-            <Tab label="문의하기" {...a11yProps(2)} />
-            <Tab label="펀딩 약관" {...a11yProps(3)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <FundingInfo></FundingInfo>
-          
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            <div className="boardComp">
-            <Board></Board>
-            </div>
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            <Qna/>
-          </TabPanel>
-          <TabPanel value={value} index={3} dir={theme.direction}>
-            <FundingTerms></FundingTerms>
-          </TabPanel>
-          <TabPanel value={value} index={4} dir={theme.direction}>
-            <FundingTerms></FundingTerms>
-          </TabPanel>
-        </SwipeableViews>
       </div>
-    );
-  }
+      </div>
+      <div>
+        <FullWidthTabs></FullWidthTabs>
+      </div>
+    </div>
+  );
+};
+
+export default FundingDetail;
