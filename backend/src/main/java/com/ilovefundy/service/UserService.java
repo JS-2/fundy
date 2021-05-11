@@ -9,12 +9,14 @@ import com.ilovefundy.dto.funding.FundingRegister;
 import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.pay.PayInfo;
 import com.ilovefundy.dto.user.User;
+import com.ilovefundy.model.idol.IdolResponse;
 import com.ilovefundy.model.user.FanAuth;
 import com.ilovefundy.model.user.ProfileAuth;
 import com.ilovefundy.model.user.SignupRequest;
 import com.ilovefundy.model.user.UserResponse;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
+import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -193,9 +195,14 @@ public class UserService {
         userDao.save(user);
     }
 
-    public Set<Idol> getMyIdolList(int user_id) {
+    public List<IdolResponse> getMyIdolList(int user_id) {
         User user = userDao.findByUserId(user_id);
-        return user.getIdols();
+        Set<Idol> myIdolList = user.getIdols();
+        List<IdolResponse> myIdolResponseList = new LinkedList<>();
+        for(Idol idol : myIdolList) {
+            myIdolResponseList.add(SetterUtils.setIdolResponse(idol));
+        }
+        return myIdolResponseList;
     }
 
     @Transactional
