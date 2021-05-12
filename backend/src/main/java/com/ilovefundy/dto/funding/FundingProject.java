@@ -64,7 +64,7 @@ public class FundingProject {
     private LocalDateTime fundingStartTime; // 펀딩 시작 시간
     @Column(name = "funding_end_time")
     private LocalDateTime fundingEndTime; // 펀딩 종료 시간
-    @Column(name = "funding_content")
+    @Column(name = "funding_content", columnDefinition = "LONGTEXT")
     private String fundingContent;
     @Column(name = "funding_thumbnail")
     private String fundingThumbnail;
