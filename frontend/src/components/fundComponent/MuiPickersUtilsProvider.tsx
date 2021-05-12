@@ -7,7 +7,7 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDateTimePicker } from '@material-ui/pickers'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

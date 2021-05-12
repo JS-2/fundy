@@ -26,6 +26,8 @@ import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
 import axios from "axios";
 
+import CustomDateTimePicker from "../../components/fundComponent/CustomDateTimePicker";
+
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState("");
   const [idolId, setIdolId] = useState("");
@@ -321,6 +323,7 @@ const FundCreate = () => {
 
         <div className="col-md-6 input">
           <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
+          <CustomDateTimePicker></CustomDateTimePicker>
         </div>
       </div>
 
