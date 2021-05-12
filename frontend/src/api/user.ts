@@ -60,6 +60,21 @@ export const setFavorite = (user_id: number, idol_id: number, favorite: boolean)
   }
 }
 
+export const getFavoriteFunding = (user_id: number) => {
+  return axiosInstance
+      .get('/user/' + user_id + '/my-funding');
+}
+
+export const setFavoriteFunding = (user_id: number, funding_id: number, favorite: boolean) => {
+  if (!favorite) {
+    return axiosInstance
+      .post('/user/' + user_id + '/my-funding/'  + funding_id)
+  } else {
+    return axiosInstance
+      .delete('/user/' + user_id + '/my-funding/'  + funding_id)
+  }
+}
+
 export const passwordCheck = (email: string, password: string) => {
   const user: LoginUser = {
     userEmail: email,
