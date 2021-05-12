@@ -19,7 +19,7 @@ export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHisto
 export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHistory>) => {
   console.log(user);
   axiosInstance
-    .post('api/user/signup', user)
+    .post('user/signup', user)
     .then(() => { history.push('/'); })
     .catch((e: AxiosError) => { console.log(e) });
 }
