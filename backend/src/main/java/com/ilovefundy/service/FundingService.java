@@ -56,6 +56,7 @@ public class FundingService {
         fundingProject.setFundingEndTime(req.getEndTime());
         fundingProject.setFundingThumbnail(req.getThumbnail());
         fundingProject.setIsDonate(req.getIsDonate());
+        fundingProject.setIsConfirm(FundingProject.FundingConfirm.Wait);
         fundingDao.save(fundingProject);
     }
 
