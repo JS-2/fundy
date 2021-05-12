@@ -33,6 +33,7 @@ const IdolInfo = (props: Props) => {
   console.log('props', props);
 
   useEffect(() => {
+    if (user === null) return;
     getFavorite(user.user_id).then((resp) => {
       console.log('resp data', resp.data);
       const check = resp.data.find((e: Idol) => {
@@ -43,7 +44,7 @@ const IdolInfo = (props: Props) => {
       if (check) setIdolFavorite(true);
       else setIdolFavorite(false);
     });
-  }, [props]);
+  }, [user]);
 
   const handleFavorite = () => {
     setFavorite(user.user_id, Number(params.idol_id), idolFavorite).then(
@@ -59,14 +60,18 @@ const IdolInfo = (props: Props) => {
         <div className="nbg_bold" style={{ fontSize: '2em' }}>
           {props.idolInfo?.idolName}
         </div>
-        <Button
-          variant="contained"
-          className="nbg_bold"
-          color={idolFavorite ? 'secondary' : 'default'}
-          onClick={handleFavorite}
-        >
-          관심 {idolFavorite ? '해제' : '등록'}
-        </Button>
+        {user === null ? (
+          <></>
+        ) : (
+          <Button
+            variant="contained"
+            className="nbg_bold"
+            color={idolFavorite ? 'secondary' : 'default'}
+            onClick={handleFavorite}
+          >
+            관심 {idolFavorite ? '해제' : '등록'}
+          </Button>
+        )}
       </Box>
       <Box display="flex" justifyContent="center">
         <Card>
