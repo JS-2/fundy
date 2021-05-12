@@ -92,3 +92,15 @@ export interface IFunding {
   fundingAmount: string,
   fundingGoalAmount: number;
 }
+
+export interface IChartData {
+  name: string,
+  금액: number,
+}
+
+export interface IDonationPlace {
+  donationPlaceId: number;
+  idolDonationPlaceAmount: string;
+  placeAddress: string;
+  placeName: string;
+}
