@@ -33,7 +33,9 @@ const IdolDetail = () => {
         <></>
       )}
       <IdolFunding funding={detailInfo?.idolFundingProject} />
-      <Chart />
+      <Chart
+        title={detailInfo?.idolInfo.idol.idolName + '가 남긴 기부 발자취'}
+      />
       <FundingMap idolInfo={detailInfo?.idolInfo.idol} />
     </div>
   );

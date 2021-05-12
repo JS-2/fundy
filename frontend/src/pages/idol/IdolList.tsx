@@ -7,7 +7,7 @@ const IdolList = () => {
   return (
     <div>
       <Banner />
-      <Chart></Chart>
+      <Chart title="아이돌 차트"></Chart>
       <IdolSearch></IdolSearch>
     </div>
   );
