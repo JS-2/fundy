@@ -21,7 +21,7 @@ public class FundingRequest {
     @NotNull
     String fundingSubtitle;
     @NotNull
-    String idolId;
+    Integer idolId;
     @NotNull
     String idolName;
     @NotNull

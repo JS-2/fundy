@@ -47,7 +47,9 @@ public class FundingService {
         fundingProject.setFundingType(req.getFundingType());
         fundingProject.setUserId(req.getUserId());
         fundingProject.setFundingName(req.getFundingName());
+        fundingProject.setFundingSubtitle(req.getFundingSubtitle());
         fundingProject.setFundingContent(req.getFundingContent());
+        fundingProject.setIdolId(req.getIdolId());
         fundingProject.setIdolName(req.getIdolName());
         fundingProject.setFundingGoalAmount(req.getGoalAmount());
         fundingProject.setFundingStartTime(req.getStartTime());
