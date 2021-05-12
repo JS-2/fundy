@@ -3,7 +3,10 @@
 }
 
 #fundImg{
-  border-radius: 3px;
+  object-fit: cover;
+  vertical-align: middle;
+  width: 100%;
+
 }
 
 .fundRate{
@@ -48,6 +51,14 @@
     padding-top:25px;
     color: black;
     text-shadow: 1px 1px 3px white;
+}
+
+
+.imgArea{
+  height:400px;
+  background-position: center;
+  overflow: hidden;
+  background-size: cover;
 }
 
 

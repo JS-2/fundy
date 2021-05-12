@@ -26,6 +26,8 @@ import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
 import axios from "axios";
 
+import CustomDateTimePicker from "../../components/fundComponent/CustomDateTimePicker";
+
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState("");
   const [idolId, setIdolId] = useState("");
@@ -265,7 +267,7 @@ const FundCreate = () => {
           className="col-md-12 input"
           style={{ width: "100%" }}
           label="펀딩 제목"
-          placeholder="싸피싸피의 기부 릴레이 4월유기견 보호소 강아지들 사료 지원 프로젝트"
+          placeholder="싸피싸피의 기부 릴레이 4월 - 유기견 보호소 강아지들 사료 지원 프로젝트"
           variant="outlined"
           value={fundName}
           onChange={onChangeFundName}
@@ -286,13 +288,14 @@ const FundCreate = () => {
           className="col-md-12 input"
           label="펀딩 한줄 소개"
           value={fundShortInfo}
+          variant="outlined"
           multiline
           onChange={onChangeFundShortInfo}
         ></TextField>
       </div>
 
       <div>
-        <h5>펀딩 이미지 업로드</h5>
+        <h5>펀딩 썸네일 업로드</h5>
         <ImageUploader
           withIcon={true}
           buttonText="이미지를 선택하세요"
@@ -320,6 +323,7 @@ const FundCreate = () => {
 
         <div className="col-md-6 input">
           <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
+          <CustomDateTimePicker></CustomDateTimePicker>
         </div>
       </div>
 
