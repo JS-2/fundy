@@ -98,14 +98,18 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         //style={{ background: `url(${Fund?.fundingThumbnail})`}}
       >
         <div className="none">
-          <Button
-            variant="contained"
-            className="nbg_bold"
-            color={fundingFavorite ? 'secondary' : 'default'}
-            onClick={handleFavorite}
-          >
-            관심 {fundingFavorite ? '해제' : '등록'}
-          </Button>
+          {user === null ? (
+            <></>
+          ) : (
+            <Button
+              variant="contained"
+              className="nbg_bold"
+              color={fundingFavorite ? 'secondary' : 'default'}
+              onClick={handleFavorite}
+            >
+              관심 {fundingFavorite ? '해제' : '등록'}
+            </Button>
+          )}
           <h3 className="fundingText">{Fund?.fundingName}</h3>
           <h5 className="fundingText">
             트와이스를 공식 후원하고 1집 데뷔앨범을 선착순으로 수령해보세요
