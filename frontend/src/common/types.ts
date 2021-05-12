@@ -11,7 +11,6 @@ export interface LoginUser {
 
 export interface ResponseUser {
   userEmail: string;
-  userPassword: string;
   userId: number;
   userLevel: string;
   userAddress: string;

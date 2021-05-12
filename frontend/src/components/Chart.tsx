@@ -25,11 +25,15 @@ const data = [
   },
 ];
 
-const Chart = () => {
+interface Props {
+  title: string;
+}
+
+const Chart = (props: Props) => {
   return (
     <div>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
-        아이돌 차트
+        {props.title}
       </Box>
       <div style={{ height: 400 }}>
         <ResponsiveBar

@@ -21,13 +21,35 @@ import classNames from 'classnames';
 import { User } from '../../../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../../../reducers';
+import ModifyPassword from './ModifyPassword';
+import ModifyNickname from './ModifyNickname';
 
 const Profile = () => {
   const [fold, setFold] = useState(true);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const [openPw, setOpenPw] = useState(false);
+  const [openN, setOpenN] = useState(false);
+
+  const handleOpenPw = () => {
+    setOpenPw(true);
+  };
+
+  const handleClosePw = () => {
+    setOpenPw(false);
+  };
+
+  const handleOpenN = () => {
+    setOpenN(true);
+  };
+
+  const handleCloseN = () => {
+    setOpenN(false);
+  };
 
   return (
     <div>
+      <ModifyPassword open={openPw} onClose={handleClosePw}></ModifyPassword>
+      <ModifyNickname open={openN} onClose={handleCloseN}></ModifyNickname>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
         나의 프로필
       </Box>
@@ -72,13 +94,18 @@ const Profile = () => {
             </Grid>
             <Grid item xs={6}>
               <Box display="flex" justifyContent="flex-end">
-                <Button variant="contained" className="btn_main nbg_bold">
+                <Button
+                  variant="contained"
+                  className="btn_main nbg_bold"
+                  onClick={handleOpenN}
+                >
                   닉네임 변경
                 </Button>
                 <Button
                   variant="contained"
                   className="btn_main nbg_bold"
                   style={{ marginLeft: '15px' }}
+                  onClick={handleOpenPw}
                 >
                   비밀번호 변경
                 </Button>
