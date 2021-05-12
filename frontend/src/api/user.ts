@@ -8,7 +8,7 @@ import { setUser, logout } from '../reducers/user'
 export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHistory>, dispatch: ReturnType<typeof useDispatch>) => {
   console.log(user);
   axiosInstance
-    .post('api/user/login', user)
+    .post('user/login', user)
     .then((response) => {
       dispatch(setUser(response.data.user, response.data.token));
       history.push('/');
