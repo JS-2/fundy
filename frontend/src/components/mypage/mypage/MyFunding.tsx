@@ -13,6 +13,7 @@ const MyFunding = () => {
   useEffect(() => {
     getFavoriteFundingList(user.user_id).then((resp) => {
       setFundings(resp.data);
+      console.log('resp.data>>>', resp.data);
     });
   }, []);
   return (
@@ -24,13 +25,13 @@ const MyFunding = () => {
       <Button className="ml-2" variant="contained">
         등록 펀딩
       </Button>
-      {/* <Grid className="mt-2" container spacing={2}>
+      <Grid className="mt-2" container spacing={2}>
         {fundings?.map((funding, i) => (
           <Grid item xs={4}>
-            <FundCard funding={funding}></FundCard>
+            <FundCard funding={funding} key={funding.fundingId}></FundCard>
           </Grid>
         ))}
-      </Grid> */}
+      </Grid>
     </div>
   );
 };
