@@ -18,15 +18,19 @@ import { withStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { Editor } from "@toast-ui/react-editor";
 import DaumPostcode from "react-daum-postcode";
 import "./FundCreate.css";
-import MuiPickersUtilsProvider from "../../components/fundComponent/MuiPickersUtilsProvider";
+
 import ImageUploader from "react-images-upload";
 import IconButton from "@material-ui/core/IconButton";
 import SearchButton from "@material-ui/icons/Search";
 import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
 import axios from "axios";
-
-import CustomDateTimePicker from "../../components/fundComponent/CustomDateTimePicker";
+import {
+  DateTimePicker,
+  KeyboardDateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState("");
@@ -39,11 +43,17 @@ const FundCreate = () => {
   const [goalAmount, setGoalAmount] = useState("");
   const [endTime, setEndTime] = useState<string>("");
   const [fundDetail, setFundDetail] = useState("");
+  let [selectedValue] = React.useState("0");
+  const [selectedStartDate, handleStartDateChange] = useState(new Date());
+  const [selectedEndDate, handleEndDateChange] = useState(new Date());
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     getEditor();
-    
+
+    const fund={
+      fundingName:fundName,
+    }
 
     console.log({
       fundingType,
@@ -56,7 +66,11 @@ const FundCreate = () => {
       goalAmount,
       endTime,
       fundDetail,
+      selectedStartDate,
+      selectedEndDate,
     });
+
+    setFundDetail(fund);
   };
 
   const onlocation = (address: string) => {
@@ -66,7 +80,7 @@ const FundCreate = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  let [selectedValue] = React.useState("0");
+
   interface SimpleDialogProps {
     open: boolean;
     selectedValue: string;
@@ -194,7 +208,6 @@ const FundCreate = () => {
     console.log(getContent_md);
     const getContent_html = editorInstance.getHtml();
     console.log(getContent_html);
-    
   };
 
   const uploadImage = (blob: string | Blob) => {
@@ -231,6 +244,8 @@ const FundCreate = () => {
       });
   };
 
+
+
   return (
     <div className="container">
       <h3>펀딩 작성하기</h3>
@@ -264,6 +279,7 @@ const FundCreate = () => {
       </div>
       <div className="row">
         <TextField
+        required
           className="col-md-12 input"
           style={{ width: "100%" }}
           label="펀딩 제목"
@@ -275,6 +291,7 @@ const FundCreate = () => {
       </div>
       <div className="row">
         <TextField
+        required
           className="col-md-12 input"
           style={{ width: "100%" }}
           label="아이돌 리스트"
@@ -285,6 +302,7 @@ const FundCreate = () => {
       </div>
       <div className="row">
         <TextField
+        required
           className="col-md-12 input"
           label="펀딩 한줄 소개"
           value={fundShortInfo}
@@ -309,6 +327,7 @@ const FundCreate = () => {
 
       <div className="row">
         <TextField
+        required
           className="col-md-6 input"
           label="펀딩 목표 금액"
           type="number"
@@ -320,14 +339,41 @@ const FundCreate = () => {
           value={goalAmount}
           onChange={onChangeGoalAmount}
         />
-
-        <div className="col-md-6 input">
-          <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
-          <CustomDateTimePicker></CustomDateTimePicker>
-        </div>
       </div>
 
-      <div className="row"></div>
+      <div className="row">
+        <div className="col-md-6 input"></div>
+      </div>
+      <div className="row">
+        <div className="col-md-3 input">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
+            required
+              value={selectedStartDate}
+              onChange={handleStartDateChange}
+              label="펀딩 시작"
+              onError={console.log}
+              minDate={new Date("2018-01-01T00:00")}
+              format="yyyy/MM/dd hh:mm a"
+              disablePast
+            />
+          </MuiPickersUtilsProvider>
+        </div>
+        <div className="col-md-3 input">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
+            required
+              value={selectedEndDate}
+              onChange={handleEndDateChange}
+              label="펀딩 종료"
+              onError={console.log}
+              minDate={selectedStartDate}
+              format="yyyy/MM/dd hh:mm a"
+              disablePast
+            />
+          </MuiPickersUtilsProvider>
+        </div>
+      </div>
       <div className="row">
         <TextField
           className="col-md-11 input"
@@ -370,12 +416,11 @@ const FundCreate = () => {
             ref={editorRef}
             hooks={{
               addImageBlobHook: async (blob, callback) => {
-                  const uploadedImageURL = await uploadImage(blob);
-                  callback(uploadedImageURL, "alt text");
-                  return false;
-              }
-          }}
-            
+                const uploadedImageURL = await uploadImage(blob);
+                callback(uploadedImageURL, "alt text");
+                return false;
+              },
+            }}
           />
         </div>
       </div>

@@ -18,3 +18,14 @@ export const getFundDetail = (funding_id: number) => {
     return axiosInstance
         .get('/fundings/'+funding_id);
 }
+
+
+export const setFundDetail = (fund: any, FundInfo: any) => {
+    
+    return axiosInstance
+        .post('/fundings',{
+            params: {
+                fund,
+            }
+        });
+}
