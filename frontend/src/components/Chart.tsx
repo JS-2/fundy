@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 import { Box, Card, CardContent } from '@material-ui/core';
+import { IChartData } from '../common/types';
 
 const data = [
   {
@@ -27,9 +28,13 @@ const data = [
 
 interface Props {
   title: string;
+  data: object[];
 }
 
 const Chart = (props: Props) => {
+  useEffect(() => {
+    console.log('props', props.data);
+  }, [props]);
   return (
     <div>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
@@ -37,9 +42,9 @@ const Chart = (props: Props) => {
       </Box>
       <div style={{ height: 400 }}>
         <ResponsiveBar
-          data={data}
+          data={props.data}
           keys={['금액']}
-          indexBy="country"
+          indexBy="name"
           margin={{ top: 10, right: 50, bottom: 50, left: 120 }}
           padding={0.5}
           valueScale={{ type: 'linear' }}

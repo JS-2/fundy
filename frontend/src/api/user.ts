@@ -19,7 +19,7 @@ export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHisto
 export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHistory>) => {
   console.log(user);
   axiosInstance
-    .post('api/user/signup', user)
+    .post('user/signup', user)
     .then(() => { history.push('/'); })
     .catch((e: AxiosError) => { console.log(e) });
 }
@@ -57,6 +57,21 @@ export const setFavorite = (user_id: number, idol_id: number, favorite: boolean)
   } else {
     return axiosInstance
       .delete('/user/' + user_id + '/my-idol/' + idol_id)
+  }
+}
+
+export const getFavoriteFunding = (user_id: number) => {
+  return axiosInstance
+      .get('/user/' + user_id + '/my-funding');
+}
+
+export const setFavoriteFunding = (user_id: number, funding_id: number, favorite: boolean) => {
+  if (!favorite) {
+    return axiosInstance
+      .post('/user/' + user_id + '/my-funding/'  + funding_id)
+  } else {
+    return axiosInstance
+      .delete('/user/' + user_id + '/my-funding/'  + funding_id)
   }
 }
 

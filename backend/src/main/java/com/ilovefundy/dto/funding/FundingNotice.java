@@ -34,7 +34,7 @@ public class FundingNotice {
     private String fundingNoticeRegisterNickname;
     @Column(name = "register_picture")
     private String registerPicture;
-    @Column(name = "funding_notice_content")
+    @Column(name = "funding_notice_content", columnDefinition = "LONGTEXT")
     private String fundingNoticeContent;
 
     @CreatedDate
