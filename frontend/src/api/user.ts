@@ -1,4 +1,4 @@
-import { LoginUser, RegistUser } from "../common/types";
+import { LoginUser, RegistUser, User } from "../common/types";
 import axios, { AxiosError } from 'axios';
 import axiosInstance from './axiosConfig';
 import { useHistory } from "react-router-dom";
@@ -24,9 +24,9 @@ export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHis
     .catch((e: AxiosError) => { console.log(e) });
 }
 
-export const logoutSubmit = (dispatch: ReturnType<typeof useDispatch>, history: ReturnType<typeof useHistory>) => {
-  dispatch(logout());
+export const logoutSubmit = (dispatch: ReturnType<typeof useDispatch>) => {
   window.location.href='/';
+  dispatch(logout());
   // history.push('/');
 }
 
@@ -41,7 +41,7 @@ export const validatePassword = (password: string): boolean => {
 }
 
 export const validateNickName = (nickName: string): boolean => {
-  return /^[ㄱ-ㅎ|가-힣|a-z]{2,8}$/.test(nickName) ? true : false;
+  return /^[가-힣|a-z]{2,8}$/.test(nickName) ? true : false;
 
 }
 
@@ -58,4 +58,32 @@ export const setFavorite = (user_id: number, idol_id: number, favorite: boolean)
     return axiosInstance
       .delete('/user/' + user_id + '/my-idol/' + idol_id)
   }
+}
+
+export const passwordCheck = (email: string, password: string) => {
+  const user: LoginUser = {
+    userEmail: email,
+    userPassword: password
+  }
+  return axiosInstance.post('user/login', user);
+}
+
+export const checkNickName = (nickName: string) => {
+  return axiosInstance.get('user/check-nickname/' + nickName);
+}
+
+export const modifyPassword = (password: string, user_id: number) => {
+  return axiosInstance.patch('user/' + user_id + '/password', { password: password }, {
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+}
+
+export const modifyNickName = (nickName: string, user_id: number) => {
+  return axiosInstance.patch('user/' + user_id + '/nickname', { nickname: nickName }, {
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
 }

@@ -136,7 +136,7 @@ const Navbar = () => {
                 <ListItem
                   button
                   onClick={() => {
-                    logoutSubmit(dispatch, history);
+                    logoutSubmit(dispatch);
                   }}
                 >
                   <ListItemText primary="로그아웃"></ListItemText>
