@@ -91,4 +91,5 @@ export interface IFunding {
   fundingRemainDay: number,
   fundingAchievementRate: number,
   fundingAmount: string,
+  fundingGoalAmount: number;
 }

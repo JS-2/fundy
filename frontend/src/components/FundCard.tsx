@@ -28,7 +28,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     bar: {
       borderRadius: 5,
-      backgroundColor: '#1a90ff',
+      backgroundColor: '#f74a64 !important',
     },
   })
 )(LinearProgress);
@@ -47,16 +47,20 @@ const FundCard = (props: Props) => {
     }
   }, [props]);
 
-  const redirect = () => {
+  const redirect = (e: any, id: any) => {
     console.log('redirecting...');
-    const url = '/funding/detail/1234';
-    history.push(url);
+    const url = '/funding/detail/'+id;
+    history.push({
+      pathname: url,
+      state: { fundingId: id}
+    });
   };
+  
 
   return (
     <Card
-      onClick={redirect}
-      style={{ padding: '0', height: '400px', display: 'block' }}
+      onClick={(e) => redirect(e, fundingInfo?.fundingId)}
+      style={{ padding: '0', height: '100%', display: 'block' }}
     >
       <CardActionArea>
         <CardMedia

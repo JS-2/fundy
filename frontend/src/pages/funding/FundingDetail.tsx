@@ -13,8 +13,10 @@ import "./FundingDetail.css";
 import { getFundDetail } from "../../api/fund";
 import FullWidthTabs from "../../components/fundComponent/FullWidthTabs";
 import { FundForm } from "../../common/types";
-import { useParams } from "react-router-dom";
+import { RouteComponentProps, useParams } from "react-router-dom";
 import { Height } from "@material-ui/icons";
+
+
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -34,25 +36,37 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-const FundingDetail = () => {
+interface MatchParams {
+  num: string;
+}
+
+
+const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) =>{
+  console.log(match.params.num);
+  
+
   const [Fund, setFund] = useState<FundForm>();
+
   interface Params {
     fund_id: string;
   }
   const params: Params = useParams();
+
   interface Props {
     fundInfo: FundForm | undefined;
   }
 
   useEffect(() => {
     console.log("fundDetailPage");
-    getFundDetail(Number(1)).then((response) => {
+
+    getFundDetail(Number(match.params.num)).then((response) => {
       setFund(response.data);
     });
   }, [params]);
 
-  console.log("hihi");
+
   console.log({ Fund });
+
 
   return (
     <div>
