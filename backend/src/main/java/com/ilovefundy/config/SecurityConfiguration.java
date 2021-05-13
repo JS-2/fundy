@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
                 .authorizeRequests()    // 사용권한 체크
                     .antMatchers("/admin/**").hasRole("ADMIN") //관리자 권한
-                    .antMatchers("/user/**").hasRole("MEMBER") // 회원 권한
+                    .antMatchers("/user/**", "/grade/**").hasAnyRole("MEMBER", "ADMIN") // 회원 권한
                     .anyRequest().permitAll()   // 그 외 나머지 요청은 누구나 접근가능
         .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())

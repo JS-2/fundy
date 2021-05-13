@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ProfileAuth {
-    @ApiModelProperty(example = "1")
+    @ApiModelProperty(hidden = true)
     Integer userId;
     @ApiModelProperty(example = "김윤성")
     String name;

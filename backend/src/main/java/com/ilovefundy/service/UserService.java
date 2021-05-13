@@ -86,6 +86,7 @@ public class UserService {
         newUser.setUserEmail(user.getUserEmail());
         newUser.setUserAddress(user.getUserAddress());
         newUser.setUserLevel(user.getUserLevel().getValue());
+        newUser.setRole(user.getIsAdmin().getValue() == 1 ? "ADMIN" : "MEMBER");
         return newUser;
     }
 
