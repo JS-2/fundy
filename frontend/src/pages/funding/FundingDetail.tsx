@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Grid, Paper, Box } from '@material-ui/core';
+import { Grid, Paper, Box, Modal } from '@material-ui/core';
 import './FundingDetail.css';
 import { getFundDetail } from '../../api/fund';
 import FullWidthTabs from '../../components/fundComponent/FullWidthTabs';
@@ -81,6 +81,16 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   interface Props {
     fundInfo: FundForm | undefined;
   }
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   useEffect(() => {
     console.log('fundDetailPage');
@@ -95,7 +105,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
   return (
     <div>
-      <div
+      <div className="row">
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
+        <div
         className="fundingHeader"
         //style={{ background: `url(${Fund?.fundingThumbnail})`}}
       >
@@ -114,13 +127,24 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
           )}
           <h3 className="fundingText">{Fund?.fundingName}</h3>
           <h5 className="fundingText">
-            {Fund?.fundShortInfo}
+            {Fund?.fundingSubtitle}
           </h5>
     
 
           <div className="row">
             <div className="col-md-8 imgArea">
-              <img id="fundImg" width="100%" src={Fund?.fundingThumbnail}></img>
+              <img id="fundImg" width="100%" onClick={handleOpen} src={Fund?.fundingThumbnail}></img>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                >
+                  <div className="modalDiv">
+                  <img onClick={handleClose} width="60%" src={Fund?.fundingThumbnail}></img>
+                  </div>
+              </Modal>
+              
             </div>
             <div className="col-md-4 fundingInfo">
               <p>아이돌 이름: {Fund?.idolName}</p>
@@ -130,7 +154,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                 <tr>
                   <td style={{ textAlign: 'right' }}>
                     <h5>
-                      목표금액:{' '}{Fund?.fundingGoalAmount}원
+                      목표 금액:{' '}{Fund?.fundingGoalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+                    </h5>
+                    <h5>
+                      달성 금액:{' '}{Fund?.fundingAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                     </h5>
                   </td>
                 </tr>
@@ -139,11 +166,11 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                     <p>펀딩 이름:{Fund?.fundingName}</p>
                   </td>
                   <td style={{ textAlign: 'right' }}>
-                    <h3 className="fundRate">70%</h3>
+                    <h3 className="fundRate">{Fund?.fundingAchievementRate}%</h3>
                   </td>
                 </tr>
               </table>
-              <BorderLinearProgress variant="determinate" value={70} />
+              <BorderLinearProgress variant="determinate" value={Number(Fund?.fundingAchievementRate)} />
 
               <Box display="flex" justifyContent="flex-end" m={1} p={1}>
                 <a id="logoAnchor" href="1234/payment">
@@ -160,6 +187,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         <FullWidthTabs detail={Fund?.fundingContent}></FullWidthTabs>
       </div>
     </div>
+
+        </div>
+      </div>
+      
   );
 };
 

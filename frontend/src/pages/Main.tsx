@@ -85,8 +85,11 @@ const Main = () => {
       <div id="bannerArea">
         <Banner></Banner>
       </div>
+      <div className="row">
+      <div className="col-md-1"></div>
+      
 
-      <div className="area" id="">
+      <div className="area col-md-10" id="" >
         <div className="" id="topFundArea">
           <h3 className="headText">인기 펀딩</h3>
 
@@ -132,6 +135,7 @@ const Main = () => {
         <p>아이템 카드</p>
 
         <div data-aos="zoom-in-up"> <p>안녕안녕</p></div>
+        </div>
       </div>
     </div>
   );

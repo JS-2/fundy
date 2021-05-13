@@ -56,9 +56,15 @@ const Funding = () => {
 
   return (
     <div>
+      
       <div id="bannerArea">
         <Banner></Banner>
       </div>
+      <div className="row">
+      <div className="col-md-1 col-sm-2"></div>
+      <div className="col-md-10 col-sm-8">
+      
+
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
         모든 펀딩
       </Box>
@@ -69,6 +75,8 @@ const Funding = () => {
           </Grid>
         ))}
       </Grid>
+      </div>
+      </div>
     </div>
   );
 };

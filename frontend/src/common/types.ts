@@ -72,7 +72,6 @@ export interface FundForm {
   fundingGoalAmount: number;
   fundingStartTime: string| null;
   fundingEndTime: string| null;
-  fundShortInfo: string;
   fundingContent: string;
   fundingThumbnail: string;
   fundImgUrl: string;
@@ -83,6 +82,10 @@ export interface FundForm {
   location: string|null;
   fundDetail: string|null;
   isGoodFunding: boolean|null;
+  fundingAchievementRate: string|null;
+  fundingAmount: number;
+  fundingSubtitle: string;
+  fundingRemainDay: number;
 }
 
 export interface IFunding {
@@ -110,6 +113,7 @@ export interface IDonationPlace {
 
 
 export interface FundingForm{
+  //폼 제출용
     fundingName: string;
     fundingSubtitle: string;
     donationLocation: string;
