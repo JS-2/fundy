@@ -49,13 +49,12 @@ const FundCard = (props: Props) => {
 
   const redirect = (e: any, id: any) => {
     console.log('redirecting...');
-    const url = '/funding/detail/'+id;
+    const url = '/funding/detail/' + id;
     history.push({
       pathname: url,
-      state: { fundingId: id}
+      state: { fundingId: id },
     });
   };
-  
 
   return (
     <Card
@@ -96,7 +95,7 @@ const FundCard = (props: Props) => {
           </Box>
           <BorderLinearProgress
             variant="determinate"
-            value={fundingInfo?.fundingAchievementRate}
+            value={Number(fundingInfo?.fundingAchievementRate)}
           />
         </CardContent>
       </CardActionArea>

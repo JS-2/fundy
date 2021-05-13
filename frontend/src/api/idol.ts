@@ -13,6 +13,19 @@ export const getIdolList = (keyword: string | null = null, page: number) => {
         });
 }
 
+export const getAllIdolList = () => {
+    const per_page = 1000;
+    
+    return axiosInstance
+        .get('/idols', {
+            params: {
+                keyword: '',
+                page: 1,
+                per_page,
+            }
+        });
+}
+
 export const getIdolMember = (keyword: string) => {
     return axiosInstance
         .get('/idols', {

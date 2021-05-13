@@ -21,7 +21,7 @@ const IdolMembers = (props: Props) => {
       </Box>
       <Grid container spacing={2}>
         {idols?.map((idol) => (
-          <Grid item container xs={3} justify="center">
+          <Grid item container xs={3} justify="center" key={idol.idolId}>
             <IdolCard idol={idol} />
           </Grid>
         ))}
