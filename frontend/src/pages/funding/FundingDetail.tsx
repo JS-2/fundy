@@ -123,6 +123,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             </div>
             <div className="col-md-4 fundingInfo">
               <p>아이돌 이름: {Fund?.idolName}</p>
+              
 
               <table style={{ width: '100%' }}>
                 <tr>

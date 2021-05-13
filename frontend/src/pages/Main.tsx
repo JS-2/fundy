@@ -75,8 +75,10 @@ const Main = () => {
           <Grid container spacing={3}>
             {hotFunding?.map((funding: IFunding) => {
               return (
-                <Grid date-aos="flip-right" item xs={4}>
+                <Grid  item xs={4}>
+             
                   <FundCard funding={funding}></FundCard>
+                  
                 </Grid>
               );
             })}
@@ -291,6 +293,8 @@ const Main = () => {
         </div>
         <h3 className="headText">스토어</h3>
         <p>아이템 카드</p>
+
+        <div data-aos="zoom-in-up"> <p>안녕안녕</p></div>
       </div>
     </div>
   );
