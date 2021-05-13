@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.funding.FundingCommentListResponse;
 import com.ilovefundy.entity.funding.FundingComment;
 import com.ilovefundy.dto.funding.CommentRequest;
 import com.ilovefundy.entity.user.User;
@@ -29,8 +30,8 @@ public class FundingCommentController {
     @ApiOperation(value = "전체 펀딩 댓글 리스트")
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 댓글 리스트 반환 성공!"))
     @GetMapping("/fundings/{funding_id}/comments")
-    public ResponseEntity<Object> fundingCommentList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
-        List<FundingComment> fundingCommentList = fundingCommentService.getFundingCommentList(page-1, per_page);
+    public ResponseEntity<Object> fundingCommentList(@PathVariable int funding_id, @RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
+        List<FundingCommentListResponse> fundingCommentList = fundingCommentService.getFundingCommentList(funding_id, page-1, per_page);
         return new ResponseEntity<>(fundingCommentList, HttpStatus.OK);
     }
 
