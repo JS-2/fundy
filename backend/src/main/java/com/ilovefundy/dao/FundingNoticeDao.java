@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface FundingNoticeDao extends JpaRepository<FundingNotice, Integer> {
     //펀딩 공지사항 리스트(펀딩 별 공지사항)
 //    Set<FundingNotice> findAllByFundingId(int funding_id, PageRequest pageable);
-    Page<FundingNotice> findAllByFundingId(int funding_id, Pageable pageable);
+    Page<FundingNotice> findAllByFunding_FundingId(int funding_id, Pageable pageable);
 
     //펀딩 공지사항 상세보기
     FundingNotice findByFundingNoticeId(int id);

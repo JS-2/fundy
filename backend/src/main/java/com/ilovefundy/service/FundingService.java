@@ -5,6 +5,7 @@ import com.ilovefundy.dto.funding.FundingProject;
 import com.ilovefundy.model.funding.FundingDetailResponse;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.funding.FundingRequest;
+import com.ilovefundy.utils.CalculationUtils;
 import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -34,12 +36,32 @@ public class FundingService {
         return fundingListResponse;
     }
 
-    public List<FundingDetailResponse> getFunding(int id) {
-        List<FundingProject> funding = fundingDao.findByFundingId(id);
-        List<FundingDetailResponse> fundingDetailResponse = new LinkedList<>();
-        for (FundingProject fundingProject : funding) {
-            fundingDetailResponse.add(SetterUtils.setFundingDetailResponse(fundingProject));
-        }
+    public FundingDetailResponse getFunding(int id) {
+        FundingProject fundingProject = fundingDao.findByFundingId(id);
+        FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
+        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
+        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
+        fundingDetailResponse.setIdolId(fundingProject.getIdolId());
+        fundingDetailResponse.setUserId(fundingProject.getUserId());
+        fundingDetailResponse.setFundingName(fundingProject.getFundingName());
+        fundingDetailResponse.setIdolName(fundingProject.getIdolName());
+        fundingDetailResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
+        fundingDetailResponse.setDonationPlaceId(fundingProject.getDonationPlaceId());
+        fundingDetailResponse.setFundingContent(fundingProject.getFundingContent());
+        fundingDetailResponse.setFundingStartTime(fundingProject.getFundingStartTime());
+        fundingDetailResponse.setFundingEndTime(fundingProject.getFundingEndTime());
+        fundingDetailResponse.setFundingGoalAmount(fundingProject.getFundingGoalAmount());
+        fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
+        fundingDetailResponse.setFundingType(fundingProject.getFundingType());
+        fundingDetailResponse.setIsDonate(fundingProject.getIsDonate());
+        fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
+        fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
+        int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+        fundingDetailResponse.setFundingRemainDay(remainDay);
+        int amount = CalculationUtils.getFundingAmount(fundingProject);
+        fundingDetailResponse.setFundingAmount(String.format("%,d", amount));
+        int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
+        fundingDetailResponse.setFundingAchievementRate(achievementRate);
         return fundingDetailResponse;
     }
 

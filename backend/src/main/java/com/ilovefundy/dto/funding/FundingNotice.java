@@ -1,5 +1,7 @@
 package com.ilovefundy.dto.funding;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -10,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="fundingNoticeId")
 @Entity
 @Getter
 @Setter
@@ -27,7 +30,9 @@ public class FundingNotice {
 
     @ManyToOne
     @JoinColumn(name = "funding_id")
-    private FundingProject fundingId;
+    private FundingProject funding;
+//    @Column(name = "funding_id")
+//    private Integer fundingId;
     @Column(name = "funding_notice_name")
     private String fundingNoticeName;
     @Column(name = "funding_notice_register_nickname")
