@@ -1,5 +1,7 @@
 package com.ilovefundy.dto.donation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
@@ -7,6 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="donationPlaceId")
 @Entity
 @Getter
 @Setter
