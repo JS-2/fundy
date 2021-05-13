@@ -1,4 +1,3 @@
-
 import React, { Component, useEffect, useState } from 'react';
 import {
   createStyles,
@@ -36,11 +35,11 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     colorPrimary: {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === "light" ? 200 : 700],
+        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
     },
     bar: {
       borderRadius: 5,
-      backgroundColor: "#1a90ff",
+      backgroundColor: '#1a90ff',
     },
   })
 )(LinearProgress);
@@ -65,8 +64,8 @@ const Funding = () => {
       </Box>
       <Grid container spacing={3}>
         {fundings?.map((funding: IFunding, i: number) => (
-          <Grid item xs={4}>
-            <FundCard funding={funding} key={funding.fundingId}></FundCard>
+          <Grid item xs={4} key={funding.fundingId}>
+            <FundCard funding={funding}></FundCard>
           </Grid>
         ))}
       </Grid>
