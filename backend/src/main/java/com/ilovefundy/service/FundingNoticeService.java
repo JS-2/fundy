@@ -3,11 +3,13 @@ package com.ilovefundy.service;
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingNoticeDao;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.dto.funding.FundingNoticeListResponse;
 import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.NoticeRequest;
 import com.ilovefundy.dto.funding.NoticeUpdateRequest;
 import com.ilovefundy.entity.user.User;
+import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 @CrossOrigin(origins = {"*"})
@@ -28,11 +31,15 @@ public class FundingNoticeService {
     private final FundingNoticeDao fundingNoticeDao;
     private final UserDao userDao;
 
-    public List<FundingNotice> getFundingNoticeList(int funding_id, int page, int per_page) {
-//        Page<FundingNotice> pages = fundingNoticeDao.findAll(PageRequest.of(page, per_page));
+    public List<FundingNoticeListResponse> getFundingNoticeList(int funding_id, int page, int per_page) {
+        List<FundingNoticeListResponse> fundingNoticeListResponse = new LinkedList<>();
         Page<FundingNotice> pages = fundingNoticeDao.findAllByFunding_FundingId(funding_id, PageRequest.of(page, per_page));
-        System.out.println(pages.getContent());
-        return pages.getContent();
+        List<FundingNotice> fundingNoticeList = pages.getContent();
+        for (FundingNotice fundingNotice : fundingNoticeList) {
+            fundingNoticeListResponse.add(SetterUtils.setFundingNoticeListResponse(fundingNotice));
+        }
+//        System.out.println(pages.getContent());
+        return fundingNoticeListResponse;
     }
 
     public FundingNotice getFundingNotice(int id) { return fundingNoticeDao.findByFundingNoticeId(id); }

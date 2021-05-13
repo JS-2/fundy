@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.funding.FundingNoticeListResponse;
 import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.dto.funding.NoticeRequest;
 import com.ilovefundy.dto.funding.NoticeUpdateRequest;
@@ -32,7 +33,7 @@ public class FundingNoticeController {
     @GetMapping("/fundings/{funding_id}/notices")
 //    public ResponseEntity<Object> fundingNoticeList(@PathVariable int funding_id, @RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword){
     public ResponseEntity<Object> fundingNoticeList(@PathVariable int funding_id, @RequestParam(defaultValue = "1") int page, int per_page){
-            List<FundingNotice> fundingNoticeList = fundingNoticeService.getFundingNoticeList(funding_id,page-1, per_page);
+            List<FundingNoticeListResponse> fundingNoticeList = fundingNoticeService.getFundingNoticeList(funding_id,page-1, per_page);
         return new ResponseEntity<>(fundingNoticeList, HttpStatus.OK);
     }
 
