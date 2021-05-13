@@ -71,6 +71,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       setFundingFavorite(!fundingFavorite);
     });
   };
+  //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
   interface Params {
     fund_id: string | undefined;
@@ -129,11 +130,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                 <tr>
                   <td style={{ textAlign: 'right' }}>
                     <h5>
-                      목표금액:
-                      {Fund?.fundingGoalAmount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                      원
+                      목표금액:{' '}{Fund?.fundingGoalAmount}원
                     </h5>
                   </td>
                 </tr>

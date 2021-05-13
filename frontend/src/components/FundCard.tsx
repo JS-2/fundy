@@ -40,9 +40,17 @@ interface Props {
 const FundCard = (props: Props) => {
   const [fundingInfo, setFundingInfo] = useState<IFunding>();
   const history = useHistory();
+  const [dday, setDday]= useState<string>();
 
   useEffect(() => {
     if (props.funding !== null) {
+      if(props.funding.fundingRemainDay==0){
+        setDday("펀딩 마감");
+      }else if(props.funding.fundingRemainDay<0){
+        setDday("마감 임박");
+      }else{
+        setDday("D-"+props.funding.fundingRemainDay);
+      }
       setFundingInfo(props.funding);
     }
   }, [props]);
@@ -70,7 +78,7 @@ const FundCard = (props: Props) => {
           title="Card Image"
         />
         <CardContent style={{ padding: '5px' }}>
-          <Chip color="primary" label={'D-' + fundingInfo?.fundingRemainDay} />
+          <Chip color="primary" label={dday} /> 
           <Typography
             gutterBottom
             variant="h6"
