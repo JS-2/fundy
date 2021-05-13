@@ -1,11 +1,13 @@
 package com.ilovefundy.dto.donation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ilovefundy.dto.idol.Idol;
 import lombok.*;
 
 import javax.persistence.*;
 
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="donationId")
 @Entity
 @Getter
 @Setter
