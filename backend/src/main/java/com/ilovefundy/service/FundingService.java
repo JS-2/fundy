@@ -1,10 +1,12 @@
 package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
+import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.entity.user.User;
 import com.ilovefundy.utils.CalculationUtils;
 import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,12 +23,8 @@ import java.util.*;
 @Service
 public class FundingService {
     private final FundingDao fundingDao;
+    private final UserDao userDao;
 
-//    public List<FundingProject> getFundingList(int page, int per_page) {
-//        Page<FundingProject> pages = fundingDao.findAll(PageRequest.of(page, per_page));
-//        System.out.println(pages.getContent());
-//        return pages.getContent();
-//    }
     public List<FundingListResponse> getFundingList(int page, int per_page) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
         Page<FundingProject> pages = fundingDao.findAll(PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingEndTime")));
@@ -65,11 +64,16 @@ public class FundingService {
         return fundingDetailResponse;
     }
 
+    @Transactional
     public void patchFundingState(int funding_id, boolean isApprove, char isGoodProject) {
         FundingProject fundingProject = fundingDao.getOne(funding_id);
         fundingProject.setIsConfirm(isApprove ? FundingProject.FundingConfirm.Approve : FundingProject.FundingConfirm.Decline);
         fundingProject.setIsGoodFunding(isGoodProject == 'Y' ? FundingProject.YesOrNo.Y : FundingProject.YesOrNo.N);
         fundingDao.save(fundingProject);
+        int user_id = fundingProject.getUserId();
+        User user = userDao.getOne(user_id);
+        user.setFundingRegistCount(user.getFundingRegistCount()+1);
+        userDao.save(user);
     }
 
     public void addFunding(FundingRequest req) {
