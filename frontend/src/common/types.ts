@@ -83,13 +83,13 @@ export interface FundForm {
 }
 
 export interface IFunding {
-  fundingId: number,
-  fundingName: string,
-  fundingSubtitle: string | null,
-  fundingThumbnail: string
-  fundingRemainDay: number,
-  fundingAchievementRate: number,
-  fundingAmount: string,
+  fundingId: number;
+  fundingName: string;
+  fundingSubtitle: string | null;
+  fundingThumbnail: string;
+  fundingRemainDay: number;
+  fundingAchievementRate: number;
+  fundingAmount: string;
   fundingGoalAmount: number;
 }
 
@@ -103,4 +103,22 @@ export interface IDonationPlace {
   idolDonationPlaceAmount: string;
   placeAddress: string;
   placeName: string;
+}
+
+
+export interface FundingForm{
+    fundingName: string;
+    fundingSubtitle: string;
+    donationLocation: string;
+    startTime: Date;
+    endTime: Date;
+    fundingContent: string;
+    fundingType: string;
+    goalAmount: string|number;
+    idolId: number;
+    idolName: string;
+    isDonate: boolean;
+    thumbnail: string;
+    userId: number;
+  
 }

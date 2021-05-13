@@ -18,45 +18,75 @@ import { withStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import { Editor } from "@toast-ui/react-editor";
 import DaumPostcode from "react-daum-postcode";
 import "./FundCreate.css";
-import MuiPickersUtilsProvider from "../../components/fundComponent/MuiPickersUtilsProvider";
+
 import ImageUploader from "react-images-upload";
 import IconButton from "@material-ui/core/IconButton";
 import SearchButton from "@material-ui/icons/Search";
 import { useState } from "react";
 import ItemTable from "../../components/fundComponent/ItemTable";
 import axios from "axios";
+import {
+  DateTimePicker,
+  KeyboardDateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import { FundingForm } from "../../common/types";
+import { useParams } from "react-router";
+import { setFundCreate } from "../../api/fund";
 
-import CustomDateTimePicker from "../../components/fundComponent/CustomDateTimePicker";
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState("");
   const [idolId, setIdolId] = useState("");
   const [fundName, setFundName] = useState<string>("");
   const [fundShortInfo, setFundShortInfo] = useState<string>("");
-  const [thumbnails, setThumbnails] = useState([]);
+  const [thumbnails, setThumbnails] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [locationDetail, setLocationDetail] = useState<string>("");
   const [goalAmount, setGoalAmount] = useState("");
   const [endTime, setEndTime] = useState<string>("");
   const [fundDetail, setFundDetail] = useState("");
+  let [selectedValue] = React.useState("0");
+  const [selectedStartDate, handleStartDateChange] = useState(new Date());
+  const [selectedEndDate, handleEndDateChange] = useState(new Date());
+  
+
+
+
+
+
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    getEditor();
+    const getMD=getEditor();
+    console.log(thumbnails);
+
+    const fundForm: FundingForm = {
+      donationLocation: location,
+      fundingName: fundingType,
+      startTime: selectedStartDate,
+      endTime: selectedEndDate,
+      idolName: idolId,
+      fundingContent: getMD,
+      goalAmount: goalAmount,
+      thumbnail: thumbnails,
+      fundingSubtitle:fundShortInfo,
+      fundingType: "Donation",
+      idolId: 22,
+      userId: 3,
+      isDonate: true,
+      
+    };
     
 
+
     console.log({
-      fundingType,
-      idolId,
-      fundName,
-      fundShortInfo,
-      thumbnails,
-      location,
-      locationDetail,
-      goalAmount,
-      endTime,
-      fundDetail,
+      fundForm
     });
+
+    setFundCreate(fundForm);
+
   };
 
   const onlocation = (address: string) => {
@@ -66,7 +96,7 @@ const FundCreate = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  let [selectedValue] = React.useState("0");
+
   interface SimpleDialogProps {
     open: boolean;
     selectedValue: string;
@@ -94,7 +124,7 @@ const FundCreate = () => {
   }
 
   const onDrop = (thumbnail: any) => {
-    setThumbnails(thumbnails.concat(thumbnail));
+    setThumbnails(thumbnail);
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -194,42 +224,45 @@ const FundCreate = () => {
     console.log(getContent_md);
     const getContent_html = editorInstance.getHtml();
     console.log(getContent_html);
-    
+
+    return getContent_md;
   };
 
-  const uploadImage = (blob: string | Blob) => {
-    let formData = new FormData();
+  // const uploadImage = (blob: string | Blob) => {
+  //   let formData = new FormData();
 
-    formData.append("image", blob);
-    console.log(formData);
+  //   formData.append("image", blob);
+  //   console.log(formData);
 
-    return axios("http://localhost:3001/api/imageupload", {
-      method: "POST",
-      data: formData,
-      headers: { "Content-type": "multipart/form-data" },
-    }).then((response: { data: any }) => {
-      if (response.data) {
-        return response.data;
-      }
+  //   return axios("http://localhost:3001/api/imageupload", {
+  //     method: "POST",
+  //     data: formData,
+  //     headers: { "Content-type": "multipart/form-data" },
+  //   }).then((response: { data: any }) => {
+  //     if (response.data) {
+  //       return response.data;
+  //     }
 
-      throw new Error("Server or network error");
-    });
-  };
+  //     throw new Error("Server or network error");
+  //   });
+  // };
 
-  const onAddImageBlob = (
-    blob: any,
-    callback: (arg0: any, arg1: string) => void
-  ) => {
-    uploadImage(blob)
-      .then((response: any) => {
-        if (!response) {
-          throw new Error("Validation error");
-        } else callback(response, "alt text");
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  };
+  // const onAddImageBlob = (
+  //   blob: any,
+  //   callback: (arg0: any, arg1: string) => void
+  // ) => {
+  //   uploadImage(blob)
+  //     .then((response: any) => {
+  //       if (!response) {
+  //         throw new Error("Validation error");
+  //       } else callback(response, "alt text");
+  //     })
+  //     .catch((error: any) => {
+  //       console.log(error);
+  //     });
+  // };
+
+
 
   return (
     <div className="container">
@@ -264,6 +297,7 @@ const FundCreate = () => {
       </div>
       <div className="row">
         <TextField
+        required
           className="col-md-12 input"
           style={{ width: "100%" }}
           label="펀딩 제목"
@@ -275,6 +309,7 @@ const FundCreate = () => {
       </div>
       <div className="row">
         <TextField
+        required
           className="col-md-12 input"
           style={{ width: "100%" }}
           label="아이돌 리스트"
@@ -285,6 +320,7 @@ const FundCreate = () => {
       </div>
       <div className="row">
         <TextField
+        required
           className="col-md-12 input"
           label="펀딩 한줄 소개"
           value={fundShortInfo}
@@ -309,6 +345,7 @@ const FundCreate = () => {
 
       <div className="row">
         <TextField
+        required
           className="col-md-6 input"
           label="펀딩 목표 금액"
           type="number"
@@ -320,14 +357,41 @@ const FundCreate = () => {
           value={goalAmount}
           onChange={onChangeGoalAmount}
         />
-
-        <div className="col-md-6 input">
-          <MuiPickersUtilsProvider></MuiPickersUtilsProvider>
-          <CustomDateTimePicker></CustomDateTimePicker>
-        </div>
       </div>
 
-      <div className="row"></div>
+      <div className="row">
+        <div className="col-md-6 input"></div>
+      </div>
+      <div className="row">
+        <div className="col-md-3 input">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
+            required
+              value={selectedStartDate}
+              onChange={handleStartDateChange}
+              label="펀딩 시작"
+              onError={console.log}
+              minDate={new Date("2018-01-01T00:00")}
+              format="yyyy/MM/dd hh:mm a"
+              disablePast
+            />
+          </MuiPickersUtilsProvider>
+        </div>
+        <div className="col-md-3 input">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
+            required
+              value={selectedEndDate}
+              onChange={handleEndDateChange}
+              label="펀딩 종료"
+              onError={console.log}
+              minDate={selectedStartDate}
+              format="yyyy/MM/dd hh:mm a"
+              disablePast
+            />
+          </MuiPickersUtilsProvider>
+        </div>
+      </div>
       <div className="row">
         <TextField
           className="col-md-11 input"
@@ -368,14 +432,7 @@ const FundCreate = () => {
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
             ref={editorRef}
-            hooks={{
-              addImageBlobHook: async (blob, callback) => {
-                  const uploadedImageURL = await uploadImage(blob);
-                  callback(uploadedImageURL, "alt text");
-                  return false;
-              }
-          }}
-            
+         
           />
         </div>
       </div>

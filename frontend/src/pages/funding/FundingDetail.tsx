@@ -49,6 +49,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const user: User = useSelector((state: rootState) => state.userReducer.user);
 
+
   useEffect(() => {
     if (user === null) return;
     getFavoriteFunding(user.user_id).then((resp) => {
@@ -73,7 +74,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   interface Params {
-    fund_id: string;
+    fund_id: string| undefined;
   }
   const params: Params = useParams();
 
@@ -85,11 +86,13 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     console.log('fundDetailPage');
 
     getFundDetail(Number(match.params.num)).then((response) => {
+      console.log(response.data);
       setFund(response.data);
     });
   }, [params]);
 
   console.log({ Fund });
+  
 
   return (
     <div>
@@ -121,23 +124,21 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
               <img id="fundImg" width="100%" src={Fund?.fundingThumbnail}></img>
             </div>
             <div className="col-md-4 fundingInfo">
-              <p>{Fund?.idolName}</p>
+              <p>아이돌 이름: {Fund?.idolName}</p>
 
               <table style={{ width: '100%' }}>
                 <tr>
                   <td style={{ textAlign: 'right' }}>
                     <h5>
-                      목표금액:{' '}
-                      {Fund?.fundingGoalAmount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                      원
+                      목표금액:{Fund?.fundingGoalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+                      
+                      
                     </h5>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <p>{Fund?.fundingName}</p>
+                    <p>펀딩 이름:{Fund?.fundingName}</p>
                   </td>
                   <td style={{ textAlign: 'right' }}>
                     <h3 className="fundRate">70%</h3>
@@ -158,7 +159,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         </div>
       </div>
       <div>
-        <FullWidthTabs></FullWidthTabs>
+        <FullWidthTabs detail={Fund?.fundingContent}></FullWidthTabs>
       </div>
     </div>
   );
