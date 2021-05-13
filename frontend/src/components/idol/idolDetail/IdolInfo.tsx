@@ -57,7 +57,10 @@ const IdolInfo = (props: Props) => {
 
   return (
     <div>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <div className="row">
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
         <div className="nbg_bold" style={{ fontSize: '2em' }}>
           {props.idolInfo?.idolName}
         </div>
@@ -115,6 +118,9 @@ const IdolInfo = (props: Props) => {
           <></>
         )}
       </Box>
+        </div>
+      </div>
+      
     </div>
   );
 };

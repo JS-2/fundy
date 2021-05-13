@@ -26,7 +26,10 @@ const swiperParams: SwiperOptions = {
 
 const Banner = () => {
   return (
+    <div className="row">
+   
     <Swiper
+      className="col-md-12"
       spaceBetween={0}
       slidesPerView={1}
       onSlideChange={() => console.log('slide change')}
@@ -41,13 +44,16 @@ const Banner = () => {
           className="col-md-12"
           id="banner"
           style={{
-            borderRadius: '10px',
+         
+            borderRadius: '5px',
             height: '400px',
+            padding: 0,
             overflow: 'hidden',
           }}
         >
           <img
             src={banner1}
+            className="bannerImg"
             style={{
               width: '100%',
             }}
@@ -59,17 +65,19 @@ const Banner = () => {
           className="col-md-12"
           id="banner"
           style={{
-            backgroundColor: '#44848c',
-            borderRadius: '20px',
-            height: '400px',
-            padding: 0,
-            overflow: 'hidden',
+             //backgroundColor: '#44848c',
+             borderRadius: '5px',
+             height: '400px',
+             padding: 0,
+             overflow: 'hidden',
           }}
         >
                    <img
+                   className="bannerImg"
             src={banner2}
             style={{
               width: '100%',
+              alignContent: "center",
             }}
           ></img>
         </div>
@@ -80,13 +88,14 @@ const Banner = () => {
           id="banner"
           style={{
            // backgroundColor: '#44848c',
-            borderRadius: '20px',
+            borderRadius: '5px',
             padding: 0,
             height: '400px',
             overflow: 'hidden',
           }}
         >
                    <img
+                   className="bannerImg"
             src={banner3}
             style={{
               width: '100%',
@@ -101,13 +110,14 @@ const Banner = () => {
           id="banner"
           style={{
             //backgroundColor: '#44848c',
-            borderRadius: '20px',
+            borderRadius: '5px',
             height: '400px',
             padding: 0,
             overflow: 'hidden',
           }}
         >
                    <img
+                   className="bannerImg"
             src={banner2}
             style={{
               width: '100%',
@@ -116,6 +126,7 @@ const Banner = () => {
           ></img>
         </div></SwiperSlide>
     </Swiper>
+    </div>
   );
 };
 

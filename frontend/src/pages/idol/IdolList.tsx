@@ -31,8 +31,13 @@ const IdolList = () => {
   return (
     <div>
       <Banner />
+      <div className="row">
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
       <Chart title="아이돌 차트" data={chartData} />
       <IdolSearch></IdolSearch>
+      </div>
+      </div>
     </div>
   );
 };

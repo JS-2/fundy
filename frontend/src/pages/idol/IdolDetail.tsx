@@ -46,6 +46,9 @@ const IdolDetail = () => {
 
   return (
     <div>
+        <div className="row">
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
       <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
       {detailInfo?.idolInfo.members !== undefined &&
       detailInfo?.idolInfo.members.length !== 0 ? (
@@ -67,6 +70,8 @@ const IdolDetail = () => {
         idolInfo={detailInfo?.idolInfo.idol}
         data={donationPlaceData}
       />
+      </div>
+      </div>
     </div>
   );
 };

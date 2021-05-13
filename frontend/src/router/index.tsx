@@ -30,7 +30,7 @@ const index = () => {
       <Navbar />
       <ScrollToTop />
       <Box minWidth={1080} display="flex" justifyContent="center">
-        <Box width={1080}>
+        <Box className="col-md-12">
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/regist" component={Regist} exact />
