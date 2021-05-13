@@ -34,6 +34,10 @@ public class FundingProject {
     private List<FundingNotice> fundingNotices = new ArrayList<>();
 
     @BatchSize(size=10)
+    @OneToMany(mappedBy = "funding")
+    private List<FundingComment> fundingComments = new ArrayList<>();
+
+    @BatchSize(size=10)
 //    @JsonBackReference
     @JsonIgnore
     @ManyToMany(mappedBy = "fundings")

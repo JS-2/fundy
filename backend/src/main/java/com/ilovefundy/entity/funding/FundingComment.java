@@ -1,5 +1,6 @@
 package com.ilovefundy.entity.funding;
 
+import com.ilovefundy.entity.user.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -26,11 +27,14 @@ public class FundingComment {
 
     @ManyToOne
     @JoinColumn(name = "funding_id")
-    private FundingProject fundingId;
-    @Column(name = "user_nickname")
-    private String userNickname;
-    @Column(name = "user_picture")
-    private String userPicture;
+    private FundingProject funding;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+//    @Column(name = "user_nickname")
+//    private String userNickname;
+//    @Column(name = "user_picture")
+//    private String userPicture;
     @Column(name = "funding_comment_content")
     private String fundingCommentContent; // 댓글 내용
 

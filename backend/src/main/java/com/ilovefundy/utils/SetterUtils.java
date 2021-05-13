@@ -1,5 +1,9 @@
 package com.ilovefundy.utils;
 
+import com.ilovefundy.dto.funding.FundingCommentListResponse;
+import com.ilovefundy.dto.funding.FundingNoticeListResponse;
+import com.ilovefundy.entity.funding.FundingComment;
+import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
@@ -7,8 +11,10 @@ import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.idol.IdolResponse;
 import com.ilovefundy.dto.user.MyRegisteredFundingResponse;
 import com.ilovefundy.dto.user.PayInfoResponse;
+import com.ilovefundy.entity.user.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class SetterUtils {
     public static IdolResponse setIdolResponse(Idol idol) {
@@ -41,35 +47,28 @@ public class SetterUtils {
         return fundingResponse;
     }
 
-//    public static FundingDetailResponse setFundingDetailResponse(FundingProject fundingProject) {
-//        FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
-//        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
-//        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
-//        fundingDetailResponse.setIdolId(fundingProject.getIdolId());
-//        fundingDetailResponse.setUserId(fundingProject.getUserId());
-//        fundingDetailResponse.setFundingName(fundingProject.getFundingName());
-//        fundingDetailResponse.setIdolName(fundingProject.getIdolName());
-//        fundingDetailResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
-//        fundingDetailResponse.setDonationPlaceId(fundingProject.getDonationPlaceId());
-//        fundingDetailResponse.setFundingContent(fundingProject.getFundingContent());
-//        fundingDetailResponse.setFundingStartTime(fundingProject.getFundingStartTime());
-//        fundingDetailResponse.setFundingEndTime(fundingProject.getFundingEndTime());
-//        fundingDetailResponse.setFundingGoalAmount(fundingProject.getFundingGoalAmount());
-//        fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
-//        fundingDetailResponse.setFundingType(fundingProject.getFundingType());
-//        fundingDetailResponse.setIsDonate(fundingProject.getIsDonate());
-//        fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
-//        fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
-//        int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
-//        fundingDetailResponse.setFundingRemainDay(remainDay);
-//        int amount = CalculationUtils.getFundingAmount(fundingProject);
-//        fundingDetailResponse.setFundingAmount(String.format("%,d", amount));
-//        int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
-//        fundingDetailResponse.setFundingAchievementRate(achievementRate);
-//        return fundingDetailResponse;
-//    }
+    public static FundingNoticeListResponse setFundingNoticeListResponse(FundingNotice fundingNotice) {
+        FundingNoticeListResponse fundingNoticeListResponse = new FundingNoticeListResponse();
+        fundingNoticeListResponse.setFundingNoticeId(fundingNotice.getFundingNoticeId());
+        fundingNoticeListResponse.setFundingNoticeTitle(fundingNotice.getFundingNoticeName());
+        fundingNoticeListResponse.setFundingNoticeContent(fundingNotice.getFundingNoticeContent());
+        fundingNoticeListResponse.setFundingNoticeTime(fundingNotice.getFundingNoticeRegTime());
+        fundingNoticeListResponse.setUserPicture(fundingNotice.getUser().getUserPicture());
+        fundingNoticeListResponse.setUserNickname(fundingNotice.getUser().getUserNickname());
+        return fundingNoticeListResponse;
+    }
 
-    public static MyRegisteredFundingResponse setMyRegisteredFundingResponse(FundingProject fundingProject) {
+    public static FundingCommentListResponse setFundingCommentListResponse(FundingComment fundingComment) {
+        FundingCommentListResponse fundingCommentListResponse = new FundingCommentListResponse();
+        fundingCommentListResponse.setFundingCommentId(fundingComment.getFundingCommentId());
+        fundingCommentListResponse.setFundingCommentContent(fundingComment.getFundingCommentContent());
+        fundingCommentListResponse.setFundingCommentTime(fundingComment.getFundingCommentRegTime());
+        fundingCommentListResponse.setUserPicture(fundingComment.getUser().getUserPicture());
+        fundingCommentListResponse.setUserNickname(fundingComment.getUser().getUserNickname());
+        return fundingCommentListResponse;
+    }
+
+   public static MyRegisteredFundingResponse setMyRegisteredFundingResponse(FundingProject fundingProject) {
         MyRegisteredFundingResponse myRegisteredFundingResponse = new MyRegisteredFundingResponse();
         myRegisteredFundingResponse.setFundingId(fundingProject.getFundingId());
         myRegisteredFundingResponse.setFundingName(fundingProject.getFundingName());

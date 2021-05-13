@@ -40,8 +40,9 @@ const ModifyNickname = (props: Props) => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    checkNickName(nickName).then((resp) => {
-      modifyNickName(nickName, user.user_id).then(() => {
+    checkNickName(nickName, token).then((resp) => {
+      console.log('이상없음');
+      modifyNickName(nickName, token).then(() => {
         const newUser: ResponseUser = {
           userEmail: user.email,
           userId: user.user_id,
@@ -49,6 +50,7 @@ const ModifyNickname = (props: Props) => {
           userAddress: user.address,
           userNickname: nickName,
           userPicture: user.picture,
+          role: user.role,
         };
         dispatch(setUser(newUser, token));
         history.push('/');

@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.funding.IsGoodProjectRequest;
 import com.ilovefundy.service.AdminService;
 import com.ilovefundy.service.FundingService;
 import io.swagger.annotations.*;
@@ -28,9 +29,9 @@ public class AdminController {
             @ApiResponse(code = 200, message = "펀딩 승인. OK !!")
     })
     @PatchMapping("/admin/funding/{funding_id}/accept")
-    public ResponseEntity<Object> acceptFunding(@PathVariable int funding_id, @RequestBody Map<String, Character> req) {
+    public ResponseEntity<Object> acceptFunding(@PathVariable int funding_id, @RequestBody IsGoodProjectRequest req) {
         Map<String, Object> result = new HashMap<>();
-        fundingService.patchFundingState(funding_id, true, req.get("isGoodProject"));
+        fundingService.patchFundingState(funding_id, true, req.getIsGoodProject());
         result.put("message", "펀딩 승인!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

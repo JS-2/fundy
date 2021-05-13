@@ -1,8 +1,10 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.funding.FundingNoticeListResponse;
 import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.dto.funding.NoticeRequest;
 import com.ilovefundy.dto.funding.NoticeUpdateRequest;
+import com.ilovefundy.entity.user.User;
 import com.ilovefundy.service.FundingNoticeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -10,6 +12,8 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +33,7 @@ public class FundingNoticeController {
     @GetMapping("/fundings/{funding_id}/notices")
 //    public ResponseEntity<Object> fundingNoticeList(@PathVariable int funding_id, @RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword){
     public ResponseEntity<Object> fundingNoticeList(@PathVariable int funding_id, @RequestParam(defaultValue = "1") int page, int per_page){
-            List<FundingNotice> fundingNoticeList = fundingNoticeService.getFundingNoticeList(funding_id,page-1, per_page);
+            List<FundingNoticeListResponse> fundingNoticeList = fundingNoticeService.getFundingNoticeList(funding_id,page-1, per_page);
         return new ResponseEntity<>(fundingNoticeList, HttpStatus.OK);
     }
 
@@ -44,14 +48,22 @@ public class FundingNoticeController {
 
     //펀딩 공지사항 등록
     @ApiOperation(value = "펀딩 공지사항 등록")
-    @ApiResponses(@ApiResponse(code = 201, message = "펀딩 공지사항 등록 성공!"))
+    @ApiResponses({@ApiResponse(code = 201, message = "펀딩 공지사항 등록 성공!"), @ApiResponse(code = 400, message = "펀딩 등록자만 공지사항 작성 가능합니다. UNAUTHORIZED !!")})
     @PostMapping("/fundings/{funding_id}/notices")
     public ResponseEntity<Object> fundingNoticeWrite(@PathVariable int funding_id, @RequestBody @Valid NoticeRequest request) {
         Map<String, Object> result = new HashMap<>();
         //공지사항 등록
-        fundingNoticeService.addFundingNotice(funding_id, request);
-        result.put("message", "공지사항 등록 성공!");
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        String regist = fundingNoticeService.addFundingNotice(user.getUserId(), funding_id, request);
+        if (regist == "success") {
+            result.put("message", "공지사항 등록 성공!");
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        }
+        else{
+            result.put("message", "공지사항 등록 실패! 펀딩 등록자만 공지사항 작성 가능합니다.");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
     }
 
     //펀딩 공지사항 수정

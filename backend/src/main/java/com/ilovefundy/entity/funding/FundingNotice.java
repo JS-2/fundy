@@ -2,6 +2,7 @@ package com.ilovefundy.entity.funding;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilovefundy.entity.user.User;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -34,10 +35,13 @@ public class FundingNotice {
 //    private Integer fundingId;
     @Column(name = "funding_notice_name")
     private String fundingNoticeName;
-    @Column(name = "funding_notice_register_nickname")
-    private String fundingNoticeRegisterNickname;
-    @Column(name = "register_picture")
-    private String registerPicture;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+//    @Column(name = "funding_notice_register_nickname")
+//    private String fundingNoticeRegisterNickname;
+//    @Column(name = "register_picture")
+//    private String registerPicture;
     @Column(name = "funding_notice_content", columnDefinition = "LONGTEXT")
     private String fundingNoticeContent;
 

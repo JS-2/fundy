@@ -13,9 +13,5 @@ public class NoticeRequest {
     @NotNull
     String title;
     @NotNull
-    String nickname;
-    @NotNull
     String content;
-
-    String picture;
 }

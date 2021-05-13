@@ -48,10 +48,12 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [fundingFavorite, setFundingFavorite] = useState<boolean>(false);
 
   const user: User = useSelector((state: rootState) => state.userReducer.user);
-
+  const token: string = useSelector(
+    (state: rootState) => state.userReducer.token
+  );
   useEffect(() => {
     if (user === null) return;
-    getFavoriteFunding(user.user_id).then((resp) => {
+    getFavoriteFunding(token).then((resp) => {
       const check = resp.data.find((e: IFunding) => {
         if (e.fundingId == Number(match.params.num)) {
           return true;
@@ -63,13 +65,12 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   }, [user]);
 
   const handleFavorite = () => {
-    setFavoriteFunding(
-      user.user_id,
-      Number(match.params.num),
-      fundingFavorite
-    ).then((resp) => {
-      setFundingFavorite(!fundingFavorite);
-    });
+    setFavoriteFunding(token, match.params.num, fundingFavorite).then(
+      (resp) => {
+        console.log('이건');
+        setFundingFavorite(!fundingFavorite);
+      }
+    );
   };
   //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
@@ -148,7 +149,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             </div>
             <div className="col-md-4 fundingInfo">
               <p>아이돌 이름: {Fund?.idolName}</p>
-              
 
               <table style={{ width: '100%' }}>
                 <tr>
