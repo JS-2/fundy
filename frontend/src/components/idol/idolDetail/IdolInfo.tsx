@@ -29,12 +29,15 @@ interface Params {
 const IdolInfo = (props: Props) => {
   const [idolFavorite, setIdolFavorite] = useState<boolean>(false);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const token: string = useSelector(
+    (state: rootState) => state.userReducer.token
+  );
   const params: Params = useParams();
   console.log('props', props);
 
   useEffect(() => {
     if (user === null) return;
-    getFavorite(user.user_id).then((resp) => {
+    getFavorite(token).then((resp) => {
       console.log('resp data', resp.data);
       const check = resp.data.find((e: Idol) => {
         if (e.idolId == Number(params.idol_id)) {
@@ -44,14 +47,12 @@ const IdolInfo = (props: Props) => {
       if (check) setIdolFavorite(true);
       else setIdolFavorite(false);
     });
-  }, [user]);
+  }, [token]);
 
   const handleFavorite = () => {
-    setFavorite(user.user_id, Number(params.idol_id), idolFavorite).then(
-      (resp) => {
-        setIdolFavorite(!idolFavorite);
-      }
-    );
+    setFavorite(token, Number(params.idol_id), idolFavorite).then((resp) => {
+      setIdolFavorite(!idolFavorite);
+    });
   };
 
   return (

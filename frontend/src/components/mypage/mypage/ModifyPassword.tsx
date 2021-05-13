@@ -36,6 +36,9 @@ const ModifyPassword = (props: Props) => {
   ]);
   const dispatch = useDispatch();
   const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const token: string = useSelector(
+    (state: rootState) => state.userReducer.token
+  );
   const handleClose = () => {
     onClose();
   };
@@ -43,7 +46,7 @@ const ModifyPassword = (props: Props) => {
   const handleSubmit = () => {
     passwordCheck(user.email, oldPassword).then((resp) => {
       if (resp.status === 200) {
-        modifyPassword(newPassword, user.user_id).then((pwResp) => {
+        modifyPassword(newPassword, token).then((pwResp) => {
           logoutSubmit(dispatch);
         });
       }

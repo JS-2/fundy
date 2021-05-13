@@ -9,6 +9,6 @@ export const getFundingList = () => {
     });
 }
 
-export const getFavoriteFundingList = (user_id: number) => {
-    return axiosInstance.get('/user/' + user_id + "/my-funding");
+export const getFavoriteFundingList = (auth_token: string) => {
+    return axiosInstance.get('/user/my-funding');
 }
