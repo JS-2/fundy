@@ -115,9 +115,9 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
           )}
           <h3 className="fundingText">{Fund?.fundingName}</h3>
           <h5 className="fundingText">
-            트와이스를 공식 후원하고 1집 데뷔앨범을 선착순으로 수령해보세요
+            {Fund?.fundShortInfo}
           </h5>
-          <p>{Fund?.fundingContent}</p>
+    
 
           <div className="row">
             <div className="col-md-8 imgArea">

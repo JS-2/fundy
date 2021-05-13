@@ -64,7 +64,7 @@ const FundCreate = () => {
 
     const fundForm: FundingForm = {
       donationLocation: location,
-      fundingName: fundingType,
+      fundingName: fundName,
       startTime: selectedStartDate,
       endTime: selectedEndDate,
       idolName: idolId,

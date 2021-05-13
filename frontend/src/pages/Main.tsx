@@ -75,7 +75,7 @@ const Main = () => {
           <Grid container spacing={3}>
             {hotFunding?.map((funding: IFunding) => {
               return (
-                <Grid item xs={4}>
+                <Grid date-aos="flip-right" item xs={4}>
                   <FundCard funding={funding}></FundCard>
                 </Grid>
               );
