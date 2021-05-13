@@ -1,9 +1,8 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.funding.FundingProject;
-import com.ilovefundy.model.funding.FundingDetailResponse;
-import com.ilovefundy.model.funding.FundingListResponse;
-import com.ilovefundy.model.funding.FundingRequest;
+import com.ilovefundy.dto.funding.FundingDetailResponse;
+import com.ilovefundy.dto.funding.FundingListResponse;
+import com.ilovefundy.dto.funding.FundingRequest;
 import com.ilovefundy.service.FundingService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

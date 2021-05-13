@@ -1,7 +1,7 @@
 package com.ilovefundy.utils;
 
-import com.ilovefundy.dto.funding.FundingProject;
-import com.ilovefundy.dto.pay.PayInfo;
+import com.ilovefundy.entity.funding.FundingProject;
+import com.ilovefundy.entity.pay.PayInfo;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.user.User;
-import com.ilovefundy.model.funding.FundingListResponse;
-import com.ilovefundy.model.idol.IdolResponse;
-import com.ilovefundy.model.user.*;
+import com.ilovefundy.entity.user.User;
+import com.ilovefundy.dto.funding.FundingListResponse;
+import com.ilovefundy.dto.idol.IdolResponse;
+import com.ilovefundy.dto.user.*;
 
 import com.ilovefundy.service.UserService;
 import com.ilovefundy.utils.EncryptionUtils;

@@ -1,6 +1,6 @@
 package com.ilovefundy.dao.user;
 
-import com.ilovefundy.dto.user.User;
+import com.ilovefundy.entity.user.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 

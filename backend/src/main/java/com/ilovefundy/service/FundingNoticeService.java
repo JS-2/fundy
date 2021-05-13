@@ -2,10 +2,10 @@ package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingNoticeDao;
-import com.ilovefundy.dto.funding.FundingNotice;
-import com.ilovefundy.dto.funding.FundingProject;
-import com.ilovefundy.model.funding.NoticeRequest;
-import com.ilovefundy.model.funding.NoticeUpdateRequest;
+import com.ilovefundy.entity.funding.FundingNotice;
+import com.ilovefundy.entity.funding.FundingProject;
+import com.ilovefundy.dto.funding.NoticeRequest;
+import com.ilovefundy.dto.funding.NoticeUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,8 +1,8 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.funding.FundingNotice;
-import com.ilovefundy.model.funding.NoticeRequest;
-import com.ilovefundy.model.funding.NoticeUpdateRequest;
+import com.ilovefundy.entity.funding.FundingNotice;
+import com.ilovefundy.dto.funding.NoticeRequest;
+import com.ilovefundy.dto.funding.NoticeUpdateRequest;
 import com.ilovefundy.service.FundingNoticeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

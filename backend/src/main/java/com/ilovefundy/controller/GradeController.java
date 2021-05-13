@@ -1,8 +1,8 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.user.User;
-import com.ilovefundy.model.user.FanAuth;
-import com.ilovefundy.model.user.ProfileAuth;
+import com.ilovefundy.entity.user.User;
+import com.ilovefundy.dto.user.FanAuth;
+import com.ilovefundy.dto.user.ProfileAuth;
 import com.ilovefundy.service.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;

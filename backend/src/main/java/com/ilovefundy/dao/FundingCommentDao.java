@@ -1,6 +1,6 @@
 package com.ilovefundy.dao;
 
-import com.ilovefundy.dto.funding.FundingComment;
+import com.ilovefundy.entity.funding.FundingComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FundingCommentDao extends JpaRepository<FundingComment, Integer> {

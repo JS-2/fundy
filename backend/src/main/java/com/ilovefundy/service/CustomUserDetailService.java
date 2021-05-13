@@ -1,7 +1,7 @@
 package com.ilovefundy.service;
 
 import com.ilovefundy.dao.user.UserDao;
-import com.ilovefundy.dto.user.User;
+import com.ilovefundy.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

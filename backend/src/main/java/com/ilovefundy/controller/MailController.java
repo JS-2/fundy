@@ -1,8 +1,7 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.model.user.CodeRequest;
-import com.ilovefundy.model.user.EmailRequest;
-import com.ilovefundy.model.user.UserResponse;
+import com.ilovefundy.dto.user.CodeRequest;
+import com.ilovefundy.dto.user.EmailRequest;
 import com.ilovefundy.service.MailService;
 import com.ilovefundy.service.UserService;
 import io.swagger.annotations.ApiOperation;
