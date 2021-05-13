@@ -1,6 +1,8 @@
 package com.ilovefundy.utils;
 
+import com.ilovefundy.dto.funding.FundingCommentListResponse;
 import com.ilovefundy.dto.funding.FundingNoticeListResponse;
+import com.ilovefundy.entity.funding.FundingComment;
 import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.idol.Idol;
@@ -56,7 +58,17 @@ public class SetterUtils {
         return fundingNoticeListResponse;
     }
 
-    public static MyRegisteredFundingResponse setMyRegisteredFundingResponse(FundingProject fundingProject) {
+    public static FundingCommentListResponse setFundingCommentListResponse(FundingComment fundingComment) {
+        FundingCommentListResponse fundingCommentListResponse = new FundingCommentListResponse();
+        fundingCommentListResponse.setFundingCommentId(fundingComment.getFundingCommentId());
+        fundingCommentListResponse.setFundingCommentContent(fundingComment.getFundingCommentContent());
+        fundingCommentListResponse.setFundingCommentTime(fundingComment.getFundingCommentRegTime());
+        fundingCommentListResponse.setUserPicture(fundingComment.getUser().getUserPicture());
+        fundingCommentListResponse.setUserNickname(fundingComment.getUser().getUserNickname());
+        return fundingCommentListResponse;
+    }
+
+   public static MyRegisteredFundingResponse setMyRegisteredFundingResponse(FundingProject fundingProject) {
         MyRegisteredFundingResponse myRegisteredFundingResponse = new MyRegisteredFundingResponse();
         myRegisteredFundingResponse.setFundingId(fundingProject.getFundingId());
         myRegisteredFundingResponse.setFundingName(fundingProject.getFundingName());
