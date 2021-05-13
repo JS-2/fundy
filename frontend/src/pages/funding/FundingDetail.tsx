@@ -49,7 +49,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const user: User = useSelector((state: rootState) => state.userReducer.user);
 
-
   useEffect(() => {
     if (user === null) return;
     getFavoriteFunding(user.user_id).then((resp) => {
@@ -74,7 +73,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   interface Params {
-    fund_id: string| undefined;
+    fund_id: string | undefined;
   }
   const params: Params = useParams();
 
@@ -92,7 +91,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   }, [params]);
 
   console.log({ Fund });
-  
 
   return (
     <div>
@@ -130,9 +128,11 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                 <tr>
                   <td style={{ textAlign: 'right' }}>
                     <h5>
-                      목표금액:{Fund?.fundingGoalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-                      
-                      
+                      목표금액:
+                      {Fund?.fundingGoalAmount
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      원
                     </h5>
                   </td>
                 </tr>
