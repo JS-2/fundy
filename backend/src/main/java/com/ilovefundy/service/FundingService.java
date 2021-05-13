@@ -2,6 +2,7 @@ package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dto.funding.FundingProject;
+import com.ilovefundy.model.funding.FundingDetailResponse;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.funding.FundingRequest;
 import com.ilovefundy.utils.SetterUtils;
@@ -33,7 +34,14 @@ public class FundingService {
         return fundingListResponse;
     }
 
-    public FundingProject getFunding(int id) { return fundingDao.findByFundingId(id); }
+    public List<FundingDetailResponse> getFunding(int id) {
+        List<FundingProject> funding = fundingDao.findByFundingId(id);
+        List<FundingDetailResponse> fundingDetailResponse = new LinkedList<>();
+        for (FundingProject fundingProject : funding) {
+            fundingDetailResponse.add(SetterUtils.setFundingDetailResponse(fundingProject));
+        }
+        return fundingDetailResponse;
+    }
 
     public void patchFundingState(int funding_id, boolean isApprove, char isGoodProject) {
         FundingProject fundingProject = fundingDao.getOne(funding_id);
