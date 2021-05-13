@@ -45,19 +45,25 @@ public class FundingNoticeService {
     public FundingNotice getFundingNotice(int id) { return fundingNoticeDao.findByFundingNoticeId(id); }
 
     @Transactional
-    public void addFundingNotice(int user_id, int funding_id, NoticeRequest req) {
+    public String addFundingNotice(int user_id, int funding_id, NoticeRequest req) {
         FundingProject funding = fundingDao.findByFundingId(funding_id);
         FundingNotice fundingNotice = new FundingNotice();
         User user = userDao.findByUserId(user_id);
-        fundingNotice.setFundingNoticeContent(req.getContent());
-        fundingNotice.setFundingNoticeName(req.getTitle());
-//        fundingNotice.setFundingNoticeRegisterNickname(req.getNickname());
-//        fundingNotice.setRegisterPicture(req.getPicture());
-        fundingNotice.setFundingNoticeRegTime(LocalDateTime.now());
-        fundingNotice.setUser(user);
-        fundingNotice.setFunding(funding);
-        funding.getFundingNotices().add(fundingNotice);
-        fundingNoticeDao.save(fundingNotice);
+        if (funding.getUserId() == user_id) {
+            fundingNotice.setFundingNoticeContent(req.getContent());
+            fundingNotice.setFundingNoticeName(req.getTitle());
+    //        fundingNotice.setFundingNoticeRegisterNickname(req.getNickname());
+    //        fundingNotice.setRegisterPicture(req.getPicture());
+            fundingNotice.setFundingNoticeRegTime(LocalDateTime.now());
+            fundingNotice.setUser(user);
+            fundingNotice.setFunding(funding);
+            funding.getFundingNotices().add(fundingNotice);
+            fundingNoticeDao.save(fundingNotice);
+            return "success";
+        }
+        else {
+            return "fail";
+        }
     }
 
     public void editFundingNotice(int funding_notice_id, NoticeUpdateRequest req) {
