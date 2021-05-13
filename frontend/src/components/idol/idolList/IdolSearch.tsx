@@ -94,7 +94,7 @@ const IdolSearch = () => {
       <Grid container spacing={2}>
         {idolList.map((idol, index) => {
           return (
-            <Grid item container xs={3} justify="center">
+            <Grid item container xs={3} justify="center" key={index}>
               <IdolCard idol={idol} key={index} />
             </Grid>
           );
