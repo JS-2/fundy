@@ -2,11 +2,11 @@ package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.IdolDao;
-import com.ilovefundy.dto.funding.FundingProject;
-import com.ilovefundy.dto.idol.Idol;
-import com.ilovefundy.model.funding.FundingListResponse;
-import com.ilovefundy.model.idol.IdolResponse;
-import com.ilovefundy.model.idol.IdolRequest;
+import com.ilovefundy.entity.funding.FundingProject;
+import com.ilovefundy.entity.idol.Idol;
+import com.ilovefundy.dto.funding.FundingListResponse;
+import com.ilovefundy.dto.idol.IdolResponse;
+import com.ilovefundy.dto.idol.IdolRequest;
 import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

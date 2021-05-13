@@ -2,13 +2,12 @@ package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingRegisterDao;
 import com.ilovefundy.dao.user.UserDao;
-import com.ilovefundy.dto.funding.FundingRegister;
-import com.ilovefundy.dto.user.User;
+import com.ilovefundy.entity.funding.FundingRegister;
+import com.ilovefundy.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.*;
 

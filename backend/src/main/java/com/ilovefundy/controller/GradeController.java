@@ -1,14 +1,15 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.model.user.FanAuth;
-import com.ilovefundy.model.user.ProfileAuth;
+import com.ilovefundy.entity.user.User;
+import com.ilovefundy.dto.user.FanAuth;
+import com.ilovefundy.dto.user.ProfileAuth;
 import com.ilovefundy.service.UserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,9 @@ public class GradeController {
     @PostMapping("/grade/fan-auth")
     public ResponseEntity<Object> createFanAuth(@RequestBody FanAuth fanAuth) {
         Map<String, Object> result = new HashMap<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        fanAuth.setUserId(user.getUserId());
         userService.createFanAuth(fanAuth);
         result.put("message", "팬활동 인증 신청에 성공하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -44,6 +48,9 @@ public class GradeController {
     @PostMapping("/grade/profile-auth")
     public ResponseEntity<Object> createProfileAuth(@RequestBody ProfileAuth profileAuth) {
         Map<String, Object> result = new HashMap<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        profileAuth.setUserId(user.getUserId());
         userService.createProfileAuth(profileAuth);
         result.put("message", "프로필 인증 신청에 성공하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);

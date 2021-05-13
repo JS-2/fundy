@@ -1,9 +1,8 @@
 package com.ilovefundy.dao;
 
-import com.ilovefundy.dto.donation.Donation;
-import com.ilovefundy.model.idol.IIdolDonation;
-import com.ilovefundy.model.idol.IIdolDonationRanking;
-import com.ilovefundy.model.idol.IdolDonationRankingResponse;
+import com.ilovefundy.entity.donation.Donation;
+import com.ilovefundy.dto.idol.IIdolDonation;
+import com.ilovefundy.dto.idol.IIdolDonationRanking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

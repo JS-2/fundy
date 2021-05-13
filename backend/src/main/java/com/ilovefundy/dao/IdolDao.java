@@ -1,11 +1,9 @@
 package com.ilovefundy.dao;
 
-import com.ilovefundy.dto.idol.Idol;
+import com.ilovefundy.entity.idol.Idol;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Set;
 
 public interface IdolDao extends JpaRepository<Idol, Integer> {
     // 아이돌 상세보기

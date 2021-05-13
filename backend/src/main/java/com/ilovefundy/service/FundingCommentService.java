@@ -2,8 +2,8 @@ package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingCommentDao;
 import com.ilovefundy.dao.FundingDao;
-import com.ilovefundy.dto.funding.FundingComment;
-import com.ilovefundy.model.funding.CommentRequest;
+import com.ilovefundy.entity.funding.FundingComment;
+import com.ilovefundy.dto.funding.CommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -4,14 +4,14 @@ import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingRegisterDao;
 import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.user.UserDao;
-import com.ilovefundy.dto.funding.FundingProject;
-import com.ilovefundy.dto.funding.FundingRegister;
-import com.ilovefundy.dto.idol.Idol;
-import com.ilovefundy.dto.pay.PayInfo;
-import com.ilovefundy.dto.user.User;
-import com.ilovefundy.model.funding.FundingListResponse;
-import com.ilovefundy.model.idol.IdolResponse;
-import com.ilovefundy.model.user.*;
+import com.ilovefundy.entity.funding.FundingProject;
+import com.ilovefundy.entity.funding.FundingRegister;
+import com.ilovefundy.entity.idol.Idol;
+import com.ilovefundy.entity.pay.PayInfo;
+import com.ilovefundy.entity.user.User;
+import com.ilovefundy.dto.funding.FundingListResponse;
+import com.ilovefundy.dto.idol.IdolResponse;
+import com.ilovefundy.dto.user.*;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.utils.EncryptionUtils;
 import com.ilovefundy.utils.SetterUtils;
@@ -24,7 +24,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -78,8 +77,7 @@ public class UserService {
         userDao.save(user);
     }
 
-    public UserResponse getUserInfo(int user_id) {
-        User user = userDao.findByUserId(user_id);
+    public UserResponse getUserInfo(User user) {
         UserResponse newUser = new UserResponse();
         newUser.setUserId(user.getUserId());
         newUser.setUserPicture(user.getUserPicture());
@@ -87,6 +85,7 @@ public class UserService {
         newUser.setUserEmail(user.getUserEmail());
         newUser.setUserAddress(user.getUserAddress());
         newUser.setUserLevel(user.getUserLevel().getValue());
+        newUser.setRole(user.getIsAdmin().getValue() == 1 ? "ADMIN" : "MEMBER");
         return newUser;
     }
 

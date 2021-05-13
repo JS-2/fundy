@@ -1,8 +1,8 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.model.idol.IdolDonationDetailResponse;
-import com.ilovefundy.model.idol.IdolDonationListResponse;
-import com.ilovefundy.model.idol.IdolDonationRankingResponse;
+import com.ilovefundy.dto.idol.IdolDonationDetailResponse;
+import com.ilovefundy.dto.idol.IdolDonationListResponse;
+import com.ilovefundy.dto.idol.IdolDonationRankingResponse;
 import com.ilovefundy.service.DonationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

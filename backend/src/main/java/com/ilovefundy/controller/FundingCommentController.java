@@ -1,7 +1,7 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.funding.FundingComment;
-import com.ilovefundy.model.funding.CommentRequest;
+import com.ilovefundy.entity.funding.FundingComment;
+import com.ilovefundy.dto.funding.CommentRequest;
 import com.ilovefundy.service.FundingCommentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

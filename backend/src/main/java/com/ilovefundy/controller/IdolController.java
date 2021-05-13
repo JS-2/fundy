@@ -1,7 +1,7 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.model.idol.IdolRequest;
-import com.ilovefundy.model.idol.IdolResponse;
+import com.ilovefundy.dto.idol.IdolRequest;
+import com.ilovefundy.dto.idol.IdolResponse;
 import com.ilovefundy.service.IdolService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
