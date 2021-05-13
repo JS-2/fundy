@@ -19,4 +19,6 @@ public class UserResponse {
     private String userPicture;
     @ApiModelProperty(example = "D")
     private String userLevel; // 인증레벨
+    @ApiModelProperty(example = "ADMIN")
+    private String role;    // 권한레벨
 }

@@ -2,9 +2,7 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.service.AdminService;
 import com.ilovefundy.service.FundingService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +19,9 @@ public class AdminController {
     private final FundingService fundingService;
     private final AdminService adminService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", dataType = "String", paramType = "header")
+    })
     @ApiOperation(value = "펀딩 승인",
             notes = "관리자의 판단하에 대기중인 펀딩 승인 Request Body Example : {\"isGoodProject\" : \'Y\' or \'N\'}")
     @ApiResponses({
@@ -34,6 +35,9 @@ public class AdminController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value = "펀딩 거절",
             notes = "관리자의 판단하에 대기중인 펀딩 거절")
     @ApiResponses({

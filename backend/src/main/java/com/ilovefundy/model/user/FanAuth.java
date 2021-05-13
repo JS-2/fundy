@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class FanAuth {
-    @ApiModelProperty(example = "1")
+    @ApiModelProperty(hidden = true)
     Integer userId;
     @ApiModelProperty(example = "저는 유애나 1기로 아이유 팬활동을 ~~")
     String fanHistory;

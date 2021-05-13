@@ -78,8 +78,7 @@ public class UserService {
         userDao.save(user);
     }
 
-    public UserResponse getUserInfo(int user_id) {
-        User user = userDao.findByUserId(user_id);
+    public UserResponse getUserInfo(User user) {
         UserResponse newUser = new UserResponse();
         newUser.setUserId(user.getUserId());
         newUser.setUserPicture(user.getUserPicture());
@@ -87,6 +86,7 @@ public class UserService {
         newUser.setUserEmail(user.getUserEmail());
         newUser.setUserAddress(user.getUserAddress());
         newUser.setUserLevel(user.getUserLevel().getValue());
+        newUser.setRole(user.getIsAdmin().getValue() == 1 ? "ADMIN" : "MEMBER");
         return newUser;
     }
 

@@ -1,6 +1,5 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
@@ -10,8 +9,11 @@ import com.ilovefundy.service.UserService;
 import com.ilovefundy.utils.EncryptionUtils;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -30,7 +32,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "로그인 성공. OK !!", response = UserResponse.class),
             @ApiResponse(code = 401, message = "유저정보가 없음. UNAUTHORIZED !!")
     })
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity<Object> login(@ApiParam(value = "이메일 패스워드", required = true)
                                             @RequestBody LoginRequest user) {
         Map<String, Object> result = new HashMap<>();
@@ -40,10 +42,11 @@ public class UserController {
         // 유저 정보가 존재
         if(userOpt.isPresent()) {
             // UserEmail 을 PK로 하는 JWT 를 생성
-            UserResponse userInfo = userService.getUserInfo(userOpt.get().getUserId());
+            UserResponse userInfo = userService.getUserInfo(userOpt.get());
             result.put("token", userService.getToken(userOpt.get()));
-            result.put("user", userInfo);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("token", userService.getToken(userOpt.get()));
+            return new ResponseEntity<>(userInfo, responseHeaders, HttpStatus.OK);
         }
         // 유저 정보가 없음
         else {
@@ -59,7 +62,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
             @ApiResponse(code = 409, message = "중복되는 이메일 or 닉네임. CONFLICT !!")
     })
-    @PostMapping("/user/signup")
+    @PostMapping("/signup")
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignupRequest request, @ApiIgnore Errors errors) {
         Map<String, Object> result = new HashMap<>();
         // Form Validation 에 에러가 발생
@@ -89,10 +92,12 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "사용자 정보. OK !!", response = UserResponse.class),
     })
-    @GetMapping("/user/{user_id}")
-    public ResponseEntity<Object> userInfo(@PathVariable int user_id) {
-        UserResponse user = userService.getUserInfo(user_id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/user")
+    public ResponseEntity<Object> userInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        UserResponse userResponse = userService.getUserInfo(user);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = "닉네임 변경",
@@ -102,9 +107,9 @@ public class UserController {
             @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
             @ApiResponse(code = 409, message = "중복되는 닉네임. CONFLICT !!")
     })
-    @PatchMapping("/user/{user_id}/nickname")
-    public ResponseEntity<Object> patchNickname(@PathVariable int user_id, @RequestBody Map<String, String> req) {
-        String nickname = req.get("nickname");
+    @PatchMapping("/user/nickname")
+    public ResponseEntity<Object> patchNickname(@RequestBody NicknameRequest req) {
+        String nickname = req.getNickname();
         Map<String, Object> result = new HashMap<>();
         if(userService.checkNickname(nickname)) {
             result.put("message", "유효한 양식을 지켜주세요 [한글, 영문 2~8자]");
@@ -116,7 +121,9 @@ public class UserController {
             return new ResponseEntity<>(result, HttpStatus.CONFLICT);
         }
         // 닉네임 변경
-        userService.patchNickname(user_id, nickname);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.patchNickname(user.getUserId(), nickname);
         result.put("message", "닉네임 변경 성공!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -128,7 +135,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
             @ApiResponse(code = 409, message = "중복되는 닉네임. CONFLICT !!")
     })
-    @GetMapping("/user/check-nickname/{nickname}")
+    @GetMapping("/check-nickname/{nickname}")
     public ResponseEntity<Object> checkNickname(@PathVariable String nickname) {
         Map<String, Object> result = new HashMap<>();
         // 유효성 체크
@@ -150,11 +157,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "주소 변경 성공. OK !!"),
     })
-    @PatchMapping("/user/{user_id}/address")
-    public ResponseEntity<Object> patchAddress(@PathVariable int user_id, @RequestBody Map<String, String> req) {
+    @PatchMapping("/user/address")
+    public ResponseEntity<Object> patchAddress(@RequestBody AddressRequest req) {
         Map<String, Object> result = new HashMap<>();
         // 주소 변경
-        userService.patchAddress(user_id, req.get("address"));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.patchAddress(user.getUserId(), req.getAddress());
         result.put("message", "주소가 변경되었습니다!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -165,17 +174,19 @@ public class UserController {
             @ApiResponse(code = 200, message = "비밀번호 변경 성공. OK !!"),
             @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
     })
-    @PatchMapping("/user/{user_id}/password")
-    public ResponseEntity<Object> patchPassword(@PathVariable int user_id, @RequestBody Map<String, String> req) {
+    @PatchMapping("/user/password")
+    public ResponseEntity<Object> patchPassword(@RequestBody PasswordRequest req) {
         Map<String, Object> result = new HashMap<>();
-        String password = req.get("password");
+        String password = req.getPassword();
         // 유효성 체크
         if(userService.checkPassword(password)) {
             result.put("message", "유효한 양식을 지켜주세요 [영문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8글자 이상]");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
         // 비밀번호 수정
-        userService.patchPassword(user_id, password);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.patchPassword(user.getUserId(), password);
         result.put("message", "비밀번호를 변경하였습니다");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -185,12 +196,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "프로필 사진 변경 성공. OK !!")
     })
-    @PatchMapping("/user/{user_id}/user-picture")
-    public ResponseEntity<Object> patchPicture(@PathVariable int user_id, @RequestBody Map<String, String> req) {
+    @PatchMapping("/user/user-picture")
+    public ResponseEntity<Object> patchPicture(PictureRequest req) {
         Map<String, Object> result = new HashMap<>();
-        String picture = req.get("picture");
         // 프로필 사진 변경
-        userService.patchPicture(user_id, picture);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.patchPicture(user.getUserId(), req.getPicture());
         result.put("message", "프로필 사진이 변경되었습니다");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -200,11 +212,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "회원 정보 삭제 성공. NO_CONTENT !!")
     })
-    @DeleteMapping("/user/{user_id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable int user_id) {
+    @DeleteMapping("/user")
+    public ResponseEntity<Object> deleteUser() {
         Map<String, Object> result = new HashMap<>();
         // 회원 정보 삭제
-        userService.deleteUser(user_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.deleteUser(user.getUserId());
         result.put("message", "회원 정보가 삭제되었습니다");
         return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
@@ -214,10 +228,12 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "펀딩내역 리스트 반환. OK !!", response = PayInfoResponse.class)
     })
-    @GetMapping("/user/{user_id}/funding")
-    public ResponseEntity<Object> fundingPayList(@PathVariable int user_id) {
+    @GetMapping("/user/funding")
+    public ResponseEntity<Object> fundingPayList() {
         // 사용자 펀딩내역 리스트
-        List<PayInfoResponse> fundingPayList = userService.getFundingPayList(user_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        List<PayInfoResponse> fundingPayList = userService.getFundingPayList(user.getUserId());
         return new ResponseEntity<>(fundingPayList, HttpStatus.OK);
     }
 
@@ -226,10 +242,12 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "개설 펀딩 리스트 반환. OK !!", response = MyRegisteredFundingResponse.class)
     })
-    @GetMapping("/user/{user_id}/registered-funding")
-    public ResponseEntity<Object> registeredFundingList(@PathVariable int user_id) {
+    @GetMapping("/user/registered-funding")
+    public ResponseEntity<Object> registeredFundingList() {
         // 사용자 개설 펀딩 리스트
-        List<MyRegisteredFundingResponse> myRegisteredFundingList = userService.getMyRegisteredFundingList(user_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        List<MyRegisteredFundingResponse> myRegisteredFundingList = userService.getMyRegisteredFundingList(user.getUserId());
         return new ResponseEntity<>(myRegisteredFundingList, HttpStatus.OK);
     }
 
@@ -238,10 +256,12 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 펀딩 리스트 반환. OK !!", response = FundingListResponse.class)
     })
-    @GetMapping("/user/{user_id}/my-funding")
-    public ResponseEntity<Object> myFundingList(@PathVariable int user_id) {
+    @GetMapping("/user/my-funding")
+    public ResponseEntity<Object> myFundingList() {
         // 사용자 관심펀딩 리스트
-        List<FundingListResponse> myFundingList = userService.getMyFundingList(user_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        List<FundingListResponse> myFundingList = userService.getMyFundingList(user.getUserId());
         return new ResponseEntity<>(myFundingList, HttpStatus.OK);
     }
 
@@ -250,11 +270,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 펀딩 추가. CREATED !!")
     })
-    @PostMapping("/user/{user_id}/my-funding/{funding_id}")
-    public ResponseEntity<Object> createMyFunding(@PathVariable int user_id, @PathVariable int funding_id) {
+    @PostMapping("/user/my-funding/{funding_id}")
+    public ResponseEntity<Object> createMyFunding(@PathVariable int funding_id) {
         Map<String, Object> result = new HashMap<>();
         // 관심펀딩 추가
-        userService.addMyFunding(user_id, funding_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.addMyFunding(user.getUserId(), funding_id);
         result.put("message", "관심 펀딩을 추가하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -264,11 +286,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 펀딩 삭제. NO_CONTENT !!")
     })
-    @DeleteMapping("/user/{user_id}/my-funding/{funding_id}")
-    public ResponseEntity<Object> deleteMyFunding(@PathVariable int user_id, @PathVariable int funding_id) {
+    @DeleteMapping("/user/my-funding/{funding_id}")
+    public ResponseEntity<Object> deleteMyFunding(@PathVariable int funding_id) {
         Map<String, Object> result = new HashMap<>();
         // 관심펀딩 삭제
-        userService.removeMyFunding(user_id, funding_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.removeMyFunding(user.getUserId(), funding_id);
         result.put("message", "관심 펀딩을 삭제하였습니다");
         return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
@@ -278,10 +302,12 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 아이돌 리스트 반환. OK !!", response = IdolResponse.class)
     })
-    @GetMapping("/user/{user_id}/my-idol")
-    public ResponseEntity<Object> myIdolList(@PathVariable int user_id) {
+    @GetMapping("/user/my-idol")
+    public ResponseEntity<Object> myIdolList() {
         // 사용자 관심아이돌 리스트
-        List<IdolResponse> myIdolList = userService.getMyIdolList(user_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        List<IdolResponse> myIdolList = userService.getMyIdolList(user.getUserId());
         return new ResponseEntity<>(myIdolList, HttpStatus.OK);
     }
 
@@ -290,11 +316,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 아이돌 추가. CREATED !!")
     })
-    @PostMapping("/user/{user_id}/my-idol/{idol_id}")
-    public ResponseEntity<Object> addMyIdol(@PathVariable int user_id, @PathVariable int idol_id) {
+    @PostMapping("/user/my-idol/{idol_id}")
+    public ResponseEntity<Object> addMyIdol(@PathVariable int idol_id) {
         Map<String, Object> result = new HashMap<>();
         // 관심아이돌 추가
-        userService.addMyIdol(user_id, idol_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.addMyIdol(user.getUserId(), idol_id);
         result.put("message", "관심 아이돌을 추가하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -304,11 +332,13 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "관심 아이돌 삭제. NO_CONTENT !!")
     })
-    @DeleteMapping("/user/{user_id}/my-idol/{idol_id}")
-    public ResponseEntity<Object> deleteMyIdol(@PathVariable int user_id, @PathVariable int idol_id) {
+    @DeleteMapping("/user/my-idol/{idol_id}")
+    public ResponseEntity<Object> deleteMyIdol(@PathVariable int idol_id) {
         Map<String, Object> result = new HashMap<>();
         // 관심아이돌 삭제
-        userService.removeMyIdol(user_id, idol_id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.removeMyIdol(user.getUserId(), idol_id);
         result.put("message", "관심 아이돌에서 삭제하였습니다");
         return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
