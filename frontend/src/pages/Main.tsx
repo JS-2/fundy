@@ -95,6 +95,7 @@ const Main = () => {
               return (
                 <Grid item xs={4} key={funding.fundingId}>
                   <FundCard funding={funding}></FundCard>
+                  
                 </Grid>
               );
             })}
@@ -129,6 +130,8 @@ const Main = () => {
         </div>
         <h3 className="headText">스토어</h3>
         <p>아이템 카드</p>
+
+        <div data-aos="zoom-in-up"> <p>안녕안녕</p></div>
       </div>
     </div>
   );

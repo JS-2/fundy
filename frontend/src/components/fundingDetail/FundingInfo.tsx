@@ -3,9 +3,8 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
 import "./FundingBoard.css";
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { Editor, Viewer } from '@toast-ui/react-editor';
-
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import { Editor, Viewer } from "@toast-ui/react-editor";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -17,32 +16,15 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const FundingInfo = (props:any) => {
+const FundingInfo = (props: any) => {
+  return (
+    <div className="container">
+      <div id="viewer">
+        <Viewer initialValue={props.detail}></Viewer>
 
-
-
-    return (
-
-      <div className="container">
-{props.detail}
-        <div id="viewer">
-        <Viewer
-            initialValue={props.detail}
-      >
-      </Viewer>
-      <Editor
-
-initialValue={props.detail}
-      >
-
-      </Editor>
-       
       </div>
-  
-        
-      </div>
-    );
-  
-}
+    </div>
+  );
+};
 
 export default FundingInfo;

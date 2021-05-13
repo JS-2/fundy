@@ -40,6 +40,9 @@ const Navbar = () => {
 
   const open = Boolean(anchorEl);
 
+
+
+
   return (
     <>
       <Box justifyContent="center" className="nav" minWidth={1080}>

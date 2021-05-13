@@ -56,7 +56,7 @@ const FundCard = (props: Props) => {
     });
   };
 
-  return (
+  return (  
     <Card
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
       style={{ padding: '0', height: '100%', display: 'block' }}
