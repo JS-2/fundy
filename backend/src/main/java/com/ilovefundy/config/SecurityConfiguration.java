@@ -1,11 +1,14 @@
 package com.ilovefundy.config;
 
+import com.ilovefundy.security.CustomAccessDeniedHandler;
 import com.ilovefundy.security.CustomAuthenticationEntryPoint;
 import com.ilovefundy.security.JwtAuthenticationFilter;
 import com.ilovefundy.security.JwtTokenProvider;
 import com.ilovefundy.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -18,6 +21,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().disable()  // security 에서 기본으로 생성하는 로그인페이지 사용 안 함
@@ -25,12 +34,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT 인증을 사용하므로 세션 사용
         .and()
                 .authorizeRequests()    // 사용권한 체크
-                    .antMatchers("/admin").hasRole("ADMIN") //관리자 권한
-                    .antMatchers("/user").hasRole("MEMBER") // 회원 권한
+                    .antMatchers("/admin/**").hasRole("ADMIN") //관리자 권한
+                    .antMatchers("/user/**").hasRole("MEMBER") // 회원 권한
                     .anyRequest().permitAll()   // 그 외 나머지 요청은 누구나 접근가능
         .and()
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+                .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
+                // JwtAuthenticationFilter 를 id/password 인증 필터 전에 넣음
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
     @Override

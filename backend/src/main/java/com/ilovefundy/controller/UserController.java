@@ -1,6 +1,5 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.idol.Idol;
 import com.ilovefundy.dto.user.User;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.idol.IdolResponse;
@@ -10,8 +9,11 @@ import com.ilovefundy.service.UserService;
 import com.ilovefundy.utils.EncryptionUtils;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -30,7 +32,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "로그인 성공. OK !!", response = UserResponse.class),
             @ApiResponse(code = 401, message = "유저정보가 없음. UNAUTHORIZED !!")
     })
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity<Object> login(@ApiParam(value = "이메일 패스워드", required = true)
                                             @RequestBody LoginRequest user) {
         Map<String, Object> result = new HashMap<>();
@@ -40,10 +42,11 @@ public class UserController {
         // 유저 정보가 존재
         if(userOpt.isPresent()) {
             // UserEmail 을 PK로 하는 JWT 를 생성
-            UserResponse userInfo = userService.getUserInfo(userOpt.get().getUserId());
+            UserResponse userInfo = userService.getUserInfo(userOpt.get());
             result.put("token", userService.getToken(userOpt.get()));
-            result.put("user", userInfo);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("token", userService.getToken(userOpt.get()));
+            return new ResponseEntity<>(userInfo, responseHeaders, HttpStatus.OK);
         }
         // 유저 정보가 없음
         else {
@@ -59,7 +62,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
             @ApiResponse(code = 409, message = "중복되는 이메일 or 닉네임. CONFLICT !!")
     })
-    @PostMapping("/user/signup")
+    @PostMapping("/signup")
     public ResponseEntity<Object> signUp(@RequestBody @Valid SignupRequest request, @ApiIgnore Errors errors) {
         Map<String, Object> result = new HashMap<>();
         // Form Validation 에 에러가 발생
@@ -85,16 +88,24 @@ public class UserController {
         }
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value = "사용자정보", notes = "사용자 정보 반환")
     @ApiResponses({
             @ApiResponse(code = 200, message = "사용자 정보. OK !!", response = UserResponse.class),
     })
-    @GetMapping("/user/{user_id}")
-    public ResponseEntity<Object> userInfo(@PathVariable int user_id) {
-        UserResponse user = userService.getUserInfo(user_id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/user")
+    public ResponseEntity<Object> userInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        UserResponse userResponse = userService.getUserInfo(user);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value = "닉네임 변경",
                 notes = "로그인된 사용자의 닉네임 변경 Request Body Example : {\"nickname\" : \"김우식\"}")
     @ApiResponses({
@@ -128,7 +139,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "폼 유효성 체크 실패. BAD_REQUEST !!"),
             @ApiResponse(code = 409, message = "중복되는 닉네임. CONFLICT !!")
     })
-    @GetMapping("/user/check-nickname/{nickname}")
+    @GetMapping("/check-nickname/{nickname}")
     public ResponseEntity<Object> checkNickname(@PathVariable String nickname) {
         Map<String, Object> result = new HashMap<>();
         // 유효성 체크
