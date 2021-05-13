@@ -27,7 +27,7 @@ public class FundingComment {
 
     @ManyToOne
     @JoinColumn(name = "funding_id")
-    private FundingProject fundingId;
+    private FundingProject funding;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
