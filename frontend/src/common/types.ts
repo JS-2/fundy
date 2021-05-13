@@ -1,3 +1,6 @@
+
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+
 export interface RegistUser {
   email: string;
   password: string;
@@ -110,8 +113,8 @@ export interface FundingForm{
     fundingName: string;
     fundingSubtitle: string;
     donationLocation: string;
-    startTime: Date;
-    endTime: Date;
+    startTime: MaterialUiPickersDate;
+    endTime: MaterialUiPickersDate;
     fundingContent: string;
     fundingType: string;
     goalAmount: string|number;
