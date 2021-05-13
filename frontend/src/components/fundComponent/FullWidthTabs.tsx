@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function FullWidthTabs() {
+const FullWidthTabs = (props:any) => {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -89,7 +89,7 @@ export default function FullWidthTabs() {
         >
 
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <FundingInfo></FundingInfo>
+            <FundingInfo detail={props.detail}></FundingInfo>
           
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
@@ -108,3 +108,7 @@ export default function FullWidthTabs() {
     </div>
   );
 }
+
+
+
+export default FullWidthTabs;

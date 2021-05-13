@@ -31,13 +31,17 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { FundingForm } from "../../common/types";
+import { useParams } from "react-router";
+import { setFundCreate } from "../../api/fund";
+
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState("");
   const [idolId, setIdolId] = useState("");
   const [fundName, setFundName] = useState<string>("");
   const [fundShortInfo, setFundShortInfo] = useState<string>("");
-  const [thumbnails, setThumbnails] = useState([]);
+  const [thumbnails, setThumbnails] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [locationDetail, setLocationDetail] = useState<string>("");
   const [goalAmount, setGoalAmount] = useState("");
@@ -46,31 +50,43 @@ const FundCreate = () => {
   let [selectedValue] = React.useState("0");
   const [selectedStartDate, handleStartDateChange] = useState(new Date());
   const [selectedEndDate, handleEndDateChange] = useState(new Date());
+  
+
+
+
+
+
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    getEditor();
+    const getMD=getEditor();
+    console.log(thumbnails);
 
-    const fund={
-      fundingName:fundName,
-    }
+    const fundForm: FundingForm = {
+      donationLocation: location,
+      fundingName: fundingType,
+      startTime: selectedStartDate,
+      endTime: selectedEndDate,
+      idolName: idolId,
+      fundingContent: getMD,
+      goalAmount: goalAmount,
+      thumbnail: thumbnails,
+      fundingSubtitle:fundShortInfo,
+      fundingType: "Donation",
+      idolId: 22,
+      userId: 3,
+      isDonate: true,
+      
+    };
+    
+
 
     console.log({
-      fundingType,
-      idolId,
-      fundName,
-      fundShortInfo,
-      thumbnails,
-      location,
-      locationDetail,
-      goalAmount,
-      endTime,
-      fundDetail,
-      selectedStartDate,
-      selectedEndDate,
+      fundForm
     });
 
-    setFundDetail(fund);
+    setFundCreate(fundForm);
+
   };
 
   const onlocation = (address: string) => {
@@ -108,7 +124,7 @@ const FundCreate = () => {
   }
 
   const onDrop = (thumbnail: any) => {
-    setThumbnails(thumbnails.concat(thumbnail));
+    setThumbnails(thumbnail);
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -208,41 +224,43 @@ const FundCreate = () => {
     console.log(getContent_md);
     const getContent_html = editorInstance.getHtml();
     console.log(getContent_html);
+
+    return getContent_md;
   };
 
-  const uploadImage = (blob: string | Blob) => {
-    let formData = new FormData();
+  // const uploadImage = (blob: string | Blob) => {
+  //   let formData = new FormData();
 
-    formData.append("image", blob);
-    console.log(formData);
+  //   formData.append("image", blob);
+  //   console.log(formData);
 
-    return axios("http://localhost:3001/api/imageupload", {
-      method: "POST",
-      data: formData,
-      headers: { "Content-type": "multipart/form-data" },
-    }).then((response: { data: any }) => {
-      if (response.data) {
-        return response.data;
-      }
+  //   return axios("http://localhost:3001/api/imageupload", {
+  //     method: "POST",
+  //     data: formData,
+  //     headers: { "Content-type": "multipart/form-data" },
+  //   }).then((response: { data: any }) => {
+  //     if (response.data) {
+  //       return response.data;
+  //     }
 
-      throw new Error("Server or network error");
-    });
-  };
+  //     throw new Error("Server or network error");
+  //   });
+  // };
 
-  const onAddImageBlob = (
-    blob: any,
-    callback: (arg0: any, arg1: string) => void
-  ) => {
-    uploadImage(blob)
-      .then((response: any) => {
-        if (!response) {
-          throw new Error("Validation error");
-        } else callback(response, "alt text");
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  };
+  // const onAddImageBlob = (
+  //   blob: any,
+  //   callback: (arg0: any, arg1: string) => void
+  // ) => {
+  //   uploadImage(blob)
+  //     .then((response: any) => {
+  //       if (!response) {
+  //         throw new Error("Validation error");
+  //       } else callback(response, "alt text");
+  //     })
+  //     .catch((error: any) => {
+  //       console.log(error);
+  //     });
+  // };
 
 
 
@@ -414,13 +432,7 @@ const FundCreate = () => {
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
             ref={editorRef}
-            hooks={{
-              addImageBlobHook: async (blob, callback) => {
-                const uploadedImageURL = await uploadImage(blob);
-                callback(uploadedImageURL, "alt text");
-                return false;
-              },
-            }}
+         
           />
         </div>
       </div>

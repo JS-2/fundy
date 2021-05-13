@@ -1,3 +1,4 @@
+import { FundForm, FundingForm } from "../common/types";
 import axiosInstance from "./axiosConfig"
 
 
@@ -20,12 +21,16 @@ export const getFundDetail = (funding_id: number) => {
 }
 
 
-export const setFundDetail = (fund: any, FundInfo: any) => {
+export const setFundCreate = (fund: FundingForm) => {
     
     return axiosInstance
-        .post('/fundings',{
-            params: {
-                fund,
-            }
-        });
+        .post('/fundings',JSON.stringify(fund), {
+            headers: {
+                "Content-Type": `application/json`,
+              },
+        }
+        ).then((res) => {
+            console.log(res);
+          });
+   
 }
