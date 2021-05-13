@@ -2,6 +2,7 @@ package com.ilovefundy.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
@@ -53,6 +54,10 @@ public class User implements UserDetails {
 //    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private List<PayInfo> fundingPays = new ArrayList<>();
+
+    @BatchSize(size = 10)
+    @OneToMany(mappedBy = "user")
+    private List<FundingNotice> fundingNotices = new ArrayList<>();
 
     @Column(name = "user_email")
     private String userEmail;

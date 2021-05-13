@@ -8,6 +8,7 @@ import com.ilovefundy.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,6 +37,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()    // 사용권한 체크
                     .antMatchers("/admin/**").hasRole("ADMIN") //관리자 권한
                     .antMatchers("/user/**", "/grade/**").hasAnyRole("MEMBER", "ADMIN") // 회원 권한
+                    .antMatchers(HttpMethod.GET, "/fundings/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/fundings/**").hasAnyRole("MEMBER", "ADMIN")
+                    .antMatchers(HttpMethod.PUT, "/fundings/**").hasAnyRole("MEMBER", "ADMIN")
+                    .antMatchers(HttpMethod.PATCH, "/fundings/**").hasAnyRole("MEMBER", "ADMIN")
+                    .antMatchers(HttpMethod.DELETE, "/fundings/**").hasAnyRole("MEMBER", "ADMIN")
                     .anyRequest().permitAll()   // 그 외 나머지 요청은 누구나 접근가능
         .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
