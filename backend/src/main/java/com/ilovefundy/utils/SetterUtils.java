@@ -44,33 +44,33 @@ public class SetterUtils {
         return fundingResponse;
     }
 
-    public static FundingDetailResponse setFundingDetailResponse(FundingProject fundingProject) {
-        FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
-        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
-        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
-        fundingDetailResponse.setIdolId(fundingProject.getIdolId());
-        fundingDetailResponse.setUserId(fundingProject.getUserId());
-        fundingDetailResponse.setFundingName(fundingProject.getFundingName());
-        fundingDetailResponse.setIdolName(fundingProject.getIdolName());
-        fundingDetailResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
-        fundingDetailResponse.setDonationPlaceId(fundingProject.getDonationPlaceId());
-        fundingDetailResponse.setFundingContent(fundingProject.getFundingContent());
-        fundingDetailResponse.setFundingStartTime(fundingProject.getFundingStartTime());
-        fundingDetailResponse.setFundingEndTime(fundingProject.getFundingEndTime());
-        fundingDetailResponse.setFundingGoalAmount(fundingProject.getFundingGoalAmount());
-        fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
-        fundingDetailResponse.setFundingType(fundingProject.getFundingType());
-        fundingDetailResponse.setIsDonate(fundingProject.getIsDonate());
-        fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
-        fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
-        int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
-        fundingDetailResponse.setFundingRemainDay(remainDay);
-        int amount = CalculationUtils.getFundingAmount(fundingProject);
-        fundingDetailResponse.setFundingAmount(String.format("%,d", amount));
-        int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
-        fundingDetailResponse.setFundingAchievementRate(achievementRate);
-        return fundingDetailResponse;
-    }
+//    public static FundingDetailResponse setFundingDetailResponse(FundingProject fundingProject) {
+//        FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
+//        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
+//        fundingDetailResponse.setFundingId(fundingProject.getFundingId());
+//        fundingDetailResponse.setIdolId(fundingProject.getIdolId());
+//        fundingDetailResponse.setUserId(fundingProject.getUserId());
+//        fundingDetailResponse.setFundingName(fundingProject.getFundingName());
+//        fundingDetailResponse.setIdolName(fundingProject.getIdolName());
+//        fundingDetailResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
+//        fundingDetailResponse.setDonationPlaceId(fundingProject.getDonationPlaceId());
+//        fundingDetailResponse.setFundingContent(fundingProject.getFundingContent());
+//        fundingDetailResponse.setFundingStartTime(fundingProject.getFundingStartTime());
+//        fundingDetailResponse.setFundingEndTime(fundingProject.getFundingEndTime());
+//        fundingDetailResponse.setFundingGoalAmount(fundingProject.getFundingGoalAmount());
+//        fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
+//        fundingDetailResponse.setFundingType(fundingProject.getFundingType());
+//        fundingDetailResponse.setIsDonate(fundingProject.getIsDonate());
+//        fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
+//        fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
+//        int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+//        fundingDetailResponse.setFundingRemainDay(remainDay);
+//        int amount = CalculationUtils.getFundingAmount(fundingProject);
+//        fundingDetailResponse.setFundingAmount(String.format("%,d", amount));
+//        int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
+//        fundingDetailResponse.setFundingAchievementRate(achievementRate);
+//        return fundingDetailResponse;
+//    }
 
     public static MyRegisteredFundingResponse setMyRegisteredFundingResponse(FundingProject fundingProject) {
         MyRegisteredFundingResponse myRegisteredFundingResponse = new MyRegisteredFundingResponse();

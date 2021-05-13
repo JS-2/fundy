@@ -51,7 +51,7 @@ public class FundingController {
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 상세보기 성공!"))
     @GetMapping("/fundings/{funding_id}")
     public ResponseEntity<Object> fundingInfo(@PathVariable int funding_id){
-        List<FundingDetailResponse> fundingProject = fundingService.getFunding(funding_id);
+        FundingDetailResponse fundingProject = fundingService.getFunding(funding_id);
         return new ResponseEntity<>(fundingProject, HttpStatus.OK);
     }
 
