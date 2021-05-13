@@ -1,6 +1,7 @@
 package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingProject;
+import com.ilovefundy.model.funding.FundingDetailResponse;
 import com.ilovefundy.model.funding.FundingListResponse;
 import com.ilovefundy.model.funding.FundingRequest;
 import com.ilovefundy.service.FundingService;
@@ -50,7 +51,7 @@ public class FundingController {
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 상세보기 성공!"))
     @GetMapping("/fundings/{funding_id}")
     public ResponseEntity<Object> fundingInfo(@PathVariable int funding_id){
-        FundingProject fundingProject = fundingService.getFunding(funding_id);
+        List<FundingDetailResponse> fundingProject = fundingService.getFunding(funding_id);
         return new ResponseEntity<>(fundingProject, HttpStatus.OK);
     }
 
