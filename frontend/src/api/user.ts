@@ -6,20 +6,22 @@ import { useDispatch } from "react-redux";
 import { setUser, logout } from '../reducers/user'
 
 export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHistory>, dispatch: ReturnType<typeof useDispatch>) => {
-  console.log(user);
+  console.log('losub', user);
   axiosInstance
-    .post('user/login', user)
+    .post('login', user)
     .then((response) => {
-      dispatch(setUser(response.data.user, response.data.token));
+      dispatch(setUser(response.data, response.headers.token));
       history.push('/');
     })
-    .catch((e: AxiosError) => { console.log(e.response!.status) });
+    .catch((e: AxiosError) => {
+      console.log(e)
+    });
 }
 
 export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHistory>) => {
   console.log(user);
   axiosInstance
-    .post('user/signup', user)
+    .post('signup', user)
     .then(() => { history.push('/'); })
     .catch((e: AxiosError) => { console.log(e) });
 }
@@ -45,33 +47,61 @@ export const validateNickName = (nickName: string): boolean => {
 
 }
 
-export const getFavorite = (user_id: number) => {
+export const getFavorite = (auth_token: string) => {
   return axiosInstance
-      .get('/user/' + user_id + '/my-idol');
+    .get('/user/my-idol', {
+      headers: {
+        Authorization: auth_token
+        }
+      });
 }
 
-export const setFavorite = (user_id: number, idol_id: number, favorite: boolean) => {
+export const setFavorite = (auth_token: string, idol_id: number, favorite: boolean) => {
   if (!favorite) {
     return axiosInstance
-      .post('/user/' + user_id + '/my-idol/' + idol_id)
+      .post('/user/my-idol/' + idol_id, {}, {
+        headers: {
+          Authorization: auth_token
+          }
+        })
   } else {
     return axiosInstance
-      .delete('/user/' + user_id + '/my-idol/' + idol_id)
+      .delete('/user/my-idol/' + idol_id, {
+        headers: {
+          Authorization: auth_token
+          }
+        })
   }
 }
 
-export const getFavoriteFunding = (user_id: number) => {
+export const getFavoriteFunding = (auth_token: string) => {
   return axiosInstance
-      .get('/user/' + user_id + '/my-funding');
+      .get('/user/my-funding',{
+        headers: {
+          Authorization: auth_token
+          }
+        });
 }
 
-export const setFavoriteFunding = (user_id: number, funding_id: number, favorite: boolean) => {
+export const setFavoriteFunding = (auth_token: string, funding_id: string, favorite: boolean) => {
+  console.log('favorite', favorite);
   if (!favorite) {
+    console.log('post');
+    console.log(auth_token);
     return axiosInstance
-      .post('/user/' + user_id + '/my-funding/'  + funding_id)
+      .post('/user/my-funding/' + funding_id, {}, {
+        headers: {
+          Authorization: auth_token
+          }
+        })
   } else {
+    console.log('delete');
     return axiosInstance
-      .delete('/user/' + user_id + '/my-funding/'  + funding_id)
+      .delete('/user/my-funding/' + funding_id, {
+        headers: {
+          Authorization: auth_token
+          }
+        })
   }
 }
 
@@ -80,25 +110,32 @@ export const passwordCheck = (email: string, password: string) => {
     userEmail: email,
     userPassword: password
   }
-  return axiosInstance.post('user/login', user);
+  console.log(user);
+  return axiosInstance.post('/login', user);
 }
 
-export const checkNickName = (nickName: string) => {
-  return axiosInstance.get('user/check-nickname/' + nickName);
+export const checkNickName = (nickName: string, auth_token: string) => {
+  return axiosInstance.get('/check-nickname/' + nickName, {
+    headers: {
+      Authorization: auth_token
+      }
+    });
 }
 
-export const modifyPassword = (password: string, user_id: number) => {
-  return axiosInstance.patch('user/' + user_id + '/password', { password: password }, {
+export const modifyPassword = (password: string, auth_token: string) => {
+  return axiosInstance.patch('user/password', { password: password }, {
     headers: {
         'Content-Type': 'application/json',
+        Authorization: auth_token
     }
 });
 }
 
-export const modifyNickName = (nickName: string, user_id: number) => {
-  return axiosInstance.patch('user/' + user_id + '/nickname', { nickname: nickName }, {
+export const modifyNickName = (nickName: string, auth_token: string) => {
+  return axiosInstance.patch('user/nickname',{ nickname: nickName }, {
     headers: {
-        'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: auth_token
     }
 });
 }

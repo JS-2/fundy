@@ -19,6 +19,7 @@ export interface ResponseUser {
   userAddress: string;
   userNickname: string;
   userPicture: string;
+  role: string;
 }
 
 export interface User {
@@ -28,6 +29,7 @@ export interface User {
   level: string;
   address: string;
   picture: string;
+  role: string;
 }
 
 export interface IUserState {

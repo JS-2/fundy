@@ -8,9 +8,12 @@ import IdolCard from '../../IdolCard';
 
 const MyIdols = () => {
   const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const token: string = useSelector(
+    (state: rootState) => state.userReducer.token
+  );
   const [idols, setIdols] = useState<Idol[]>();
   useEffect(() => {
-    getFavorite(user.user_id).then((resp) => {
+    getFavorite(token).then((resp) => {
       setIdols(resp.data);
     });
   }, []);

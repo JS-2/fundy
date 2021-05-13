@@ -12,6 +12,8 @@ const LOGOUT = 'USER/LOGOUT';
 
 // 액션 생성함수
 export function setUser(_user: ResponseUser, token: string) {
+    console.log('1>>>', _user);
+    console.log('2>>>', _user.userEmail);
     const user: User = {
         email: _user.userEmail,
         nickname: _user.userNickname!,
@@ -19,6 +21,7 @@ export function setUser(_user: ResponseUser, token: string) {
         level: _user.userLevel!,
         address: _user.userAddress!,
         picture: _user.userPicture!,
+        role: _user.role
     }
 
     return {
