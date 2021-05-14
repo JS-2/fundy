@@ -34,3 +34,16 @@ export const setFundCreate = (fund: FundingForm) => {
           });
    
 }
+
+
+
+export const getFundNotice = (funding_id: number) => {
+    
+    return axiosInstance
+        .get('/fundings/'+funding_id+'/notices',{
+        params: {
+            page: 1,
+            per_page: 100,
+        }}
+        );
+}

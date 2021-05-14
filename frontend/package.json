@@ -35,9 +35,12 @@
     "react": "^17.0.2",
     "react-daum-postcode": "^2.0.6",
     "react-dom": "^17.0.2",
+    "react-html-parser": "^2.0.2",
     "react-images-upload": "^1.2.8",
+    "react-markdown": "^6.0.2",
     "react-native-gifted-chat": "^0.16.3",
     "react-redux": "^7.2.4",
+    "react-render-html": "^0.6.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-swipeable-views": "^0.13.9",
@@ -76,6 +79,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-html-parser": "^2.0.1",
     "@types/react-swipeable-views": "^0.13.0"
   }
 }

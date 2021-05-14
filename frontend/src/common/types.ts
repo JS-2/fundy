@@ -131,3 +131,14 @@ export interface FundingForm{
     userId: number;
   
 }
+
+
+
+export interface FundingNotice{
+  fundingNoticeId: number;
+  fundingNoticeTitle: string;
+  fundingNoticeContent: string;
+  fundingNoticeTime: Date;
+  userPicture: string|null;
+  userNickname: string;
+}
