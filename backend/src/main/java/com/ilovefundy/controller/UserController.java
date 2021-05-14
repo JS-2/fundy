@@ -16,9 +16,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 @CrossOrigin(origins = {"*"})
@@ -197,12 +199,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "프로필 사진 변경 성공. OK !!")
     })
     @PatchMapping("/user/user-picture")
-    public ResponseEntity<Object> patchPicture(PictureRequest req) {
+    public ResponseEntity<Object> patchPicture(@RequestPart final MultipartFile multipartFile) throws IOException {
         Map<String, Object> result = new HashMap<>();
         // 프로필 사진 변경
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        userService.patchPicture(user.getUserId(), req.getPicture());
+        userService.patchPicture(user.getUserId(), multipartFile);
         result.put("message", "프로필 사진이 변경되었습니다");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

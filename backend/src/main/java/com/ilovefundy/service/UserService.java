@@ -22,8 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -35,7 +37,7 @@ public class UserService {
     private final FundingDao fundingDao;
     private final FundingRegisterDao fundingRegisterDao;
     private final JwtTokenProvider jwtTokenProvider;
-    private final EntityManager em;
+    private final S3UploaderService s3UploaderService;
 
     // Form Validation 에러 메세지를 Map 에 담아 반환
     public Map<String, String> validateHandling(Errors errors) {
@@ -115,8 +117,15 @@ public class UserService {
         userDao.save(user);
     }
 
-    public void patchPicture(int user_id, String picture) {
+    public void patchPicture(int user_id, MultipartFile multipartFile) throws IOException {
         User user = userDao.findByUserId(user_id);
+        if(user.getUserPicture() != null) { // 원래 존재한 사진 삭제
+            String picturePath = user.getUserPicture();
+            String key = picturePath.substring(picturePath.lastIndexOf("static/"));
+//            System.out.println(key);
+            s3UploaderService.deleteFileInS3(key);
+        }
+        String picture = s3UploaderService.upload(multipartFile, "static");
         user.setUserPicture(picture);
         userDao.save(user);
     }
