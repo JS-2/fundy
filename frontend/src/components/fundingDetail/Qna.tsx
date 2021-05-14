@@ -46,16 +46,31 @@ const Qna = () => {
   return (
     <div>
       <Grid container>
-        {comments.map((com) => {
-          return (
-            <QnaComment
-              user={user}
-              com={com}
-              token={token}
-              refreshComments={refreshComments}
-            />
-          );
-        })}
+        {comments.length !== 0 ? (
+          comments.map((com) => {
+            return (
+              <QnaComment
+                user={user}
+                com={com}
+                token={token}
+                refreshComments={refreshComments}
+              />
+            );
+          })
+        ) : (
+          <Grid
+            item
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+            xs={12}
+          >
+            <Box my={3} fontSize="3em" color="silver">
+              첫 댓글을 달아보세요!
+            </Box>
+          </Grid>
+        )}
       </Grid>
       <Grid container spacing={1}>
         <Grid item xs={10}>
