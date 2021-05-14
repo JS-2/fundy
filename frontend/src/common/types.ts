@@ -131,3 +131,11 @@ export interface FundingForm{
     userId: number;
   
 }
+
+export interface IComment {
+  fundingCommentContent: string;
+  fundingCommentId: string;
+  fundingCommentTime: string;
+  userNickname: string;
+  userPicture: string | undefined;
+}
