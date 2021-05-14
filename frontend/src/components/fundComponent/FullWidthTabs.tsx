@@ -94,7 +94,7 @@ const FullWidthTabs = (props:any) => {
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <div className="boardComp">
-            <Board></Board>
+            <Board notices={props.notices}></Board>
             </div>
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>

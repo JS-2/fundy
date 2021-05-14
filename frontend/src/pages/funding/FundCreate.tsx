@@ -216,8 +216,7 @@ const FundCreate = () => {
     console.log(getContent_md);
     const getContent_html = editorInstance.getHtml();
     console.log(getContent_html);
-
-    return getContent_md;
+    return getContent_html;
   };
 
   // const uploadImage = (blob: string | Blob) => {

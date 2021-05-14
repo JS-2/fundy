@@ -132,10 +132,22 @@ export interface FundingForm{
   
 }
 
+
+
+export interface FundingNotice{
+  fundingNoticeId: number;
+  fundingNoticeTitle: string;
+  fundingNoticeContent: string;
+  fundingNoticeTime: Date;
+  userPicture: string|null;
+  userNickname: string;
+}
+
 export interface IComment {
   fundingCommentContent: string;
   fundingCommentId: string;
   fundingCommentTime: string;
   userNickname: string;
   userPicture: string | undefined;
+
 }

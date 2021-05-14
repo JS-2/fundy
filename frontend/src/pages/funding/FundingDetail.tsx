@@ -10,11 +10,11 @@ import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Grid, Paper, Box, Modal } from '@material-ui/core';
 import './FundingDetail.css';
-import { getFundDetail } from '../../api/fund';
+import { getFundDetail, getFundNotice } from '../../api/fund';
 import FullWidthTabs from '../../components/fundComponent/FullWidthTabs';
-import { FundForm, IFunding, User } from '../../common/types';
+import { FundForm, FundingNotice, IFunding, User } from '../../common/types';
 import { RouteComponentProps, useParams } from 'react-router-dom';
-import { Height } from '@material-ui/icons';
+import { Height, PinDropSharp } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { rootState } from '../../reducers';
 import { getFavoriteFunding, setFavoriteFunding } from '../../api/user';
@@ -75,7 +75,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
   interface Params {
-    fund_id: string | undefined;
+    fund_id: string;
   }
   const params: Params = useParams();
 
@@ -91,7 +91,12 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const [notices, setNotices] = useState<FundingNotice[]>([]);
 
+
+
+
+  
 
   useEffect(() => {
     console.log('fundDetailPage');
@@ -101,6 +106,19 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       setFund(response.data);
     });
   }, [params]);
+
+
+  
+  useEffect(() => {
+    console.log('fundNotices Request');
+    getFundNotice(Number(match.params.num)).then((response) => {
+      console.log(response.data);
+      setNotices(response.data);
+    });
+  }, [params]);
+
+
+
 
   console.log({ Fund });
 
@@ -184,7 +202,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         </div>
       </div>
       <div>
-        <FullWidthTabs detail={Fund?.fundingContent}></FullWidthTabs>
+        <FullWidthTabs detail={Fund?.fundingContent} notices={notices}></FullWidthTabs>
       </div>
     </div>
 
