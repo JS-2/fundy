@@ -21,6 +21,8 @@ public class UserResponse {
     private String userLevel; // 인증레벨
     @ApiModelProperty(example = "Y")
     private String isAdult; // 성인 여부
+    @ApiModelProperty(example = "Y")
+    private String isPlus;  // 플러스 인증
     @ApiModelProperty(example = "N | Waiting | Approve | Decline")
     private String isOfficialFan;   // 팬활동 인증
     @ApiModelProperty(example = "N | Waiting | Approve | Decline")
