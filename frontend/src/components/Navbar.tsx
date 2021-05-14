@@ -50,6 +50,7 @@ const Navbar = () => {
           minWidth={1080}
           height={80}
           mb={1}
+          mx={4}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -99,7 +100,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Box mx={1} display="flex" alignItems="center">
+                <Box display="flex" alignItems="center">
                   <IconButton onClick={handleClick}>
                     <Avatar src={user.picture}></Avatar>
                   </IconButton>
