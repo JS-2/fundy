@@ -5,19 +5,11 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser, logout } from '../reducers/user'
 
-export const loginSubmit = (user: LoginUser, history: ReturnType<typeof useHistory>, dispatch: ReturnType<typeof useDispatch>) => {
+export const loginSubmit = (user: LoginUser) => {
   console.log('losub', user);
-  axiosInstance
-    .post('login', user)
-    .then((response) => {
-      dispatch(setUser(response.data, response.headers.token));
-      history.push('/');
-    })
-    .catch((e: AxiosError) => {
-      console.log(e)
-    });
+  return axiosInstance
+    .post('login', user);
 }
-
 export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHistory>) => {
   console.log(user);
   axiosInstance
@@ -123,7 +115,7 @@ export const checkNickName = (nickName: string, auth_token: string) => {
 }
 
 export const modifyPassword = (password: string, auth_token: string) => {
-  return axiosInstance.patch('user/password', { password: password }, {
+  return axiosInstance.patch('/user/password', { password: password }, {
     headers: {
         'Content-Type': 'application/json',
         Authorization: auth_token
@@ -132,10 +124,21 @@ export const modifyPassword = (password: string, auth_token: string) => {
 }
 
 export const modifyNickName = (nickName: string, auth_token: string) => {
-  return axiosInstance.patch('user/nickname',{ nickname: nickName }, {
+  return axiosInstance.patch('/user/nickname',{ nickname: nickName }, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: auth_token
     }
 });
+}
+
+export const setThumbnail = (file: any, auth_token: string) => {
+  const frm = new FormData();
+  frm.append('multipartFile', file);
+  return axiosInstance.patch('/user/user-picture', frm, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: auth_token
+    }
+})
 }
