@@ -16,9 +16,11 @@ public class FundingDetailResponse {
     private Integer idolId;
     @ApiModelProperty(example = "1")
     private Integer userId;
-    @ApiModelProperty(example = "1")
-    private String fundingName;
+    @ApiModelProperty(example = "멍멍이")
+    private String userNickname;
     @ApiModelProperty(example = "\"MORE & MORE 앨범 후원\"")
+    private String fundingName;
+    @ApiModelProperty(example = "\"트와이스\"")
     private String idolName;
     @ApiModelProperty(example = "\"9개월 만에 컴백이자 2020년 발표하는 첫 신곡 \"MORE & MORE\"에 후원하세요!\"")
     private String fundingSubtitle;
