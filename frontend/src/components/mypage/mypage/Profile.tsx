@@ -7,6 +7,7 @@ import {
   Collapse,
   Divider,
   Grid,
+  IconButton,
 } from '@material-ui/core';
 import React, { useState } from 'react';
 import LockIcon from '@material-ui/icons/Lock';
@@ -23,12 +24,36 @@ import { useSelector } from 'react-redux';
 import { rootState } from '../../../reducers';
 import ModifyPassword from './ModifyPassword';
 import ModifyNickname from './ModifyNickname';
+import { setThumbnail } from '../../../api/user';
+import CertUserInfo from './CertUserInfo';
+import CertFan from './CertFan';
 
 const Profile = () => {
   const [fold, setFold] = useState(true);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const token: string = useSelector(
+    (state: rootState) => state.userReducer.token
+  );
   const [openPw, setOpenPw] = useState(false);
   const [openN, setOpenN] = useState(false);
+  const [openCertFan, setOpenCertFan] = useState(false);
+  const [openCertUserInfo, setOpenCertUserInfo] = useState(false);
+
+  const handleOpenFan = () => {
+    setOpenCertFan(true);
+  };
+
+  const handleCloseFan = () => {
+    setOpenCertFan(false);
+  };
+
+  const handleOpenUserInfo = () => {
+    setOpenCertUserInfo(true);
+  };
+
+  const handleCloseUserInfo = () => {
+    setOpenCertUserInfo(false);
+  };
 
   const handleOpenPw = () => {
     setOpenPw(true);
@@ -46,10 +71,18 @@ const Profile = () => {
     setOpenN(false);
   };
 
+  const handleImage = (e: any) => {
+    setThumbnail(e.target.files[0], token).then((resp) => {
+      console.log(resp);
+    });
+  };
+
   return (
     <div>
-      <ModifyPassword open={openPw} onClose={handleClosePw}></ModifyPassword>
-      <ModifyNickname open={openN} onClose={handleCloseN}></ModifyNickname>
+      <ModifyPassword open={openPw} onClose={handleClosePw} />
+      <ModifyNickname open={openN} onClose={handleCloseN} />
+      <CertFan open={openCertFan} onClose={handleCloseFan} />
+      <CertUserInfo open={openCertUserInfo} onClose={handleCloseUserInfo} />
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
         나의 프로필
       </Box>
@@ -57,7 +90,15 @@ const Profile = () => {
         <CardContent>
           <Grid container>
             <Grid item xs={2}>
-              <Avatar className={styles.avatar}>H</Avatar>
+              <IconButton component="label">
+                <input
+                  type="file"
+                  hidden
+                  accept=".gif, .jpg, .png"
+                  onChange={handleImage}
+                />
+                <Avatar className={styles.avatar}></Avatar>
+              </IconButton>
             </Grid>
             <Grid item xs={4}>
               <Box ml={2} mt={1}>
@@ -127,9 +168,9 @@ const Profile = () => {
               <Grid item container xs={12}>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <PersonOutlineIcon
-                      className={classNames('main_color', styles.icon)}
-                    />
+                    <IconButton size="small">
+                      <PersonOutlineIcon className={classNames(styles.icon)} />
+                    </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
                     <Box className="nbg_bold">성인 인증</Box>
@@ -137,9 +178,11 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <FavoriteBorderIcon
-                      className={classNames('main_color', styles.icon)}
-                    />
+                    <IconButton size="small" onClick={handleOpenFan}>
+                      <FavoriteBorderIcon
+                        className={classNames('main_color', styles.icon)}
+                      />
+                    </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
                     <Box className="nbg_bold">팬활동 인증</Box>
@@ -147,9 +190,11 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <EmojiPeopleIcon
-                      className={classNames('main_color', styles.icon)}
-                    />
+                    <IconButton size="small" onClick={handleOpenUserInfo}>
+                      <EmojiPeopleIcon
+                        className={classNames('main_color', styles.icon)}
+                      />
+                    </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
                     <Box className="nbg_bold">총대 신상 인증</Box>
@@ -157,9 +202,11 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <AddCircleOutlineIcon
-                      className={classNames('main_color', styles.icon)}
-                    />
+                    <IconButton size="small">
+                      <AddCircleOutlineIcon
+                        className={classNames('main_color', styles.icon)}
+                      />
+                    </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
                     <Box className="nbg_bold">플러스 인증</Box>
