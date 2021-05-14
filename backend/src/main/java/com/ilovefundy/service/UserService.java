@@ -121,11 +121,11 @@ public class UserService {
         User user = userDao.findByUserId(user_id);
         if(user.getUserPicture() != null) { // 원래 존재한 사진 삭제
             String picturePath = user.getUserPicture();
-            String key = picturePath.substring(picturePath.lastIndexOf("/static/"));
-            System.out.println(key);
-//            s3UploaderService.deleteFileInS3(key);
+            String key = picturePath.substring(picturePath.lastIndexOf("static/"));
+//            System.out.println(key);
+            s3UploaderService.deleteFileInS3(key);
         }
-        String picture = s3UploaderService.upload(multipartFile, "/static");
+        String picture = s3UploaderService.upload(multipartFile, "static");
         user.setUserPicture(picture);
         userDao.save(user);
     }

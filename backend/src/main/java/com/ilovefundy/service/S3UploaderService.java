@@ -46,7 +46,8 @@ public class S3UploaderService {
             // S3 파일 업로드
             uploadOnS3(saveFileName, file, dirName);
             // 주소 할당
-            url = defaultUrl + dirName + "/" + saveFileName;
+            url = defaultUrl + "/" + dirName + "/" + saveFileName;
+//            System.out.println(url);
             // 파일 삭제
             file.delete();
         } catch (StringIndexOutOfBoundsException e) {
