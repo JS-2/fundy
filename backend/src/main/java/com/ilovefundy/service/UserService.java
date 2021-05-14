@@ -87,6 +87,9 @@ public class UserService {
         newUser.setUserEmail(user.getUserEmail());
         newUser.setUserAddress(user.getUserAddress());
         newUser.setUserLevel(user.getUserLevel().getValue());
+        newUser.setIsAdult(user.getIsAdult().getValue() == 1 ? "Y" : "N");
+        newUser.setIsOfficialFan(user.getIsOfficialFan().getValue());
+        newUser.setIsProfile(user.getIsProfile().getValue());
         newUser.setRole(user.getIsAdmin().getValue() == 1 ? "ADMIN" : "MEMBER");
         return newUser;
     }

@@ -19,6 +19,12 @@ public class UserResponse {
     private String userPicture;
     @ApiModelProperty(example = "D")
     private String userLevel; // 인증레벨
+    @ApiModelProperty(example = "Y")
+    private String isAdult; // 성인 여부
+    @ApiModelProperty(example = "N | Waiting | Approve | Decline")
+    private String isOfficialFan;   // 팬활동 인증
+    @ApiModelProperty(example = "N | Waiting | Approve | Decline")
+    private String isProfile;   // 프로필 인증
     @ApiModelProperty(example = "ADMIN")
     private String role;    // 권한레벨
 }

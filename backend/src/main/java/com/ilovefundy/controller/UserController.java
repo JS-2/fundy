@@ -45,7 +45,6 @@ public class UserController {
         if(userOpt.isPresent()) {
             // UserEmail 을 PK로 하는 JWT 를 생성
             UserResponse userInfo = userService.getUserInfo(userOpt.get());
-            result.put("token", userService.getToken(userOpt.get()));
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("token", userService.getToken(userOpt.get()));
             return new ResponseEntity<>(userInfo, responseHeaders, HttpStatus.OK);
