@@ -48,7 +48,7 @@ public class FundingNoticeController {
 
     //펀딩 공지사항 등록
     @ApiOperation(value = "펀딩 공지사항 등록")
-    @ApiResponses({@ApiResponse(code = 201, message = "펀딩 공지사항 등록 성공!"), @ApiResponse(code = 400, message = "펀딩 등록자만 공지사항 작성 가능합니다. UNAUTHORIZED !!")})
+    @ApiResponses({@ApiResponse(code = 201, message = "펀딩 공지사항 등록 성공!"), @ApiResponse(code = 401, message = "펀딩 등록자만 공지사항 작성 가능합니다. UNAUTHORIZED !!")})
     @PostMapping("/fundings/{funding_id}/notices")
     public ResponseEntity<Object> fundingNoticeWrite(@PathVariable int funding_id, @RequestBody @Valid NoticeRequest request) {
         Map<String, Object> result = new HashMap<>();
@@ -62,7 +62,7 @@ public class FundingNoticeController {
         }
         else{
             result.put("message", "공지사항 등록 실패! 펀딩 등록자만 공지사항 작성 가능합니다.");
-            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         }
     }
 

@@ -38,10 +38,12 @@ public class FundingService {
     public FundingDetailResponse getFunding(int id) {
         FundingProject fundingProject = fundingDao.findByFundingId(id);
         FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
+        User user = userDao.findByUserId(fundingProject.getUserId());
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setIdolId(fundingProject.getIdolId());
         fundingDetailResponse.setUserId(fundingProject.getUserId());
+        fundingDetailResponse.setUserNickname(user.getUserNickname());
         fundingDetailResponse.setFundingName(fundingProject.getFundingName());
         fundingDetailResponse.setIdolName(fundingProject.getIdolName());
         fundingDetailResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
