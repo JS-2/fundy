@@ -204,8 +204,9 @@ public class UserController {
         // 프로필 사진 변경
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        userService.patchPicture(user.getUserId(), multipartFile);
+        String userPicture = userService.patchPicture(user.getUserId(), multipartFile);
         result.put("message", "프로필 사진이 변경되었습니다");
+        result.put("userPicture", userPicture);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
