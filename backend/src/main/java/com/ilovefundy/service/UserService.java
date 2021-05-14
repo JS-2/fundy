@@ -22,8 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -35,7 +37,7 @@ public class UserService {
     private final FundingDao fundingDao;
     private final FundingRegisterDao fundingRegisterDao;
     private final JwtTokenProvider jwtTokenProvider;
-    private final EntityManager em;
+    private final S3UploaderService s3UploaderService;
 
     // Form Validation 에러 메세지를 Map 에 담아 반환
     public Map<String, String> validateHandling(Errors errors) {
@@ -115,8 +117,15 @@ public class UserService {
         userDao.save(user);
     }
 
-    public void patchPicture(int user_id, String picture) {
+    public void patchPicture(int user_id, MultipartFile multipartFile) throws IOException {
         User user = userDao.findByUserId(user_id);
+        if(user.getUserPicture() != null) { // 원래 존재한 사진 삭제
+            String picturePath = user.getUserPicture();
+            String key = picturePath.substring(picturePath.lastIndexOf("static/"));
+//            System.out.println(key);
+            s3UploaderService.deleteFileInS3(key);
+        }
+        String picture = s3UploaderService.upload(multipartFile, "static");
         user.setUserPicture(picture);
         userDao.save(user);
     }
@@ -200,8 +209,8 @@ public class UserService {
         userDao.save(user);
     }
 
+    // 팬 활동 인증 등록 신청
     @Transactional
-    // 팬 활동 인증 등록
     public void createFanAuth(FanAuth fanAuth) {
         int user_id = fanAuth.getUserId();
         User user = userDao.getOne(user_id);
@@ -213,13 +222,15 @@ public class UserService {
             fundingRegister.setOfficialFanHistory(fanAuth.getFanHistory());
             fundingRegisterDao.save(fundingRegister);
         }
-        // 프로필 인증으로 이미 정보가 있는 경우
+        // 팬활동 인증으로 이미 정보가 있는 경우 or 재신청 하는 경우
         else {
             fundingRegisterOpt.get().setOfficialFanHistory(fanAuth.getFanHistory());
             fundingRegisterDao.save(fundingRegisterOpt.get());
         }
+        user.setIsOfficialFan(User.IsCertification.Waiting);
     }
 
+    //프로필 인증 등록 신청
     @Transactional
     public void createProfileAuth(ProfileAuth profileAuth) {
         int user_id = profileAuth.getUserId();
@@ -235,7 +246,7 @@ public class UserService {
             fundingRegister.setFundingRegisterHistory(profileAuth.getProfileHistory());
             fundingRegisterDao.save(fundingRegister);
         }
-        // 프로필 인증으로 이미 정보가 있는 경우
+        // 프로필 인증으로 이미 정보가 있는 경우 or 재신청 하는 경우
         else {
             fundingRegisterOpt.get().setFundingRegisterName(profileAuth.getName());
             fundingRegisterOpt.get().setFundingRegisterPicture(profileAuth.getProfilePicture());
@@ -243,5 +254,6 @@ public class UserService {
             fundingRegisterOpt.get().setFundingRegisterHistory(profileAuth.getProfileHistory());
             fundingRegisterDao.save(fundingRegisterOpt.get());
         }
+        user.setIsProfile(User.IsCertification.Waiting);
     }
 }

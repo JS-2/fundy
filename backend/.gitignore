@@ -93,3 +93,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# AWS configuration file
+application-aws.properties

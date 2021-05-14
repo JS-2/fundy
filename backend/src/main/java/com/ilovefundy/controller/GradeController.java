@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.dto.user.FanAuth;
 import com.ilovefundy.dto.user.ProfileAuth;
@@ -23,17 +24,23 @@ import java.util.Map;
 @RestController
 public class GradeController {
     private final UserService userService;
+    private final UserDao userDao;
 
     @ApiOperation(value = "팬활동 인증 신청",
             notes = "사용자가 자신의 팬활동 인증 신청")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "팬활동 인증 신청. CREATED !!")
+            @ApiResponse(code = 201, message = "팬활동 인증 신청. CREATED !!"),
+            @ApiResponse(code = 400, message = "이미 완료된 인증. BAD_REQUEST !!")
     })
     @PostMapping("/grade/fan-auth")
     public ResponseEntity<Object> createFanAuth(@RequestBody FanAuth fanAuth) {
         Map<String, Object> result = new HashMap<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
+        if (user.getIsOfficialFan().getValue().equals("Approve")) {
+            result.put("message", "이미 완료된 인증입니다.");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
         fanAuth.setUserId(user.getUserId());
         userService.createFanAuth(fanAuth);
         result.put("message", "팬활동 인증 신청에 성공하였습니다");
@@ -50,6 +57,10 @@ public class GradeController {
         Map<String, Object> result = new HashMap<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
+        if (user.getIsProfile().getValue().equals("Approve")) {
+            result.put("message", "이미 완료된 인증입니다.");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
         profileAuth.setUserId(user.getUserId());
         userService.createProfileAuth(profileAuth);
         result.put("message", "프로필 인증 신청에 성공하였습니다");

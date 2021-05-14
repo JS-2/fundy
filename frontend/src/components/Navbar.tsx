@@ -40,9 +40,6 @@ const Navbar = () => {
 
   const open = Boolean(anchorEl);
 
-
-
-
   return (
     <>
       <Box justifyContent="center" className="nav" minWidth={1080}>
@@ -51,8 +48,11 @@ const Navbar = () => {
           width="100%"
           maxWidth={1440}
           minWidth={1080}
-          px={5}
+          height={80}
+          mb={1}
+          mx={4}
           justifyContent="space-between"
+          alignItems="center"
         >
           <Box display="flex">
             <Box className="logo" mr={5}>
@@ -100,7 +100,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Box mx={1} display="flex" alignItems="center">
+                <Box display="flex" alignItems="center">
                   <IconButton onClick={handleClick}>
                     <Avatar src={user.picture}></Avatar>
                   </IconButton>

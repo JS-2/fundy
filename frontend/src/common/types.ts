@@ -142,3 +142,12 @@ export interface FundingNotice{
   userPicture: string|null;
   userNickname: string;
 }
+
+export interface IComment {
+  fundingCommentContent: string;
+  fundingCommentId: string;
+  fundingCommentTime: string;
+  userNickname: string;
+  userPicture: string | undefined;
+
+}
