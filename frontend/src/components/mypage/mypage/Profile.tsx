@@ -19,14 +19,15 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styles from './Profile.module.css';
 import classNames from 'classnames';
-import { User } from '../../../common/types';
-import { useSelector } from 'react-redux';
+import { ResponseUser, User } from '../../../common/types';
+import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../../reducers';
 import ModifyPassword from './ModifyPassword';
 import ModifyNickname from './ModifyNickname';
 import { setThumbnail } from '../../../api/user';
 import CertUserInfo from './CertUserInfo';
 import CertFan from './CertFan';
+import { setUser } from '../../../reducers/user';
 
 const Profile = () => {
   const [fold, setFold] = useState(true);
@@ -38,6 +39,8 @@ const Profile = () => {
   const [openN, setOpenN] = useState(false);
   const [openCertFan, setOpenCertFan] = useState(false);
   const [openCertUserInfo, setOpenCertUserInfo] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleOpenFan = () => {
     setOpenCertFan(true);
@@ -72,8 +75,18 @@ const Profile = () => {
   };
 
   const handleImage = (e: any) => {
-    setThumbnail(e.target.files[0], token).then((resp) => {
-      console.log(resp);
+    setThumbnail(e.target.files[0], token).then((resp: any) => {
+      console.log(resp.data.userPicture);
+      const newUser: ResponseUser = {
+        userEmail: user.email,
+        userId: user.user_id,
+        userLevel: user.level,
+        userAddress: user.address,
+        userNickname: user.nickname,
+        userPicture: resp.data.userPicture,
+        role: user.role,
+      };
+      dispatch(setUser(newUser, token));
     });
   };
 
