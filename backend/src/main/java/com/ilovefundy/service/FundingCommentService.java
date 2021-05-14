@@ -12,6 +12,7 @@ import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -29,7 +30,7 @@ public class FundingCommentService {
 
     public List<FundingCommentListResponse> getFundingCommentList(int funding_id, int page, int per_page) {
         List<FundingCommentListResponse> fundingCommentListResponse = new LinkedList<>();
-        Page<FundingComment> pages = fundingCommentDao.findByFunding_FundingId(funding_id, PageRequest.of(page, per_page));
+        Page<FundingComment> pages = fundingCommentDao.findByFunding_FundingId(funding_id, PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingCommentRegTime")));
         List<FundingComment> fundingCommentList = pages.getContent();
         for (FundingComment fundingComment : fundingCommentList) {
             fundingCommentListResponse.add(SetterUtils.setFundingCommentListResponse(fundingComment));

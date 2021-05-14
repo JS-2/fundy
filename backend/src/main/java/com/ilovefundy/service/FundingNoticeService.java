@@ -13,6 +13,7 @@ import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class FundingNoticeService {
 
     public List<FundingNoticeListResponse> getFundingNoticeList(int funding_id, int page, int per_page) {
         List<FundingNoticeListResponse> fundingNoticeListResponse = new LinkedList<>();
-        Page<FundingNotice> pages = fundingNoticeDao.findAllByFunding_FundingId(funding_id, PageRequest.of(page, per_page));
+        Page<FundingNotice> pages = fundingNoticeDao.findAllByFunding_FundingId(funding_id, PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingNoticeRegTime")));
         List<FundingNotice> fundingNoticeList = pages.getContent();
         for (FundingNotice fundingNotice : fundingNoticeList) {
             fundingNoticeListResponse.add(SetterUtils.setFundingNoticeListResponse(fundingNotice));
