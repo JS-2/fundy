@@ -82,11 +82,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "is_official_fan")
     @ColumnDefault("'N'")
-    private YesOrNo isOfficialFan; // 팬활동 인증 여부
+    private IsCertification isOfficialFan; // 팬활동 인증 여부
     @Enumerated(EnumType.STRING)
     @Column(name = "is_profile")
     @ColumnDefault("'N'")
-    private YesOrNo isProfile; // 프로필 인증 여부
+    private IsCertification isProfile; // 프로필 인증 여부
     @Enumerated(EnumType.STRING)
     @Column(name = "user_level")
     @ColumnDefault("'D'")
@@ -158,5 +158,15 @@ public class User implements UserDetails {
         public String getValue() {
             return value;
         }
+    }
+
+    public enum IsCertification {
+        N("N"), Waiting("Waiting"), Approve("Approve"), Decline("Decline");
+
+        private String value;
+
+        private IsCertification(String value) { this.value = value; }
+
+        public String getValue() { return value; }
     }
 }

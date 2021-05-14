@@ -35,11 +35,11 @@ public class AdminService {
         return fanAuthList;
     }
 
-    public void patchFanAuth(int user_id, boolean isAccept) {
+    public void patchFanAuth(int user_id, boolean isAccept) { //팬활동 승인절차
+        User user = userDao.getOne(user_id);
         // 승인
         if(isAccept) {
-            User user = userDao.getOne(user_id);
-            user.setIsOfficialFan(User.YesOrNo.Y);
+            user.setIsOfficialFan(User.IsCertification.Approve);
             userDao.save(user);
         }
         // 거절
@@ -47,6 +47,7 @@ public class AdminService {
             Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user_id);
             if(fundingRegisterOpt.isPresent()) {
                 fundingRegisterOpt.get().setOfficialFanHistory(null);
+                user.setIsOfficialFan(User.IsCertification.Decline);
                 fundingRegisterDao.save(fundingRegisterOpt.get());
             }
         }
@@ -74,11 +75,11 @@ public class AdminService {
         return profileAuthList;
     }
 
-    public void patchProfileAuth(int user_id, boolean isAccept) {
+    public void patchProfileAuth(int user_id, boolean isAccept) { //프로필 승인절차
+        User user = userDao.getOne(user_id);
         // 승인
         if(isAccept) {
-            User user = userDao.getOne(user_id);
-            user.setIsProfile(User.YesOrNo.Y);
+            user.setIsProfile(User.IsCertification.Approve);
             userDao.save(user);
         }
         // 거절
@@ -89,6 +90,7 @@ public class AdminService {
                 fundingRegisterOpt.get().setFundingRegisterPicture(null);
                 fundingRegisterOpt.get().setFundingRegisterAge(null);
                 fundingRegisterOpt.get().setFundingRegisterHistory(null);
+                user.setIsProfile(User.IsCertification.Decline);
                 fundingRegisterDao.save(fundingRegisterOpt.get());
             }
         }
