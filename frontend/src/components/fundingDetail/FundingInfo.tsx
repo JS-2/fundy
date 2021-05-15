@@ -19,10 +19,16 @@ const useStyles = makeStyles((theme) =>
 const FundingInfo = (props: any) => {
   return (
     <div className="container">
+      <div className="col-md-1"></div>
+      <div className="col-md-12">
       <div id="viewer">
         
         <div dangerouslySetInnerHTML={ {__html: props.detail} }>
       </div>
+
+
+      </div>
+
 
       </div>
     </div>

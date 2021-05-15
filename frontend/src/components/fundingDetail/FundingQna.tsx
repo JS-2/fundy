@@ -1,5 +1,4 @@
 import React, { Component, useState, useCallback, useEffect } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
 
 class FundingQna extends Component {
   state = {
