@@ -1,13 +1,20 @@
 package com.ilovefundy.service;
 
+import com.ilovefundy.dao.DonationPlaceDao;
+import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingRegisterDao;
+import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.entity.donation.DonationPlace;
+import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.funding.FundingRegister;
+import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -16,6 +23,8 @@ import java.util.*;
 public class AdminService {
     private final FundingRegisterDao fundingRegisterDao;
     private final UserDao userDao;
+    private final FundingDao fundingDao;
+    private final DonationPlaceDao donationPlaceDao;
 
     public List<Object> getFanAuthList(int page, int per_page) {
         List<Object> fanAuthList = new LinkedList<>();
@@ -94,5 +103,28 @@ public class AdminService {
                 fundingRegisterDao.save(fundingRegisterOpt.get());
             }
         }
+    }
+
+    @Transactional
+    public boolean completeFunding(int funding_id) {
+        FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
+        // 이미 완료 처리된 프로젝트라면
+        if(fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Complete) {
+            return false;
+        }
+        // 기부와 관련된 프로젝트라면
+        if(fundingProject.getIsDonate() || fundingProject.getFundingType() == FundingProject.FundingType.Donation) {
+            DonationPlace donationPlace = donationPlaceDao.findByDonationPlaceId(fundingProject.getDonationPlaceId());
+            long fundingAmount = 0;
+            List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
+            for(PayInfo payInfo : fundingPayInfoList) {
+                fundingAmount += payInfo.getPayAmount();
+            }
+            donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
+            donationPlaceDao.save(donationPlace);
+        }
+        fundingProject.setIsConfirm(FundingProject.FundingConfirm.Complete);
+        fundingDao.save(fundingProject);
+        return true;
     }
 }

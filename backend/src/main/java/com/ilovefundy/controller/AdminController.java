@@ -57,7 +57,7 @@ public class AdminController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "팬활동 인증 신청 리스트. OK !!"),
     })
-    @GetMapping("admin/fan-auth")
+    @GetMapping("/admin/fan-auth")
     public ResponseEntity<Object> fanAuthList(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "30")int per_page) {
         // 팬활동 신청한 리스트에서 팬활동 인증 안된 유저만
         List<Object> result = adminService.getFanAuthList(page, per_page);
@@ -69,7 +69,7 @@ public class AdminController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "팬활동 인증 신청 수락. OK !!"),
     })
-    @PatchMapping("admin/fan-auth/{user_id}/accept")
+    @PatchMapping("/admin/fan-auth/{user_id}/accept")
     public ResponseEntity<Object> acceptFanAuth(@PathVariable int user_id) {
         Map<String, Object> result = new HashMap<>();
         adminService.patchFanAuth(user_id, true);
@@ -82,7 +82,7 @@ public class AdminController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "팬활동 인증 신청 거절. OK !!"),
     })
-    @PatchMapping("admin/fan-auth/{user_id}/decline")
+    @PatchMapping("/admin/fan-auth/{user_id}/decline")
     public ResponseEntity<Object> declineFanAuth(@PathVariable int user_id) {
         Map<String, Object> result = new HashMap<>();
         adminService.patchFanAuth(user_id, false);
@@ -95,7 +95,7 @@ public class AdminController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "프로필 인증 신청 리스트. OK !!"),
     })
-    @GetMapping("admin/profile-auth")
+    @GetMapping("/admin/profile-auth")
     public ResponseEntity<Object> profileAuthList(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "30")int per_page) {
         // 프로필 인증 신청한 리스트에서 프로필 인증 안된 유저만
         List<Object> result = adminService.getProfileAuthList(page, per_page);
@@ -107,7 +107,7 @@ public class AdminController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "프로필 인증 신청 수락. OK !!"),
     })
-    @PatchMapping("admin/profile-auth/{user_id}/accept")
+    @PatchMapping("/admin/profile-auth/{user_id}/accept")
     public ResponseEntity<Object> acceptProfileAuth(@PathVariable int user_id) {
         Map<String, Object> result = new HashMap<>();
         adminService.patchProfileAuth(user_id, true);
@@ -120,11 +120,28 @@ public class AdminController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "프로필 인증 신청 거절. OK !!"),
     })
-    @PatchMapping("admin/profile-auth/{user_id}/decline")
+    @PatchMapping("/admin/profile-auth/{user_id}/decline")
     public ResponseEntity<Object> declineProfileAuth(@PathVariable int user_id) {
         Map<String, Object> result = new HashMap<>();
         adminService.patchProfileAuth(user_id, false);
         result.put("message", "프로필 인증 거절");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "펀딩 완료 처리",
+            notes = "종료 날짜가 지난 펀딩 완료 처리. 기부 프로젝트면 모금액을 기부처 테이블에 더해준다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "펀딩 완료 처리 성공. OK !!"),
+            @ApiResponse(code = 400, message = "이미 완료 처리된 펀딩. BAD_REQUEST !!"),
+    })
+    @PatchMapping("/admin/funding-complete/{funding_id}")
+    public ResponseEntity<Object> completeFunding(@PathVariable int funding_id) {
+        Map<String, Object> result = new HashMap<>();
+        if(!adminService.completeFunding(funding_id)) {
+            result.put("message", "이미 완료 처리된 펀딩");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        result.put("message", "펀딩 완료 처리 성공");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
