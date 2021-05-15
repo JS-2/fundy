@@ -13,9 +13,9 @@ public interface FundingRegisterDao extends JpaRepository<FundingRegister, Integ
 //            "from User u join FundingRegister f on u.userId = f.user " +
 //            "where u.isOfficialFan = 'N'")
 //    Page<Object> findFanHistoryByUserIsOfficialFan(Pageable pageable);
-    Page<FundingRegister> findByUser_IsOfficialFanAndOfficialFanHistoryIsNotNull(User.YesOrNo yn, Pageable pageable);
+    Page<FundingRegister> findByUser_IsOfficialFanAndOfficialFanHistoryIsNotNull(User.IsCertification cert, Pageable pageable);
 
-    Page<FundingRegister> findByUser_IsProfileAndFundingRegisterNameIsNotNull(User.YesOrNo yn, Pageable pageable);
+    Page<FundingRegister> findByUser_IsProfileAndFundingRegisterNameIsNotNull(User.IsCertification cert, Pageable pageable);
 
     Optional<FundingRegister> findByUser_UserId(int user_id);
 
