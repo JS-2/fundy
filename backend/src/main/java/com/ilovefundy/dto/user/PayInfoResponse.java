@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 public class PayInfoResponse {
     @ApiModelProperty(example = "4")
     private Integer fundingId;
-    @ApiModelProperty(example = "MORE & MORE 앨범 후원")
+    @ApiModelProperty(example = "'MORE & MORE 앨범 후원'")
     private String fundingName;
-    @ApiModelProperty(example = "[MORE & MORE 앨범]을 메이크스타에서 구입하고 한정판 포토카드와 영상통화 기회를 놓치지 마세요!")
+    @ApiModelProperty(example = "'[MORE & MORE 앨범]을 메이크스타에서 구입하고 한정판 포토카드와 영상통화 기회를 놓치지 마세요!'")
     private String fundingSubtitle;
     @ApiModelProperty(example = "펀딩 등록자 닉네임 : 재성")
     private String userNickname;
@@ -21,7 +21,7 @@ public class PayInfoResponse {
     private String userLevel;
     @ApiModelProperty(example = "진행중")
     private String fundingStatement;
-    @ApiModelProperty(example = "결제번호 2")
+    @ApiModelProperty(example = "2")
     private Integer paymentId;
     @ApiModelProperty(example = "250,000")
     private String payAmount;
