@@ -4,6 +4,7 @@ import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.dto.funding.FundingPayRequest;
+import com.ilovefundy.dto.user.PayInfoResponse;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
@@ -147,7 +148,7 @@ public class FundingService {
         fundingDao.save(fundingProject);
     }
 
-    public boolean addFundingPay(int user_id, int funding_id, FundingPayRequest req) throws IOException, IamportResponseException {
+    public PayInfoResponse addFundingPay(int user_id, int funding_id, FundingPayRequest req) throws IOException, IamportResponseException {
         IamportResponse<AccessToken> getToken = client.getAuth();
         String access_token = getToken.getResponse().getToken();
         IamportResponse<Payment> payment = client.paymentByImpUid(req.getImpUid());
@@ -155,7 +156,7 @@ public class FundingService {
         // 결제 금액이 맞는지 확인
         if(!payAmount.equals(payment.getResponse().getAmount())) {
             // 금액이 다르면 결제취소
-            return false;
+            return null;
         }
         FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
         User user = userDao.findByUserId(user_id);
@@ -164,8 +165,12 @@ public class FundingService {
         payInfo.setPayDatetime(LocalDateTime.now());
         payInfo.setFunding(fundingProject);
         payInfo.setUser(user);
-        payDao.save(payInfo);
-        return true;
+        PayInfo tmpPayInfo = payDao.saveAndFlush(payInfo);
+
+        FundingProject funding = tmpPayInfo.getFunding();
+        User u = userDao.findByUserId(funding.getUserId());
+        PayInfoResponse payInfoResponse = SetterUtils.setMyPayInfo(payInfo, funding, u);
+        return payInfoResponse;
     }
 
 }
