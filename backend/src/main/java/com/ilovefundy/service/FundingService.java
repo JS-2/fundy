@@ -1,11 +1,14 @@
 package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
+import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.dto.funding.FundingPayRequest;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.utils.CalculationUtils;
 import com.ilovefundy.utils.SetterUtils;
@@ -23,6 +26,7 @@ import java.util.*;
 public class FundingService {
     private final FundingDao fundingDao;
     private final UserDao userDao;
+    private final PayDao payDao;
 
     public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
@@ -125,6 +129,17 @@ public class FundingService {
         fundingProject.setIsDonate(req.getIsDonate());
         fundingProject.setIsConfirm(FundingProject.FundingConfirm.Wait);
         fundingDao.save(fundingProject);
+    }
+
+    public void addFundingPay(int user_id, int funding_id, FundingPayRequest req) {
+        FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
+        User user = userDao.findByUserId(user_id);
+        PayInfo payInfo = new PayInfo();
+        payInfo.setPayAmount(req.getPayAmount());
+        payInfo.setPayDatetime(req.getPayTime());
+        payInfo.setFunding(fundingProject);
+        payInfo.setUser(user);
+        payDao.save(payInfo);
     }
 
 }

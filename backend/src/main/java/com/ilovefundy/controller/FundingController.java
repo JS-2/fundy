@@ -2,7 +2,9 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
+import com.ilovefundy.dto.funding.FundingPayRequest;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.entity.user.User;
 import com.ilovefundy.service.FundingService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -10,6 +12,8 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -55,5 +59,17 @@ public class FundingController {
     }
 
     //펀딩 참여 결제
+    @ApiOperation(value = "펀딩 결제하기")
+    @ApiResponses(@ApiResponse(code = 200, message = "펀딩 결제하기 성공!"))
+    @PostMapping("/fundings/{funding_id}/pay")
+    public ResponseEntity<Object> fundingPay(@PathVariable int funding_id, @RequestBody @Valid FundingPayRequest request){
+        Map<String, Object> result = new HashMap<>();
+        //펀딩 결제
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        fundingService.addFundingPay(user.getUserId(), funding_id, request);
+        result.put("message", "펀딩 결제 성공!");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }
