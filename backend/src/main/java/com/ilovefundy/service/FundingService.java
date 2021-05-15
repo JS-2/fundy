@@ -12,12 +12,21 @@ import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.utils.CalculationUtils;
 import com.ilovefundy.utils.SetterUtils;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -27,6 +36,13 @@ public class FundingService {
     private final FundingDao fundingDao;
     private final UserDao userDao;
     private final PayDao payDao;
+    private final IamportService iamportService;
+    private IamportClient client;
+
+    @PostConstruct
+    public void FundingServiceInit() {
+        this.client = iamportService.getClient();
+    }
 
     public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
@@ -131,15 +147,25 @@ public class FundingService {
         fundingDao.save(fundingProject);
     }
 
-    public void addFundingPay(int user_id, int funding_id, FundingPayRequest req) {
+    public boolean addFundingPay(int user_id, int funding_id, FundingPayRequest req) throws IOException, IamportResponseException {
+        IamportResponse<AccessToken> getToken = client.getAuth();
+        String access_token = getToken.getResponse().getToken();
+        IamportResponse<Payment> payment = client.paymentByImpUid(req.getImpUid());
+        BigDecimal payAmount = new BigDecimal(req.getPayAmount());
+        // 결제 금액이 맞는지 확인
+        if(!payAmount.equals(payment.getResponse().getAmount())) {
+            // 금액이 다르면 결제취소
+            return false;
+        }
         FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
         User user = userDao.findByUserId(user_id);
         PayInfo payInfo = new PayInfo();
         payInfo.setPayAmount(req.getPayAmount());
-        payInfo.setPayDatetime(req.getPayTime());
+        payInfo.setPayDatetime(LocalDateTime.now());
         payInfo.setFunding(fundingProject);
         payInfo.setUser(user);
         payDao.save(payInfo);
+        return true;
     }
 
 }

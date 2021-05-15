@@ -1,5 +1,6 @@
 package com.ilovefundy.dto.funding;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,8 +10,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class FundingPayRequest {
+    @ApiModelProperty(example = "결제 금액")
     @NotNull
-    Integer payAmount;
+    private Long payAmount;
+    @ApiModelProperty(example = "아임포트 uid")
     @NotNull
-    LocalDateTime payTime;
+    private String impUid;
 }
