@@ -4,6 +4,9 @@ import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingRegisterDao;
 import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.dto.auth.FanAuth;
+import com.ilovefundy.dto.auth.MyRegisteredFundingResponse;
+import com.ilovefundy.dto.auth.ProfileAuth;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.funding.FundingRegister;
 import com.ilovefundy.entity.idol.Idol;
@@ -24,7 +27,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -145,7 +147,9 @@ public class UserService {
         List<PayInfo> userPayInfo = user.getFundingPays();
         List<PayInfoResponse> myPayInfoResponseList = new LinkedList<>();
         for(PayInfo payInfo : userPayInfo) {
-            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo));
+            FundingProject funding = payInfo.getFunding();
+            User u = userDao.findByUserId(funding.getUserId());
+            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo, funding, u));
         }
         return myPayInfoResponseList;
     }

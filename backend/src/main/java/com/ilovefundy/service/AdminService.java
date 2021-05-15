@@ -21,7 +21,7 @@ public class AdminService {
         List<Object> fanAuthList = new LinkedList<>();
         Page<FundingRegister> fundingRegisters = fundingRegisterDao
                 .findByUser_IsOfficialFanAndOfficialFanHistoryIsNotNull
-                        (User.YesOrNo.N, PageRequest.of(page-1, per_page));
+                        (User.IsCertification.N, PageRequest.of(page-1, per_page));
         for(FundingRegister auth : fundingRegisters) {
             User user = auth.getUser();
             Map<String, Object> userInfo = new LinkedHashMap<>();
@@ -56,7 +56,7 @@ public class AdminService {
     public List<Object> getProfileAuthList(int page, int per_page) {
         List<Object> profileAuthList = new LinkedList<>();
         Page<FundingRegister> fundingRegisters = fundingRegisterDao
-                .findByUser_IsProfileAndFundingRegisterNameIsNotNull(User.YesOrNo.N, PageRequest.of(page-1, per_page));
+                .findByUser_IsProfileAndFundingRegisterNameIsNotNull(User.IsCertification.N, PageRequest.of(page-1, per_page));
         for(FundingRegister auth : fundingRegisters) {
             User user = auth.getUser();
             Map<String, Object> userInfo = new LinkedHashMap<>();

@@ -29,6 +29,14 @@ import CertUserInfo from './CertUserInfo';
 import CertFan from './CertFan';
 import { setUser } from '../../../reducers/user';
 
+declare global {
+  interface Window {
+    IMP: any;
+  }
+}
+
+const { IMP } = window;
+
 const Profile = () => {
   const [fold, setFold] = useState(true);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
@@ -39,6 +47,18 @@ const Profile = () => {
   const [openN, setOpenN] = useState(false);
   const [openCertFan, setOpenCertFan] = useState(false);
   const [openCertUserInfo, setOpenCertUserInfo] = useState(false);
+
+  const handleAdultCert = () => {
+    console.log('handleAdult');
+    IMP.init('imp09514011');
+    IMP.certification({}, (resp: any) => {
+      if (resp.success) {
+        console.log(resp);
+      } else {
+        alert('인증에 실패하였습니다. 에러 내용: ' + resp.error_msg);
+      }
+    });
+  };
 
   const dispatch = useDispatch();
 
@@ -181,7 +201,7 @@ const Profile = () => {
               <Grid item container xs={12}>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <IconButton size="small">
+                    <IconButton size="small" onClick={handleAdultCert}>
                       <PersonOutlineIcon className={classNames(styles.icon)} />
                     </IconButton>
                   </Grid>

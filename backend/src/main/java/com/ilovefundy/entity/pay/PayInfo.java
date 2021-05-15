@@ -29,7 +29,7 @@ public class PayInfo {
     private FundingProject funding;
 
     @Column(name = "pay_amount")
-    private long payAmount; // 펀딩 결제 금액
+    private Long payAmount; // 펀딩 결제 금액
 
     @Column(name = "pay_datetime")
     private LocalDateTime payDatetime;  // 펀딩 결제 시간

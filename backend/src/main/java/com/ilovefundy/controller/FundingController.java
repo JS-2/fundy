@@ -2,17 +2,24 @@ package com.ilovefundy.controller;
 
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
+import com.ilovefundy.dto.funding.FundingPayRequest;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.dto.user.PayInfoResponse;
+import com.ilovefundy.entity.user.User;
 import com.ilovefundy.service.FundingService;
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +31,12 @@ public class FundingController {
     private final FundingService fundingService;
 
     //전체 펀딩 리스트
-    @ApiOperation(value = "전체 펀딩 리스트")
+    @ApiOperation(value = "전체 펀딩 리스트", notes = "status = 0: 대기, 1: 승인, 2: 거절")
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 리스트 반환 성공!"))
     @GetMapping("/fundings")
-    public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
+    public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer status) {
         Map<String, Object> result = new HashMap<>();
-        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword);
+        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword, status);
         result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
     }
@@ -55,5 +62,21 @@ public class FundingController {
     }
 
     //펀딩 참여 결제
+    @ApiOperation(value = "펀딩 결제하기")
+    @ApiResponses({@ApiResponse(code = 200, message = "펀딩 결제하기 성공!, OK !!"),
+                   @ApiResponse(code = 400, message = "펀딩 결제하기 실패, BAD_REQUEST !!")})
+    @PostMapping("/fundings/{funding_id}/pay")
+    public ResponseEntity<Object> fundingPay(@PathVariable int funding_id, @RequestBody FundingPayRequest request) throws IOException, IamportResponseException {
+        Map<String, Object> result = new HashMap<>();
+        //펀딩 결제
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        PayInfoResponse payInfoResponse = fundingService.addFundingPay(user.getUserId(), funding_id, request);
+        if(payInfoResponse == null) {
+            result.put("message", "펀딩 결제 실패");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(payInfoResponse, HttpStatus.OK);
+    }
 
 }

@@ -1,21 +1,33 @@
 package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
+import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.dto.funding.FundingPayRequest;
+import com.ilovefundy.dto.user.PayInfoResponse;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.utils.CalculationUtils;
 import com.ilovefundy.utils.SetterUtils;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -24,17 +36,50 @@ import java.util.*;
 public class FundingService {
     private final FundingDao fundingDao;
     private final UserDao userDao;
+    private final PayDao payDao;
+    private final IamportService iamportService;
+    private IamportClient client;
 
-    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword) {
+    @PostConstruct
+    public void FundingServiceInit() {
+        this.client = iamportService.getClient();
+    }
+
+    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
-//        Page<FundingProject> pages = fundingDao.findAll(PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingEndTime")));
         Page<FundingProject> pages;
-        if (keyword != null) {
-            pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+        if (status != null) { // 펀딩 승인 여부에 따른 리스트
+            FundingProject.FundingConfirm isStatus = null;
+            if (status == 0) {
+                isStatus = FundingProject.FundingConfirm.Wait;
+            }
+            else if (status == 1) {
+                isStatus = FundingProject.FundingConfirm.Approve;
+            }
+            else if (status == 2) {
+                isStatus = FundingProject.FundingConfirm.Decline;
+            }
+            if (keyword != null) {
+                pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
+            }
+            else {
+                pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
+            }
         }
-        else {
-            pages = fundingDao.findAll(PageRequest.of(page, per_page));
+        else { // 펀딩 전체보기
+            if (keyword != null) {
+                pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+            }
+            else {
+                pages = fundingDao.findAll(PageRequest.of(page, per_page));
+            }
         }
+//        if (keyword != null) {
+//            pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+//        }
+//        else {
+//            pages = fundingDao.findAll(PageRequest.of(page, per_page));
+//        }
         List<FundingProject> fundingProjectList = pages.getContent();
         for (FundingProject fundingProject : fundingProjectList){
             fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProject));
@@ -101,6 +146,31 @@ public class FundingService {
         fundingProject.setIsDonate(req.getIsDonate());
         fundingProject.setIsConfirm(FundingProject.FundingConfirm.Wait);
         fundingDao.save(fundingProject);
+    }
+
+    public PayInfoResponse addFundingPay(int user_id, int funding_id, FundingPayRequest req) throws IOException, IamportResponseException {
+        IamportResponse<AccessToken> getToken = client.getAuth();
+        String access_token = getToken.getResponse().getToken();
+        IamportResponse<Payment> payment = client.paymentByImpUid(req.getImpUid());
+        BigDecimal payAmount = new BigDecimal(req.getPayAmount());
+        // 결제 금액이 맞는지 확인
+        if(!payAmount.equals(payment.getResponse().getAmount())) {
+            // 금액이 다르면 결제취소
+            return null;
+        }
+        FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
+        User user = userDao.findByUserId(user_id);
+        PayInfo payInfo = new PayInfo();
+        payInfo.setPayAmount(req.getPayAmount());
+        payInfo.setPayDatetime(LocalDateTime.now());
+        payInfo.setFunding(fundingProject);
+        payInfo.setUser(user);
+        PayInfo tmpPayInfo = payDao.saveAndFlush(payInfo);
+
+        FundingProject funding = tmpPayInfo.getFunding();
+        User u = userDao.findByUserId(funding.getUserId());
+        PayInfoResponse payInfoResponse = SetterUtils.setMyPayInfo(payInfo, funding, u);
+        return payInfoResponse;
     }
 
 }

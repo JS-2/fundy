@@ -23,6 +23,8 @@ import IdolDetail from '../pages/idol/IdolDetail';
 import FundPayment from '../pages/funding/FundPayment';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
+import CertManage from '../pages/admin/Admin';
+import Admin from '../pages/admin/Admin';
 
 const index = () => {
   return (
@@ -51,6 +53,7 @@ const index = () => {
             <Route path="/idol" component={IdolList} exact />
             <Route path="/idol/:idol_id" component={IdolDetail} exact />
             <Route path="/" component={Main} exact />
+            <Route path="/admin" component={Admin} exact />
             <Redirect from="*" to="/" />
           </Switch>
         </Box>
