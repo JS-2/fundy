@@ -20,7 +20,9 @@ const FundingInfo = (props: any) => {
   return (
     <div className="container">
       <div id="viewer">
-        <Viewer initialValue={props.detail}></Viewer>
+        
+        <div dangerouslySetInnerHTML={ {__html: props.detail} }>
+      </div>
 
       </div>
     </div>

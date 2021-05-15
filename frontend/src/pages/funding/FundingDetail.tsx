@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import {
   createStyles,
-  makeStyles,
   Theme,
-  useTheme,
   withStyles,
 } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Grid, Paper, Box, Modal } from '@material-ui/core';
+import { Box, Modal } from '@material-ui/core';
 import './FundingDetail.css';
 import { getFundDetail } from '../../api/fund';
 import FullWidthTabs from '../../components/fundComponent/FullWidthTabs';
 import { FundForm, IFunding, User } from '../../common/types';
 import { RouteComponentProps, useParams } from 'react-router-dom';
-import { Height } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { rootState } from '../../reducers';
 import { getFavoriteFunding, setFavoriteFunding } from '../../api/user';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({

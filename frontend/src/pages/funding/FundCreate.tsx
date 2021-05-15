@@ -16,15 +16,14 @@ import {
 } from '@material-ui/core';
 import { withStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { Editor } from '@toast-ui/react-editor';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import DaumPostcode from 'react-daum-postcode';
 import './FundCreate.css';
-
 import ImageUploader from 'react-images-upload';
 import IconButton from '@material-ui/core/IconButton';
 import SearchButton from '@material-ui/icons/Search';
 import { useState } from 'react';
 import ItemTable from '../../components/fundComponent/ItemTable';
-import axios from 'axios';
 import {
   DateTimePicker,
   KeyboardDateTimePicker,
@@ -35,6 +34,15 @@ import { FundingForm } from '../../common/types';
 import { useParams } from 'react-router';
 import { setFundCreate } from '../../api/fund';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { useSelector } from 'react-redux';
+import { rootState } from '../../reducers';
+import colorSyntaxPlugin from '@toast-ui/editor-plugin-color-syntax';
+import ReactSummernote from "react-summernote";
+import "react-summernote/dist/react-summernote.css";
+import "bootstrap/js/modal";
+import "bootstrap/js/dropdown";
+import "bootstrap/js/tooltip";
+import "bootstrap/dist/css/bootstrap.css";
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState('');
@@ -52,6 +60,10 @@ const FundCreate = () => {
     useState<MaterialUiPickersDate>(new Date());
   const [selectedEndDate, handleEndDateChange] =
     useState<MaterialUiPickersDate>(new Date());
+
+    const token: string = useSelector(
+      (state: rootState) => state.userReducer.token
+    );
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -78,12 +90,14 @@ const FundCreate = () => {
       fundForm,
     });
 
-    setFundCreate(fundForm);
+    setFundCreate(fundForm, token );
   };
 
   const onlocation = (address: string) => {
     setLocation(address);
   };
+
+  const plugin:any = [colorSyntax,];
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
@@ -208,6 +222,8 @@ const FundCreate = () => {
     setFundDetail(e.target.value);
   };
 
+ 
+
   const editorRef: any = useRef();
 
   const getEditor = () => {
@@ -217,7 +233,7 @@ const FundCreate = () => {
     const getContent_html = editorInstance.getHtml();
     console.log(getContent_html);
 
-    return getContent_md;
+    return getContent_html;
   };
 
   // const uploadImage = (blob: string | Blob) => {
@@ -415,14 +431,35 @@ const FundCreate = () => {
       <div className="row">
         <div className="col-md-12 editor">
           <Editor
-            //initialValue="원하는 문장을 입력해주세요.."
             previewStyle="vertical"
             height="500px"
             initialEditType="wysiwyg"
             useCommandShortcut={true}
             placeholder="펀딩에 대해 상세하게 설명해주세요."
             ref={editorRef}
+            plugins={plugin}
           />
+
+<ReactSummernote
+          value="내용을 입력하여주세요"
+          options={{
+            lang: "ko-KR",
+            height: 380,
+            dialogsInBody: true,
+            toolbar: [
+              ["style", ["style"]],
+              ["font", ["bold", "underline", "clear"]],
+              ["fontname", ["fontname"]],
+              ["para", ["ul", "ol", "paragraph"]],
+              ["table", ["table"]],
+              ["insert", ["link", "picture", "video"]],
+              ["view", ["fullscreen", "codeview"]]
+            ]
+          }}
+          onChange={onChangeFundDetail}
+        />
+
+        
         </div>
       </div>
       <Box
