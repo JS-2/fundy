@@ -12,7 +12,6 @@ import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,16 +24,41 @@ public class FundingService {
     private final FundingDao fundingDao;
     private final UserDao userDao;
 
-    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword) {
+    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
-//        Page<FundingProject> pages = fundingDao.findAll(PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingEndTime")));
         Page<FundingProject> pages;
-        if (keyword != null) {
-            pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+        if (status != null) { // 펀딩 승인 여부에 따른 리스트
+            FundingProject.FundingConfirm isStatus = null;
+            if (status == 0) {
+                isStatus = FundingProject.FundingConfirm.Wait;
+            }
+            else if (status == 1) {
+                isStatus = FundingProject.FundingConfirm.Approve;
+            }
+            else if (status == 2) {
+                isStatus = FundingProject.FundingConfirm.Decline;
+            }
+            if (keyword != null) {
+                pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
+            }
+            else {
+                pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
+            }
         }
-        else {
-            pages = fundingDao.findAll(PageRequest.of(page, per_page));
+        else { // 펀딩 전체보기
+            if (keyword != null) {
+                pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+            }
+            else {
+                pages = fundingDao.findAll(PageRequest.of(page, per_page));
+            }
         }
+//        if (keyword != null) {
+//            pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+//        }
+//        else {
+//            pages = fundingDao.findAll(PageRequest.of(page, per_page));
+//        }
         List<FundingProject> fundingProjectList = pages.getContent();
         for (FundingProject fundingProject : fundingProjectList){
             fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProject));

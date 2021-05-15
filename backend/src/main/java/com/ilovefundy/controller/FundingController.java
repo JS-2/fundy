@@ -24,12 +24,12 @@ public class FundingController {
     private final FundingService fundingService;
 
     //전체 펀딩 리스트
-    @ApiOperation(value = "전체 펀딩 리스트")
+    @ApiOperation(value = "전체 펀딩 리스트", notes = "status = 0: 대기, 1: 승인, 2: 거절")
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 리스트 반환 성공!"))
     @GetMapping("/fundings")
-    public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
+    public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer status) {
         Map<String, Object> result = new HashMap<>();
-        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword);
+        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword, status);
         result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
     }
