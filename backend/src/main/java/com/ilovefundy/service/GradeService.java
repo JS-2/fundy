@@ -5,23 +5,23 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.*;
 
-@RequiredArgsConstructor
 @Service
 public class GradeService {
-    private final IamportClient client;
-    @Value("${import.restApi.key}")
+    private IamportClient client;
+    @Value("${iamport.restApi.key}")
     private String api_key;
-    @Value("${import.restApi.secret}")
+    @Value("${iamport.restApi.secret}")
     private String api_secret_key;
 
-    public GradeService() {
+    @PostConstruct
+    public void GradeServiceInit() {
         client = new IamportClient(api_key, api_secret_key);
     }
 
@@ -38,10 +38,7 @@ public class GradeService {
         int year = calendar.get(Calendar.YEAR);
 
         // 성인 인증
-        if(year <= 2001) {
-            return true;
-        }
-        return false;
+        return year <= 2001;
     }
 
 }
