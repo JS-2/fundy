@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.donation.DonationPlaceListResponse;
 import com.ilovefundy.dto.idol.IdolDonationDetailResponse;
 import com.ilovefundy.dto.idol.IdolDonationListResponse;
 import com.ilovefundy.dto.idol.IdolDonationRankingResponse;
@@ -23,6 +24,17 @@ import java.util.List;
 @RestController
 public class DonationController {
     private final DonationService donationService;
+
+    @ApiOperation(value = "기부처 리스트",
+            notes = "기부처들의 리스트. (기부처 id, 기부처 이름, 기부처 주소, 기부금액)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "기부처 리스트. OK !!", response = DonationPlaceListResponse.class),
+    })
+    @GetMapping("/donation-places")
+    public ResponseEntity<Object> donationPlaceList() {
+        List<DonationPlaceListResponse> result = donationService.getDonationPlaceList();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @ApiOperation(value = "아이돌 기부처 리스트",
             notes = "아이돌이 기부한 기부처들의 리스트. (기부처 id, 기부처 이름, 기부처 주소, 기부금액)")

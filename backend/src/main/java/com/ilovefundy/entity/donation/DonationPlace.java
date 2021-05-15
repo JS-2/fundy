@@ -30,8 +30,12 @@ public class DonationPlace {
     private String placeName;
     @Column(name = "place_address")
     private String placeAddress;
+    @Column(name = "place_picture")
+    private String placePicture;    // 기부처 사진
+    @Column(name = "place_desciption")
+    private String placeDescription;
     @Column(name = "place_total_amount")
-    private long placeTotalAmount; // 총기부금액
+    private Long placeTotalAmount; // 총기부금액
     @Column(name = "account_number")
     private String accountNumber; // 기부처 계좌번호
 }

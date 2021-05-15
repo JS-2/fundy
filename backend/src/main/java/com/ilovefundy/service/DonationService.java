@@ -4,6 +4,7 @@ import com.ilovefundy.dao.DonationDao;
 import com.ilovefundy.dao.DonationPlaceDao;
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.IdolDao;
+import com.ilovefundy.dto.donation.DonationPlaceListResponse;
 import com.ilovefundy.entity.donation.DonationPlace;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.idol.Idol;
@@ -23,6 +24,22 @@ public class DonationService {
     private final IdolDao idolDao;
     private final DonationDao donationDao;
     private final DonationPlaceDao donationPlaceDao;
+
+    public List<DonationPlaceListResponse> getDonationPlaceList() {
+        List<DonationPlaceListResponse> result = new LinkedList<>();
+        List<DonationPlace> placeList = donationPlaceDao.findAll();
+        for(DonationPlace place : placeList) {
+            DonationPlaceListResponse response = new DonationPlaceListResponse();
+            response.setDonationPlaceId(place.getDonationPlaceId());
+            response.setPlaceName(place.getPlaceName());
+            response.setPlaceAddress(place.getPlaceAddress());
+            response.setPlacePicture(place.getPlacePicture());
+            response.setPlaceDescription(place.getPlaceDescription());
+            response.setPlaceTotalAmount(String.format("%d,",place.getPlaceTotalAmount()));
+            result.add(response);
+        }
+        return result;
+    }
 
     public List<IdolDonationListResponse> getIdolDonationList(int idol_id) {
         List<IdolDonationListResponse> result = new LinkedList<>();
