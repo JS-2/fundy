@@ -38,6 +38,10 @@ const Navbar = () => {
     history.push('/mypage');
   };
 
+  const handleAdminBtn = () => {
+    history.push('/admin');
+  };
+
   const open = Boolean(anchorEl);
 
   return (
@@ -131,6 +135,17 @@ const Navbar = () => {
                     secondary={user.email}
                   ></ListItemText>
                 </ListItem>
+                {user.role == 'ADMIN' ? (
+                  <>
+                    <Divider />
+                    <ListItem button onClick={handleAdminBtn}>
+                      <ListItemText primary="인증 관리(ADMIN)"></ListItemText>
+                    </ListItem>
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <Divider />
                 <ListItem button onClick={handleMypageBtn}>
                   <ListItemText primary="마이페이지"></ListItemText>
