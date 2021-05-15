@@ -5,24 +5,22 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.Certification;
 import com.siot.IamportRestClient.response.IamportResponse;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class GradeService {
+    private final IamportService iamportService;
     private IamportClient client;
-    @Value("${iamport.restApi.key}")
-    private String api_key;
-    @Value("${iamport.restApi.secret}")
-    private String api_secret_key;
 
     @PostConstruct
     public void GradeServiceInit() {
-        client = new IamportClient(api_key, api_secret_key);
+        this.client = iamportService.getClient();
     }
 
     public boolean isAdult(String imp_uid) throws IOException, IamportResponseException {
@@ -40,5 +38,4 @@ public class GradeService {
         // 성인 인증
         return year <= 2001;
     }
-
 }
