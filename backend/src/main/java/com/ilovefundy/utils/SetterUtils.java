@@ -11,6 +11,7 @@ import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.idol.IdolResponse;
 import com.ilovefundy.dto.auth.MyRegisteredFundingResponse;
 import com.ilovefundy.dto.user.PayInfoResponse;
+import com.ilovefundy.entity.user.User;
 
 import java.time.LocalDateTime;
 
@@ -82,14 +83,15 @@ public class SetterUtils {
         return myRegisteredFundingResponse;
     }
 
-    public static PayInfoResponse setMyPayInfo(PayInfo payInfo) {
+    public static PayInfoResponse setMyPayInfo(PayInfo payInfo, FundingProject funding, User user) {
         PayInfoResponse payInfoResponse = new PayInfoResponse();
-        FundingProject funding = payInfo.getFunding();
         payInfoResponse.setFundingId(funding.getFundingId());
         payInfoResponse.setFundingName(funding.getFundingName());
         payInfoResponse.setFundingSubtitle(funding.getFundingSubtitle());
-        payInfoResponse.setUserNickname(payInfo.getUser().getUserNickname());
+        payInfoResponse.setUserNickname(user.getUserNickname());
+        payInfoResponse.setUserLevel(user.getUserLevel().getValue());
         payInfoResponse.setFundingStatement(LocalDateTime.now().isBefore(funding.getFundingEndTime()) ? "진행중" : "종료");
+        payInfoResponse.setPaymentId(payInfo.getPaymentId());
         payInfoResponse.setPayAmount(String.format("%,d", payInfo.getPayAmount()));
         payInfoResponse.setPayDatetime(payInfo.getPayDatetime());
         payInfoResponse.setFundingEndTime(funding.getFundingEndTime());

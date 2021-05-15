@@ -147,7 +147,9 @@ public class UserService {
         List<PayInfo> userPayInfo = user.getFundingPays();
         List<PayInfoResponse> myPayInfoResponseList = new LinkedList<>();
         for(PayInfo payInfo : userPayInfo) {
-            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo));
+            FundingProject funding = payInfo.getFunding();
+            User u = userDao.findByUserId(funding.getUserId());
+            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo, funding, u));
         }
         return myPayInfoResponseList;
     }

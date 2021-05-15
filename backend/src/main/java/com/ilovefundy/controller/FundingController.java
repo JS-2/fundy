@@ -4,6 +4,7 @@ import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.funding.FundingPayRequest;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.dto.user.PayInfoResponse;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.service.FundingService;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -70,12 +71,12 @@ public class FundingController {
         //펀딩 결제
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        if(!fundingService.addFundingPay(user.getUserId(), funding_id, request)) {
+        PayInfoResponse payInfoResponse = fundingService.addFundingPay(user.getUserId(), funding_id, request);
+        if(payInfoResponse == null) {
             result.put("message", "펀딩 결제 실패");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        result.put("message", "펀딩 결제 성공!");
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(payInfoResponse, HttpStatus.OK);
     }
 
 }
