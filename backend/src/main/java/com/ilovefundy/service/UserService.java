@@ -87,6 +87,10 @@ public class UserService {
         newUser.setUserEmail(user.getUserEmail());
         newUser.setUserAddress(user.getUserAddress());
         newUser.setUserLevel(user.getUserLevel().getValue());
+        newUser.setIsAdult(user.getIsAdult().getValue() == 1 ? "Y" : "N");
+        newUser.setIsPlus(user.getFundingRegistCount() >= 5 ? "Y" : "N");
+        newUser.setIsOfficialFan(user.getIsOfficialFan().getValue());
+        newUser.setIsProfile(user.getIsProfile().getValue());
         newUser.setRole(user.getIsAdmin().getValue() == 1 ? "ADMIN" : "MEMBER");
         return newUser;
     }
@@ -117,7 +121,7 @@ public class UserService {
         userDao.save(user);
     }
 
-    public void patchPicture(int user_id, MultipartFile multipartFile) throws IOException {
+    public String patchPicture(int user_id, MultipartFile multipartFile) throws IOException {
         User user = userDao.findByUserId(user_id);
         if(user.getUserPicture() != null) { // 원래 존재한 사진 삭제
             String picturePath = user.getUserPicture();
@@ -128,6 +132,8 @@ public class UserService {
         String picture = s3UploaderService.upload(multipartFile, "static");
         user.setUserPicture(picture);
         userDao.save(user);
+
+        return picture;
     }
 
     public void deleteUser(int user_id) {

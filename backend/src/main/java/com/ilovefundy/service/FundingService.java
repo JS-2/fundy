@@ -25,9 +25,16 @@ public class FundingService {
     private final FundingDao fundingDao;
     private final UserDao userDao;
 
-    public List<FundingListResponse> getFundingList(int page, int per_page) {
+    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
-        Page<FundingProject> pages = fundingDao.findAll(PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingEndTime")));
+//        Page<FundingProject> pages = fundingDao.findAll(PageRequest.of(page, per_page, new Sort(Sort.Direction.DESC, "fundingEndTime")));
+        Page<FundingProject> pages;
+        if (keyword != null) {
+            pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
+        }
+        else {
+            pages = fundingDao.findAll(PageRequest.of(page, per_page));
+        }
         List<FundingProject> fundingProjectList = pages.getContent();
         for (FundingProject fundingProject : fundingProjectList){
             fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProject));

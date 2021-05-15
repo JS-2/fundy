@@ -12,9 +12,10 @@ import { useHistory } from 'react-router';
 import { loginSubmit, validateId, validatePassword } from '../../../api/user';
 import { LoginUser } from '../../../common/types';
 import { rootState } from '../../../reducers';
+import { setUser } from '../../../reducers/user';
 
 const SignIn = () => {
-  const [user, setUser] = useState<LoginUser>({
+  const [user, setUserInfo] = useState<LoginUser>({
     userEmail: '',
     userPassword: '',
   });
@@ -44,7 +45,7 @@ const SignIn = () => {
               newValidateds[0] = !newValidateds[0];
               setValidateds(newValidateds);
             }
-            setUser({ ...user, userEmail: e.target.value });
+            setUserInfo({ ...user, userEmail: e.target.value });
           }}
           label="아이디(이메일)"
           variant="outlined"
@@ -61,7 +62,7 @@ const SignIn = () => {
               newValidateds[1] = !newValidateds[1];
               setValidateds(newValidateds);
             }
-            setUser({ ...user, userPassword: e.target.value });
+            setUserInfo({ ...user, userPassword: e.target.value });
           }}
           helperText={
             user.userPassword != '' && !validateds[1]
@@ -84,7 +85,10 @@ const SignIn = () => {
           size="large"
           fullWidth
           onClick={() => {
-            loginSubmit(user, history, dispatch);
+            loginSubmit(user).then((response) => {
+              dispatch(setUser(response.data, response.headers.token));
+              history.push('/');
+            });
           }}
           className={
             !validateds.includes(false) ? 'btn_main nbg_bold' : 'nbg_bold'

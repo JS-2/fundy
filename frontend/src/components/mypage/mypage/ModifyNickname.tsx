@@ -41,7 +41,6 @@ const ModifyNickname = (props: Props) => {
 
   const handleSubmit = () => {
     checkNickName(nickName, token).then((resp) => {
-      console.log('이상없음');
       modifyNickName(nickName, token).then(() => {
         const newUser: ResponseUser = {
           userEmail: user.email,

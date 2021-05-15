@@ -45,7 +45,6 @@ public class UserController {
         if(userOpt.isPresent()) {
             // UserEmail 을 PK로 하는 JWT 를 생성
             UserResponse userInfo = userService.getUserInfo(userOpt.get());
-            result.put("token", userService.getToken(userOpt.get()));
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("token", userService.getToken(userOpt.get()));
             return new ResponseEntity<>(userInfo, responseHeaders, HttpStatus.OK);
@@ -204,8 +203,9 @@ public class UserController {
         // 프로필 사진 변경
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        userService.patchPicture(user.getUserId(), multipartFile);
+        String userPicture = userService.patchPicture(user.getUserId(), multipartFile);
         result.put("message", "프로필 사진이 변경되었습니다");
+        result.put("userPicture", userPicture);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

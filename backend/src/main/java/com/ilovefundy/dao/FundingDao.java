@@ -2,6 +2,8 @@ package com.ilovefundy.dao;
 
 
 import com.ilovefundy.entity.funding.FundingProject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,9 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
     //펀딩 상세보기
 //    List<FundingProject> findByFundingId(int id);
     FundingProject findByFundingId(int id);
+
+    //펀딩 제목으로 검색
+    Page<FundingProject> findByFundingNameContains(String title, Pageable pageable);
 
     // 아이돌 기부 상세보기
     List<FundingProject> findByIdolIdAndDonationPlaceId(int idol_id, int donation_place_id);

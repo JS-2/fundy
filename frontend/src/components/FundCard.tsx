@@ -78,6 +78,7 @@ const FundCard = (props: Props) => {
           height="200"
           image={fundingInfo?.fundingThumbnail}
           title="Card Image"
+          
         />
         <CardContent style={{ padding: '5px' }}>
           <Chip className="ddayBadge" label={dday} /> 
@@ -105,7 +106,7 @@ const FundCard = (props: Props) => {
           </Box>
           <BorderLinearProgress
             variant="determinate"
-            value={Number(fundingInfo?.fundingAchievementRate)}
+            value={Number(fundingInfo?.fundingAchievementRate)+1}
           />
         </CardContent>
       </CardActionArea>

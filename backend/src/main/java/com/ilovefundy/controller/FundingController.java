@@ -29,7 +29,7 @@ public class FundingController {
     @GetMapping("/fundings")
     public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword) {
         Map<String, Object> result = new HashMap<>();
-        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page);
+        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword);
         result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
     }
