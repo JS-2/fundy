@@ -1,5 +1,6 @@
 package com.ilovefundy.controller;
 
+import com.ilovefundy.dto.auth.MyRegisteredFundingResponse;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.idol.IdolResponse;

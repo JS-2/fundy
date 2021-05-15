@@ -9,12 +9,10 @@ import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.idol.IdolResponse;
-import com.ilovefundy.dto.user.MyRegisteredFundingResponse;
+import com.ilovefundy.dto.auth.MyRegisteredFundingResponse;
 import com.ilovefundy.dto.user.PayInfoResponse;
-import com.ilovefundy.entity.user.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class SetterUtils {
     public static IdolResponse setIdolResponse(Idol idol) {

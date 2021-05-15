@@ -1,4 +1,4 @@
-package com.ilovefundy.dto.user;
+package com.ilovefundy.dto.auth;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
