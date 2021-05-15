@@ -11,12 +11,18 @@ import java.util.List;
 
 @Repository
 public interface FundingDao extends JpaRepository<FundingProject, Integer> {
-    //펀딩 상세보기
+    // 펀딩 상세보기
 //    List<FundingProject> findByFundingId(int id);
     FundingProject findByFundingId(int id);
 
-    //펀딩 제목으로 검색
+    // 펀딩 승인 여부 별 리스트
+    Page<FundingProject> findByIsConfirm(FundingProject.FundingConfirm isStatus, Pageable pageable);
+
+    // 펀딩 제목으로 검색
     Page<FundingProject> findByFundingNameContains(String title, Pageable pageable);
+
+    // 승인여부 별 & 펀딩 제목으록 검색
+    Page<FundingProject> findByFundingNameContainsAndIsConfirm(String title, FundingProject.FundingConfirm IsStatus, Pageable pageable);
 
     // 아이돌 기부 상세보기
     List<FundingProject> findByIdolIdAndDonationPlaceId(int idol_id, int donation_place_id);
