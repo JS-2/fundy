@@ -1,4 +1,4 @@
-package com.ilovefundy.dto.user;
+package com.ilovefundy.dto.auth;
 
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingListResponse;

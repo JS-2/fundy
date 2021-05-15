@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource(value = {"classpath:application-aws.properties"})
+@PropertySource(value = {"classpath:application-import.properties"})
 public class SpringBootApiMainApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootApiMainApplication.class, args);
