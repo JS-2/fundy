@@ -142,3 +142,12 @@ export const setThumbnail = (file: any, auth_token: string) => {
     }
 })
 }
+
+export const getCerts = (auth_token: string) => {
+  return axiosInstance
+    .get('/user', {
+      headers: {
+        Authorization: auth_token
+        }
+      });
+}

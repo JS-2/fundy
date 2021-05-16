@@ -1,6 +1,34 @@
-.icon {
+.uncert_icon {
   font-size: 8em !important;
-  color: lightgrey;
+  color: silver;
+}
+
+.cert_icon {
+  font-size: 8em !important;
+  color: #2ecc71;
+}
+
+.waiting_icon {
+  font-size: 8em !important;
+  color: #fcc200;
+}
+
+.uncert_card {
+  margin-top: 5px !important;
+  color: whitesmoke !important;
+  background-color: grey !important;
+}
+
+.cert_card {
+  margin-top: 5px !important;
+  color: whitesmoke !important;
+  background-color: #2ecc71 !important;
+}
+
+.waiting_card {
+  margin-top: 5px !important;
+  color: whitesmoke !important;
+  background-color: #fcc200 !important;
 }
 
 .avatar {

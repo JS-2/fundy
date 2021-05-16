@@ -9,7 +9,7 @@ import {
   Grid,
   IconButton,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -24,18 +24,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../../reducers';
 import ModifyPassword from './ModifyPassword';
 import ModifyNickname from './ModifyNickname';
-import { setThumbnail } from '../../../api/user';
+import { getCerts, setThumbnail } from '../../../api/user';
 import CertUserInfo from './CertUserInfo';
 import CertFan from './CertFan';
 import { setUser } from '../../../reducers/user';
 
-declare global {
-  interface Window {
-    IMP: any;
-  }
+interface Cert {
+  isAdult: string;
+  isOfficialFan: string;
+  isPlus: string;
+  isProfile: string;
 }
-
-const { IMP } = window;
 
 const Profile = () => {
   const [fold, setFold] = useState(true);
@@ -47,20 +46,22 @@ const Profile = () => {
   const [openN, setOpenN] = useState(false);
   const [openCertFan, setOpenCertFan] = useState(false);
   const [openCertUserInfo, setOpenCertUserInfo] = useState(false);
-
-  const handleAdultCert = () => {
-    console.log('handleAdult');
-    IMP.init('imp09514011');
-    IMP.certification({}, (resp: any) => {
-      if (resp.success) {
-        console.log(resp);
-      } else {
-        alert('인증에 실패하였습니다. 에러 내용: ' + resp.error_msg);
-      }
-    });
-  };
-
+  const [cert, setCert] = useState<Cert>();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getCerts(token).then((resp) => {
+      console.log(resp);
+      const certObj: Cert = {
+        isAdult: resp.data.isAdult,
+        isOfficialFan: resp.data.isOfficialFan,
+        isPlus: resp.data.isPlus,
+        isProfile: resp.data.isProfile,
+      };
+      console.log(certObj);
+      setCert(certObj);
+    });
+  }, [token]);
 
   const handleOpenFan = () => {
     setOpenCertFan(true);
@@ -201,8 +202,16 @@ const Profile = () => {
               <Grid item container xs={12}>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <IconButton size="small" onClick={handleAdultCert}>
-                      <PersonOutlineIcon className={classNames(styles.icon)} />
+                    <IconButton size="small" disabled={cert?.isAdult !== 'N'}>
+                      <PersonOutlineIcon
+                        className={
+                          cert?.isAdult === 'Y'
+                            ? styles.cert_icon
+                            : cert?.isAdult === 'Waiting'
+                            ? styles.waiting_icon
+                            : styles.uncert_icon
+                        }
+                      />
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
@@ -211,9 +220,19 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <IconButton size="small" onClick={handleOpenFan}>
+                    <IconButton
+                      size="small"
+                      disabled={cert?.isOfficialFan !== 'N'}
+                      onClick={handleOpenFan}
+                    >
                       <FavoriteBorderIcon
-                        className={classNames('main_color', styles.icon)}
+                        className={
+                          cert?.isOfficialFan === 'Y'
+                            ? styles.cert_icon
+                            : cert?.isOfficialFan === 'Waiting'
+                            ? styles.waiting_icon
+                            : styles.uncert_icon
+                        }
                       />
                     </IconButton>
                   </Grid>
@@ -223,9 +242,19 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <IconButton size="small" onClick={handleOpenUserInfo}>
+                    <IconButton
+                      size="small"
+                      disabled={cert?.isProfile !== 'N'}
+                      onClick={handleOpenUserInfo}
+                    >
                       <EmojiPeopleIcon
-                        className={classNames('main_color', styles.icon)}
+                        className={
+                          cert?.isProfile === 'Y'
+                            ? styles.cert_icon
+                            : cert?.isProfile === 'Waiting'
+                            ? styles.waiting_icon
+                            : styles.uncert_icon
+                        }
                       />
                     </IconButton>
                   </Grid>
@@ -235,9 +264,15 @@ const Profile = () => {
                 </Grid>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
-                    <IconButton size="small">
+                    <IconButton size="small" disabled={cert?.isPlus !== 'N'}>
                       <AddCircleOutlineIcon
-                        className={classNames('main_color', styles.icon)}
+                        className={
+                          cert?.isPlus === 'Y'
+                            ? styles.cert_icon
+                            : cert?.isPlus === 'Waiting'
+                            ? styles.waiting_icon
+                            : styles.uncert_icon
+                        }
                       />
                     </IconButton>
                   </Grid>

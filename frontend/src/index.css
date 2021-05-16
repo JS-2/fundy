@@ -54,7 +54,7 @@ code {
 }
 
 .main_color {
-  color: #f74a64;
+  color: #f74a64 !important;
 }
 
 .disabled_input {
