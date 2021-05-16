@@ -115,13 +115,14 @@ public class AdminService {
             return false;
         }
         // 기부와 관련된 프로젝트라면
-        if(fundingProject.getDonationRate() > 0 || fundingProject.getFundingType() == FundingProject.FundingType.Donation) {
+        if(fundingProject.getDonationRate() > 0) {
             DonationPlace donationPlace = donationPlaceDao.findByDonationPlaceId(fundingProject.getDonationPlaceId());
             long fundingAmount = 0;
             List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
             for(PayInfo payInfo : fundingPayInfoList) {
                 fundingAmount += payInfo.getPayAmount();
             }
+            fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
             donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
             donationPlaceDao.save(donationPlace);
         }
