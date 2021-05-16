@@ -26,6 +26,8 @@ public class AdminService {
     private final FundingDao fundingDao;
     private final DonationPlaceDao donationPlaceDao;
 
+    private final MailService mailService;
+
     public List<Object> getFanAuthList(int page, int per_page) {
         List<Object> fanAuthList = new LinkedList<>();
         Page<FundingRegister> fundingRegisters = fundingRegisterDao
@@ -126,5 +128,21 @@ public class AdminService {
         fundingProject.setIsConfirm(FundingProject.FundingConfirm.Complete);
         fundingDao.save(fundingProject);
         return true;
+    }
+
+    public void sendSuccessMail(int funding_id) {
+        FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
+        User user = userDao.findByUserId(fundingProject.getUserId());
+        String email = user.getUserEmail();
+        // 성공메일
+        mailService.sendSuccessMessage(email);
+    }
+
+    public void sendFailMail(int funding_id) {
+        FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
+        User user = userDao.findByUserId(fundingProject.getUserId());
+        String email = user.getUserEmail();
+        // 실패메일
+        mailService.sendFailMessage(email);
     }
 }

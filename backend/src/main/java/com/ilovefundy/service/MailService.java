@@ -6,6 +6,7 @@ import com.ilovefundy.utils.EncryptionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,5 +99,27 @@ public class MailService {
     public void patchTempPassword(User user, String tmpPassword) {
         user.setUserPassword(EncryptionUtils.encryptSHA256(tmpPassword));
         userDao.save(user);
+    }
+
+    public void sendSuccessMessage(String mail) {
+        String url = "\"http://www.ilovefundy.com\"";
+        SimpleMailMessage message  = new SimpleMailMessage();
+        message.setTo(mail); // 수신자
+        message.setSubject("[FUNDY] 펀딩 신청 결과입니다."); // 메일 제목
+        message.setText("축하합니다. 펀딩 등록에 성공하였습니다."); // 메일 내용
+        message.setFrom(url); // 발신자
+
+        mailSender.send(message);
+    }
+
+    public void sendFailMessage(String mail) {
+        String url = "\"http://www.ilovefundy.com\"";
+        SimpleMailMessage message  = new SimpleMailMessage();
+        message.setTo(mail); // 수신자
+        message.setSubject("[FUNDY] 펀딩 신청 결과입니다."); // 메일 제목
+        message.setText("죄송합니다. 펀딩 등록에 실패하였습니다."); // 메일 내용
+        message.setFrom(url); // 발신자
+
+        mailSender.send(message);
     }
 }

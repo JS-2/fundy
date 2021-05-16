@@ -3,6 +3,7 @@ package com.ilovefundy.controller;
 import com.ilovefundy.dto.funding.IsGoodProjectRequest;
 import com.ilovefundy.service.AdminService;
 import com.ilovefundy.service.FundingService;
+import com.ilovefundy.service.MailService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class AdminController {
             @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "펀딩 승인",
-            notes = "관리자의 판단하에 대기중인 펀딩 승인 Request Body Example : {\"isGoodProject\" : \'Y\' or \'N\'}")
+            notes = "관리자의 판단하에 대기중인 펀딩 승인")
     @ApiResponses({
             @ApiResponse(code = 200, message = "펀딩 승인. OK !!")
     })
@@ -32,6 +33,7 @@ public class AdminController {
     public ResponseEntity<Object> acceptFunding(@PathVariable int funding_id, @RequestBody IsGoodProjectRequest req) {
         Map<String, Object> result = new HashMap<>();
         fundingService.patchFundingState(funding_id, true, req.getIsGoodProject());
+        adminService.sendSuccessMail(funding_id);
         result.put("message", "펀딩 승인!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -47,7 +49,8 @@ public class AdminController {
     @PatchMapping("/admin/funding/{funding_id}/decline")
     public ResponseEntity<Object> declineFunding(@PathVariable int funding_id) {
         Map<String, Object> result = new HashMap<>();
-        fundingService.patchFundingState(funding_id, false, 'N');
+        fundingService.patchFundingState(funding_id, false, "N");
+        adminService.sendFailMail(funding_id);
         result.put("message", "펀딩 거절");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

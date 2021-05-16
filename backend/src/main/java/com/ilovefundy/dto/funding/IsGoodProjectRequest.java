@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class IsGoodProjectRequest {
     @ApiModelProperty(example = "Y or N")
-    private Character isGoodProject;
+    private String isGoodProject;
 }
