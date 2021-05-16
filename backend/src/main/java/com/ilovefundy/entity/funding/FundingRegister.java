@@ -33,8 +33,8 @@ public class FundingRegister {
     @Column(name = "funding_register_age")
     private Integer fundingRegisterAge;
 
-    @Column(name = "funding_register_history")
+    @Column(name = "funding_register_history", columnDefinition = "LONGTEXT")
     private String fundingRegisterHistory; // 총대 경력
-    @Column(name = "official_fan_history")
+    @Column(name = "official_fan_history", columnDefinition = "LONGTEXT")
     private String officialFanHistory; // 팬활동 경력
 }
