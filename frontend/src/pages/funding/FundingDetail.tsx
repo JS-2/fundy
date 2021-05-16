@@ -27,8 +27,10 @@ import DoneIcon from "@material-ui/icons/Done";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
-import CreditCardIcon from '@material-ui/icons/CreditCard';
+import CreditCardIcon from "@material-ui/icons/CreditCard";
 import kHeartIcon from "../../assets/img/hand-gesture.svg";
+import GroupIcon from '@material-ui/icons/Group';
+import TodayIcon from '@material-ui/icons/Today';
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -57,7 +59,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const [Fund, setFund] = useState<FundForm>();
   const [fundingFavorite, setFundingFavorite] = useState<boolean>(false);
-
   const user: User = useSelector((state: rootState) => state.userReducer.user);
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
@@ -136,6 +137,9 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     });
   };
 
+  const startdate=Fund?.fundingStartTime?.replaceAll('-','.').split('T',1);
+  const enddate=Fund?.fundingEndTime?.replaceAll('-','.').split('T',1);
+
   return (
     <div>
       <div className="row">
@@ -181,24 +185,28 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                   </Modal>
                 </div>
                 <div className="col-md-4 fundingInfo">
-                  <div className="barInfo">
-                    <span className="p-2 fundAmount">
-                      달성 금액:{" "}
+                  <div className="barInfo d-flex flex-wrap justify-content-end align-items-end">
+                    <span className="fundAmount">
+                    ￦
                       {Fund?.fundingAmount
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      원/
+                      
                     </span>
-                    <span className=" p-2 fundRate">
+                    <span className="fundRate">
                       {Fund?.fundingAchievementRate}%
                     </span>
                   </div>
-
+                  <div>
                   <BorderLinearProgress
                     className="progressBar"
                     variant="determinate"
                     value={Number(Fund?.fundingAchievementRate)}
                   />
+
+                  </div>
+
+                 
 
                   <div>
                     <Button
@@ -216,8 +224,9 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                     >
                       관심 {fundingFavorite ? "해제" : "등록"}
                     </Button>
+
                     <Button
-                    startIcon={<CreditCardIcon/>}
+                      startIcon={<CreditCardIcon />}
                       className="paybtn col-md-6 col-sm-6"
                       variant="contained"
                       color="secondary"
@@ -226,39 +235,46 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                     >
                       펀딩하기
                     </Button>
+
+                    <div className="infoBox" style={{ }}>
                     <Button
-                        startIcon={<AssignmentInd/>}
-                        variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
-                        color={fundingFavorite ? "secondary" : "default"} 
-                      >
-                        펀딩 개설자: {Fund?.userNickname}
+                      startIcon={<AssignmentInd />}
+                      variant="outlined"
+                      className="boxbtn nbg_bold col-md-12 col-sm-12"
+                    >
+                      펀딩 개설자: {Fund?.userNickname}
                     </Button>
-                   
-          
-                    
+
+                    <div
+                      className="boxbtn nbg_bold col-md-12 col-sm-12"
+                      style={{ alignItems: "center", textAlign: "center" }}
+                    >
+                      <img style={{ height: "28px" }} src={kHeartIcon} /> 펀딩
+                      아이돌: {Fund?.idolName}
+                    </div>
                     <Button
-                      
-                        variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
-                        color={fundingFavorite ? "secondary" : "default"} 
-                      >
-                        <img style={{height: "28px"}} src={kHeartIcon} /> 펀딩 아이돌: {Fund?.idolName}
-                    </Button>
-                    <Button
-                        startIcon={<DoneIcon/>}
-                        variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
-                        color={fundingFavorite ? "secondary" : "default"} 
-                      >
-                         목표 금액:{" "}
+                      startIcon={<DoneIcon />}
+                      variant="outlined"
+                      className="boxbtn nbg_bold col-md-12 col-sm-12"
+                    >
+                      목표 금액:{" "}
                       {Fund?.fundingGoalAmount
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       원
                     </Button>
-            
-  
+
+                    <Button
+                      startIcon={<TodayIcon/>}
+                      variant="outlined"
+                      className="boxbtn nbg_bold col-md-12 col-sm-12"
+                    >
+                      {startdate}~{enddate}
+                    </Button>
+
+
+                    </div>
+                  
                     <Chip
                       label="Custom delete icon"
                       deleteIcon={<DoneIcon />}

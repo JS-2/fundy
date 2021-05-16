@@ -33,6 +33,8 @@
 
 .fundAmount{
   font-size:20px;
+  height: 100%;
+  vertical-align:text-bottom;
   align-content: center;
   line-height: inherit;
 }
@@ -44,7 +46,6 @@
 .fundRate{
   font-weight: bolder;
   font-size:30px !important;
-  float: right;
   display: inline-block;
   
   background: linear-gradient(270deg, rgba(252,86,111,0.6225840678068102) 0%, rgba(252,86,111,1) 53%);
@@ -55,11 +56,20 @@
 .boxbtn{
   font-size:16px !important;
   height: 50px;
+  align-items: center !important;
+  border: 2px 2px 2px 2px;
 }
 .barInfo{
-  text-align: justify;
-  height: 43px;
+
+
   
+}
+
+.infoBox{
+  border-style: solid; 
+  border-color: lightgrey;
+  border-width: 0.3px;
+  margin-bottom:20px;
 }
 
 .parentSpan{
@@ -113,6 +123,7 @@
   text-align: center;
   color: black;
   text-shadow: 1px 1px 3px white;
+  font-weight: bold;
 }
 .fundingSub{
   text-align: center;
