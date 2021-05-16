@@ -66,6 +66,7 @@ export interface FundForm {
   donationPlaceId: number | null;
   idolId: number;
   userId: number;
+  userNickname: string;
   fundingType: string| null;
   fund_Type: number| null;
   idolNumber: number| null;

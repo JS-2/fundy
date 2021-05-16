@@ -27,32 +27,35 @@ import {
   DateTimePicker,
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { FundingForm } from '../../common/types';
-import { useParams } from 'react-router';
-import { setFundCreate } from '../../api/fund';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { useSelector } from 'react-redux';
-import { rootState } from '../../reducers';
-import ReactSummernote from 'react-summernote';
-import 'react-summernote/dist/react-summernote.css';
-import 'bootstrap/js/modal';
-import 'bootstrap/js/dropdown';
-import 'bootstrap/js/tooltip';
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import { FundingForm } from "../../common/types";
+import { useParams } from "react-router";
+import { setFundCreate } from "../../api/fund";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+import { useSelector } from "react-redux";
+import { rootState } from "../../reducers";
+import ReactSummernote from "react-summernote";
+import "react-summernote/dist/react-summernote.css";
+import "bootstrap/js/modal";
+import "bootstrap/js/dropdown";
+import "bootstrap/js/tooltip";
+import { useHistory } from "react-router-dom";
 
 const FundCreate = () => {
-  const [fundingType, setFundingType] = useState('');
-  const [idolId, setIdolId] = useState('');
-  const [fundName, setFundName] = useState<string>('');
-  const [fundShortInfo, setFundShortInfo] = useState<string>('');
-  const [thumbnails, setThumbnails] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
-  const [locationDetail, setLocationDetail] = useState<string>('');
-  const [goalAmount, setGoalAmount] = useState('');
-  const [endTime, setEndTime] = useState<string>('');
-  const [fundDetail, setFundDetail] = useState('');
-  let [selectedValue] = React.useState('0');
+  const [fundingType, setFundingType] = useState("");
+  const [idolId, setIdolId] = useState("");
+  const [fundName, setFundName] = useState<string>("");
+  const [fundShortInfo, setFundShortInfo] = useState<string>("");
+  const [thumbnails, setThumbnails] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [locationDetail, setLocationDetail] = useState<string>("");
+  const [goalAmount, setGoalAmount] = useState("");
+  const [endTime, setEndTime] = useState<string>("");
+  const [fundDetail, setFundDetail] = useState("");
+  let [selectedValue] = React.useState("0");
+  const [file, setFile] =useState("");
+  const [fileURL, setFileURL] =useState<any>();
   const [selectedStartDate, handleStartDateChange] =
     useState<MaterialUiPickersDate>(new Date());
   const [selectedEndDate, handleEndDateChange] =
@@ -61,6 +64,7 @@ const FundCreate = () => {
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
+  const history = useHistory();
 
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -75,7 +79,7 @@ const FundCreate = () => {
       idolName: idolId,
       fundingContent: fundDetail,
       goalAmount: goalAmount,
-      thumbnail: thumbnails,
+      thumbnail: fileURL,
       fundingSubtitle: fundShortInfo,
       fundingType: 'Donation',
       idolId: 22,
@@ -89,6 +93,10 @@ const FundCreate = () => {
     console.log(fundDetail);
 
     setFundCreate(fundForm, token);
+    history.push({
+      pathname: ('/funding'),
+      state: {  },
+    });
   };
 
   const onlocation = (address: string) => {
@@ -127,6 +135,7 @@ const FundCreate = () => {
 
   const onDrop = (thumbnail: any) => {
     setThumbnails(thumbnail);
+    console.log("IMG FILE>>>>>"+thumbnails);
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -250,6 +259,22 @@ const FundCreate = () => {
     }
   };
 
+
+  const handleFileOnChange = (event:any) => {
+    event.preventDefault();
+    const reader = new FileReader();
+    let file = event.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+      setFileURL(reader.result);
+    }
+    reader.readAsDataURL(file);
+  }
+  let profile_preview = null;
+    if(file !== ''){
+      profile_preview = <img className='profile_preview col-md-6' width="100%" src={fileURL}></img>
+    }
+
   // const uploadImage = (blob: string | Blob) => {
   //   let formData = new FormData();
 
@@ -361,6 +386,15 @@ const FundCreate = () => {
           withPreview={true}
           onChange={onDrop}
         />
+          <div>
+      <input type='file' 
+          accept='image/jpg,impge/png,image/jpeg,image/gif' 
+          name='profile_img' 
+          onChange={handleFileOnChange}>
+      </input>
+      {profile_preview}
+    </div>
+          
       </div>
 
       <div className="row">

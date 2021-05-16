@@ -22,7 +22,12 @@ input{
     padding: 0px;
 }
 
-
+.profile_preview{
+  height: 300px;
+  width: auto;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
 
 
 .MuiFormLabel-root {

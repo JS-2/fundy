@@ -1,28 +1,8 @@
 import React, { Component, useEffect, useState } from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Pagination from "@material-ui/lab/Pagination";
 import "./FundingBoard.css";
-import { Accordion, Grid } from "@material-ui/core";
 import AccordionComp from "./AccordionComp";
-import { render } from "react-dom";
-import { RouteComponentProps } from "react-router-dom";
-import { FundingNotice } from "../../common/types";
-import { getFundNotice } from "../../api/fund";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      "& > * + *": {
-        marginTop: theme.spacing(2),
-      },
-    },
-  })
-);
 
-interface MatchParams {
-  num: string;
-}
 
 const FundingBoard = (props: any) => {
 
