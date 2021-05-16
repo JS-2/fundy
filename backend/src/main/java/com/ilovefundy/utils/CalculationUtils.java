@@ -18,7 +18,7 @@ public class CalculationUtils {
     public static int getAchievementRate(int amount, int goalAmount) {
         int achievementRate = 0;
         if(goalAmount != 0) {
-            achievementRate = 100 * amount / goalAmount;
+            achievementRate = (int) (100 * ((float) amount / (float) goalAmount));
         }
         return achievementRate;
     }
