@@ -222,7 +222,10 @@ const Profile = () => {
                   <Grid item container xs={12} justify="center">
                     <IconButton
                       size="small"
-                      disabled={cert?.isOfficialFan !== 'N'}
+                      disabled={
+                        cert?.isOfficialFan !== 'N' &&
+                        cert?.isOfficialFan !== 'Decline'
+                      }
                       onClick={handleOpenFan}
                     >
                       <FavoriteBorderIcon
@@ -244,7 +247,9 @@ const Profile = () => {
                   <Grid item container xs={12} justify="center">
                     <IconButton
                       size="small"
-                      disabled={cert?.isProfile !== 'N'}
+                      disabled={
+                        cert?.isProfile !== 'N' && cert?.isProfile !== 'Decline'
+                      }
                       onClick={handleOpenUserInfo}
                     >
                       <EmojiPeopleIcon

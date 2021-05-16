@@ -3,6 +3,7 @@ package com.ilovefundy.dto.funding;
 import com.ilovefundy.entity.funding.FundingProject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -27,8 +28,10 @@ public class FundingRequest {
     @NotNull
     Integer goalAmount;
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     LocalDateTime startTime;
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     LocalDateTime endTime;
     @NotNull
     String fundingContent;

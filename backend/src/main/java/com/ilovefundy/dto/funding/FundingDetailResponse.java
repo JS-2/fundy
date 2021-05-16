@@ -51,4 +51,6 @@ public class FundingDetailResponse {
     private String fundingAmount;
     @ApiModelProperty(example = "35")
     private Integer fundingAchievementRate;
+    @ApiModelProperty(example = "1000")
+    private Integer fundingParticipants;
 }
