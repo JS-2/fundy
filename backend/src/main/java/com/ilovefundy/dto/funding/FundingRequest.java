@@ -3,13 +3,13 @@ package com.ilovefundy.dto.funding;
 import com.ilovefundy.entity.funding.FundingProject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@Valid
 @Data
 public class FundingRequest {
     @NotNull
@@ -33,7 +33,7 @@ public class FundingRequest {
     @NotNull
     String fundingContent;
 
-    String Thumbnail;
+    MultipartFile Thumbnail;
     @NotNull
     Integer donationRate;
 
