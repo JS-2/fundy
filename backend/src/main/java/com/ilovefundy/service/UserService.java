@@ -244,8 +244,6 @@ public class UserService {
     public void createProfileAuth(int user_id, ProfileAuth profileAuth) throws IOException {
         User user = userDao.getOne(user_id);
         Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user.getUserId());
-        System.out.println(profileAuth.getName());
-        System.out.println(profileAuth.getProfilePicture());
         String picture_path = s3UploaderService.upload(profileAuth.getProfilePicture(), "static");
         // 인증 등록을 처음 하는 경우
         if(!fundingRegisterOpt.isPresent()) {
