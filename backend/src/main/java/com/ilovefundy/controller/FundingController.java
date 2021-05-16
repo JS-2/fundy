@@ -45,7 +45,7 @@ public class FundingController {
     @ApiOperation(value = "펀딩 등록")
     @ApiResponses(@ApiResponse(code = 201, message = "펀딩 등록 성공!"))
     @PostMapping("/fundings")
-    public ResponseEntity<Object> fundingWrite(@RequestBody @Valid FundingRequest request){
+    public ResponseEntity<Object> fundingWrite(@ModelAttribute FundingRequest request) throws IOException {
         Map<String, Object> result = new HashMap<>();
         // 펀딩 등록
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
