@@ -11,8 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { User, ResponseUser } from '../../../common/types';
 import { rootState } from '../../../reducers';
-import { Editor } from '@toast-ui/react-editor';
 import { useRef, useState } from 'react';
+import ReactSummernote from 'react-summernote';
+import { postFanCert } from '../../../api/admin';
 
 interface Props {
   open: boolean;
@@ -33,16 +34,28 @@ const CertFan = (props: Props) => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    const content = getEditor();
+    postFanCert(contentHtml, token).then((resp) => {
+      window.location.reload();
+    });
+  };
+  const onChangeEdit = (content: any) => {
+    console.log('onChange ', content);
     setContentHtml(content);
   };
-  const editorRef: any = useRef();
 
-  const getEditor = () => {
-    const editorInstance = editorRef.current.getInstance();
-    const getContent_html = editorInstance.getHtml();
+  const onImageUpload = (
+    images: string | any[],
+    insertImage: (arg0: string | ArrayBuffer | null) => void
+  ) => {
+    for (let i = 0; i < images.length; i++) {
+      const reader = new FileReader();
 
-    return getContent_html;
+      reader.onloadend = () => {
+        insertImage(reader.result);
+      };
+
+      reader.readAsDataURL(images[i]);
+    }
   };
 
   return (
@@ -51,22 +64,27 @@ const CertFan = (props: Props) => {
       <DialogContent>
         <div className="row">
           <div className="col-md-12 editor">
-            <Editor
-              //initialValue="원하는 문장을 입력해주세요.."
-              previewStyle="vertical"
-              height="500px"
-              initialEditType="wysiwyg"
-              useCommandShortcut={true}
-              placeholder="펀딩에 대해 상세하게 설명해주세요."
-              ref={editorRef}
+            <ReactSummernote
+              placeholder="내용을 입력하여주세요"
+              options={{
+                lang: 'ko-KR',
+                minHeight: 380,
+                toolbar: [
+                  ['style', ['style']],
+                  ['font', ['bold', 'underline', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['table', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['view', ['fullscreen']],
+                ],
+              }}
+              onChange={onChangeEdit}
+              onImageUpload={onImageUpload}
             />
           </div>
         </div>
-        {contentHtml !== '' ? (
-          <div dangerouslySetInnerHTML={{ __html: contentHtml }}></div>
-        ) : (
-          <></>
-        )}
       </DialogContent>
       <DialogActions>
         <Button fullWidth variant="contained" onClick={handleSubmit}>
