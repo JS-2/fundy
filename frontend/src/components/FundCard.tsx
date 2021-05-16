@@ -41,6 +41,9 @@ const FundCard = (props: Props) => {
   const [fundingInfo, setFundingInfo] = useState<IFunding>();
   const history = useHistory();
   const [dday, setDday]= useState<string>();
+  const [percentage, setPercentage]= useState<number>();
+  
+
 
   useEffect(() => {
     if (props.funding !== null) {
@@ -52,6 +55,12 @@ const FundCard = (props: Props) => {
         setDday("D-"+props.funding.fundingRemainDay);
       }
       setFundingInfo(props.funding);
+      if(fundingInfo?.fundingAchievementRate!=null){
+        if(fundingInfo?.fundingAchievementRate>=100){
+          setPercentage(100);
+        }else setPercentage(fundingInfo?.fundingAchievementRate);
+
+      }
     }
   }, [props]);
 
@@ -63,6 +72,7 @@ const FundCard = (props: Props) => {
       state: { fundingId: id },
     });
   };
+
 
   return (  
     <Card
@@ -106,7 +116,7 @@ const FundCard = (props: Props) => {
           </Box>
           <BorderLinearProgress
             variant="determinate"
-            value={Number(fundingInfo?.fundingAchievementRate)+1}
+            value={percentage}
           />
         </CardContent>
       </CardActionArea>

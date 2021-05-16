@@ -28,10 +28,10 @@ const FundingInfo = (props: any) => {
 
 
   return (
-    <div className="container">
+    <div className="">
       <div className="col-md-12">
-        <div id="viewer">
-          <div dangerouslySetInnerHTML={ {__html: props.detail} }>
+        <div id="viewer" style={{wordBreak:"break-all"}}>
+          <div className="col-md-12 col-sm-12" style={{wordBreak:"break-all"}} dangerouslySetInnerHTML={ {__html: props.detail} }>
       </div>
 
       </div>
