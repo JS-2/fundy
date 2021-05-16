@@ -164,20 +164,23 @@ public class FundingService {
         userDao.save(user);
     }
 
-    public void addFunding(FundingRequest req) {
+    public void addFunding(int user_id, FundingRequest req) {
+//        User user = userDao.getOne(user_id);
         FundingProject fundingProject = new FundingProject();
         fundingProject.setFundingType(req.getFundingType());
-        fundingProject.setUserId(req.getUserId());
+//        fundingProject.setUserId(req.getUserId());
+        fundingProject.setUserId(user_id);
         fundingProject.setFundingName(req.getFundingName());
         fundingProject.setFundingSubtitle(req.getFundingSubtitle());
         fundingProject.setFundingContent(req.getFundingContent());
         fundingProject.setIdolId(req.getIdolId());
-        fundingProject.setIdolName(req.getIdolName());
+//        fundingProject.setIdolName(req.getIdolName());
         fundingProject.setFundingGoalAmount(req.getGoalAmount());
         fundingProject.setFundingStartTime(req.getStartTime());
         fundingProject.setFundingEndTime(req.getEndTime());
         fundingProject.setFundingThumbnail(req.getThumbnail());
         fundingProject.setIsDonate(req.getIsDonate());
+        fundingProject.setDonationPlaceId(req.getDonationPlaceId());
         fundingProject.setIsConfirm(FundingProject.FundingConfirm.Wait);
         fundingDao.save(fundingProject);
     }

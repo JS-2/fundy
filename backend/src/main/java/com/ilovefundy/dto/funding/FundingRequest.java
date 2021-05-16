@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 public class FundingRequest {
     @NotNull
     FundingProject.FundingType fundingType;
-    @NotNull
-    Integer userId;
+//    @NotNull
+//    Integer userId;
     @NotNull
     String fundingName;
     @NotNull
     String fundingSubtitle;
     @NotNull
     Integer idolId;
-    @NotNull
-    String idolName;
+//    @NotNull
+//    String idolName;
     @NotNull
     Integer goalAmount;
     @NotNull
@@ -37,5 +37,5 @@ public class FundingRequest {
     @NotNull
     Boolean isDonate;
 
-    String DonationLocation;
+    Integer donationPlaceId;
 }

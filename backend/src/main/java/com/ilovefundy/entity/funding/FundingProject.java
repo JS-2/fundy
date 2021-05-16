@@ -56,6 +56,9 @@ public class FundingProject {
     private Integer idolId;
     @Column(name = "user_id")
     private Integer userId;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     @Column(name = "funding_type")
     @ColumnDefault("1")

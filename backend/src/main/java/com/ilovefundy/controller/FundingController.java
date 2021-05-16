@@ -47,7 +47,10 @@ public class FundingController {
     @PostMapping("/fundings")
     public ResponseEntity<Object> fundingWrite(@RequestBody @Valid FundingRequest request){
         Map<String, Object> result = new HashMap<>();
-        fundingService.addFunding(request);
+        // 펀딩 등록
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        fundingService.addFunding(user.getUserId(), request);
         result.put("message", "펀딩 등록 성공!");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
