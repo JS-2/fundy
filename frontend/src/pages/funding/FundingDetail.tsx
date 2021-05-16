@@ -137,6 +137,14 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     });
   };
 
+  const goToIdol = ()=>{
+    const idolUrl="/idol/"+Fund?.idolId;
+    history.push({
+      pathname: idolUrl,
+      state: {},
+    });
+  }
+
   const startdate=Fund?.fundingStartTime?.replaceAll('-','.').split('T',1);
   const enddate=Fund?.fundingEndTime?.replaceAll('-','.').split('T',1);
 
@@ -245,13 +253,14 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       펀딩 개설자: {Fund?.userNickname}
                     </Button>
 
-                    <div
+                    <Button
                       className="boxbtn nbg_bold col-md-12 col-sm-12"
-                      style={{ alignItems: "center", textAlign: "center" }}
+                      variant="outlined"
+                      onClick={goToIdol}
                     >
                       <img style={{ height: "28px" }} src={kHeartIcon} /> 펀딩
                       아이돌: {Fund?.idolName}
-                    </div>
+                    </Button>
                     <Button
                       startIcon={<DoneIcon />}
                       variant="outlined"
