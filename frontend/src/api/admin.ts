@@ -34,6 +34,20 @@ export const postFanCert = (fanHistory: string, auth_token: string) => {
     })
 }
 
+export const postProfileCert = (age: number, name: string, profileHistory: string, profilePicture: any, auth_token: string) => {
+    const frm = new FormData();
+    frm.append('age', String(age));
+    frm.append('name', name);
+    frm.append('profileHistory', profileHistory);
+    frm.append('profilePicture', profilePicture);
+
+    return axiosInstance.post('/grade/profile-auth', frm, {
+        headers: {
+            Authorization: auth_token
+        }
+    })
+}
+
 export const acceptFanCert = (user_id: number, auth_token: string) => {
     return axiosInstance.patch('/admin/fan-auth/' + user_id + '/accept', {}, {
         headers: {

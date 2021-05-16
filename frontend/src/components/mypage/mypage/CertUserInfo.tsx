@@ -15,6 +15,7 @@ import { User, ResponseUser, IProfileAuth } from '../../../common/types';
 import { rootState } from '../../../reducers';
 import ReactSummernote from 'react-summernote';
 import { CompareSharp } from '@material-ui/icons';
+import { postProfileCert } from '../../../api/admin';
 
 interface Props {
   open: boolean;
@@ -23,7 +24,7 @@ interface Props {
 
 const CertUserInfo = (props: Props) => {
   const { onClose, open } = props;
-  const [profilePicture, setProfilePicture] = useState<string>('');
+  const [profilePicture, setProfilePicture] = useState<any>();
   const [name, setName] = useState<string>('');
   const [age, setAge] = useState<number>(0);
   const [profileHistory, setProfileHistory] = useState<string>('');
@@ -32,9 +33,16 @@ const CertUserInfo = (props: Props) => {
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
+  console.log(token);
   const handleClose = () => {
     onClose();
   };
+
+  const handleImage = (e: any) => {
+    console.log(e.target.files[0]);
+    setProfilePicture(e.target.files[0]);
+  };
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -58,9 +66,11 @@ const CertUserInfo = (props: Props) => {
   };
 
   const handleSubmit = () => {
-    console.log(name);
-    console.log(age);
-    console.log(profileHistory);
+    postProfileCert(age, name, profileHistory, profilePicture, token).then(
+      (resp) => {
+        console.log(resp);
+      }
+    );
   };
 
   const handleChangeName = (e: any) => {
@@ -77,7 +87,11 @@ const CertUserInfo = (props: Props) => {
       <DialogContent>
         <Grid container spacing={1}>
           <Grid container item xs={12} alignItems="center">
-            <input type="file" accept=".gif, .jpg, .png" />
+            <input
+              type="file"
+              accept=".gif, .jpg, .png"
+              onChange={handleImage}
+            />
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -106,7 +120,6 @@ const CertUserInfo = (props: Props) => {
               options={{
                 lang: 'ko-KR',
                 minHeight: 380,
-                dialogsInBody: true,
                 toolbar: [
                   ['style', ['style']],
                   ['font', ['bold', 'underline', 'clear']],

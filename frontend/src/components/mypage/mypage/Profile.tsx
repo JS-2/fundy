@@ -127,9 +127,9 @@ const Profile = () => {
               <IconButton component="label">
                 <input
                   type="file"
-                  hidden
                   accept=".gif, .jpg, .png"
                   onChange={handleImage}
+                  style={{ display: 'none' }}
                 />
                 <Avatar className={styles.avatar}></Avatar>
               </IconButton>
@@ -227,7 +227,7 @@ const Profile = () => {
                     >
                       <FavoriteBorderIcon
                         className={
-                          cert?.isOfficialFan === 'Y'
+                          cert?.isOfficialFan === 'Approve'
                             ? styles.cert_icon
                             : cert?.isOfficialFan === 'Waiting'
                             ? styles.waiting_icon
@@ -249,7 +249,7 @@ const Profile = () => {
                     >
                       <EmojiPeopleIcon
                         className={
-                          cert?.isProfile === 'Y'
+                          cert?.isProfile === 'Approve'
                             ? styles.cert_icon
                             : cert?.isProfile === 'Waiting'
                             ? styles.waiting_icon
