@@ -14,10 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -46,8 +44,7 @@ public class GradeController {
             result.put("message", "이미 완료된 인증입니다.");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        fanAuth.setUserId(user.getUserId());
-        userService.createFanAuth(fanAuth);
+        userService.createFanAuth(user, fanAuth);
         result.put("message", "팬활동 인증 신청에 성공하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -59,7 +56,7 @@ public class GradeController {
             @ApiResponse(code = 400, message = "이미 완료된 인증. BAD_REQUEST !!")
     })
     @PostMapping("/grade/profile-auth")
-    public ResponseEntity<Object> createProfileAuth(@RequestBody ProfileAuth profileAuth) {
+    public ResponseEntity<Object> createProfileAuth(@ModelAttribute ProfileAuth profileAuth) throws IOException {
         Map<String, Object> result = new HashMap<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
@@ -67,8 +64,7 @@ public class GradeController {
             result.put("message", "이미 완료된 인증입니다.");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        profileAuth.setUserId(user.getUserId());
-        userService.createProfileAuth(profileAuth);
+        userService.createProfileAuth(user.getUserId(), profileAuth);
         result.put("message", "프로필 인증 신청에 성공하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

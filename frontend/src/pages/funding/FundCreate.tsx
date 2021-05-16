@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
-import "codemirror/lib/codemirror.css";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import Tooltip from "@material-ui/core/Tooltip";
+import React, { useRef } from 'react';
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import Tooltip from '@material-ui/core/Tooltip';
 import {
   TextField,
   Button,
@@ -13,17 +13,16 @@ import {
   FormControl,
   RadioGroup,
   Box,
-} from "@material-ui/core";
-import { withStyles, Theme, makeStyles } from "@material-ui/core/styles";
-import { Editor } from "@toast-ui/react-editor";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-import DaumPostcode from "react-daum-postcode";
-import "./FundCreate.css";
-import ImageUploader from "react-images-upload";
-import IconButton from "@material-ui/core/IconButton";
-import SearchButton from "@material-ui/icons/Search";
-import { useState } from "react";
-import ItemTable from "../../components/fundComponent/ItemTable";
+} from '@material-ui/core';
+import { withStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { Editor } from '@toast-ui/react-editor';
+import DaumPostcode from 'react-daum-postcode';
+import './FundCreate.css';
+import ImageUploader from 'react-images-upload';
+import IconButton from '@material-ui/core/IconButton';
+import SearchButton from '@material-ui/icons/Search';
+import { useState } from 'react';
+import ItemTable from '../../components/fundComponent/ItemTable';
 import {
   DateTimePicker,
   KeyboardDateTimePicker,
@@ -36,7 +35,6 @@ import { setFundCreate } from "../../api/fund";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { useSelector } from "react-redux";
 import { rootState } from "../../reducers";
-import colorSyntaxPlugin from "@toast-ui/editor-plugin-color-syntax";
 import ReactSummernote from "react-summernote";
 import "react-summernote/dist/react-summernote.css";
 import "bootstrap/js/modal";
@@ -83,7 +81,7 @@ const FundCreate = () => {
       goalAmount: goalAmount,
       thumbnail: fileURL,
       fundingSubtitle: fundShortInfo,
-      fundingType: "Donation",
+      fundingType: 'Donation',
       idolId: 22,
       userId: 3,
       isDonate: true,
@@ -104,8 +102,6 @@ const FundCreate = () => {
   const onlocation = (address: string) => {
     setLocation(address);
   };
-
-  const plugin: any = [colorSyntax];
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
@@ -145,7 +141,7 @@ const FundCreate = () => {
   const LightTooltip = withStyles((theme: Theme) => ({
     tooltip: {
       backgroundColor: theme.palette.common.white,
-      color: "rgba(0, 0, 0, 0.87)",
+      color: 'rgba(0, 0, 0, 0.87)',
       boxShadow: theme.shadows[1],
       fontSize: 14,
     },
@@ -153,17 +149,17 @@ const FundCreate = () => {
 
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
-    let extraAddress = "";
+    let extraAddress = '';
 
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
         extraAddress += data.bname;
       }
-      if (data.buildingName !== "") {
+      if (data.buildingName !== '') {
         extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
     console.log(fullAddress);
@@ -179,7 +175,7 @@ const FundCreate = () => {
   const handleClose = (value: string) => {
     setOpen(false);
   };
-  const [value, setValue] = React.useState("basic");
+  const [value, setValue] = React.useState('basic');
 
   const onChangeFundingType = (e: {
     target: { value: React.SetStateAction<string> };
@@ -244,12 +240,14 @@ const FundCreate = () => {
   };
 
   const onChangeEdit = (content: any) => {
-    console.log("onChange ", content);
+    console.log('onChange ', content);
     setFundDetail(content);
-    
   };
 
-  const onImageUpload = (images: string | any[], insertImage: (arg0: string | ArrayBuffer | null) => void) => {
+  const onImageUpload = (
+    images: string | any[],
+    insertImage: (arg0: string | ArrayBuffer | null) => void
+  ) => {
     for (let i = 0; i < images.length; i++) {
       const reader = new FileReader();
 
@@ -346,7 +344,7 @@ const FundCreate = () => {
         <TextField
           required
           className="col-md-12 input"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           label="펀딩 제목"
           placeholder="싸피싸피의 기부 릴레이 4월 - 유기견 보호소 강아지들 사료 지원 프로젝트"
           variant="outlined"
@@ -358,7 +356,7 @@ const FundCreate = () => {
         <TextField
           required
           className="col-md-12 input"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           label="아이돌 리스트"
           placeholder="싸피싸피"
           variant="outlined"
@@ -383,7 +381,7 @@ const FundCreate = () => {
           withIcon={true}
           buttonText="이미지를 선택하세요"
           className="col-md-6 input"
-          imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+          imgExtension={['.jpg', '.gif', '.png', '.gif']}
           maxFileSize={5242880}
           withPreview={true}
           onChange={onDrop}
@@ -427,7 +425,7 @@ const FundCreate = () => {
               onChange={handleStartDateChange}
               label="펀딩 시작"
               onError={console.log}
-              minDate={new Date("2018-01-01T00:00")}
+              minDate={new Date('2018-01-01T00:00')}
               format="yyyy/MM/dd hh:mm a"
               disablePast
             />
@@ -469,7 +467,7 @@ const FundCreate = () => {
       <div className="row">
         <TextField
           className="col-md-11 input"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           label="상세 주소"
           placeholder=""
           variant="outlined"
@@ -493,18 +491,18 @@ const FundCreate = () => {
           <ReactSummernote
             placeholder="내용을 입력하여주세요"
             options={{
-              lang: "ko-KR",
+              lang: 'ko-KR',
               minHeight: 380,
               dialogsInBody: true,
               toolbar: [
-                ["style", ["style"]],
-                ["font", ["bold", "underline", "clear"]],
-                ["fontname", ["fontname"]],
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
                 ['color', ['color']],
-                ["para", ["ul", "ol", "paragraph"]],
-                ["table", ["table"]],
-                ["insert", ["link", "picture", "video"]],
-                ["view", ["fullscreen", "codeview"]],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen']],
               ],
             }}
             onChange={onChangeEdit}

@@ -124,7 +124,7 @@ public class UserService {
     }
 
     public String patchPicture(int user_id, MultipartFile multipartFile) throws IOException {
-        User user = userDao.findByUserId(user_id);
+        User user = userDao.getOne(user_id);
         if(user.getUserPicture() != null) { // 원래 존재한 사진 삭제
             String picturePath = user.getUserPicture();
             String key = picturePath.substring(picturePath.lastIndexOf("static/"));
@@ -184,8 +184,8 @@ public class UserService {
 
     @Transactional
     public void removeMyFunding(int user_id, int funding_id) {
-        User user = userDao.getOne(user_id);
         FundingProject funding = fundingDao.getOne(funding_id);
+        User user = userDao.getOne(user_id);
         user.getFundings().remove(funding);
         funding.getUsers().remove(user);
         userDao.save(user);
@@ -221,10 +221,8 @@ public class UserService {
 
     // 팬 활동 인증 등록 신청
     @Transactional
-    public void createFanAuth(FanAuth fanAuth) {
-        int user_id = fanAuth.getUserId();
-        User user = userDao.getOne(user_id);
-        Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user_id);
+    public void createFanAuth(User user, FanAuth fanAuth) {
+        Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user.getUserId());
         // 인증 등록을 처음 하는 경우
         if(!fundingRegisterOpt.isPresent()) {
             FundingRegister fundingRegister = new FundingRegister();
@@ -238,32 +236,39 @@ public class UserService {
             fundingRegisterDao.save(fundingRegisterOpt.get());
         }
         user.setIsOfficialFan(User.IsCertification.Waiting);
+        userDao.save(user);
     }
 
     //프로필 인증 등록 신청
     @Transactional
-    public void createProfileAuth(ProfileAuth profileAuth) {
-        int user_id = profileAuth.getUserId();
+    public void createProfileAuth(int user_id, ProfileAuth profileAuth) throws IOException {
         User user = userDao.getOne(user_id);
-        Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user_id);
+        Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user.getUserId());
+        String picture_path = s3UploaderService.upload(profileAuth.getProfilePicture(), "static");
         // 인증 등록을 처음 하는 경우
         if(!fundingRegisterOpt.isPresent()) {
             FundingRegister fundingRegister = new FundingRegister();
             fundingRegister.setUser(user);
             fundingRegister.setFundingRegisterName(profileAuth.getName());
-            fundingRegister.setFundingRegisterPicture(profileAuth.getProfilePicture());
+            fundingRegister.setFundingRegisterPicture(picture_path);
             fundingRegister.setFundingRegisterAge(profileAuth.getAge());
             fundingRegister.setFundingRegisterHistory(profileAuth.getProfileHistory());
             fundingRegisterDao.save(fundingRegister);
         }
         // 프로필 인증으로 이미 정보가 있는 경우 or 재신청 하는 경우
         else {
+            if(fundingRegisterOpt.get().getFundingRegisterPicture() != null) {
+                String path = fundingRegisterOpt.get().getFundingRegisterPicture();
+                String key = path.substring(path.lastIndexOf("static/"));
+                s3UploaderService.deleteFileInS3(key);
+            }
             fundingRegisterOpt.get().setFundingRegisterName(profileAuth.getName());
-            fundingRegisterOpt.get().setFundingRegisterPicture(profileAuth.getProfilePicture());
+            fundingRegisterOpt.get().setFundingRegisterPicture(picture_path);
             fundingRegisterOpt.get().setFundingRegisterAge(profileAuth.getAge());
             fundingRegisterOpt.get().setFundingRegisterHistory(profileAuth.getProfileHistory());
             fundingRegisterDao.save(fundingRegisterOpt.get());
         }
         user.setIsProfile(User.IsCertification.Waiting);
+        userDao.save(user);
     }
 }

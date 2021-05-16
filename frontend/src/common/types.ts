@@ -152,3 +152,10 @@ export interface IComment {
   userPicture: string | undefined;
 
 }
+
+export interface IProfileAuth {
+  age: string;
+  name: string;
+  profileHistory: string;
+  profilePicture: string;
+}

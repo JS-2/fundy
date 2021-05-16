@@ -165,6 +165,7 @@ public class UserController {
         // 주소 변경
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
+        // 영속성 때문에 user 가 아닌 user_id 를 보냄
         userService.patchAddress(user.getUserId(), req.getAddress());
         result.put("message", "주소가 변경되었습니다!");
         return new ResponseEntity<>(result, HttpStatus.OK);
