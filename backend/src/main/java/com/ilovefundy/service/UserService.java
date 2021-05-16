@@ -123,7 +123,8 @@ public class UserService {
         userDao.save(user);
     }
 
-    public String patchPicture(User user, MultipartFile multipartFile) throws IOException {
+    public String patchPicture(int user_id, MultipartFile multipartFile) throws IOException {
+        User user = userDao.getOne(user_id);
         if(user.getUserPicture() != null) { // 원래 존재한 사진 삭제
             String picturePath = user.getUserPicture();
             String key = picturePath.substring(picturePath.lastIndexOf("static/"));
@@ -182,8 +183,9 @@ public class UserService {
     }
 
     @Transactional
-    public void removeMyFunding(User user, int funding_id) {
+    public void removeMyFunding(int user_id, int funding_id) {
         FundingProject funding = fundingDao.getOne(funding_id);
+        User user = userDao.getOne(user_id);
         user.getFundings().remove(funding);
         funding.getUsers().remove(user);
         userDao.save(user);
@@ -239,9 +241,12 @@ public class UserService {
 
     //프로필 인증 등록 신청
     @Transactional
-    public void createProfileAuth(User user, ProfileAuth profileAuth, MultipartFile multipartFile) throws IOException {
+    public void createProfileAuth(int user_id, ProfileAuth profileAuth) throws IOException {
+        User user = userDao.getOne(user_id);
         Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user.getUserId());
-        String picture_path = s3UploaderService.upload(multipartFile, "static");
+        System.out.println(profileAuth.getName());
+        System.out.println(profileAuth.getProfilePicture());
+        String picture_path = s3UploaderService.upload(profileAuth.getProfilePicture(), "static");
         // 인증 등록을 처음 하는 경우
         if(!fundingRegisterOpt.isPresent()) {
             FundingRegister fundingRegister = new FundingRegister();
