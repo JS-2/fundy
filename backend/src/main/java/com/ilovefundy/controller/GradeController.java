@@ -56,7 +56,7 @@ public class GradeController {
             @ApiResponse(code = 400, message = "이미 완료된 인증. BAD_REQUEST !!")
     })
     @PostMapping("/grade/profile-auth")
-    public ResponseEntity<Object> createProfileAuth(@RequestPart ProfileAuth profileAuth, @RequestPart MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<Object> createProfileAuth(@ModelAttribute ProfileAuth profileAuth) throws IOException {
         Map<String, Object> result = new HashMap<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
@@ -64,7 +64,7 @@ public class GradeController {
             result.put("message", "이미 완료된 인증입니다.");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        userService.createProfileAuth(user, profileAuth, multipartFile);
+        userService.createProfileAuth(user.getUserId(), profileAuth);
         result.put("message", "프로필 인증 신청에 성공하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
