@@ -204,7 +204,7 @@ public class UserController {
         // 프로필 사진 변경
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        String userPicture = userService.patchPicture(user.getUserId(), multipartFile);
+        String userPicture = userService.patchPicture(user, multipartFile);
         result.put("message", "프로필 사진이 변경되었습니다");
         result.put("userPicture", userPicture);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -295,7 +295,7 @@ public class UserController {
         // 관심펀딩 삭제
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        userService.removeMyFunding(user.getUserId(), funding_id);
+        userService.removeMyFunding(user, funding_id);
         result.put("message", "관심 펀딩을 삭제하였습니다");
         return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
     }
