@@ -67,8 +67,8 @@ const CertUserInfo = (props: Props) => {
 
   const handleSubmit = () => {
     postProfileCert(age, name, profileHistory, profilePicture, token).then(
-      (resp) => {
-        console.log(resp);
+      () => {
+        window.location.reload();
       }
     );
   };
