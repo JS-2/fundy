@@ -174,6 +174,15 @@ public class FundingService {
         fundingProject.setIsConfirm(isApprove ? FundingProject.FundingConfirm.Approve : FundingProject.FundingConfirm.Decline);
         fundingProject.setIsGoodFunding(isGoodProject.equals("Y") ? FundingProject.YesOrNo.Y : FundingProject.YesOrNo.N);
         fundingDao.save(fundingProject);
+
+        // Default PayInfo - 관리자 계정이 모금액 0으로 펀딩. 모금이 없는 예외상황 처리
+        PayInfo payInfo = new PayInfo();
+        payInfo.setUser(userDao.getOne(1));
+        payInfo.setFunding(fundingProject);
+        payInfo.setPayAmount((long) 0);
+        payInfo.setPayDatetime(LocalDateTime.now());
+        payDao.save(payInfo);
+
         int user_id = fundingProject.getUserId();
         User user = userDao.getOne(user_id);
         user.setFundingRegistCount(user.getFundingRegistCount()+1);
