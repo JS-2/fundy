@@ -78,18 +78,18 @@ public class FundingService {
                 }
                 else if (time == 2) { // 승인된 펀딩 진행 후(완료)
                     if (keyword != null) {
-                        pages = fundingDao.findByFundingEndTimeBeforeAndIsConfirmAndFundingNameContains(LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
+                        pages = fundingDao.CompleteSuccessFundingWithKeyword(keyword, PageRequest.of(page, per_page));
                     }
                     else {
-                        pages = fundingDao.findByFundingEndTimeBeforeAndIsConfirm(LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
+                        pages = fundingDao.CompleteSuccessFunding(PageRequest.of(page, per_page));
                     }
                 }
                 else {
                     if (keyword != null) {
-                        pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
+                        pages = fundingDao.CompleteFailFundingWithKeyword(keyword, PageRequest.of(page, per_page));
                     }
                     else {
-                        pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
+                        pages = fundingDao.CompleteFailFunding(PageRequest.of(page, per_page));
                     }
                 }
 
@@ -140,7 +140,7 @@ public class FundingService {
         fundingDetailResponse.setFundingGoalAmount(fundingProject.getFundingGoalAmount());
         fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
         fundingDetailResponse.setFundingType(fundingProject.getFundingType());
-        fundingDetailResponse.setIsDonate(fundingProject.getIsDonate());
+        fundingDetailResponse.setDonationRate(fundingProject.getDonationRate());
         fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
         fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
         int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
@@ -153,10 +153,10 @@ public class FundingService {
     }
 
     @Transactional
-    public void patchFundingState(int funding_id, boolean isApprove, char isGoodProject) {
+    public void patchFundingState(int funding_id, boolean isApprove, String isGoodProject) {
         FundingProject fundingProject = fundingDao.getOne(funding_id);
         fundingProject.setIsConfirm(isApprove ? FundingProject.FundingConfirm.Approve : FundingProject.FundingConfirm.Decline);
-        fundingProject.setIsGoodFunding(isGoodProject == 'Y' ? FundingProject.YesOrNo.Y : FundingProject.YesOrNo.N);
+        fundingProject.setIsGoodFunding(isGoodProject.equals("Y") ? FundingProject.YesOrNo.Y : FundingProject.YesOrNo.N);
         fundingDao.save(fundingProject);
         int user_id = fundingProject.getUserId();
         User user = userDao.getOne(user_id);
@@ -179,7 +179,7 @@ public class FundingService {
         fundingProject.setFundingStartTime(req.getStartTime());
         fundingProject.setFundingEndTime(req.getEndTime());
         fundingProject.setFundingThumbnail(req.getThumbnail());
-        fundingProject.setIsDonate(req.getIsDonate());
+        fundingProject.setDonationRate(req.getDonationRate());
         fundingProject.setDonationPlaceId(req.getDonationPlaceId());
         fundingProject.setIsConfirm(FundingProject.FundingConfirm.Wait);
         fundingDao.save(fundingProject);

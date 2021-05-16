@@ -1,10 +1,12 @@
 package com.ilovefundy.dao;
 
 
+import com.ilovefundy.dto.funding.IFundingListResponse;
 import com.ilovefundy.entity.funding.FundingProject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -34,9 +36,81 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
     Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, Pageable pageable);
     Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
 
-    // 펀딩 진행 후(완료)
-    Page<FundingProject> findByFundingEndTimeBeforeAndIsConfirm(LocalDateTime time, FundingProject.FundingConfirm IsStatus,Pageable pageable);
-    Page<FundingProject> findByFundingEndTimeBeforeAndIsConfirmAndFundingNameContains(LocalDateTime time, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
+    // 펀딩 완료(성공)
+    @Query(value = "SELECT f.*\n" +
+            "FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+            "                            FROM pay_info\n" +
+            "                            GROUP BY funding_id) p\n" +
+            "                            ON f.funding_id = p.funding_id\n" +
+            "WHERE f.funding_end_time < now() and\n" +
+            "       f.is_confirm = 1 and\n" +
+            "       f.funding_goal_amount <= p.total_amount",
+            countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+                    "FROM pay_info\n" +
+                    "GROUP BY funding_id) p\n" +
+                    "ON f.funding_id = p.funding_id\n" +
+                    "WHERE f.funding_end_time < now() and\n" +
+                    "f.is_confirm = 1 and\n" +
+                    "f.funding_goal_amount <= p.total_amount",
+            nativeQuery = true)
+    Page<FundingProject> CompleteSuccessFunding(Pageable pageable);
+    @Query(value = "SELECT f.*\n" +
+            "FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+            "                            FROM pay_info\n" +
+            "                            GROUP BY funding_id) p\n" +
+            "                            ON f.funding_id = p.funding_id\n" +
+            "WHERE f.funding_end_time < now() and\n" +
+            "       f.is_confirm = 1 and\n" +
+            "       f.funding_goal_amount <= p.total_amount and" +
+            "       f.funding_name like CONCAT('%', :keyword, '%')",
+            countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+                    "FROM pay_info\n" +
+                    "GROUP BY funding_id) p\n" +
+                    "ON f.funding_id = p.funding_id\n" +
+                    "WHERE f.funding_end_time < now() and\n" +
+                    "f.is_confirm = 1 and\n" +
+                    "f.funding_goal_amount <= p.total_amount and \n" +
+                    "f.funding_name like CONCAT('%', :keyword, '%')",
+            nativeQuery = true)
+    Page<FundingProject> CompleteSuccessFundingWithKeyword(String keyword, Pageable pageable);
+
+    // 펀딩 완료(실패)
+    @Query(value = "SELECT f.*\n" +
+            "FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+            "                            FROM pay_info\n" +
+            "                            GROUP BY funding_id) p\n" +
+            "                            ON f.funding_id = p.funding_id\n" +
+            "WHERE f.funding_end_time < now() and\n" +
+            "       f.is_confirm = 1 and\n" +
+            "       f.funding_goal_amount > p.total_amount",
+            countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+                    "FROM pay_info\n" +
+                    "GROUP BY funding_id) p\n" +
+                    "ON f.funding_id = p.funding_id\n" +
+                    "WHERE f.funding_end_time < now() and\n" +
+                    "f.is_confirm = 1 and\n" +
+                    "f.funding_goal_amount > p.total_amount",
+            nativeQuery = true)
+    Page<FundingProject> CompleteFailFunding(Pageable pageable);
+    @Query(value = "SELECT f.*\n" +
+            "FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+            "                            FROM pay_info\n" +
+            "                            GROUP BY funding_id) p\n" +
+            "                            ON f.funding_id = p.funding_id\n" +
+            "WHERE f.funding_end_time < now() and\n" +
+            "       f.is_confirm = 1 and\n" +
+            "       f.funding_goal_amount > p.total_amount and" +
+            "       f.funding_name like CONCAT('%', :keyword, '%')",
+            countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
+                    "FROM pay_info\n" +
+                    "GROUP BY funding_id) p\n" +
+                    "ON f.funding_id = p.funding_id\n" +
+                    "WHERE f.funding_end_time < now() and\n" +
+                    "f.is_confirm = 1 and\n" +
+                    "f.funding_goal_amount > p.total_amount and \n" +
+                    "f.funding_name like CONCAT('%', :keyword, '%')",
+            nativeQuery = true)
+    Page<FundingProject> CompleteFailFundingWithKeyword(String keyword, Pageable pageable);
 
     // 아이돌 기부 상세보기
     List<FundingProject> findByIdolIdAndDonationPlaceId(int idol_id, int donation_place_id);

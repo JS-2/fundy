@@ -31,7 +31,7 @@ public class FundingController {
     private final FundingService fundingService;
 
     //전체 펀딩 리스트
-    @ApiOperation(value = "전체 펀딩 리스트", notes = "status = 0: 대기, 1: 승인, 2: 거절\n (status:1 일 때)time = 0: 진행 전, 1: 진행 중, 2: 진행 후(완료)")
+    @ApiOperation(value = "전체 펀딩 리스트", notes = "status = 0: 대기, 1: 승인, 2: 거절\n (status:1 일 때)time = 0: 진행 전, 1: 진행 중, 2: 완료(성공), 3: 완료(실패)")
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 리스트 반환 성공!"))
     @GetMapping("/fundings")
     public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer time) {
