@@ -11,6 +11,7 @@ import {
   Chip,
   Grid,
   Modal,
+  SvgIcon,
 } from "@material-ui/core";
 import "./FundingDetail.css";
 import { getFundDetail, getFundNotice } from "../../api/fund";
@@ -26,6 +27,8 @@ import DoneIcon from "@material-ui/icons/Done";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import AssignmentInd from "@material-ui/icons/AssignmentInd";
+import CreditCardIcon from '@material-ui/icons/CreditCard';
+import kHeartIcon from "../../assets/img/hand-gesture.svg";
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -214,7 +217,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       관심 {fundingFavorite ? "해제" : "등록"}
                     </Button>
                     <Button
-                    startIcon={<DoneIcon/>}
+                    startIcon={<CreditCardIcon/>}
                       className="paybtn col-md-6 col-sm-6"
                       variant="contained"
                       color="secondary"
@@ -229,18 +232,21 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         className="boxbtn nbg_bold col-md-12 col-sm-12"
                         color={fundingFavorite ? "secondary" : "default"} 
                       >
-                         {Fund?.userNickname}
+                        펀딩 개설자: {Fund?.userNickname}
                     </Button>
+                   
+          
+                    
                     <Button
-                        startIcon={<AssignmentInd/>}
+                      
                         variant="outlined"
                         className="boxbtn nbg_bold col-md-12 col-sm-12"
                         color={fundingFavorite ? "secondary" : "default"} 
                       >
-                         {Fund?.idolName}
+                        <img style={{height: "28px"}} src={kHeartIcon} /> 펀딩 아이돌: {Fund?.idolName}
                     </Button>
                     <Button
-                        startIcon={<AssignmentInd/>}
+                        startIcon={<DoneIcon/>}
                         variant="outlined"
                         className="boxbtn nbg_bold col-md-12 col-sm-12"
                         color={fundingFavorite ? "secondary" : "default"} 
