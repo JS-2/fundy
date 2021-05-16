@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Data
 public class FundingListResponse {
@@ -21,4 +23,8 @@ public class FundingListResponse {
     private String fundingAmount;
     @ApiModelProperty(example = "35")
     private Integer fundingAchievementRate;
+    @ApiModelProperty(example = "2021-05-12 17:22:20")
+    private LocalDateTime fundingStartTime;
+    @ApiModelProperty(example = "2021-05-22 17:22:20")
+    private LocalDateTime fundingEndTime;
 }

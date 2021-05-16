@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,19 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
 
     // 승인여부 별 & 펀딩 제목으록 검색
     Page<FundingProject> findByFundingNameContainsAndIsConfirm(String title, FundingProject.FundingConfirm IsStatus, Pageable pageable);
+
+    // 펀딩 진행 전
+    Page<FundingProject> findByFundingStartTimeAfterAndIsConfirm(LocalDateTime time, FundingProject.FundingConfirm IsStatus,Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime time, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
+
+    // 펀딩 진행 중
+//    Page<FundingProject> findBy(LocalDateTime time, Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
+
+    // 펀딩 진행 후(완료)
+    Page<FundingProject> findByFundingEndTimeBeforeAndIsConfirm(LocalDateTime time, FundingProject.FundingConfirm IsStatus,Pageable pageable);
+    Page<FundingProject> findByFundingEndTimeBeforeAndIsConfirmAndFundingNameContains(LocalDateTime time, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
 
     // 아이돌 기부 상세보기
     List<FundingProject> findByIdolIdAndDonationPlaceId(int idol_id, int donation_place_id);

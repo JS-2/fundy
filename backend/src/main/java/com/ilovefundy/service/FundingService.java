@@ -19,7 +19,6 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -45,26 +44,66 @@ public class FundingService {
         this.client = iamportService.getClient();
     }
 
-    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status) {
+    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status, Integer time) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
-        Page<FundingProject> pages;
+        Page<FundingProject> pages = null;
         if (status != null) { // 펀딩 승인 여부에 따른 리스트
-            FundingProject.FundingConfirm isStatus = null;
+            FundingProject.FundingConfirm isStatus;
             if (status == 0) {
                 isStatus = FundingProject.FundingConfirm.Wait;
+                if (keyword != null) {
+                    pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
+                }
+                else {
+                    pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
+                }
             }
             else if (status == 1) {
                 isStatus = FundingProject.FundingConfirm.Approve;
+                if (time == 0) { // 승인된 펀딩 진행 전
+                    if (keyword != null) {
+                        pages = fundingDao.findByFundingStartTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
+                    }
+                    else {
+                        pages = fundingDao.findByFundingStartTimeAfterAndIsConfirm(LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
+                    }
+                }
+                else if (time == 1) { // 승인된 펀딩 진행 중
+                    if (keyword != null) {
+                        pages = fundingDao.findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime.now(), LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
+                    }
+                    else {
+                        pages = fundingDao.findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime.now(), LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
+                    }
+                }
+                else if (time == 2) { // 승인된 펀딩 진행 후(완료)
+                    if (keyword != null) {
+                        pages = fundingDao.findByFundingEndTimeBeforeAndIsConfirmAndFundingNameContains(LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
+                    }
+                    else {
+                        pages = fundingDao.findByFundingEndTimeBeforeAndIsConfirm(LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
+                    }
+                }
+                else {
+                    if (keyword != null) {
+                        pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
+                    }
+                    else {
+                        pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
+                    }
+                }
+
             }
             else if (status == 2) {
                 isStatus = FundingProject.FundingConfirm.Decline;
+                if (keyword != null) {
+                    pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
+                }
+                else {
+                    pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
+                }
             }
-            if (keyword != null) {
-                pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
-            }
-            else {
-                pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
-            }
+
         }
         else { // 펀딩 전체보기
             if (keyword != null) {
@@ -74,12 +113,7 @@ public class FundingService {
                 pages = fundingDao.findAll(PageRequest.of(page, per_page));
             }
         }
-//        if (keyword != null) {
-//            pages = fundingDao.findByFundingNameContains(keyword, PageRequest.of(page, per_page));
-//        }
-//        else {
-//            pages = fundingDao.findAll(PageRequest.of(page, per_page));
-//        }
+
         List<FundingProject> fundingProjectList = pages.getContent();
         for (FundingProject fundingProject : fundingProjectList){
             fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProject));

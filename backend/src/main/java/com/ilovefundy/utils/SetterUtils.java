@@ -37,7 +37,9 @@ public class SetterUtils {
         fundingResponse.setFundingName(fundingProject.getFundingName());
         fundingResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
         fundingResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
-        int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+        fundingResponse.setFundingStartTime(fundingProject.getFundingStartTime());
+        fundingResponse.setFundingEndTime(fundingProject.getFundingEndTime());
+        int remainDay = fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
         fundingResponse.setFundingRemainDay(remainDay);
         int amount = CalculationUtils.getFundingAmount(fundingProject);
         fundingResponse.setFundingAmount(String.format("%,d", amount));
