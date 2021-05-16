@@ -60,6 +60,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [Fund, setFund] = useState<FundForm>();
   const [fundingFavorite, setFundingFavorite] = useState<boolean>(false);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
+  const [percentage, setPercentage]= useState<number>();
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
@@ -73,6 +74,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       });
       if (check) setFundingFavorite(true);
       else setFundingFavorite(false);
+
+
     });
   }, [user]);
 
@@ -119,6 +122,13 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       console.log(response.data);
       setFund(response.data);
     });
+
+    if(Fund?.fundingAchievementRate!=null){
+      if(Number(Fund?.fundingAchievementRate)>=100){
+        setPercentage(100);
+      }else setPercentage(Number(Fund?.fundingAchievementRate));
+
+    }
   }, [params]);
 
   useEffect(() => {
@@ -209,7 +219,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                   <BorderLinearProgress
                     className="progressBar"
                     variant="determinate"
-                    value={Number(Fund?.fundingAchievementRate)}
+                    value={percentage}
                   />
 
                   </div>
