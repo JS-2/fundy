@@ -11,7 +11,7 @@ import './FundingDetail.css';
 import { getFundDetail, getFundNotice } from '../../api/fund';
 import FullWidthTabs from '../../components/fundComponent/FullWidthTabs';
 import { FundForm, FundingNotice, IFunding, User } from '../../common/types';
-import { RouteComponentProps, useParams } from 'react-router-dom';
+import { RouteComponentProps, useHistory, useParams } from 'react-router-dom';
 import { Height, PinDropSharp } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { rootState } from '../../reducers';
@@ -39,6 +39,9 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 interface MatchParams {
   num: string;
 }
+
+
+
 
 const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   console.log(match.params.num);
@@ -72,6 +75,17 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     );
   };
   //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  const history = useHistory();
+  const onClickPayment=()=>{
+
+    const url = '/funding/detail/' + Fund?.fundingId + '/payment';
+    history.push({
+      pathname: url,
+    });
+  }
+
+  
+
 
   interface Params {
     fund_id: string;
@@ -190,11 +204,9 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
               <BorderLinearProgress variant="determinate" value={Number(Fund?.fundingAchievementRate)} />
 
               <Box display="flex" justifyContent="flex-end" m={1} p={1}>
-                <a id="logoAnchor" href="1234/payment">
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" onClick={onClickPayment}>
                     펀딩하기
                   </Button>
-                </a>
               </Box>
             </div>
           </div>
