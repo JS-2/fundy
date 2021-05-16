@@ -31,7 +31,7 @@ const index = () => {
     <BrowserRouter>
       <Navbar />
       <ScrollToTop />
-      <Box minWidth={1080} display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center">
         <Box className="col-md-12">
           <Switch>
             <Route path="/login" component={Login} exact />

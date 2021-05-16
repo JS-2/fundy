@@ -2,20 +2,66 @@
   padding-left: 0px !important;
 }
 
+.paybtn{
+  height: 50px;
+  font-size: 16px !important;
+  border-radius: 0 !important;
+  font-weight: 700 !important;
+}
+.paybtn:hover{
+  color: white;
+}
+
+.favbtn{
+  height: 50px;
+  
+  font-size: 16px !important;
+  border-radius: 0 !important;
+}
+.favbtn:hover{
+  color: #f74a64 !important;
+}
+
 #fundImg{
   object-fit: cover;
   vertical-align: middle;
   width: 100%;
+  align-items: center;
+  align-content: center;
+  background-position: center;
 
 }
 
+.fundAmount{
+  font-size:20px;
+  align-content: center;
+  line-height: inherit;
+}
+
+.progressBar{
+  margin-bottom: 20px;
+
+}
 .fundRate{
   font-weight: bolder;
+  font-size:30px;
+  float: right;
+  display: inline-block;
+  
   background: linear-gradient(270deg, rgba(252,86,111,0.6225840678068102) 0%, rgba(252,86,111,1) 53%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+.barInfo{
+  text-align: justify;
+  height: 43px;
+  
+}
+
+.parentSpan{
+  text-align: right;
+}
 
 .fundingHeader{
   width: 100%;
@@ -46,12 +92,33 @@
   opacity: 1;
 }
 
-.fundingText{
-    text-align: center;
-    padding-top:25px;
-    color: black;
-    text-shadow: 1px 1px 3px white;
+
+
+.titleAr23ea:not(.titleArea:nth-child(1)){
+  padding: 20px;
+  z-index: -1;
+  -webkit-filter: brightness(100%);
+  opacity: 0.5;
 }
+
+.titleArea{
+  padding: 20px;
+
+}
+
+.fundingTitle{
+  text-align: center;
+  color: black;
+  text-shadow: 1px 1px 3px white;
+}
+.fundingSub{
+  text-align: center;
+z-index: 1;
+color: black;
+text-shadow: 1px 1px 3px white;
+margin-bottom:0;
+}
+
 
 
 .imgArea{
