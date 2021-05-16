@@ -14,7 +14,6 @@
 
 .favbtn{
   height: 50px;
-  
   font-size: 16px !important;
   border-radius: 0 !important;
 }
@@ -44,7 +43,7 @@
 }
 .fundRate{
   font-weight: bolder;
-  font-size:30px;
+  font-size:30px !important;
   float: right;
   display: inline-block;
   
@@ -53,6 +52,10 @@
     -webkit-text-fill-color: transparent;
 }
 
+.boxbtn{
+  font-size:16px !important;
+  height: 50px;
+}
 .barInfo{
   text-align: justify;
   height: 43px;
@@ -122,7 +125,7 @@ margin-bottom:0;
 
 
 .imgArea{
-  height:400px;
+  height:500px;
   background-position: center;
   overflow: hidden;
   background-size: cover;
