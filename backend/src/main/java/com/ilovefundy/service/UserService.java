@@ -221,7 +221,8 @@ public class UserService {
 
     // 팬 활동 인증 등록 신청
     @Transactional
-    public void createFanAuth(User user, FanAuth fanAuth) {
+    public void createFanAuth(int user_id, FanAuth fanAuth) {
+        User user = userDao.getOne(user_id);
         Optional<FundingRegister> fundingRegisterOpt = fundingRegisterDao.findByUser_UserId(user.getUserId());
         // 인증 등록을 처음 하는 경우
         if(!fundingRegisterOpt.isPresent()) {

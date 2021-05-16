@@ -44,7 +44,7 @@ public class GradeController {
             result.put("message", "이미 완료된 인증입니다.");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        userService.createFanAuth(user, fanAuth);
+        userService.createFanAuth(user.getUserId(), fanAuth);
         result.put("message", "팬활동 인증 신청에 성공하였습니다");
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

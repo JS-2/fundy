@@ -152,6 +152,11 @@ public class FundingService {
         fundingDetailResponse.setDonationRate(fundingProject.getDonationRate());
         fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
         fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
+        fundingDetailResponse.setIsAdult(user.getIsAdult());
+        fundingDetailResponse.setIsOfficialFan(user.getIsOfficialFan());
+        fundingDetailResponse.setIsProfile(user.getIsProfile());
+        fundingDetailResponse.setIsPlus(user.getFundingRegistCount() > 5 ? User.YesOrNo.Y : User.YesOrNo.N);
+
         int remainDay =  fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
         fundingDetailResponse.setFundingRemainDay(remainDay);
         int amount = CalculationUtils.getFundingAmount(fundingProject);
