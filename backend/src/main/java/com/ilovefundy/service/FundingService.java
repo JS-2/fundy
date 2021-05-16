@@ -1,6 +1,7 @@
 package com.ilovefundy.service;
 
 import com.ilovefundy.dao.FundingDao;
+import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.dto.funding.FundingPayRequest;
@@ -9,9 +10,11 @@ import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.dto.funding.FundingDetailResponse;
 import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.utils.CalculationUtils;
+import com.ilovefundy.utils.DeduplicationUtils;
 import com.ilovefundy.utils.SetterUtils;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -29,12 +32,14 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class FundingService {
     private final FundingDao fundingDao;
     private final UserDao userDao;
+    private final IdolDao idolDao;
     private final PayDao payDao;
     private final IamportService iamportService;
     private IamportClient client;
@@ -126,6 +131,9 @@ public class FundingService {
         FundingProject fundingProject = fundingDao.findByFundingId(id);
         FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
         User user = userDao.findByUserId(fundingProject.getUserId());
+        List<PayInfo> payInfoList = payDao.findByFunding(fundingProject);
+        List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
+
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setIdolId(fundingProject.getIdolId());
@@ -150,6 +158,8 @@ public class FundingService {
         fundingDetailResponse.setFundingAmount(String.format("%,d", amount));
         int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
         fundingDetailResponse.setFundingAchievementRate(achievementRate);
+        int participants = payParticipantsList.size();
+        fundingDetailResponse.setFundingParticipants(participants);
         return fundingDetailResponse;
     }
 
@@ -166,16 +176,15 @@ public class FundingService {
     }
 
     public void addFunding(int user_id, FundingRequest req) throws IOException {
-//        User user = userDao.getOne(user_id);
+        Idol idol = idolDao.findByIdolId(req.getIdolId());
         FundingProject fundingProject = new FundingProject();
         fundingProject.setFundingType(req.getFundingType());
-//        fundingProject.setUserId(req.getUserId());
         fundingProject.setUserId(user_id);
         fundingProject.setFundingName(req.getFundingName());
         fundingProject.setFundingSubtitle(req.getFundingSubtitle());
         fundingProject.setFundingContent(req.getFundingContent());
         fundingProject.setIdolId(req.getIdolId());
-//        fundingProject.setIdolName(req.getIdolName());
+        fundingProject.setIdolName(idol.getIdolName());
         fundingProject.setFundingGoalAmount(req.getGoalAmount());
         fundingProject.setFundingStartTime(req.getStartTime());
         fundingProject.setFundingEndTime(req.getEndTime());
