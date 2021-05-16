@@ -21,11 +21,12 @@ export const getFundDetail = (funding_id: number) => {
 }
 
 
-export const setFundCreate = (fund: FundingForm) => {
+export const setFundCreate = (fund: FundingForm, auth_token: string) => {
     
     return axiosInstance
         .post('/fundings',JSON.stringify(fund), {
             headers: {
+                Authorization: auth_token,
                 "Content-Type": `application/json`,
               },
         }

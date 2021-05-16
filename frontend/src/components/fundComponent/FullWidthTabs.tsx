@@ -86,10 +86,11 @@ const FullWidthTabs = (props:any) => {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
+          className="col-md-12"
         >
 
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <FundingInfo detail={props.detail}></FundingInfo>
+            <FundingInfo width="100%" detail={props.detail}></FundingInfo>
           
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
