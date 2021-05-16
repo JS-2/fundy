@@ -117,20 +117,17 @@ export interface IDonationPlace {
 
 export interface FundingForm{
   //폼 제출용
-    fundingName: string;
-    fundingSubtitle: string;
-    donationLocation: string;
-    startTime: MaterialUiPickersDate;
-    endTime: MaterialUiPickersDate;
-    fundingContent: string;
-    fundingType: string;
-    goalAmount: string|number;
-    idolId: number;
-    idolName: string;
-    isDonate: boolean;
-    thumbnail: string;
-    userId: number;
-  
+  donationPlaceId: number;
+  donationRate: number;
+  endTime: MaterialUiPickersDate;
+  fundingContent: string;
+  fundingName: string;
+  fundingSubtitle: string;
+  fundingType: string;
+  goalAmount: string|number;
+  idolId: number;
+  startTime: MaterialUiPickersDate;
+  thumbnail: any;
 }
 
 
@@ -158,4 +155,19 @@ export interface IProfileAuth {
   name: string;
   profileHistory: string;
   profilePicture: string;
+}
+
+export interface IDonationPlace {
+  donationPlaceId: number;
+  placeAddress: string;
+  placeDescription: string;
+  placeName: string;
+  placePicture: string;
+}
+
+export interface FundingStatus {
+  page: number;
+  per_page: number;
+  status: number;
+  time: number;
 }

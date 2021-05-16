@@ -65,7 +65,12 @@ const Main = () => {
       shuffle(data);
       setRandomIdols(data.slice(0, 8));
     });
-    getFundingList().then((resp) => {
+    getFundingList({
+      page: 1,
+      per_page: 1000,
+      status: 1,
+      time: 1,
+    }).then((resp) => {
       let data = resp.data;
       data = data.sort((a: IFunding, b: IFunding) => {
         const aAmount = Number(a.fundingAmount.replace(',', ''));
@@ -86,55 +91,56 @@ const Main = () => {
         <Banner></Banner>
       </div>
       <div className="row">
-      <div className="col-md-1"></div>
-      
+        <div className="col-md-1"></div>
 
-      <div className="area col-md-10" id="" >
-        <div className="" id="topFundArea">
-          <h3 className="headText">인기 펀딩</h3>
+        <div className="area col-md-10" id="">
+          <div className="" id="topFundArea">
+            <h3 className="headText">인기 펀딩</h3>
 
-          <Grid container spacing={3}>
-            {hotFunding?.map((funding: IFunding, i: number) => {
-              return (
-                <Grid item xs={4} key={funding.fundingId}>
-                  <FundCard funding={funding}></FundCard>
-                  
-                </Grid>
-              );
-            })}
-          </Grid>
-          <Box mt={1} display="flex" justifyContent="flex-end">
-            <Link className="nbg" to="/funding">
-              더보기
-            </Link>
-          </Box>
-        </div>
+            <Grid container spacing={3}>
+              {hotFunding?.map((funding: IFunding, i: number) => {
+                return (
+                  <Grid item xs={4} key={funding.fundingId}>
+                    <FundCard funding={funding}></FundCard>
+                  </Grid>
+                );
+              })}
+            </Grid>
+            <Box mt={1} display="flex" justifyContent="flex-end">
+              <Link className="nbg" to="/funding">
+                더보기
+              </Link>
+            </Box>
+          </div>
 
-        <div className="" id="idolArea">
-          <h3 className="headText">아이돌</h3>
+          <div className="" id="idolArea">
+            <h3 className="headText">아이돌</h3>
 
-          <Swiper
-            spaceBetween={-380}
-            slidesPerView={3}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
-          >
-            {randomIdols.map((idol) => (
-              <SwiperSlide key={idol.idolId}>
-                <IdolCard idol={idol} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <Box mt={1} display="flex" justifyContent="flex-end">
-            <Link className="nbg" to="/idol">
-              더보기
-            </Link>
-          </Box>
-        </div>
-        <h3 className="headText">스토어</h3>
-        <p>아이템 카드</p>
+            <Swiper
+              spaceBetween={-380}
+              slidesPerView={3}
+              onSlideChange={() => console.log('slide change')}
+              onSwiper={(swiper) => console.log(swiper)}
+            >
+              {randomIdols.map((idol) => (
+                <SwiperSlide key={idol.idolId}>
+                  <IdolCard idol={idol} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <Box mt={1} display="flex" justifyContent="flex-end">
+              <Link className="nbg" to="/idol">
+                더보기
+              </Link>
+            </Box>
+          </div>
+          <h3 className="headText">스토어</h3>
+          <p>아이템 카드</p>
 
-        <div data-aos="zoom-in-up"> <p>안녕안녕</p></div>
+          <div data-aos="zoom-in-up">
+            {' '}
+            <p>안녕안녕</p>
+          </div>
         </div>
       </div>
     </div>

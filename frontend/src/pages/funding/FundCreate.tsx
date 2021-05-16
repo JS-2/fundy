@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -13,6 +13,10 @@ import {
   FormControl,
   RadioGroup,
   Box,
+  NativeSelect,
+  InputLabel,
+  Select,
+  Grid,
 } from '@material-ui/core';
 import { withStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { Editor } from '@toast-ui/react-editor';
@@ -27,75 +31,86 @@ import {
   DateTimePicker,
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { FundingForm } from "../../common/types";
-import { useParams } from "react-router";
-import { setFundCreate } from "../../api/fund";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
-import { useSelector } from "react-redux";
-import { rootState } from "../../reducers";
-import ReactSummernote from "react-summernote";
-import "react-summernote/dist/react-summernote.css";
-import "bootstrap/js/modal";
-import "bootstrap/js/dropdown";
-import "bootstrap/js/tooltip";
-import { useHistory } from "react-router-dom";
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { FundingForm, IDonationPlace } from '../../common/types';
+import { useParams } from 'react-router';
+import { setFundCreate } from '../../api/fund';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { useSelector } from 'react-redux';
+import { rootState } from '../../reducers';
+import ReactSummernote from 'react-summernote';
+import 'react-summernote/dist/react-summernote.css';
+import 'bootstrap/js/modal';
+import 'bootstrap/js/dropdown';
+import 'bootstrap/js/tooltip';
+import { useHistory } from 'react-router-dom';
+import { getAllIdolList } from '../../api/idol';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import FundingPlaceCard from '../../components/fundComponent/FundingPlaceCard';
+import { getAllDonationPlaces } from '../../api/funding';
 
 const FundCreate = () => {
-  const [fundingType, setFundingType] = useState("");
-  const [idolId, setIdolId] = useState("");
-  const [fundName, setFundName] = useState<string>("");
-  const [fundShortInfo, setFundShortInfo] = useState<string>("");
-  const [thumbnails, setThumbnails] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [locationDetail, setLocationDetail] = useState<string>("");
-  const [goalAmount, setGoalAmount] = useState("");
-  const [endTime, setEndTime] = useState<string>("");
-  const [fundDetail, setFundDetail] = useState("");
-  let [selectedValue] = React.useState("0");
-  const [file, setFile] =useState("");
-  const [fileURL, setFileURL] =useState<any>();
+  const [fundingType, setFundingType] = useState('Donation');
+  const [idolId, setIdolId] = useState(0);
+  const [fundName, setFundName] = useState<string>('');
+  const [fundShortInfo, setFundShortInfo] = useState<string>('');
+  const [thumbnails, setThumbnails] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [locationDetail, setLocationDetail] = useState<string>('');
+  const [goalAmount, setGoalAmount] = useState('');
+  const [endTime, setEndTime] = useState<string>('');
+  const [fundDetail, setFundDetail] = useState('');
+  let [selectedValue] = React.useState('0');
+  const [file, setFile] = useState<any>();
+  const [fileURL, setFileURL] = useState<any>();
   const [selectedStartDate, handleStartDateChange] =
     useState<MaterialUiPickersDate>(new Date());
   const [selectedEndDate, handleEndDateChange] =
     useState<MaterialUiPickersDate>(new Date());
+  const [fundingPercent, setFundingPercent] = useState<number>(0);
 
+  const [idolNames, setIdolNames] = useState<string[]>([]);
+  const [places, setPlaces] = useState<IDonationPlace[]>([]);
+  const [placeId, setPlaceId] = useState<number>(1);
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
   const history = useHistory();
 
+  useEffect(() => {
+    getAllIdolList().then((resp) => {
+      setIdolNames(resp.data);
+    });
+    getAllDonationPlaces().then((resp) => {
+      console.log(resp.data);
+      setPlaces(resp.data);
+    });
+  }, []);
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    //const getMD = getEditor();
-    console.log(thumbnails);
-
     const fundForm: FundingForm = {
-      donationLocation: location,
-      fundingName: fundName,
-      startTime: selectedStartDate,
+      donationPlaceId: placeId,
+      donationRate: fundingPercent,
       endTime: selectedEndDate,
-      idolName: idolId,
       fundingContent: fundDetail,
-      goalAmount: goalAmount,
-      thumbnail: fileURL,
+      fundingName: fundName,
       fundingSubtitle: fundShortInfo,
-      fundingType: 'Donation',
-      idolId: 22,
-      userId: 3,
-      isDonate: true,
+      fundingType: fundingType,
+      goalAmount: Number(goalAmount),
+      idolId: idolId,
+      startTime: selectedStartDate,
+      thumbnail: file,
     };
-
     console.log({
       fundForm,
     });
     console.log(fundDetail);
-
-    setFundCreate(fundForm, token);
-    history.push({
-      pathname: ('/funding'),
-      state: {  },
+    setFundCreate(fundForm, token).then(() => {
+      history.push({
+        pathname: '/funding',
+        state: {},
+      });
     });
   };
 
@@ -103,9 +118,7 @@ const FundCreate = () => {
     setLocation(address);
   };
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [open, setOpen] = React.useState(false);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
 
   interface SimpleDialogProps {
     open: boolean;
@@ -135,7 +148,7 @@ const FundCreate = () => {
 
   const onDrop = (thumbnail: any) => {
     setThumbnails(thumbnail);
-    console.log("IMG FILE>>>>>"+thumbnails);
+    console.log('IMG FILE>>>>>' + thumbnails);
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -188,11 +201,6 @@ const FundCreate = () => {
   }) => {
     setFundName(e.target.value);
   };
-  const onChangeIdolId = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setIdolId(e.target.value);
-  };
   const onChangeFundShortInfo = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -227,6 +235,10 @@ const FundCreate = () => {
     setFundDetail(e.target.value);
   };
 
+  const handleRadio = (e: any) => {
+    console.log(e.target.value);
+    setFundingPercent(Number(e.target.value));
+  };
   const editorRef: any = useRef();
 
   const getEditor = () => {
@@ -259,56 +271,19 @@ const FundCreate = () => {
     }
   };
 
-
-  const handleFileOnChange = (event:any) => {
+  const handleFileOnChange = (event: any) => {
     event.preventDefault();
     const reader = new FileReader();
     let file = event.target.files[0];
-    reader.onloadend = () => {
-      setFile(file);
-      setFileURL(reader.result);
+    console.log(file);
+    setFile(file);
+    if (file !== undefined) {
+      reader.onloadend = () => {
+        setFileURL(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
-    reader.readAsDataURL(file);
-  }
-  let profile_preview = null;
-    if(file !== ''){
-      profile_preview = <img className='profile_preview col-md-6' width="100%" src={fileURL}></img>
-    }
-
-  // const uploadImage = (blob: string | Blob) => {
-  //   let formData = new FormData();
-
-  //   formData.append("image", blob);
-  //   console.log(formData);
-
-  //   return axios("http://localhost:3001/api/imageupload", {
-  //     method: "POST",
-  //     data: formData,
-  //     headers: { "Content-type": "multipart/form-data" },
-  //   }).then((response: { data: any }) => {
-  //     if (response.data) {
-  //       return response.data;
-  //     }
-
-  //     throw new Error("Server or network error");
-  //   });
-  // };
-
-  // const onAddImageBlob = (
-  //   blob: any,
-  //   callback: (arg0: any, arg1: string) => void
-  // ) => {
-  //   uploadImage(blob)
-  //     .then((response: any) => {
-  //       if (!response) {
-  //         throw new Error("Validation error");
-  //       } else callback(response, "alt text");
-  //     })
-  //     .catch((error: any) => {
-  //       console.log(error);
-  //     });
-  // };
-
+  };
   return (
     <div className="container">
       <h3>펀딩 작성하기</h3>
@@ -317,6 +292,7 @@ const FundCreate = () => {
       <div className="row">
         <FormControl component="fieldset">
           <RadioGroup
+            row
             aria-label="type"
             name="type"
             value={fundingType}
@@ -325,14 +301,14 @@ const FundCreate = () => {
             <FormLabel component="legend">펀딩 종류</FormLabel>
             <LightTooltip title="아이돌의 이름으로 기부되는 펀딩입니다.">
               <FormControlLabel
-                value="1"
+                value="Donation"
                 control={<Radio />}
                 label="기부 펀딩"
               />
             </LightTooltip>
             <LightTooltip title="일반적인 아이돌 펀딩입니다">
               <FormControlLabel
-                value="2"
+                value="Basic"
                 control={<Radio />}
                 label="기본 펀딩"
               />
@@ -353,14 +329,19 @@ const FundCreate = () => {
         />
       </div>
       <div className="row">
-        <TextField
-          required
-          className="col-md-12 input"
-          style={{ width: '100%' }}
-          label="아이돌 리스트"
-          placeholder="싸피싸피"
-          variant="outlined"
-          onChange={onChangeIdolId}
+        <Autocomplete
+          options={idolNames}
+          getOptionLabel={(idol: any) => idol.idolName}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="등록된 아이돌 이름 찾기"
+              variant="outlined"
+            />
+          )}
+          onChange={(e, value: any) => {
+            setIdolId(value.idolId);
+          }}
         />
       </div>
       <div className="row">
@@ -377,24 +358,23 @@ const FundCreate = () => {
 
       <div>
         <h5>펀딩 썸네일 업로드</h5>
-        <ImageUploader
-          withIcon={true}
-          buttonText="이미지를 선택하세요"
-          className="col-md-6 input"
-          imgExtension={['.jpg', '.gif', '.png', '.gif']}
-          maxFileSize={5242880}
-          withPreview={true}
-          onChange={onDrop}
-        />
-          <div>
-      <input type='file' 
-          accept='image/jpg,impge/png,image/jpeg,image/gif' 
-          name='profile_img' 
-          onChange={handleFileOnChange}>
-      </input>
-      {profile_preview}
-    </div>
-          
+        <div>
+          <input
+            type="file"
+            accept="image/jpg,impge/png,image/jpeg,image/gif"
+            name="profile_img"
+            onChange={handleFileOnChange}
+          ></input>
+          {file !== undefined ? (
+            <img
+              className="profile_preview col-md-6"
+              width="100%"
+              src={fileURL}
+            ></img>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
 
       <div className="row">
@@ -412,12 +392,27 @@ const FundCreate = () => {
           onChange={onChangeGoalAmount}
         />
       </div>
-
       <div className="row">
-        <div className="col-md-6 input"></div>
+        <RadioGroup row value={fundingPercent} onChange={handleRadio}>
+          <FormControlLabel
+            value={0}
+            control={<Radio color="primary" />}
+            label="기부 없음"
+          />
+          <FormControlLabel
+            value={5}
+            control={<Radio color="primary" />}
+            label="5% 기부"
+          />
+          <FormControlLabel
+            value={10}
+            control={<Radio color="primary" />}
+            label="10% 기부"
+          />
+        </RadioGroup>
       </div>
       <div className="row">
-        <div className="col-md-3 input">
+        <div className="col-md-3">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDateTimePicker
               required
@@ -431,7 +426,7 @@ const FundCreate = () => {
             />
           </MuiPickersUtilsProvider>
         </div>
-        <div className="col-md-3 input">
+        <div className="col-md-3">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDateTimePicker
               required
@@ -446,48 +441,20 @@ const FundCreate = () => {
           </MuiPickersUtilsProvider>
         </div>
       </div>
-      <div className="row">
-        <TextField
-          className="col-md-11 input"
-          label="기부처 주소"
-          onClick={handleClickOpen}
-          variant="outlined"
-          value={location}
-        />
-
-        <IconButton aria-label="search" onClick={handleClickOpen}>
-          <SearchButton>검색</SearchButton>
-        </IconButton>
-        <SimpleDialog
-          selectedValue={selectedValue}
-          open={open}
-          onClose={handleClose}
-        />
-      </div>
-      <div className="row">
-        <TextField
-          className="col-md-11 input"
-          style={{ width: '100%' }}
-          label="상세 주소"
-          placeholder=""
-          variant="outlined"
-          value={locationDetail}
-          onChange={onChangeLocationDetail}
-        />
-      </div>
+      <Grid container spacing={3}>
+        {places.map((place) => (
+          <Grid item xs={6}>
+            <FundingPlaceCard
+              place={place}
+              placeId={placeId}
+              setPlaceId={setPlaceId}
+            />
+          </Grid>
+        ))}
+      </Grid>
 
       <div className="row">
         <div className="col-md-12 editor">
-          {/* <Editor
-            previewStyle="vertical"
-            height="500px"
-            initialEditType="wysiwyg"
-            useCommandShortcut={true}
-            placeholder="펀딩에 대해 상세하게 설명해주세요."
-            ref={editorRef}
-            plugins={plugin}
-          /> */}
-
           <ReactSummernote
             placeholder="내용을 입력하여주세요"
             options={{

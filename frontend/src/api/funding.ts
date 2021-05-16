@@ -1,12 +1,18 @@
 import axiosInstance from "./axiosConfig"
+import { FundingStatus } from "../common/types";
 
-export const getFundingList = () => {
-    return axiosInstance.get('/fundings', {
-        params: {
-            page: 1,
-            per_page: 100,
-        }
-    });
+export const getFundingList = (fundingStatus: FundingStatus) => {
+    const { page, per_page, status, time } = fundingStatus;
+    
+    return axiosInstance
+        .get('/fundings', {
+            params: {
+                page,
+                per_page,
+                status,
+                time
+            }
+        });
 }
 
 export const getFavoriteFundingList = (auth_token: string) => {
@@ -34,4 +40,8 @@ export const deleteComment = (funding_comment_id: string, auth_token: string) =>
             Authorization: auth_token
         }
     })
+}
+
+export const getAllDonationPlaces = () => {
+    return axiosInstance.get('/donation-places');
 }
