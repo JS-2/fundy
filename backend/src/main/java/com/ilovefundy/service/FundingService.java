@@ -38,6 +38,7 @@ public class FundingService {
     private final PayDao payDao;
     private final IamportService iamportService;
     private IamportClient client;
+    private final S3UploaderService s3UploaderService;
 
     @PostConstruct
     public void FundingServiceInit() {
@@ -137,7 +138,7 @@ public class FundingService {
         fundingDetailResponse.setFundingContent(fundingProject.getFundingContent());
         fundingDetailResponse.setFundingStartTime(fundingProject.getFundingStartTime());
         fundingDetailResponse.setFundingEndTime(fundingProject.getFundingEndTime());
-        fundingDetailResponse.setFundingGoalAmount(fundingProject.getFundingGoalAmount());
+        fundingDetailResponse.setFundingGoalAmount(String.format("%,d", fundingProject.getFundingGoalAmount()));
         fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
         fundingDetailResponse.setFundingType(fundingProject.getFundingType());
         fundingDetailResponse.setDonationRate(fundingProject.getDonationRate());
@@ -164,7 +165,7 @@ public class FundingService {
         userDao.save(user);
     }
 
-    public void addFunding(int user_id, FundingRequest req) {
+    public void addFunding(int user_id, FundingRequest req) throws IOException {
 //        User user = userDao.getOne(user_id);
         FundingProject fundingProject = new FundingProject();
         fundingProject.setFundingType(req.getFundingType());
@@ -178,7 +179,11 @@ public class FundingService {
         fundingProject.setFundingGoalAmount(req.getGoalAmount());
         fundingProject.setFundingStartTime(req.getStartTime());
         fundingProject.setFundingEndTime(req.getEndTime());
-        fundingProject.setFundingThumbnail(req.getThumbnail());
+        String picture_path = s3UploaderService.upload(req.getThumbnail(), "static");
+        fundingProject.setFundingThumbnail(picture_path);
+        if(req.getFundingType() == FundingProject.FundingType.Donation) {
+            req.setDonationRate(100);
+        }
         fundingProject.setDonationRate(req.getDonationRate());
         fundingProject.setDonationPlaceId(req.getDonationPlaceId());
         fundingProject.setIsConfirm(FundingProject.FundingConfirm.Wait);
