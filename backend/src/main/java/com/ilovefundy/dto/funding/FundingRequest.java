@@ -35,7 +35,7 @@ public class FundingRequest {
 
     String Thumbnail;
     @NotNull
-    Boolean isDonate;
+    Integer donationRate;
 
     Integer donationPlaceId;
 }

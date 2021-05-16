@@ -79,9 +79,9 @@ public class FundingProject {
     private String fundingContent;
     @Column(name = "funding_thumbnail")
     private String fundingThumbnail;
-    @Column(name = "is_Donate")
+    @Column(name = "donation_rate")
     @ColumnDefault("0")
-    private Boolean isDonate; // 기부 옵션 선택 여부
+    private Integer donationRate; // 기부 옵션 선택 여부
     @Column(name = "is_Confirm")
     @ColumnDefault("0")
     private FundingConfirm isConfirm; // 펀딩 승인 여부

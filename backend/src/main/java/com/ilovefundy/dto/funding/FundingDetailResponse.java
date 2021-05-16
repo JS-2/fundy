@@ -38,8 +38,8 @@ public class FundingDetailResponse {
     private String fundingThumbnail;
     @ApiModelProperty(example = "Basic")
     private FundingProject.FundingType fundingType;
-    @ApiModelProperty(example = "true")
-    private Boolean isDonate;
+    @ApiModelProperty(example = "5")
+    private Integer donationRate;
     @ApiModelProperty(example = "Wait")
     private FundingProject.FundingConfirm fundingConfirm;
     @ApiModelProperty(example = "N")

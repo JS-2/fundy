@@ -113,7 +113,7 @@ public class AdminService {
             return false;
         }
         // 기부와 관련된 프로젝트라면
-        if(fundingProject.getIsDonate() || fundingProject.getFundingType() == FundingProject.FundingType.Donation) {
+        if(fundingProject.getDonationRate() > 0 || fundingProject.getFundingType() == FundingProject.FundingType.Donation) {
             DonationPlace donationPlace = donationPlaceDao.findByDonationPlaceId(fundingProject.getDonationPlaceId());
             long fundingAmount = 0;
             List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
