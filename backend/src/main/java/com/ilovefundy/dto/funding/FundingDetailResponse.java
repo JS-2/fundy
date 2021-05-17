@@ -1,6 +1,7 @@
 package com.ilovefundy.dto.funding;
 
 import com.ilovefundy.entity.funding.FundingProject;
+import com.ilovefundy.entity.user.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,14 @@ public class FundingDetailResponse {
     private FundingProject.FundingConfirm fundingConfirm;
     @ApiModelProperty(example = "N")
     private FundingProject.YesOrNo isGoodFunding;
+    @ApiModelProperty(example = "Y")
+    private User.YesOrNo isAdult;
+    @ApiModelProperty(example = "Y")
+    private User.IsCertification isOfficialFan;
+    @ApiModelProperty(example = "N")
+    private User.IsCertification isProfile;
+    @ApiModelProperty(example = "N")
+    private User.YesOrNo isPlus;
 
     @ApiModelProperty(example = "5")
     private Integer fundingRemainDay;
