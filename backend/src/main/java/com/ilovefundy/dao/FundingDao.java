@@ -43,14 +43,14 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
             "                            GROUP BY funding_id) p\n" +
             "                            ON f.funding_id = p.funding_id\n" +
             "WHERE f.funding_end_time < now() and\n" +
-            "       f.is_confirm = 1 and\n" +
+            "       (f.is_confirm = 1 or f.is_confirm = 3) and\n" +
             "       f.funding_goal_amount <= p.total_amount",
             countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
                     "FROM pay_info\n" +
                     "GROUP BY funding_id) p\n" +
                     "ON f.funding_id = p.funding_id\n" +
                     "WHERE f.funding_end_time < now() and\n" +
-                    "f.is_confirm = 1 and\n" +
+                    "(f.is_confirm = 1 or f.is_confirm = 3) and\n" +
                     "f.funding_goal_amount <= p.total_amount",
             nativeQuery = true)
     Page<FundingProject> CompleteSuccessFunding(Pageable pageable);
@@ -60,7 +60,7 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
             "                            GROUP BY funding_id) p\n" +
             "                            ON f.funding_id = p.funding_id\n" +
             "WHERE f.funding_end_time < now() and\n" +
-            "       f.is_confirm = 1 and\n" +
+            "       (f.is_confirm = 1 or f.is_confirm = 3) and\n" +
             "       f.funding_goal_amount <= p.total_amount and" +
             "       f.funding_name like CONCAT('%', :keyword, '%')",
             countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
@@ -68,7 +68,7 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
                     "GROUP BY funding_id) p\n" +
                     "ON f.funding_id = p.funding_id\n" +
                     "WHERE f.funding_end_time < now() and\n" +
-                    "f.is_confirm = 1 and\n" +
+                    "(f.is_confirm = 1 or f.is_confirm = 3) and\n" +
                     "f.funding_goal_amount <= p.total_amount and \n" +
                     "f.funding_name like CONCAT('%', :keyword, '%')",
             nativeQuery = true)
@@ -81,14 +81,14 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
             "                            GROUP BY funding_id) p\n" +
             "                            ON f.funding_id = p.funding_id\n" +
             "WHERE f.funding_end_time < now() and\n" +
-            "       f.is_confirm = 1 and\n" +
+            "       (f.is_confirm = 1 or f.is_confirm = 4) and\n" +
             "       f.funding_goal_amount > p.total_amount",
             countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
                     "FROM pay_info\n" +
                     "GROUP BY funding_id) p\n" +
                     "ON f.funding_id = p.funding_id\n" +
                     "WHERE f.funding_end_time < now() and\n" +
-                    "f.is_confirm = 1 and\n" +
+                    "(f.is_confirm = 1 or f.is_confirm = 4) and\n" +
                     "f.funding_goal_amount > p.total_amount",
             nativeQuery = true)
     Page<FundingProject> CompleteFailFunding(Pageable pageable);
@@ -98,7 +98,7 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
             "                            GROUP BY funding_id) p\n" +
             "                            ON f.funding_id = p.funding_id\n" +
             "WHERE f.funding_end_time < now() and\n" +
-            "       f.is_confirm = 1 and\n" +
+            "       (f.is_confirm = 1 or f.is_confirm = 4) and\n" +
             "       f.funding_goal_amount > p.total_amount and" +
             "       f.funding_name like CONCAT('%', :keyword, '%')",
             countQuery = "SELECT count(*) FROM funding_project f join (SELECT funding_id, sum(pay_amount) as total_amount\n" +
@@ -106,7 +106,7 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
                     "GROUP BY funding_id) p\n" +
                     "ON f.funding_id = p.funding_id\n" +
                     "WHERE f.funding_end_time < now() and\n" +
-                    "f.is_confirm = 1 and\n" +
+                    "(f.is_confirm = 1 or f.is_confirm = 4) and\n" +
                     "f.funding_goal_amount > p.total_amount and \n" +
                     "f.funding_name like CONCAT('%', :keyword, '%')",
             nativeQuery = true)
