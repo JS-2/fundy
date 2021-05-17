@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Grid,
   IconButton,
   Modal,
   Table,
@@ -75,9 +76,6 @@ const IdolInfo = (props: Props) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <div className="nbg_bold" style={{ fontSize: '2em' }}>
-              {props.idolInfo?.idolName}
-            </div>
             {user === null ? (
               <></>
             ) : (
@@ -93,6 +91,7 @@ const IdolInfo = (props: Props) => {
           </Box>
           <Box display="flex" justifyContent="center">
             <Card
+              elevation={0}
               style={{ width: '100%', height: '600px', position: 'relative' }}
             >
               <CardMedia
@@ -114,51 +113,191 @@ const IdolInfo = (props: Props) => {
                   height: '100%',
                 }}
               >
-                <Card style={{ width: '60%' }}>
-                  <CardMedia
-                    component="img"
-                    image={props.idolInfo?.idolPicture}
-                    style={{ aspectRatio: 'initial' }}
-                  />
-                </Card>
+                <Grid container alignItems="center" style={{ height: '100%' }}>
+                  <Grid item xs={1} />
+                  <Grid
+                    item
+                    container
+                    xs={6}
+                    style={{ height: '100%', alignItems: 'center' }}
+                  >
+                    <Card style={{ height: '90%' }}>
+                      <CardMedia
+                        component="img"
+                        image={props.idolInfo?.idolPicture}
+                        style={{ height: '100%' }}
+                      />
+                    </Card>
+                  </Grid>
+                  <Grid item xs={1} />
+                  <Grid
+                    item
+                    xs={3}
+                    style={{
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box>
+                      <Box
+                        className="nbg_bold"
+                        mb={3}
+                        style={{ color: 'white', fontSize: '4em' }}
+                      >
+                        {props.idolInfo?.idolName}
+                      </Box>
+                      {props.idolInfo?.idolAge === null ? (
+                        <Box style={{ color: 'white', fontSize: '1.8em' }}>
+                          Since{' '}
+                          {props.idolInfo?.idolBirthday?.replaceAll('-', '.')}
+                        </Box>
+                      ) : (
+                        <Box>
+                          <Box
+                            mb={1}
+                            style={{ color: 'white', fontSize: '1.5em' }}
+                          >
+                            나이 {props.idolInfo?.idolAge}
+                          </Box>
+                          <Box
+                            mb={1}
+                            style={{ color: 'white', fontSize: '1.5em' }}
+                          >
+                            생년월일{' '}
+                            {props.idolInfo?.idolBirthday?.replaceAll('-', '.')}
+                          </Box>
+                          <Box
+                            mb={1}
+                            style={{ color: 'white', fontSize: '1.5em' }}
+                          >
+                            혈액형 {props.idolInfo?.idolBlood}
+                          </Box>
+                          <Box
+                            mb={1}
+                            style={{ color: 'white', fontSize: '1.5em' }}
+                          >
+                            키 {props.idolInfo?.idolHeight}cm
+                          </Box>
+                          <Box
+                            mb={1}
+                            style={{ color: 'white', fontSize: '1.5em' }}
+                          >
+                            몸무게 {props.idolInfo?.idolWeight}kg
+                          </Box>
+                          <Box
+                            mb={1}
+                            style={{ color: 'white', fontSize: '1.5em' }}
+                          >
+                            소속사 {props.idolInfo?.idolAgency}
+                          </Box>
+                        </Box>
+                        // <Card style={{ width: 300 }}>
+                        //   <Table>
+                        //     <TableRow>
+                        //       <TableCell
+                        //         width="30%"
+                        //         className="nbg_bold"
+                        //         style={{
+                        //           backgroundColor: '#f74a64',
+                        //           color: 'white',
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         나이
+                        //       </TableCell>
+                        //       <TableCell
+                        //         style={{
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         {props.idolInfo?.idolAge}
+                        //       </TableCell>
+                        //     </TableRow>
+                        //     <TableRow>
+                        //       <TableCell
+                        //         className="nbg_bold"
+                        //         style={{
+                        //           backgroundColor: '#f74a64',
+                        //           color: 'white',
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         생년월일
+                        //       </TableCell>
+                        //       <TableCell style={{ fontSize: '1em' }}>
+                        //         {props.idolInfo?.idolBirthday}
+                        //       </TableCell>
+                        //     </TableRow>
+                        //     <TableRow>
+                        //       <TableCell
+                        //         className="nbg_bold"
+                        //         style={{
+                        //           backgroundColor: '#f74a64',
+                        //           color: 'white',
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         혈액형
+                        //       </TableCell>
+                        //       <TableCell style={{ fontSize: '1em' }}>
+                        //         {props.idolInfo?.idolBlood}
+                        //       </TableCell>
+                        //     </TableRow>
+                        //     <TableRow>
+                        //       <TableCell
+                        //         className="nbg_bold"
+                        //         style={{
+                        //           backgroundColor: '#f74a64',
+                        //           color: 'white',
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         키
+                        //       </TableCell>
+                        //       <TableCell style={{ fontSize: '1em' }}>
+                        //         {props.idolInfo?.idolHeight}cm
+                        //       </TableCell>
+                        //     </TableRow>
+                        //     <TableRow>
+                        //       <TableCell
+                        //         className="nbg_bold"
+                        //         style={{
+                        //           backgroundColor: '#f74a64',
+                        //           color: 'white',
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         몸무게
+                        //       </TableCell>
+                        //       <TableCell style={{ fontSize: '1em' }}>
+                        //         {props.idolInfo?.idolWeight}kg
+                        //       </TableCell>
+                        //     </TableRow>
+                        //     <TableRow>
+                        //       <TableCell
+                        //         className="nbg_bold"
+                        //         style={{
+                        //           backgroundColor: '#f74a64',
+                        //           color: 'white',
+                        //           fontSize: '1em',
+                        //         }}
+                        //       >
+                        //         소속사
+                        //       </TableCell>
+                        //       <TableCell style={{ fontSize: '1em' }}>
+                        //         {props.idolInfo?.idolAgency}
+                        //       </TableCell>
+                        //     </TableRow>
+                        //   </Table>
+                        // </Card>
+                      )}
+                    </Box>
+                    <Grid item xs={2} />
+                  </Grid>
+                </Grid>
               </CardContent>
-              {/* <img
-                src={props.idolInfo?.idolPicture}
-                style={{ width: '100%', filter: 'blur(5px)' }}
-              /> */}
             </Card>
-            {/* {props.idolInfo?.idolAge !== null ? (
-              <Card style={{ marginLeft: 10 }}>
-                <Table>
-                  <TableRow>
-                    <TableCell>나이</TableCell>
-                    <TableCell>{props.idolInfo?.idolAge}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>생년월일</TableCell>
-                    <TableCell>{props.idolInfo?.idolBirthday}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>혈액형</TableCell>
-                    <TableCell>{props.idolInfo?.idolBlood}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>키</TableCell>
-                    <TableCell>{props.idolInfo?.idolHeight}cm</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>몸무게</TableCell>
-                    <TableCell>{props.idolInfo?.idolWeight}kg</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>소속사</TableCell>
-                    <TableCell>{props.idolInfo?.idolAgency}</TableCell>
-                  </TableRow>
-                </Table>
-              </Card>
-            ) : (
-              <></>
-            )} */}
           </Box>
         </div>
       </div>

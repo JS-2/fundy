@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Card } from '@material-ui/core';
 import { Opacity } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { Idol, IDonationPlace } from '../../../common/types';
@@ -78,10 +78,8 @@ const FundingMap = (props: Props) => {
   useEffect(() => {
     const container = document.getElementById('myMap');
     const options = {
-      center: new kakao.maps.LatLng(36, 128),
-      level: 13,
-      draggable: false,
-      zoomable: false,
+      center: new kakao.maps.LatLng(36.3, 127.7),
+      level: 12,
     };
     const map = new kakao.maps.Map(container, options);
     let geocoder = new kakao.maps.services.Geocoder();
@@ -91,16 +89,29 @@ const FundingMap = (props: Props) => {
   }, [props]);
   return (
     <>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+      <Box
+        mx={1}
+        mt={10}
+        mb={5}
+        className="nbg_bold"
+        style={{ fontSize: '2em' }}
+      >
         {props.idolInfo?.idolName}의 기부지도
       </Box>
-      <div
-        id="myMap"
+      <Card
         style={{
-          width: '600px',
-          height: '700px',
+          width: '100%',
+          height: '900px',
         }}
-      ></div>
+      >
+        <div
+          id="myMap"
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        ></div>
+      </Card>
     </>
   );
 };

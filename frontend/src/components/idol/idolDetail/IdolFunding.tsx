@@ -18,8 +18,14 @@ const IdolFunding = (props: Props) => {
   }, [props]);
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
-        관련 펀딩
+      <Box
+        mx={1}
+        mt={10}
+        mb={5}
+        className="nbg_bold"
+        style={{ fontSize: '2em' }}
+      >
+        연관 펀딩
       </Box>
       <Swiper
         spaceBetween={5}
