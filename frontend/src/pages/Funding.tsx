@@ -18,7 +18,7 @@ import { Grid, Paper, Box } from '@material-ui/core';
 import FundCard from '../components/FundCard';
 import 'swiper/swiper.scss';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
-import { withRouter } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import Banner from '../components/Banner';
 import FundCreate from '../pages/funding/FundCreate';
 import './Main.css';
@@ -125,6 +125,13 @@ const Funding = () => {
     });
     setHeader('거절된 펀딩');
   };
+const history = useHistory();
+const createClick=()=>{
+    history.push({
+      pathname: "/funding/create",
+      state: {},
+    });
+  };
 
   return (
     <div>
@@ -159,7 +166,9 @@ const Funding = () => {
             ) : (
               <></>
             )}
-          </Box>
+
+            <Button variant="contained" onClick={createClick}>펀딩 제작하기</Button>         
+             </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
               <Grid item xs={4} key={funding.fundingId}>

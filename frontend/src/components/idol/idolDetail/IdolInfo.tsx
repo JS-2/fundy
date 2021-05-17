@@ -5,6 +5,7 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Modal,
   Table,
   TableCell,
   TableRow,
@@ -34,6 +35,16 @@ const IdolInfo = (props: Props) => {
   );
   const params: Params = useParams();
   console.log('props', props);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (user === null) return;

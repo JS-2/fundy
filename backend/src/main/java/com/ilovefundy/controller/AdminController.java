@@ -27,15 +27,21 @@ public class AdminController {
     @ApiOperation(value = "펀딩 승인",
             notes = "관리자의 판단하에 대기중인 펀딩 승인")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "펀딩 승인. OK !!")
+            @ApiResponse(code = 200, message = "펀딩 승인. OK !!"),
+            @ApiResponse(code = 400, message = "펀딩 승인 실패. BAD REQUEST !!")
     })
     @PatchMapping("/admin/funding/{funding_id}/accept")
     public ResponseEntity<Object> acceptFunding(@PathVariable int funding_id, @RequestBody IsGoodProjectRequest req) {
         Map<String, Object> result = new HashMap<>();
-        fundingService.patchFundingState(funding_id, true, req.getIsGoodProject());
-        adminService.sendSuccessMail(funding_id);
-        result.put("message", "펀딩 승인!");
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        if (fundingService.patchFundingState(funding_id, true, req.getIsGoodProject())){
+            adminService.sendSuccessMail(funding_id);
+            result.put("message", "펀딩 승인!");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            result.put("message", "승인할 수 없는 펀딩입니다.");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiImplicitParams({
@@ -45,14 +51,20 @@ public class AdminController {
             notes = "관리자의 판단하에 대기중인 펀딩 거절")
     @ApiResponses({
             @ApiResponse(code = 200, message = "펀딩 거절. OK !!"),
+            @ApiResponse(code = 400, message = "펀딩 거절 실패. BAD REQUEST !!")
     })
     @PatchMapping("/admin/funding/{funding_id}/decline")
     public ResponseEntity<Object> declineFunding(@PathVariable int funding_id) {
         Map<String, Object> result = new HashMap<>();
-        fundingService.patchFundingState(funding_id, false, "N");
-        adminService.sendFailMail(funding_id);
-        result.put("message", "펀딩 거절");
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        if (fundingService.patchFundingState(funding_id, false, "N")) {
+            adminService.sendFailMail(funding_id);
+            result.put("message", "펀딩 거절");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            result.put("message", "거절할 수 없는 펀딩입니다.");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "팬활동 인증 신청 리스트",
@@ -135,13 +147,13 @@ public class AdminController {
             notes = "종료 날짜가 지난 펀딩 완료 처리. 기부 프로젝트면 모금액을 기부처 테이블에 더해준다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "펀딩 완료 처리 성공. OK !!"),
-            @ApiResponse(code = 400, message = "이미 완료 처리된 펀딩. BAD_REQUEST !!"),
+            @ApiResponse(code = 400, message = "완료 처리할 수 없는 펀딩. BAD_REQUEST !!"),
     })
     @PatchMapping("/admin/funding-complete/{funding_id}")
     public ResponseEntity<Object> completeFunding(@PathVariable int funding_id) {
         Map<String, Object> result = new HashMap<>();
         if(!adminService.completeFunding(funding_id)) {
-            result.put("message", "이미 완료 처리된 펀딩");
+            result.put("message", "완료 처리할 수 없는 펀딩");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
         result.put("message", "펀딩 완료 처리 성공");

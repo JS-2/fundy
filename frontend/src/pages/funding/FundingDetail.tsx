@@ -157,7 +157,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     console.log('fundDetailPage');
 
     getFundDetail(Number(match.params.num)).then((response) => {
-      console.log(response.data);
+      console.log(">>>>"+response.data);
       setFund(response.data);
     });
 
@@ -379,11 +379,12 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                     </span>
                   </div>
                   <div>
-                    <BorderLinearProgress
-                      className="progressBar"
-                      variant="determinate"
-                      value={percentage}
-                    />
+                  <BorderLinearProgress
+                    className="progressBar"
+                    variant="determinate"
+                    value={Number(Fund?.fundingAchievementRate)>100? 100:Number(Fund?.fundingAchievementRate)}
+                  />
+
                   </div>
 
                   <div>

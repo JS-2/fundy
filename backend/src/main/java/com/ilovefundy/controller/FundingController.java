@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +30,12 @@ public class FundingController {
     private final FundingService fundingService;
 
     //전체 펀딩 리스트
-    @ApiOperation(value = "전체 펀딩 리스트", notes = "status = 0: 대기, 1: 승인, 2: 거절\n (status:1 일 때)time = 0: 진행 전, 1: 진행 중, 2: 완료(성공), 3: 완료(실패)")
+    @ApiOperation(value = "전체 펀딩 리스트", notes = "status = 0: 승인 대기, 1: 승인-시작 전, 2: 승인-진행 중, 3: 승인-마감, 4: 거절, 5: 완료-성공, 6: 완료-실패")
     @ApiResponses(@ApiResponse(code = 200, message = "펀딩 리스트 반환 성공!"))
     @GetMapping("/fundings")
-    public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer status, @RequestParam(required = false) Integer time) {
+    public ResponseEntity<Object> fundingList(@RequestParam(defaultValue = "1") int page, int per_page, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer status) {
         Map<String, Object> result = new HashMap<>();
-        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword, status, time);
+        List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword, status);
         result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
     }
