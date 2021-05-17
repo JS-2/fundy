@@ -22,6 +22,7 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -50,23 +51,14 @@ public class FundingService {
         this.client = iamportService.getClient();
     }
 
-    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status, Integer time) {
+    public List<FundingListResponse> getFundingList(int page, int per_page, String keyword, Integer status) {
         List<FundingListResponse> fundingListResponse = new LinkedList<>();
         Page<FundingProject> pages = null;
         if (status != null) { // 펀딩 승인 여부에 따른 리스트
-            FundingProject.FundingConfirm isStatus;
-            if (status == 0) {
-                isStatus = FundingProject.FundingConfirm.Wait;
-                if (keyword != null) {
-                    pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
-                }
-                else {
-                    pages = fundingDao.findByIsConfirm(isStatus, PageRequest.of(page, per_page));
-                }
-            }
-            else if (status == 1) {
-                isStatus = FundingProject.FundingConfirm.Approve;
-                if (time == 0) { // 승인된 펀딩 진행 전
+            FundingProject.FundingConfirm isStatus = null;
+            if (status == 1 || status == 2 || status == 3) {
+                if (status == 1) { // 승인 - 진행 전
+                    isStatus = FundingProject.FundingConfirm.ApprovePre;
                     if (keyword != null) {
                         pages = fundingDao.findByFundingStartTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
                     }
@@ -74,7 +66,8 @@ public class FundingService {
                         pages = fundingDao.findByFundingStartTimeAfterAndIsConfirm(LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
                     }
                 }
-                else if (time == 1) { // 승인된 펀딩 진행 중
+                else if (status == 2) { // 승인 - 진행 중
+                    isStatus = FundingProject.FundingConfirm.ApproveIng;
                     if (keyword != null) {
                         pages = fundingDao.findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime.now(), LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
                     }
@@ -82,26 +75,30 @@ public class FundingService {
                         pages = fundingDao.findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime.now(), LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
                     }
                 }
-                else if (time == 2) { // 승인된 펀딩 진행 후(완료)
+                else if (status == 3) { // 승인 - 마감
+                    isStatus = FundingProject.FundingConfirm.ApprovePost;
                     if (keyword != null) {
-                        pages = fundingDao.CompleteSuccessFundingWithKeyword(keyword, PageRequest.of(page, per_page));
+                        pages = fundingDao.findByFundingEndTimeBeforeAndIsConfirmAndFundingNameContains(LocalDateTime.now(), isStatus, keyword, PageRequest.of(page, per_page));
                     }
                     else {
-                        pages = fundingDao.CompleteSuccessFunding(PageRequest.of(page, per_page));
+                        pages = fundingDao.findByFundingEndTimeBeforeAndIsConfirm(LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
                     }
                 }
-                else {
-                    if (keyword != null) {
-                        pages = fundingDao.CompleteFailFundingWithKeyword(keyword, PageRequest.of(page, per_page));
-                    }
-                    else {
-                        pages = fundingDao.CompleteFailFunding(PageRequest.of(page, per_page));
-                    }
+            }
+            else {
+                if (status == 0) { // 승인 대기
+                    isStatus = FundingProject.FundingConfirm.Wait;
+                }
+                else if (status == 4) { // 승인 거절
+                    isStatus = FundingProject.FundingConfirm.Decline;
+                }
+                else if (status == 5) { // 완료 - 성공
+                    isStatus = FundingProject.FundingConfirm.Success;
+                }
+                else if (status == 6) { // 완료 - 실패
+                    isStatus = FundingProject.FundingConfirm.Fail;
                 }
 
-            }
-            else if (status == 2) {
-                isStatus = FundingProject.FundingConfirm.Decline;
                 if (keyword != null) {
                     pages = fundingDao.findByFundingNameContainsAndIsConfirm(keyword, isStatus, PageRequest.of(page, per_page));
                 }
@@ -150,7 +147,20 @@ public class FundingService {
         fundingDetailResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
         fundingDetailResponse.setFundingType(fundingProject.getFundingType());
         fundingDetailResponse.setDonationRate(fundingProject.getDonationRate());
-        fundingDetailResponse.setFundingConfirm(fundingProject.getIsConfirm());
+        FundingProject.FundingConfirm confirm = fundingProject.getIsConfirm();
+        if (confirm == FundingProject.FundingConfirm.ApprovePre || confirm == FundingProject.FundingConfirm.ApproveIng) {
+            if (LocalDateTime.now().isAfter(fundingProject.getFundingStartTime()) && LocalDateTime.now().isBefore(fundingProject.getFundingEndTime())) {
+                confirm = FundingProject.FundingConfirm.ApproveIng;
+                fundingProject.setIsConfirm(confirm);
+                fundingDao.save(fundingProject);
+            }
+            else if (LocalDateTime.now().isAfter(fundingProject.getFundingEndTime())){
+                confirm = FundingProject.FundingConfirm.ApprovePost;
+                fundingProject.setIsConfirm(confirm);
+                fundingDao.save(fundingProject);
+            }
+        }
+        fundingDetailResponse.setFundingConfirm(confirm);
         fundingDetailResponse.setIsGoodFunding(fundingProject.getIsGoodFunding());
         fundingDetailResponse.setIsAdult(user.getIsAdult());
         fundingDetailResponse.setIsOfficialFan(user.getIsOfficialFan());
@@ -169,9 +179,12 @@ public class FundingService {
     }
 
     @Transactional
-    public void patchFundingState(int funding_id, boolean isApprove, String isGoodProject) {
+    public boolean patchFundingState(int funding_id, boolean isApprove, String isGoodProject) {
         FundingProject fundingProject = fundingDao.getOne(funding_id);
-        fundingProject.setIsConfirm(isApprove ? FundingProject.FundingConfirm.Approve : FundingProject.FundingConfirm.Decline);
+        if (fundingProject.getIsConfirm() != FundingProject.FundingConfirm.Wait) {
+            return false;
+        }
+        fundingProject.setIsConfirm(isApprove ? FundingProject.FundingConfirm.ApprovePre : FundingProject.FundingConfirm.Decline);
         fundingProject.setIsGoodFunding(isGoodProject.equals("Y") ? FundingProject.YesOrNo.Y : FundingProject.YesOrNo.N);
         fundingDao.save(fundingProject);
 
@@ -187,6 +200,7 @@ public class FundingService {
         User user = userDao.getOne(user_id);
         user.setFundingRegistCount(user.getFundingRegistCount()+1);
         userDao.save(user);
+        return true;
     }
 
     public void addFunding(int user_id, FundingRequest req) throws IOException {
