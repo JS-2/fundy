@@ -110,30 +110,30 @@ public class AdminService {
     @Transactional
     public boolean completeFunding(int funding_id) {
         FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
-        // 이미 완료 처리된 프로젝트라면
-        if(fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Success ||
-            fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Fail) {
+        // 승인된 펀딩 중, 기한 마감된 펀딩이 아닐 때
+        if(fundingProject.getIsConfirm() != FundingProject.FundingConfirm.ApprovePost) {
             return false;
+        }
+        // 펀딩 모금액
+        long fundingAmount = 0;
+        List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
+        for(PayInfo payInfo : fundingPayInfoList) {
+            fundingAmount += payInfo.getPayAmount();
+        }
+        // 펀딩 성공
+        if(fundingAmount >= fundingProject.getFundingGoalAmount()) {
+            // 성공표시
+            fundingProject.setIsConfirm(FundingProject.FundingConfirm.Success);
+        }
+        else {
+            fundingProject.setIsConfirm(FundingProject.FundingConfirm.Fail);
         }
         // 기부와 관련된 프로젝트라면
         if(fundingProject.getDonationRate() > 0) {
             DonationPlace donationPlace = donationPlaceDao.findByDonationPlaceId(fundingProject.getDonationPlaceId());
-            long fundingAmount = 0;
-            List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
-            for(PayInfo payInfo : fundingPayInfoList) {
-                fundingAmount += payInfo.getPayAmount();
-            }
-            // 펀딩 성공
-            if(fundingAmount >= fundingProject.getFundingGoalAmount()) {
-                // 기부처에 전달
-                fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
-                donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
-                donationPlaceDao.save(donationPlace);
-                fundingProject.setIsConfirm(FundingProject.FundingConfirm.Success);
-            }
-            else {
-                fundingProject.setIsConfirm(FundingProject.FundingConfirm.Fail);
-            }
+            fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
+            donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
+            donationPlaceDao.save(donationPlace);
         }
         fundingDao.save(fundingProject);
         return true;
