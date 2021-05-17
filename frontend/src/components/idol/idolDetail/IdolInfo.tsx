@@ -100,7 +100,7 @@ const IdolInfo = (props: Props) => {
                 width="100%"
                 height="600px"
                 image={props.idolInfo?.idolPicture}
-                style={{ filter: 'blur(10px) brightness(50%)' }}
+                style={{ filter: 'blur(5px) brightness(40%)' }}
                 title="Card Image"
               />
               <CardContent
