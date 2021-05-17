@@ -1,13 +1,13 @@
 import axiosInstance from "./axiosConfig"
 
 export const getIdolList = (keyword: string | null = null, page: number) => {
-    const per_page = 4;
+    const per_page = 4 * page;
     
     return axiosInstance
         .get('/idols', {
             params: {
                 keyword,
-                page,
+                page: 1,
                 per_page,
             }
         });
