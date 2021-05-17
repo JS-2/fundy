@@ -65,38 +65,39 @@ const IdolSearch = () => {
 
   return (
     <div>
-      <Box
-        mx={1}
-        mt={8}
-        mb={3}
-        className="nbg_bold"
-        style={{ fontSize: '3em' }}
-      >
-        아이돌 리스트
-      </Box>
-      <Box mb={6} display="flex" alignItems="center" justifyContent="flex-end">
-        <TextField
-          variant="outlined"
-          value={searchWord}
-          onChange={(e) => {
-            console.log(e.target.value);
-            setSearchWord(e.target.value);
-          }}
-          inputProps={{
-            style: { fontSize: '1.5em', height: '10px' },
-          }}
-          style={{ width: '20%', paddingRight: '5px' }}
-        ></TextField>
-        <Button
-          className="ml-2 btn_main"
-          disableElevation
-          variant="contained"
-          onClick={handleSearch}
-          style={{ fontSize: '1.4em', width: '8%' }}
+      <Box mt={6} mb={6} display="flex" justifyContent="space-between">
+        <Box mx={1} className="nbg_bold" style={{ fontSize: '2em' }}>
+          아이돌 검색
+        </Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+          style={{ width: '600px' }}
         >
-          {' '}
-          검색{' '}
-        </Button>
+          <TextField
+            variant="outlined"
+            value={searchWord}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setSearchWord(e.target.value);
+            }}
+            inputProps={{
+              style: { fontSize: '1.5em', height: '10px' },
+            }}
+            style={{ paddingRight: '5px', width: '400px' }}
+          ></TextField>
+          <Button
+            className="ml-2 btn_main"
+            disableElevation
+            variant="contained"
+            onClick={handleSearch}
+            style={{ fontSize: '1.4em' }}
+          >
+            {' '}
+            검색{' '}
+          </Button>
+        </Box>
       </Box>
       <Grid container spacing={2}>
         {idolList.map((idol, index) => {
