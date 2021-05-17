@@ -47,9 +47,9 @@ const IdolDetail = () => {
   return (
     <div>
       <div className="row">
+        <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
         <div className="col-md-1"></div>
         <div className="col-md-10">
-          <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
           {detailInfo?.idolInfo.members !== undefined &&
           detailInfo?.idolInfo.members.length !== 0 ? (
             <IdolMembers idolInfo={detailInfo?.idolInfo} />
