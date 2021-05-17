@@ -111,7 +111,8 @@ public class AdminService {
     public boolean completeFunding(int funding_id) {
         FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
         // 이미 완료 처리된 프로젝트라면
-        if(fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Complete) {
+        if(fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Success ||
+            fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Fail) {
             return false;
         }
         // 기부와 관련된 프로젝트라면
@@ -122,11 +123,18 @@ public class AdminService {
             for(PayInfo payInfo : fundingPayInfoList) {
                 fundingAmount += payInfo.getPayAmount();
             }
-            fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
-            donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
-            donationPlaceDao.save(donationPlace);
+            // 펀딩 성공
+            if(fundingAmount >= fundingProject.getFundingGoalAmount()) {
+                // 기부처에 전달
+                fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
+                donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
+                donationPlaceDao.save(donationPlace);
+                fundingProject.setIsConfirm(FundingProject.FundingConfirm.Success);
+            }
+            else {
+                fundingProject.setIsConfirm(FundingProject.FundingConfirm.Fail);
+            }
         }
-        fundingProject.setIsConfirm(FundingProject.FundingConfirm.Complete);
         fundingDao.save(fundingProject);
         return true;
     }
