@@ -94,14 +94,15 @@ export interface FundForm {
 }
 
 export interface IFunding {
-  fundingId: number;
-  fundingName: string;
-  fundingSubtitle: string | null;
-  fundingThumbnail: string;
-  fundingRemainDay: number;
   fundingAchievementRate: number;
   fundingAmount: string;
-  fundingGoalAmount: number;
+  fundingEndTime: string;
+  fundingId: number;
+  fundingName: string;
+  fundingRemainDay: number;
+  fundingStartTime: string;
+  fundingSubtitle: string;
+  fundingThumbnail: string;
 }
 
 export interface IChartData {
@@ -171,5 +172,4 @@ export interface FundingStatus {
   page: number;
   per_page: number;
   status: number;
-  time: number;
 }

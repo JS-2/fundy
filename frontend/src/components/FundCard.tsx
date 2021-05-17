@@ -40,26 +40,29 @@ interface Props {
 const FundCard = (props: Props) => {
   const [fundingInfo, setFundingInfo] = useState<IFunding>();
   const history = useHistory();
-  const [dday, setDday]= useState<string>();
-  const [percentage, setPercentage]= useState<number>();
-  
-
+  const [dday, setDday] = useState<string>();
+  const [percentage, setPercentage] = useState<number>();
 
   useEffect(() => {
     if (props.funding !== null) {
-      if(props.funding.fundingRemainDay==0){
-        setDday("마감 임박");
-      }else if(props.funding.fundingRemainDay<0){
-        setDday("펀딩 마감");
-      }else{
-        setDday("D-"+props.funding.fundingRemainDay);
+      if (
+        new Date(props.funding.fundingEndTime).getTime() -
+          new Date().getTime() <
+        0
+      ) {
+        setDday('펀딩 마감');
+      } else if (props.funding.fundingRemainDay == 0) {
+        setDday('마감 임박');
+      } else if (props.funding.fundingRemainDay < 0) {
+        setDday('펀딩 마감');
+      } else {
+        setDday('D-' + props.funding.fundingRemainDay);
       }
       setFundingInfo(props.funding);
-      if(fundingInfo?.fundingAchievementRate!=null){
-        if(fundingInfo?.fundingAchievementRate>=100){
+      if (fundingInfo?.fundingAchievementRate != null) {
+        if (fundingInfo?.fundingAchievementRate >= 100) {
           setPercentage(100);
-        }else setPercentage(fundingInfo?.fundingAchievementRate);
-
+        } else setPercentage(fundingInfo?.fundingAchievementRate);
       }
     }
   }, [props]);
@@ -73,8 +76,7 @@ const FundCard = (props: Props) => {
     });
   };
 
-
-  return (  
+  return (
     <Card
       className="cardClass"
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
@@ -88,10 +90,9 @@ const FundCard = (props: Props) => {
           height="200"
           image={fundingInfo?.fundingThumbnail}
           title="Card Image"
-          
         />
         <CardContent style={{ padding: '5px' }}>
-          <Chip className="ddayBadge" label={dday} /> 
+          <Chip className="ddayBadge" label={dday} />
           <Typography
             gutterBottom
             variant="h6"
@@ -116,8 +117,12 @@ const FundCard = (props: Props) => {
           </Box>
           <BorderLinearProgress
             variant="determinate"
-            value={Number(fundingInfo?.fundingAchievementRate)>100? 100:Number(fundingInfo?.fundingAchievementRate)}
-            />
+            value={
+              Number(fundingInfo?.fundingAchievementRate) > 100
+                ? 100
+                : Number(fundingInfo?.fundingAchievementRate)
+            }
+          />
         </CardContent>
       </CardActionArea>
     </Card>

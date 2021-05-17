@@ -2,7 +2,7 @@ import axiosInstance from "./axiosConfig"
 import { FundingStatus } from "../common/types";
 
 export const getFundingList = (fundingStatus: FundingStatus) => {
-    const { page, per_page, status, time } = fundingStatus;
+    const { page, per_page, status } = fundingStatus;
     
     return axiosInstance
         .get('/fundings', {
@@ -10,7 +10,6 @@ export const getFundingList = (fundingStatus: FundingStatus) => {
                 page,
                 per_page,
                 status,
-                time
             }
         });
 }
@@ -65,8 +64,6 @@ export const approveFunding = (funding_id: number, good: string, auth_token: str
 }
 
 export const completeFunding = (funding_id: number, auth_token: string) => {
-    console.log(auth_token);
-    console.log(funding_id)
     return axiosInstance.patch('/admin/funding-complete/' + funding_id, {}, {
         headers: {
           'Content-Type': 'application/json',

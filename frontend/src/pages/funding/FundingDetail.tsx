@@ -69,7 +69,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [fundingFavorite, setFundingFavorite] = useState<boolean>(false);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
   const [percentage, setPercentage] = useState<number>();
-  const [isTimeOver, setIsTimeOver] = useState<boolean>(false);
 
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
@@ -86,18 +85,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       else setFundingFavorite(false);
     });
   }, [user]);
-
-  useEffect(() => {
-    if (Fund !== undefined) {
-      const fundTime = new Date(Fund.fundingEndTime!);
-      const nowTime = new Date();
-      console.log(fundTime);
-      console.log(nowTime);
-      const diff = nowTime.getTime() - fundTime.getTime();
-      if (diff > 0) setIsTimeOver(true);
-      else setIsTimeOver(false);
-    }
-  }, [Fund]);
 
   const handleFavorite = () => {
     setFavoriteFunding(token, match.params.num, fundingFavorite).then(
@@ -157,7 +144,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     console.log('fundDetailPage');
 
     getFundDetail(Number(match.params.num)).then((response) => {
-      console.log(">>>>"+response.data);
+      console.log('>>>>' + response.data);
       setFund(response.data);
     });
 
@@ -264,13 +251,37 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   const buttonRender = () => {
-    console.log('Fund?.fundingConfirm>>>', Fund?.fundingConfirm);
-    console.log('user.role>>>', user.role);
-    console.log('isTimeOver>>>>', isTimeOver);
-    if (Fund?.fundingConfirm === 'Success' || Fund?.fundingConfirm === 'Fail') {
-      return disableBtn('기간이 끝난 펀딩입니다.');
-    } else if (Fund?.fundingConfirm === 'Decline') {
-      return disableBtn('거절된 펀딩');
+    if (Fund?.fundingConfirm === 'ApproveIng') {
+      if (user.role === 'ADMIN') {
+        return disableBtn('진행중인 펀딩');
+      } else {
+        return doubleBtn(
+          fundingFavorite ? '관심 해제' : '관심 등록',
+          '펀딩하기',
+          user === null ? loginRedirect : handleFavorite,
+          user === null ? loginRedirect : onClickPayment,
+          fundingFavorite ? (
+            <FavoriteIcon color="secondary" />
+          ) : (
+            <FavoriteBorderIcon color="secondary" />
+          ),
+          <CreditCardIcon />,
+          'default',
+          'secondary'
+        );
+      }
+    } else if (Fund?.fundingConfirm === 'ApprovePre') {
+      return disableBtn('펀딩 시작전입니다.');
+    } else if (Fund?.fundingConfirm === 'ApprovePost') {
+      if (user.role === 'ADMIN') {
+        return singleBtn(
+          '펀딩 완료',
+          handleCompleteBtn,
+          <SentimentVerySatisfiedIcon />
+        );
+      } else {
+        return disableBtn('기간이 끝난 펀딩입니다.');
+      }
     } else if (Fund?.fundingConfirm === 'Wait') {
       if (user.role === 'ADMIN') {
         return doubleBtn(
@@ -286,37 +297,43 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       } else {
         return disableBtn('승인 대기중');
       }
+    } else if (Fund?.fundingConfirm === 'Decline') {
+      return disableBtn('승인 거절한 펀딩입니다.');
+    } else {
+      return disableBtn('완료 처리된 펀딩입니다.');
+    }
+
+    if (Fund?.fundingConfirm === 'Success' || Fund?.fundingConfirm === 'Fail') {
+      return disableBtn('기간이 끝난 펀딩입니다.');
+    } else if (Fund?.fundingConfirm === 'Decline') {
+      return disableBtn('거절된 펀딩');
+    } else if (Fund?.fundingConfirm === 'Wait') {
     } else if (Fund?.fundingConfirm === 'Approve') {
       if (user.role === 'ADMIN') {
-        if (isTimeOver) {
-          return singleBtn(
-            '펀딩 완료',
-            handleCompleteBtn,
-            <SentimentVerySatisfiedIcon />
-          );
-        } else {
-          return disableBtn('진행중인 펀딩');
-        }
+        // if (isTimeOver) {
+        //   return singleBtn(
+        //     '펀딩 완료',
+        //     handleCompleteBtn,
+        //     <SentimentVerySatisfiedIcon />
+        //   );
+        // } else {
+        //   return disableBtn('진행중인 펀딩');
+        // }
       } else {
-        if (isTimeOver) {
-          return disableBtn('완료 처리 대기중');
-        } else {
-          console.log(fundingFavorite);
-          return doubleBtn(
-            fundingFavorite ? '관심 해제' : '관심 등록',
-            '펀딩하기',
-            user === null ? loginRedirect : handleFavorite,
-            user === null ? loginRedirect : onClickPayment,
-            fundingFavorite ? (
-              <FavoriteIcon color="secondary" />
-            ) : (
-              <FavoriteBorderIcon color="secondary" />
-            ),
-            <CreditCardIcon />,
-            'default',
-            'secondary'
-          );
-        }
+        return doubleBtn(
+          fundingFavorite ? '관심 해제' : '관심 등록',
+          '펀딩하기',
+          user === null ? loginRedirect : handleFavorite,
+          user === null ? loginRedirect : onClickPayment,
+          fundingFavorite ? (
+            <FavoriteIcon color="secondary" />
+          ) : (
+            <FavoriteBorderIcon color="secondary" />
+          ),
+          <CreditCardIcon />,
+          'default',
+          'secondary'
+        );
       }
     }
   };
@@ -379,12 +396,15 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                     </span>
                   </div>
                   <div>
-                  <BorderLinearProgress
-                    className="progressBar"
-                    variant="determinate"
-                    value={Number(Fund?.fundingAchievementRate)>100? 100:Number(Fund?.fundingAchievementRate)}
-                  />
-
+                    <BorderLinearProgress
+                      className="progressBar"
+                      variant="determinate"
+                      value={
+                        Number(Fund?.fundingAchievementRate) > 100
+                          ? 100
+                          : Number(Fund?.fundingAchievementRate)
+                      }
+                    />
                   </div>
 
                   <div>
