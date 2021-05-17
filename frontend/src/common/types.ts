@@ -61,9 +61,13 @@ export interface IdolDetailInfo {
 }
 
 export interface FundForm {
+  donationPlaceId: number | null;
+  donationRate: number;
+  fundingAchievementRate: string|null;
+  fundingAmount: number;
+  fundingConfirm: string;
   fundingId: number;
   userPays: number[]|null;
-  donationPlaceId: number | null;
   idolId: number;
   userId: number;
   userNickname: string;
@@ -85,8 +89,6 @@ export interface FundForm {
   location: string|null;
   fundDetail: string|null;
   isGoodFunding: boolean|null;
-  fundingAchievementRate: string|null;
-  fundingAmount: number;
   fundingSubtitle: string;
   fundingRemainDay: number;
 }

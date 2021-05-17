@@ -58,69 +58,99 @@ const IdolInfo = (props: Props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-1"></div>
-        <div className="col-md-10">
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-        <div className="nbg_bold" style={{ fontSize: '2em' }}>
-          {props.idolInfo?.idolName}
-        </div>
-        {user === null ? (
-          <></>
-        ) : (
-          <Button
-            variant="contained"
-            className="nbg_bold"
-            color={idolFavorite ? 'secondary' : 'default'}
-            onClick={handleFavorite}
+        <div className="col-md-12">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            관심 {idolFavorite ? '해제' : '등록'}
-          </Button>
-        )}
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <Card>
-          <img src={props.idolInfo?.idolPicture} style={{ width: '100%' }} />
-          {/* <img
-            src="https://w.namu.la/s/4882104f184435e246e6ca88e9880a49969b947ba0bcafa3f9afce085dc99396bb3baa604b77f6278181652cef0f22a4a21693031fd5c7a8541291692f06132a3415f59db04e9ddd4305827a2cba26ce2dd3495fa3a48859bdd2ca15f0e0f0281a00773fcf4f9d72b26501b1039c1f7a"
-            style={{ height: 400 }}
-          /> */}
-        </Card>
-        {props.idolInfo?.idolAge !== null ? (
-          <Card style={{ marginLeft: 10 }}>
-            <Table>
-              <TableRow>
-                <TableCell>나이</TableCell>
-                <TableCell>{props.idolInfo?.idolAge}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>생년월일</TableCell>
-                <TableCell>{props.idolInfo?.idolBirthday}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>혈액형</TableCell>
-                <TableCell>{props.idolInfo?.idolBlood}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>키</TableCell>
-                <TableCell>{props.idolInfo?.idolHeight}cm</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>몸무게</TableCell>
-                <TableCell>{props.idolInfo?.idolWeight}kg</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>소속사</TableCell>
-                <TableCell>{props.idolInfo?.idolAgency}</TableCell>
-              </TableRow>
-            </Table>
-          </Card>
-        ) : (
-          <></>
-        )}
-      </Box>
+            <div className="nbg_bold" style={{ fontSize: '2em' }}>
+              {props.idolInfo?.idolName}
+            </div>
+            {user === null ? (
+              <></>
+            ) : (
+              <Button
+                variant="contained"
+                className="nbg_bold"
+                color={idolFavorite ? 'secondary' : 'default'}
+                onClick={handleFavorite}
+              >
+                관심 {idolFavorite ? '해제' : '등록'}
+              </Button>
+            )}
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Card
+              style={{ width: '100%', height: '600px', position: 'relative' }}
+            >
+              <CardMedia
+                className="cardImg"
+                component="img"
+                width="100%"
+                height="600px"
+                image={props.idolInfo?.idolPicture}
+                style={{ filter: 'blur(10px) brightness(50%)' }}
+                title="Card Image"
+              />
+              <CardContent
+                style={{
+                  alignContent: 'center',
+                  position: 'absolute',
+                  top: '0px',
+                  left: '0px',
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <Card style={{ width: '60%' }}>
+                  <CardMedia
+                    component="img"
+                    image={props.idolInfo?.idolPicture}
+                    style={{ aspectRatio: 'initial' }}
+                  />
+                </Card>
+              </CardContent>
+              {/* <img
+                src={props.idolInfo?.idolPicture}
+                style={{ width: '100%', filter: 'blur(5px)' }}
+              /> */}
+            </Card>
+            {/* {props.idolInfo?.idolAge !== null ? (
+              <Card style={{ marginLeft: 10 }}>
+                <Table>
+                  <TableRow>
+                    <TableCell>나이</TableCell>
+                    <TableCell>{props.idolInfo?.idolAge}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>생년월일</TableCell>
+                    <TableCell>{props.idolInfo?.idolBirthday}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>혈액형</TableCell>
+                    <TableCell>{props.idolInfo?.idolBlood}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>키</TableCell>
+                    <TableCell>{props.idolInfo?.idolHeight}cm</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>몸무게</TableCell>
+                    <TableCell>{props.idolInfo?.idolWeight}kg</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>소속사</TableCell>
+                    <TableCell>{props.idolInfo?.idolAgency}</TableCell>
+                  </TableRow>
+                </Table>
+              </Card>
+            ) : (
+              <></>
+            )} */}
+          </Box>
         </div>
       </div>
-      
     </div>
   );
 };
