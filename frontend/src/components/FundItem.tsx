@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Grid, Paper, Box } from "@material-ui/core";
-import "./FundCard.css";
+import "./FundItem.css";
 import { useHistory, withRouter } from "react-router-dom";
 import { IFunding } from "../common/types";
 
@@ -74,9 +74,10 @@ const FundItem = (props: Props) => {
 
   return (
     
-    <div className="fundItem"  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
-         <div className="col-md-8" style={{ padding: "5px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
-        <h4>{props?.rank+1}위</h4>
+    <div className="fundItem" style={{height:"100px"}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+        <div className="col-md-1">  <span className="ranking" style={{fontWeight:"bold"}}>{props?.rank+1}</span></div>
+         <div className="col-md-6 itemText" style={{ padding: "5px", height:"100px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+      
         <Typography
           gutterBottom
           style={{
@@ -99,19 +100,19 @@ const FundItem = (props: Props) => {
         </Box>
     
       </div>
+      <div className="col-md-5" style={{height:"100px", padding:"0px", overflow:"hidden"}}> 
+
+    
+
       <Card
-        className="itemClass col-md-4"
-       
+        className="itemClass"
         style={{
           padding: "0",
-          height: "100%",
-          display: "block",
-          border: "solid 1px lightgrey",
+          height: "100px",
         }}
         elevation={0}
       >
-        <CardActionArea>
-          <Card elevation={0}>
+    
             <CardMedia
               className="cardImgA"
               component="img"
@@ -120,9 +121,10 @@ const FundItem = (props: Props) => {
               image={fundingInfo?.fundingThumbnail}
               title="Card Image"
             />
-          </Card>
-        </CardActionArea>
+ 
       </Card>
+      </div>
+      
 
      
     </div>
