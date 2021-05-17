@@ -45,3 +45,32 @@ export const deleteComment = (funding_comment_id: string, auth_token: string) =>
 export const getAllDonationPlaces = () => {
     return axiosInstance.get('/donation-places');
 }
+
+export const declineFunding = (funding_id: number, auth_token: string) => {
+    return axiosInstance.patch('/admin/funding/' + funding_id + '/decline',{}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth_token
+        }
+    });
+}
+
+export const approveFunding = (funding_id: number, good: string, auth_token: string) => {
+    return axiosInstance.patch('/admin/funding/' + funding_id + '/accept',{isGoodProject : good}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth_token
+        }
+    });
+}
+
+export const completeFunding = (funding_id: number, auth_token: string) => {
+    console.log(auth_token);
+    console.log(funding_id)
+    return axiosInstance.patch('/admin/funding-complete/' + funding_id, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth_token
+        }
+    });
+}
