@@ -153,7 +153,7 @@ const Funding = () => {
             <Button variant="contained" onClick={handleEndFunding}>
               완료된 펀딩
             </Button>
-            {user.role == 'ADMIN' ? (
+            {user !== null && user.role == 'ADMIN' ? (
               <>
                 <Button variant="contained" onClick={handleNeedAcceptFunding}>
                   승인 필요 펀딩
