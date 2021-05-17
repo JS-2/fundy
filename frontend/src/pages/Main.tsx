@@ -25,6 +25,7 @@ import { getFundingList } from '../api/funding';
 import { getAllIdolList } from '../api/idol';
 import IdolCard from '../components/IdolCard';
 import { Link } from 'react-router-dom';
+import FundItem from '../components/FundItem';
 
 // Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -67,9 +68,9 @@ const Main = () => {
     });
     getFundingList({
       page: 1,
-      per_page: 1000,
+      per_page: 6,
       status: 1,
-      time: 1,
+      time: 0,
     }).then((resp) => {
       let data = resp.data;
       data = data.sort((a: IFunding, b: IFunding) => {
@@ -94,13 +95,13 @@ const Main = () => {
         <div className="col-md-1"></div>
 
         <div className="area col-md-10" id="">
-          <div className="" id="topFundArea">
+          <div className="col-md-8 divA" id="topFundArea">
             <h3 className="headText">인기 펀딩</h3>
 
             <Grid container spacing={3}>
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
-                  <Grid item xs={4} key={funding.fundingId}>
+                  <Grid item xs={6} key={funding.fundingId}>
                     <FundCard funding={funding}></FundCard>
                   </Grid>
                 );
@@ -112,10 +113,29 @@ const Main = () => {
               </Link>
             </Box>
           </div>
+          <div className="col-md-4 divB">
+          <h3 className="headText">인기 순위</h3>
+          <Grid container spacing={3}>
+              {hotFunding?.map((funding: IFunding, i: number) => {
+                return (
+                  <div className="col-md-12" key={funding.fundingId}>
+                    <FundItem funding={funding} rank={i}></FundItem>
+                  </div>
+                );
+              })}
+            </Grid>
+          
+          </div>
+          </div>
+          
+        </div>
 
-          <div className="" id="idolArea">
+
+
+          <div className="row" id="idolArea">
+            <div className="col-md-1"></div>
+            <div className="col-md-10 divA moveA">
             <h3 className="headText">아이돌</h3>
-
             <Swiper
               spaceBetween={-380}
               slidesPerView={3}
@@ -133,17 +153,18 @@ const Main = () => {
                 더보기
               </Link>
             </Box>
+
+            </div>
+         
           </div>
-          <h3 className="headText">스토어</h3>
-          <p>아이템 카드</p>
 
           <div data-aos="zoom-in-up">
             {' '}
             <p>안녕안녕</p>
           </div>
-        </div>
+  
       </div>
-    </div>
+
   );
 };
 

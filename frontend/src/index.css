@@ -8,10 +8,17 @@ body {
   /* transform: rotate(-0.03deg); */
 }
 
+.App{
+  /* background-color: #fcfcfc ; */
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+body { font-family: 'Noto Sans KR', sans-serif; }
+
 
 @font-face {
   font-family: Shrikhand;
@@ -67,6 +74,6 @@ h3,
 h4,
 h5,
 h6,
-p {
-  font-family: NanumBarunGothic !important;
+p,span {
+  font-family: 'Noto Sans KR'  !important;
 }

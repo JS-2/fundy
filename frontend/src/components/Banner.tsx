@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Hidden, Modal } from "@material-ui/core";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Grid, Hidden, Modal } from "@material-ui/core";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -30,79 +30,98 @@ const swiperParams: SwiperOptions = {
 
 const Banner = () => {
   const [open, setOpen] = React.useState(false);
+  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
 
-  const handleOpen = () => {
+  const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
+    setScroll(scrollType);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  const descriptionElementRef = React.useRef<HTMLElement>(null);
+  React.useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [open]);
+
+
   return (
-    <div className="row">
+    <div className="bannerArea">
+      <h3 className="headText">곧 다가오는 아이돌의 생일을 축하해주세요</h3>
       <Swiper
-        className="col-md-12"
-        spaceBetween={0}
+        className="bannerBody"
+        spaceBetween={10}
         slidesPerView={1}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
-        navigation
         pagination={{ clickable: true }}
         loop
         autoplay={{
-          delay: 2500,
+          delay: 3000,
           disableOnInteraction: false,
         }}
       >
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="col-md-12 banner" 
             id="banner"
             style={{
               borderRadius: "5px",
               height: "400px",
               padding: 0,
-              overflow: "hidden",
+              
             }}
-            onClick={handleOpen}
+            onClick={handleClickOpen('body')}
           >
             <img
               src={banner1}
               className="bannerImg"
               style={{
-                width: "100%",
+                alignContent: "center",
               }}
             ></img>
           </div>
         </SwiperSlide>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <div className="modalDiv">
-            <img onClick={handleClose} width="80%" src={fundyTuto}></img>
-          </div>
-        </Modal>
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll={scroll}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+      
+        <DialogContent className="dialog" dividers={scroll === 'paper'}>
+          
+             <div className="modalDiv">
+             <img onClick={handleClose} width="100%" src={fundyTuto}></img>
+           </div>
+          
+        </DialogContent>
+        
+      </Dialog>
+        
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="banner"
             id="banner"
             style={{
-              //backgroundColor: '#44848c',
               borderRadius: "5px",
               height: "400px",
               padding: 0,
-              overflow: "hidden",
             }}
           >
             <img
               className="bannerImg"
               src={banner2}
               style={{
-                width: "100%",
+              
                 alignContent: "center",
               }}
             ></img>
@@ -110,21 +129,21 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="banner"
             id="banner"
             style={{
               // backgroundColor: '#44848c',
               borderRadius: "5px",
               padding: 0,
               height: "400px",
-              overflow: "hidden",
+
             }}
           >
             <img
               className="bannerImg"
               src={banner4}
               style={{
-                width: "100%",
+              
                 alignContent: "center",
               }}
             ></img>
@@ -132,7 +151,7 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="banner"
             id="banner"
             style={{
               // backgroundColor: '#44848c',
@@ -146,7 +165,7 @@ const Banner = () => {
               className="bannerImg"
               src={banner3}
               style={{
-                width: "100%",
+              
                 alignContent: "center",
               }}
             ></img>
@@ -154,7 +173,7 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="banner"
             id="banner"
             style={{
               //backgroundColor: '#44848c',
@@ -168,7 +187,7 @@ const Banner = () => {
               className="bannerImg"
               src={banner5}
               style={{
-                width: "100%",
+         
                 alignItems: "center",
               }}
             ></img>
@@ -177,7 +196,7 @@ const Banner = () => {
 
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="banner"
             id="banner"
             style={{
               //backgroundColor: '#44848c',
@@ -191,7 +210,7 @@ const Banner = () => {
               className="bannerImg"
               src={banner2}
               style={{
-                width: "100%",
+            
                 alignItems: "center",
               }}
             ></img>
@@ -199,7 +218,7 @@ const Banner = () => {
         </SwiperSlide>
         <SwiperSlide>
           <div
-            className="col-md-12"
+            className="banner"
             id="banner"
             style={{
               //backgroundColor: '#44848c',
@@ -213,7 +232,7 @@ const Banner = () => {
               className="bannerImg"
               src={banner6}
               style={{
-                width: "100%",
+         
                 alignItems: "center",
               }}
             ></img>
