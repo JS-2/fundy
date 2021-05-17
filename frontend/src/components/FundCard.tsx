@@ -116,8 +116,8 @@ const FundCard = (props: Props) => {
           </Box>
           <BorderLinearProgress
             variant="determinate"
-            value={percentage}
-          />
+            value={Number(fundingInfo?.fundingAchievementRate)>100? 100:Number(fundingInfo?.fundingAchievementRate)}
+            />
         </CardContent>
       </CardActionArea>
     </Card>
