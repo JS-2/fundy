@@ -5,6 +5,7 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Modal,
   Table,
   TableCell,
   TableRow,
@@ -34,6 +35,16 @@ const IdolInfo = (props: Props) => {
   );
   const params: Params = useParams();
   console.log('props', props);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (user === null) return;
@@ -77,15 +88,44 @@ const IdolInfo = (props: Props) => {
           </Button>
         )}
       </Box>
-      <Box display="flex" justifyContent="center">
+      <div >
+
+        <div className="col-md-8">
         <Card>
-          <img src={props.idolInfo?.idolPicture} style={{ width: '100%' }} />
-          {/* <img
+        <CardMedia
+                    className="cardImg"
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="100%"
+                    onClick={handleOpen}
+                    image={props.idolInfo?.idolPicture}
+                    title="Card Image"
+                  />
+                    <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+                    <div className="modalDiv">
+                      <img
+                        onClick={handleClose}
+                        width="60%"
+                        src={props.idolInfo?.idolPicture}
+                      ></img>
+                    </div>
+                  </Modal>
+         
+          {/*  <img src={props.idolInfo?.idolPicture} style={{ width: '100%' }} /><img
             src="https://w.namu.la/s/4882104f184435e246e6ca88e9880a49969b947ba0bcafa3f9afce085dc99396bb3baa604b77f6278181652cef0f22a4a21693031fd5c7a8541291692f06132a3415f59db04e9ddd4305827a2cba26ce2dd3495fa3a48859bdd2ca15f0e0f0281a00773fcf4f9d72b26501b1039c1f7a"
             style={{ height: 400 }}
           /> */}
         </Card>
+
+        </div>
+       
         {props.idolInfo?.idolAge !== null ? (
+           <div className="col-md-4">
           <Card style={{ marginLeft: 10 }}>
             <Table>
               <TableRow>
@@ -114,10 +154,14 @@ const IdolInfo = (props: Props) => {
               </TableRow>
             </Table>
           </Card>
+          </div>
         ) : (
           <></>
         )}
-      </Box>
+     
+       
+        
+      </div>
         </div>
       </div>
       
