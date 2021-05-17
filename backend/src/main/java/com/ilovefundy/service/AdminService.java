@@ -110,9 +110,8 @@ public class AdminService {
     @Transactional
     public boolean completeFunding(int funding_id) {
         FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
-        // 이미 완료 처리된 프로젝트라면
-        if(fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Success ||
-            fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Fail) {
+        // 승인된 펀딩 중, 기한 마감된 펀딩이 아닐 때
+        if(fundingProject.getIsConfirm() != FundingProject.FundingConfirm.ApprovePost) {
             return false;
         }
         // 기부와 관련된 프로젝트라면

@@ -94,7 +94,7 @@ public class FundingProject {
         Donation, Basic;
     }
     public enum FundingConfirm {
-        Wait, Approve, Decline, Success, Fail;
+        Wait, ApprovePre, ApproveIng, ApprovePost, Decline, Success, Fail;
     }
     public enum YesOrNo {
         Y, N;
