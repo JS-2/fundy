@@ -96,7 +96,12 @@ const Main = () => {
 
         <div className="area col-md-10" id="">
           <div className="col-md-8 divA" id="topFundArea">
-            <h3 className="headText">인기 펀딩</h3>
+            <span className="headText">인기 펀딩</span>
+            <Box mt={1} display="flex" justifyContent="flex-end" style={{marginBottom:"8px"}}>
+              <Link className="nbg" to="/funding">
+                더보기
+              </Link>
+            </Box>
 
             <Grid container spacing={3}>
               {hotFunding?.map((funding: IFunding, i: number) => {
@@ -107,20 +112,23 @@ const Main = () => {
                 );
               })}
             </Grid>
-            <Box mt={1} display="flex" justifyContent="flex-end">
+            
+          </div>
+          <div className="col-md-4 divB">
+          <span className="headText">인기 순위</span>
+          <Box mt={1} display="flex" justifyContent="flex-end" style={{marginBottom:"20px"}}>
               <Link className="nbg" to="/funding">
                 더보기
               </Link>
             </Box>
-          </div>
-          <div className="col-md-4 divB">
-          <h3 className="headText">인기 순위</h3>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} style={{border:"lightgrey 1px solid", padding:"10px"}}>
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
                   <div className="col-md-12" key={funding.fundingId}>
                     <FundItem funding={funding} rank={i}></FundItem>
+                
                   </div>
+                  
                 );
               })}
             </Grid>
