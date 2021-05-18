@@ -33,12 +33,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.requiresChannel().anyRequest().requiresSecure();
         http.httpBasic().disable()  // security 에서 기본으로 생성하는 로그인페이지 사용 안 함
             .cors().configurationSource(corsConfigurationSource())
             .and()
             .csrf().disable()   // REST API 를 사용하기 때문에 csrf(사이트간 위조방지 목적으로 사용하는 토큰) 사용 안함
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT 인증을 사용하므로 세션 사용
-            .and()
+                .and()
                     .authorizeRequests()    // 사용권한 체크
                         .antMatchers("/admin/**").hasRole("ADMIN") //관리자 권한
                         .antMatchers("/user/**", "/grade/**").hasAnyRole("MEMBER", "ADMIN") // 회원 권한
@@ -55,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                     // JwtAuthenticationFilter 를 id/password 인증 필터 전에 넣음
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
     }
     @Override
     public void configure(WebSecurity web) throws Exception {

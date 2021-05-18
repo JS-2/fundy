@@ -15,6 +15,8 @@ import com.ilovefundy.dto.idol.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -47,6 +49,7 @@ public class DonationService {
         for(IIdolDonation donation : idolDonationList) {
             IdolDonationListResponse idolDonationListResponse = new IdolDonationListResponse();
             idolDonationListResponse.setDonationPlaceId(donation.getDonationPlaceId());
+            System.out.println(donation.getDonationPlaceId());
             DonationPlace place = donationPlaceDao.findByDonationPlaceId(donation.getDonationPlaceId());
             idolDonationListResponse.setPlaceName(place.getPlaceName());
             idolDonationListResponse.setPlaceAddress(place.getPlaceAddress());
@@ -92,6 +95,36 @@ public class DonationService {
             idolDonationRankingResponse.setIdolName(idol.getIdolName());
             idolDonationRankingResponse.setDonationAmount(response.getDonationAmount());
             result.add(idolDonationRankingResponse);
+        }
+        return result;
+    }
+
+    public List<IdolDonationRankingMonthlyResponse> getIdolDonationRankingMonthlyList() {
+        List<IdolDonationRankingMonthlyResponse> result = new LinkedList<>();
+        List<IIdolDonationRanking> idolDonationRankingList = donationDao.getTop5IdolDonationRanking();
+        for(IIdolDonationRanking response : idolDonationRankingList) {
+            Idol idol = idolDao.findByIdolId(response.getIdolId());
+            IdolDonationRankingMonthlyResponse tmpResponse = new IdolDonationRankingMonthlyResponse();
+            tmpResponse.setIdol_id(idol.getIdolId());
+            tmpResponse.setId(idol.getIdolName());
+            List<ChartResponse> tmpChartResponse = new LinkedList<>();
+            for(int i = 12; i >= 0; --i) {
+                String ym = LocalDate.now().minusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
+                List<IChartResponse> daoResponse = donationDao.getDonationMonthly(idol.getIdolId(), ym);
+                // 해당 월에 아이돌의 기부내역이 없는 경우
+                if(daoResponse == null) {
+                    tmpChartResponse.add(new ChartResponse(ym, (long) 0));
+                    continue;
+                }
+                long sum = 0;
+                for(IChartResponse cr : daoResponse) {
+                    sum += cr.getY();
+                }
+                ChartResponse resp = new ChartResponse(ym, sum);
+                tmpChartResponse.add(resp);
+            }
+            tmpResponse.setData(tmpChartResponse);
+            result.add(tmpResponse);
         }
         return result;
     }

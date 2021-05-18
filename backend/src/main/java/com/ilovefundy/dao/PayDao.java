@@ -2,6 +2,7 @@ package com.ilovefundy.dao;
 
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.pay.PayInfo;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

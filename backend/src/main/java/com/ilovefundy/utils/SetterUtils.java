@@ -1,7 +1,9 @@
 package com.ilovefundy.utils;
 
+import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dto.funding.FundingCommentListResponse;
 import com.ilovefundy.dto.funding.FundingNoticeListResponse;
+import com.ilovefundy.dto.funding.FundingRankListResponse;
 import com.ilovefundy.entity.funding.FundingComment;
 import com.ilovefundy.entity.funding.FundingNotice;
 import com.ilovefundy.entity.funding.FundingProject;
@@ -12,10 +14,13 @@ import com.ilovefundy.dto.idol.IdolResponse;
 import com.ilovefundy.dto.auth.MyRegisteredFundingResponse;
 import com.ilovefundy.dto.user.PayInfoResponse;
 import com.ilovefundy.entity.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class SetterUtils {
+
     public static IdolResponse setIdolResponse(Idol idol) {
         IdolResponse idolResponse = new IdolResponse();
         idolResponse.setIdolId(idol.getIdolId());
@@ -46,6 +51,15 @@ public class SetterUtils {
         int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
         fundingResponse.setFundingAchievementRate(achievementRate);
         return fundingResponse;
+    }
+
+    public static FundingRankListResponse setFundingRankListResponse(FundingProject fundingProject, int participants) {
+        FundingRankListResponse fundingRankListResponse = new FundingRankListResponse();
+        fundingRankListResponse.setFundingId(fundingProject.getFundingId());
+        fundingRankListResponse.setFundingName(fundingProject.getFundingName());
+        fundingRankListResponse.setFundingAchievementRate(fundingProject.getDonationRate());
+        fundingRankListResponse.setFundingParticipants(participants);
+        return fundingRankListResponse;
     }
 
     public static FundingNoticeListResponse setFundingNoticeListResponse(FundingNotice fundingNotice) {
