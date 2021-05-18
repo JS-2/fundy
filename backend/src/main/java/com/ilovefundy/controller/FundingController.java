@@ -1,9 +1,6 @@
 package com.ilovefundy.controller;
 
-import com.ilovefundy.dto.funding.FundingDetailResponse;
-import com.ilovefundy.dto.funding.FundingListResponse;
-import com.ilovefundy.dto.funding.FundingPayRequest;
-import com.ilovefundy.dto.funding.FundingRequest;
+import com.ilovefundy.dto.funding.*;
 import com.ilovefundy.dto.user.PayInfoResponse;
 import com.ilovefundy.entity.user.User;
 import com.ilovefundy.service.FundingService;
@@ -12,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -38,6 +36,16 @@ public class FundingController {
         List<FundingListResponse> fundingProjectList = fundingService.getFundingList(page-1, per_page, keyword, status);
         result.put("message", "펀딩 리스트 반환 성공!");
         return new ResponseEntity<>(fundingProjectList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "진행중인 펀딩 랭크 리스트")
+    @ApiResponses(@ApiResponse(code = 200, message = "펀딩 랭크 리스트 반환 성공!"))
+    @GetMapping("/fundings/rank")
+    public ResponseEntity<Object> fundingListRank(@RequestParam(defaultValue = "1") int page, int per_page) {
+        Map<String, Object> result = new HashMap<>();
+        List<FundingRankListResponse> fundingProjectRankList = fundingService.getFundingListRank(page-1, per_page);
+        result.put("message", "펀딩 리스트 반환 성공!");
+        return new ResponseEntity<>(fundingProjectRankList, HttpStatus.OK);
     }
 
     //펀딩 등록하기

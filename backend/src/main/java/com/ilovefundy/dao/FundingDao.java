@@ -33,6 +33,7 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
 
     // 승인 - 진행 중
     Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, Pageable pageable);
+    FundingProject findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus);
     Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
 
     // 승인 - 마감
