@@ -1,30 +1,7 @@
 import React, { useEffect } from 'react';
 import { ResponsiveBar } from '@nivo/bar';
-import { Box, Card, CardContent } from '@material-ui/core';
+import { Box, Card, CardContent, CardMedia } from '@material-ui/core';
 import { IChartData } from '../common/types';
-
-const data = [
-  {
-    country: '아이돌1',
-    금액: 390000,
-  },
-  {
-    country: '아이돌2',
-    금액: 420000,
-  },
-  {
-    country: '아이돌3',
-    금액: 242400,
-  },
-  {
-    country: '아이돌4',
-    금액: 130520,
-  },
-  {
-    country: '아이돌5',
-    금액: 543420,
-  },
-];
 
 interface Props {
   title: string;
@@ -37,61 +14,95 @@ const Chart = (props: Props) => {
   }, [props]);
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '2em' }}>
         {props.title}
       </Box>
-      <div style={{ height: 400 }}>
-        <ResponsiveBar
-          data={props.data}
-          keys={['금액']}
-          indexBy="name"
-          margin={{ top: 10, right: 50, bottom: 50, left: 120 }}
-          padding={0.5}
-          valueScale={{ type: 'linear' }}
-          indexScale={{ type: 'band', round: true }}
-          defs={[
-            {
-              id: 'lines',
-              type: 'patternLines',
-              background: 'inherit',
-              color: '#fa5f76',
-              rotation: -45,
-              lineWidth: 4,
-              spacing: 10,
-            },
-          ]}
-          fill={[
-            {
-              match: {
-                id: '금액',
-              },
-              id: 'lines',
-            },
-          ]}
-          colors={'#f74a64'}
-          borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          axisLeft={{
-            tickSize: 20,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: '금액',
-            legendPosition: 'middle',
-            legendOffset: -80,
-          }}
-          axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legendOffset: 32,
-          }}
-          enableLabel={false}
-          labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          legends={[]}
-          animate={false}
-          motionStiffness={90}
-          motionDamping={15}
-        />
-      </div>
+      <Box display="flex" justifyContent="center">
+        <Box display="flex">
+          <Card
+            elevation={0}
+            style={{
+              border: 'solid 2px #e0e0e0',
+              paddingTop: 30,
+            }}
+          >
+            <CardContent>
+              <div
+                style={{
+                  height: 600,
+                  width: 1000,
+                }}
+              >
+                <ResponsiveBar
+                  tooltip={(node) => (
+                    <div>
+                      <div style={{ textAlign: 'center' }} className="nbg_bold">
+                        {String(node.indexValue)}
+                      </div>
+                      <div>
+                        {String(node.value).replace(
+                          /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                          ','
+                        )}
+                        원
+                      </div>
+                    </div>
+                  )}
+                  data={props.data}
+                  keys={['금액']}
+                  indexBy="name"
+                  margin={{ top: 10, right: 50, bottom: 50, left: 120 }}
+                  padding={0.55}
+                  valueScale={{ type: 'linear' }}
+                  indexScale={{ type: 'band', round: true }}
+                  defs={[
+                    {
+                      id: 'lines',
+                      type: 'patternLines',
+                      background: 'inherit',
+                      color: '#fa5f76',
+                      rotation: -45,
+                      lineWidth: 4,
+                      spacing: 10,
+                    },
+                  ]}
+                  colors={'#f74a64'}
+                  borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+                  axisLeft={{
+                    tickSize: 20,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: '금액',
+                    legendPosition: 'middle',
+                    legendOffset: -80,
+                  }}
+                  axisBottom={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legendOffset: 32,
+                  }}
+                  enableLabel={true}
+                  label={(d) =>
+                    `\\ ${String(d.value).replace(
+                      /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                      ','
+                    )}`
+                  }
+                  labelTextColor={{
+                    from: 'color',
+                    modifiers: [['darker', 1.6]],
+                  }}
+                  legends={[]}
+                  animate={true}
+                  motionStiffness={90}
+                  motionDamping={15}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
     </div>
   );
 };

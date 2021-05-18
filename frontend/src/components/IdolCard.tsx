@@ -27,7 +27,7 @@ const IdolCard = (props: Props) => {
     <Card
       onClick={toDetail}
       style={{
-        width: '225px',
+        width: '100%',
         height: '350px',
         position: 'relative',
         cursor: 'pointer',

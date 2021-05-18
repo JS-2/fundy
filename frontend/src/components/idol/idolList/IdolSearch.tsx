@@ -5,12 +5,14 @@ import {
   CardActionArea,
   CardMedia,
   Grid,
+  InputAdornment,
   TextField,
 } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import { getIdolList } from '../../../api/idol';
 import { Idol } from '../../../common/types';
 import IdolCard from '../../IdolCard';
+import SearchIcon from '@material-ui/icons/Search';
 
 const IdolSearch = () => {
   const [idolList, setIdolList] = useState<Idol[]>([]);
@@ -23,7 +25,7 @@ const IdolSearch = () => {
 
   useEffect(() => {
     getIdolList(keyword, page).then((response) => {
-      setIdolList([...idolList, ...response.data]);
+      setIdolList([...response.data]);
     });
   }, [page]);
 
@@ -63,33 +65,39 @@ const IdolSearch = () => {
 
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
-        아이돌 리스트
-      </Box>
-      <Box
-        mb={3}
-        display="flex"
-        alignContent="center"
-        justifyContent="flex-end"
-      >
-        <TextField
-          variant="outlined"
-          size="small"
-          value={searchWord}
-          onChange={(e) => {
-            console.log(e.target.value);
-            setSearchWord(e.target.value);
-          }}
-        ></TextField>
-        <Button
-          className="ml-2"
-          disableElevation
-          variant="contained"
-          onClick={handleSearch}
+      <Box mt={6} mb={6} display="flex" justifyContent="space-between">
+        <Box mx={1} className="nbg_bold" style={{ fontSize: '2em' }}>
+          아이돌 검색
+        </Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+          style={{ width: '600px' }}
         >
-          {' '}
-          검색{' '}
-        </Button>
+          <TextField
+            variant="outlined"
+            value={searchWord}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setSearchWord(e.target.value);
+            }}
+            inputProps={{
+              style: { fontSize: '1.5em', height: '10px' },
+            }}
+            style={{ paddingRight: '5px', width: '400px' }}
+          ></TextField>
+          <Button
+            className="ml-2 btn_main"
+            disableElevation
+            variant="contained"
+            onClick={handleSearch}
+            style={{ fontSize: '1.4em' }}
+          >
+            {' '}
+            검색{' '}
+          </Button>
+        </Box>
       </Box>
       <Grid container spacing={2}>
         {idolList.map((idol, index) => {

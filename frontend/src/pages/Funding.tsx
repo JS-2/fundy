@@ -52,29 +52,16 @@ const Funding = () => {
   const [fundingStatus, setFundingStatus] = useState<FundingStatus>({
     page: 1,
     per_page: 1000,
-    status: 1,
-    time: 1,
+    status: 2,
   });
   const [header, setHeader] = useState<string>('진행중인 펀딩');
   const user: User = useSelector((state: rootState) => state.userReducer.user);
 
   useEffect(() => {
     getFundingList(fundingStatus).then((resp) => {
+      console.log(resp.data);
       setFundings(resp.data);
     });
-    if (fundingStatus.time === 2) {
-      getFundingList({
-        page: 1,
-        per_page: 1000,
-        status: 1,
-        time: 3,
-      }).then((resp) => {
-        console.log('실패펀딩들', resp.data);
-        setFailFundings(resp.data);
-      });
-    } else {
-      setFailFundings([]);
-    }
   }, [fundingStatus]);
 
   const handleWaitFunding = () => {
@@ -82,7 +69,6 @@ const Funding = () => {
       page: 1,
       per_page: 1000,
       status: 1,
-      time: 0,
     });
     setHeader('대기중인 펀딩');
   };
@@ -91,8 +77,7 @@ const Funding = () => {
     setFundingStatus({
       page: 1,
       per_page: 1000,
-      status: 1,
-      time: 1,
+      status: 2,
     });
     setHeader('진행중인 펀딩');
   };
@@ -101,8 +86,7 @@ const Funding = () => {
     setFundingStatus({
       page: 1,
       per_page: 1000,
-      status: 1,
-      time: 2,
+      status: 3,
     });
     setHeader('완료된 펀딩');
   };
@@ -112,7 +96,6 @@ const Funding = () => {
       page: 1,
       per_page: 1000,
       status: 0,
-      time: 1,
     });
     setHeader('승인 필요 펀딩');
   };
@@ -120,15 +103,31 @@ const Funding = () => {
     setFundingStatus({
       page: 1,
       per_page: 1000,
-      status: 2,
-      time: 1,
+      status: 4,
     });
     setHeader('거절된 펀딩');
   };
-const history = useHistory();
-const createClick=()=>{
+  const handleSuccessFunding = () => {
+    setFundingStatus({
+      page: 1,
+      per_page: 1000,
+      status: 5,
+    });
+    setHeader('성공한 펀딩');
+  };
+  const handleFailFunding = () => {
+    setFundingStatus({
+      page: 1,
+      per_page: 1000,
+      status: 6,
+    });
+    setHeader('실패한 펀딩');
+  };
+
+  const history = useHistory();
+  const createClick = () => {
     history.push({
-      pathname: "/funding/create",
+      pathname: '/funding/create',
       state: {},
     });
   };
@@ -154,7 +153,7 @@ const createClick=()=>{
             <Button variant="contained" onClick={handleEndFunding}>
               완료된 펀딩
             </Button>
-            {user.role == 'ADMIN' ? (
+            {user !== null && user.role == 'ADMIN' ? (
               <>
                 <Button variant="contained" onClick={handleNeedAcceptFunding}>
                   승인 필요 펀딩
@@ -162,13 +161,21 @@ const createClick=()=>{
                 <Button variant="contained" onClick={handleDeclineFunding}>
                   거절된 펀딩
                 </Button>
+                <Button variant="contained" onClick={handleSuccessFunding}>
+                  성공한 펀딩
+                </Button>
+                <Button variant="contained" onClick={handleFailFunding}>
+                  실패한 펀딩
+                </Button>
               </>
             ) : (
               <></>
             )}
 
-            <Button variant="contained" onClick={createClick}>펀딩 제작하기</Button>         
-             </Box>
+            <Button variant="contained" onClick={createClick}>
+              펀딩 제작하기
+            </Button>
+          </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
               <Grid item xs={4} key={funding.fundingId}>

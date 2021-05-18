@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import styles from './AuthEmail.module.css';
 import classNames from 'classnames';
-import { validateId } from '../../../api/user';
+import { sendAuthMail, validateId, sendCode } from '../../../api/user';
 
 interface Props {
   setUserEmail: Function;
@@ -10,7 +10,19 @@ interface Props {
 
 const AuthEmail = (props: Props) => {
   const [email, setEmail] = useState<string>('');
+  const [code, setCode] = useState<string>('');
   const [validated, setValidated] = useState<boolean>(false);
+  const handleSendMail = () => {
+    sendAuthMail(email).then((resp) => {
+      alert('인증번호 전송완료');
+    });
+  };
+
+  const handleSendCode = () => {
+    sendCode(code).then((resp) => {
+      props.setUserEmail(email);
+    });
+  };
 
   return (
     <Grid container spacing={2}>
@@ -48,6 +60,7 @@ const AuthEmail = (props: Props) => {
           fullWidth
           size="large"
           variant="contained"
+          onClick={handleSendMail}
           className={
             !validated
               ? classNames('nbg_bold', styles.auth_btn)
@@ -58,18 +71,24 @@ const AuthEmail = (props: Props) => {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <TextField fullWidth label="인증번호" variant="outlined" />
+        <TextField
+          fullWidth
+          label="인증번호"
+          variant="outlined"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          helperText="'-'를 제외한 인증코드를 입력해주세요"
+        />
       </Grid>
       <Grid item xs={12}>
         <Button
+          disabled={code.length == 0}
           disableElevation
           variant="contained"
           size="large"
           fullWidth
-          className="btn_main nbg_bold"
-          onClick={() => {
-            props.setUserEmail(email);
-          }}
+          className={code.length == 0 ? '' : 'btn_main nbg_bold'}
+          onClick={handleSendCode}
         >
           확인
         </Button>

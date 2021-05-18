@@ -46,31 +46,31 @@ const IdolDetail = () => {
 
   return (
     <div>
-        <div className="row">
+      <div className="row">
+        <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
         <div className="col-md-1"></div>
         <div className="col-md-10">
-      <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
-      {detailInfo?.idolInfo.members !== undefined &&
-      detailInfo?.idolInfo.members.length !== 0 ? (
-        <IdolMembers idolInfo={detailInfo?.idolInfo} />
-      ) : (
-        <></>
-      )}
-      <IdolFunding funding={detailInfo?.idolFundingProject} />
-      {donationData.length === 0 ? (
-        <></>
-      ) : (
-        <Chart
-          title={detailInfo?.idolInfo.idol.idolName + '가 남긴 기부 발자취'}
-          data={donationData}
-        />
-      )}
+          {detailInfo?.idolInfo.members !== undefined &&
+          detailInfo?.idolInfo.members.length !== 0 ? (
+            <IdolMembers idolInfo={detailInfo?.idolInfo} />
+          ) : (
+            <></>
+          )}
+          <IdolFunding funding={detailInfo?.idolFundingProject} />
+          {donationData.length === 0 ? (
+            <></>
+          ) : (
+            <Chart
+              title={detailInfo?.idolInfo.idol.idolName + '가 남긴 기부 발자취'}
+              data={donationData}
+            />
+          )}
 
-      <FundingMap
-        idolInfo={detailInfo?.idolInfo.idol}
-        data={donationPlaceData}
-      />
-      </div>
+          <FundingMap
+            idolInfo={detailInfo?.idolInfo.idol}
+            data={donationPlaceData}
+          />
+        </div>
       </div>
     </div>
   );

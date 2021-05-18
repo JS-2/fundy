@@ -68,9 +68,8 @@ const Main = () => {
     });
     getFundingList({
       page: 1,
-      per_page: 6,
-      status: 1,
-      time: 0,
+      per_page: 1000,
+      status: 2,
     }).then((resp) => {
       let data = resp.data;
       data = data.sort((a: IFunding, b: IFunding) => {
