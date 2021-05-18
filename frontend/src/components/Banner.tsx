@@ -22,18 +22,18 @@ import SwiperCore, {
   SwiperOptions,
 } from 'swiper';
 
-import './Banner.css';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import banner1 from '../assets/img/bannerf.png';
-import banner2 from '../assets/img/BannerY.png';
-import banner3 from '../assets/img/bannerN.png';
-import banner4 from '../assets/img/bannerB.png';
-import banner5 from '../assets/img/banner5.png';
-import banner23 from '../assets/img/banner6.jpg';
-import banner6 from '../assets/img/bannerE.png';
-import { CenterFocusStrong } from '@material-ui/icons';
-import fundyTuto from '../assets/img/fundyTuto.png';
+import "./Banner.css";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
+import banner1 from "../assets/img/bannerf.png";
+import banner2 from "../assets/img/BannerY.png";
+import banner3 from "../assets/img/bannerN.png";
+import banner4 from "../assets/img/bannerB.png";
+
+import banner23 from "../assets/img/banner6.jpg";
+import banner6 from "../assets/img/bannerE.png";
+import { CenterFocusStrong } from "@material-ui/icons";
+import fundyTuto from "../assets/img/fundyTuto.png";
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 const swiperParams: SwiperOptions = {
@@ -82,7 +82,7 @@ const Banner = () => {
       >
         <SwiperSlide>
           <div
-            className="col-md-12 banner"
+            className="banner"
             id="banner"
             style={{
               borderRadius: '5px',
@@ -188,7 +188,7 @@ const Banner = () => {
           >
             <img
               className="bannerImg"
-              src={banner5}
+              src={banner1}
               style={{
                 alignItems: 'center',
               }}
