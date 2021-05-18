@@ -68,20 +68,6 @@ const IdolInfo = (props: Props) => {
   return (
     <div>
       <div className="row">
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          {user === null ? (
-            <></>
-          ) : (
-            <Button
-              variant="contained"
-              className="nbg_bold"
-              color={idolFavorite ? 'secondary' : 'default'}
-              onClick={handleFavorite}
-            >
-              관심 {idolFavorite ? '해제' : '등록'}
-            </Button>
-          )}
-        </Box>
         <Box display="flex" justifyContent="center">
           <Card
             elevation={0}
@@ -190,7 +176,24 @@ const IdolInfo = (props: Props) => {
                       </Box>
                     )}
                   </Box>
-                  <Grid item xs={2} />
+                  <Grid item xs={6} style={{ height: '90%' }}>
+                    {user === null ? (
+                      <></>
+                    ) : (
+                      <Box display="flex" justifyContent="flex-end">
+                        <Button
+                          variant="contained"
+                          className="nbg_bold"
+                          size="large"
+                          style={{ fontSize: '1em' }}
+                          color={idolFavorite ? 'secondary' : 'default'}
+                          onClick={handleFavorite}
+                        >
+                          관심 {idolFavorite ? '해제' : '등록'}
+                        </Button>
+                      </Box>
+                    )}
+                  </Grid>
                 </Grid>
               </Grid>
             </CardContent>
