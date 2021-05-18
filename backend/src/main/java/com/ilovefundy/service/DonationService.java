@@ -107,7 +107,6 @@ public class DonationService {
             IdolDonationRankingMonthlyResponse tmpResponse = new IdolDonationRankingMonthlyResponse();
             tmpResponse.setIdol_id(idol.getIdolId());
             tmpResponse.setId(idol.getIdolName());
-            System.out.println(idol.getIdolName());
             List<ChartResponse> tmpChartResponse = new LinkedList<>();
             for(int i = 12; i >= 0; --i) {
                 String ym = LocalDate.now().minusMonths(i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
