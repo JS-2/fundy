@@ -12,6 +12,7 @@ import {
 } from '../../common/types';
 import { getIdolDonationData, getIdolInfo } from '../../api/idol';
 import { useParams } from 'react-router';
+import { Box, Card, Grid } from '@material-ui/core';
 
 interface Params {
   idol_id: string;
@@ -24,9 +25,9 @@ const IdolDetail = () => {
     []
   );
   const params: Params = useParams();
+  const [mouseOverPlace, setMouseOverPlace] = useState<number>(0);
 
   useEffect(() => {
-    console.log('idolDetailPage');
     getIdolInfo(Number(params.idol_id)).then((resp) => {
       setDetailInfo(resp.data);
     });
@@ -44,6 +45,10 @@ const IdolDetail = () => {
     });
   }, [params]);
 
+  const handleGetPlaceId = (place_id: number) => {
+    setMouseOverPlace(place_id);
+  };
+
   return (
     <div>
       <div className="row">
@@ -57,19 +62,62 @@ const IdolDetail = () => {
             <></>
           )}
           <IdolFunding funding={detailInfo?.idolFundingProject} />
-          {donationData.length === 0 ? (
-            <></>
-          ) : (
-            <Chart
-              title={detailInfo?.idolInfo.idol.idolName + '가 남긴 기부 발자취'}
-              data={donationData}
-            />
-          )}
-
-          <FundingMap
-            idolInfo={detailInfo?.idolInfo.idol}
-            data={donationPlaceData}
-          />
+          <Box
+            mt={10}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
+            {detailInfo?.idolInfo.idol.idolName} 가 남긴 기부 발자취
+          </Box>
+          <Card elevation={0}>
+            {donationData.length === 0 ? (
+              <Grid container>
+                <Grid item xs={6}>
+                  <FundingMap
+                    idolInfo={detailInfo?.idolInfo.idol}
+                    data={donationPlaceData}
+                    handleGetPlaceId={handleGetPlaceId}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ height: 600, width: '100%' }}
+                  >
+                    <Box
+                      fontSize="3em"
+                      color="silver"
+                      className="nbg_bold font-smooth"
+                    >
+                      기부 이력이 없습니다.
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container>
+                <Grid item xs={6}>
+                  <FundingMap
+                    idolInfo={detailInfo?.idolInfo.idol}
+                    data={donationPlaceData}
+                    handleGetPlaceId={handleGetPlaceId}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Chart
+                    title={
+                      detailInfo?.idolInfo.idol.idolName + '가 남긴 기부 발자취'
+                    }
+                    data={donationData}
+                    mouseOverPlace={mouseOverPlace}
+                  />
+                </Grid>
+              </Grid>
+            )}
+          </Card>
         </div>
       </div>
     </div>

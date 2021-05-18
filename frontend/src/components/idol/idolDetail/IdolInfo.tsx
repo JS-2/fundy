@@ -35,7 +35,6 @@ const IdolInfo = (props: Props) => {
     (state: rootState) => state.userReducer.token
   );
   const params: Params = useParams();
-  console.log('props', props);
 
   const [open, setOpen] = React.useState(false);
 
@@ -50,7 +49,6 @@ const IdolInfo = (props: Props) => {
   useEffect(() => {
     if (user === null) return;
     getFavorite(token).then((resp) => {
-      console.log('resp data', resp.data);
       const check = resp.data.find((e: Idol) => {
         if (e.idolId == Number(params.idol_id)) {
           return true;
