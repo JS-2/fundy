@@ -1,5 +1,7 @@
 buildscript {
     ext {
+        // tomcat'9.0.26' 은 class path 에서 파일을 읽어들이지 못함 ex) letsencrypt.jks
+        ext['tomcat.version'] = '9.0.27' //9.0.27+
         springBootVersion = '2.1.9.RELEASE'
     }
     repositories {

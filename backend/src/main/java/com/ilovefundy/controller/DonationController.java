@@ -3,6 +3,7 @@ package com.ilovefundy.controller;
 import com.ilovefundy.dto.donation.DonationPlaceListResponse;
 import com.ilovefundy.dto.idol.IdolDonationDetailResponse;
 import com.ilovefundy.dto.idol.IdolDonationListResponse;
+import com.ilovefundy.dto.idol.IdolDonationRankingMonthlyResponse;
 import com.ilovefundy.dto.idol.IdolDonationRankingResponse;
 import com.ilovefundy.service.DonationService;
 import io.swagger.annotations.ApiOperation;
@@ -67,5 +68,16 @@ public class DonationController {
     public ResponseEntity<Object> idolDonationRankingList() {
         List<IdolDonationRankingResponse> idolDonationRankingList = donationService.getIdolDonationRankingList();
         return new ResponseEntity<>(idolDonationRankingList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "아이돌 기부 순위 월별 차트",
+            notes = "아이돌을 기부금액으로 순위를 매겨. Top5 반환. 월별 기부금액 차트 데이터 반환")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "아이돌 기부 순위 월별 차트. OK !!", response = IdolDonationRankingResponse.class)
+    })
+    @GetMapping("/donation/idol/ranking/monthly-chart")
+    public ResponseEntity<Object> idolDonationRankingMonthlyChart() {
+        List<IdolDonationRankingMonthlyResponse> responseList = donationService.getIdolDonationRankingMonthlyList();
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 }
