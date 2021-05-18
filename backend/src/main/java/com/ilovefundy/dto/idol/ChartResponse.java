@@ -9,9 +9,9 @@ public class ChartResponse {
     // 날짜
     private String x;
     // 기부 금액
-    private String y;
+    private Long y;
 
-    public ChartResponse(String x, String y) {
+    public ChartResponse(String x, Long y) {
         this.x = x;
         this.y = y;
     }

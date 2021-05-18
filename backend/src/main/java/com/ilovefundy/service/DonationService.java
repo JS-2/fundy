@@ -114,14 +114,14 @@ public class DonationService {
                 List<IChartResponse> daoResponse = donationDao.getDonationMonthly(idol.getIdolId(), ym);
                 // 해당 월에 아이돌의 기부내역이 없는 경우
                 if(daoResponse == null) {
-                    tmpChartResponse.add(new ChartResponse(ym, "0"));
+                    tmpChartResponse.add(new ChartResponse(ym, (long) 0));
                     continue;
                 }
                 long sum = 0;
                 for(IChartResponse cr : daoResponse) {
                     sum += cr.getY();
                 }
-                ChartResponse resp = new ChartResponse(ym, String.format("%,d", sum));
+                ChartResponse resp = new ChartResponse(ym, sum);
                 tmpChartResponse.add(resp);
             }
             tmpResponse.setData(tmpChartResponse);
