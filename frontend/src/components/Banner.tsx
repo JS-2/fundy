@@ -17,7 +17,7 @@ import banner1 from "../assets/img/bannerf.png";
 import banner2 from "../assets/img/BannerY.png";
 import banner3 from "../assets/img/bannerN.png";
 import banner4 from "../assets/img/bannerB.png";
-import banner5 from "../assets/img/banner5.png";
+
 import banner23 from "../assets/img/banner6.jpg";
 import banner6 from "../assets/img/bannerE.png";
 import { CenterFocusStrong } from "@material-ui/icons";
@@ -74,11 +74,12 @@ const Banner = () => {
       >
         <SwiperSlide>
           <div
-            className="col-md-12 banner" 
+            className="banner" 
             id="banner"
             style={{
               borderRadius: "5px",
-              height: "400px",
+              width: "100%",
+              height: "500px",
               padding: 0,
               
             }}
@@ -117,7 +118,7 @@ const Banner = () => {
             id="banner"
             style={{
               borderRadius: "5px",
-              height: "400px",
+              width: "100%",
               padding: 0,
             }}
           >
@@ -139,7 +140,7 @@ const Banner = () => {
               // backgroundColor: '#44848c',
               borderRadius: "5px",
               padding: 0,
-              height: "400px",
+              width: "100%",
 
             }}
           >
@@ -161,7 +162,7 @@ const Banner = () => {
               // backgroundColor: '#44848c',
               borderRadius: "5px",
               padding: 0,
-              height: "400px",
+              width: "100%",
               overflow: "hidden",
             }}
           >
@@ -175,28 +176,7 @@ const Banner = () => {
             ></img>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div
-            className="banner"
-            id="banner"
-            style={{
-              //backgroundColor: '#44848c',
-              borderRadius: "5px",
-              height: "400px",
-              padding: 0,
-              overflow: "hidden",
-            }}
-          >
-            <img
-              className="bannerImg"
-              src={banner5}
-              style={{
-         
-                alignItems: "center",
-              }}
-            ></img>
-          </div>
-        </SwiperSlide>
+       
 
         <SwiperSlide>
           <div
@@ -205,7 +185,7 @@ const Banner = () => {
             style={{
               //backgroundColor: '#44848c',
               borderRadius: "5px",
-              height: "400px",
+              width: "100%",
               padding: 0,
               overflow: "hidden",
             }}
@@ -227,7 +207,7 @@ const Banner = () => {
             style={{
               //backgroundColor: '#44848c',
               borderRadius: "5px",
-              height: "400px",
+              width: "100%",
               padding: 0,
               overflow: "hidden",
             }}
