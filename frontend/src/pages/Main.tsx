@@ -91,6 +91,7 @@ const Main = () => {
       <div id="bannerArea">
         <Banner></Banner>
       </div>
+      <div className="col-md-12">
       <div className="row">
         <div className="col-md-1"></div>
 
@@ -149,23 +150,22 @@ const Main = () => {
                 더보기
               </Link>
             </Box>
-            <Grid
-              container
-              spacing={3}
-              style={{ border: 'lightgrey 1px solid', padding: '10px' }}
+            <div
+             
+              style={{ padding: '0px' }}
             >
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
                   <div
-                    className="col-md-12 fundDiv"
-                    style={{ height: '80px', marginBottom: '4px' }}
+                    className="fundDiv"
+                    style={{ height: '130px', marginBottom: '10px' }}
                     key={funding.fundingId}
                   >
                     <FundItem funding={funding} rank={i}></FundItem>
                   </div>
                 );
               })}
-            </Grid>
+            </div>
           </div>
         </div>
       </div>
@@ -203,6 +203,7 @@ const Main = () => {
       <div data-aos="zoom-in-up">
         {' '}
         <p>안녕안녕</p>
+      </div>
       </div>
     </div>
   );

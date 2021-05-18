@@ -77,6 +77,7 @@ const FundCard = (props: Props) => {
   };
 
   return (
+    <div className="col-md-12">
     <Card
       className="cardClass"
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
@@ -90,6 +91,8 @@ const FundCard = (props: Props) => {
           component="img"
           alt="펀딩 카드 이미지"
           height="250"
+  
+          
           image={fundingInfo?.fundingThumbnail}
           title="Card Image"
         />
@@ -129,6 +132,7 @@ const FundCard = (props: Props) => {
         </CardContent>
       </CardActionArea>
     </Card>
+    </div>
   );
 };
 

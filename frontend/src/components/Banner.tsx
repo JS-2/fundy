@@ -65,9 +65,9 @@ const Banner = () => {
   }, [open]);
 
   return (
-    <div className="bannerArea">
+    <div className="col-md-12 bannerArea" style={{overflowX:'hidden', padding:'0px'}}>
       <Swiper
-        className="bannerBody"
+        className="col-md-12 col-sm-12 bannerBody"
         spaceBetween={10}
         slidesPerView={1}
         onSlideChange={() => console.log('slide change')}
@@ -79,14 +79,14 @@ const Banner = () => {
           delay: 3000,
           disableOnInteraction: false,
         }}
+        style={{height:'auto'}}
       >
         <SwiperSlide>
           <div
-            className="banner"
+            className="col-md-12 banner"
             id="banner"
             style={{
               borderRadius: '5px',
-              height: '400px',
               padding: 0,
             }}
             onClick={handleClickOpen('body')}
@@ -96,6 +96,7 @@ const Banner = () => {
               className="bannerImg"
               style={{
                 alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>
@@ -120,7 +121,7 @@ const Banner = () => {
             id="banner"
             style={{
               borderRadius: '5px',
-              height: '400px',
+              height:'auto',
               padding: 0,
             }}
           >
@@ -129,6 +130,7 @@ const Banner = () => {
               src={banner2}
               style={{
                 alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>
@@ -141,7 +143,7 @@ const Banner = () => {
               // backgroundColor: '#44848c',
               borderRadius: '5px',
               padding: 0,
-              height: '400px',
+              height: 'auto',
             }}
           >
             <img
@@ -149,6 +151,7 @@ const Banner = () => {
               src={banner4}
               style={{
                 alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>
@@ -161,7 +164,7 @@ const Banner = () => {
               // backgroundColor: '#44848c',
               borderRadius: '5px',
               padding: 0,
-              height: '400px',
+              height: 'auto',
               overflow: 'hidden',
             }}
           >
@@ -170,6 +173,7 @@ const Banner = () => {
               src={banner3}
               style={{
                 alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>
@@ -181,7 +185,7 @@ const Banner = () => {
             style={{
               //backgroundColor: '#44848c',
               borderRadius: '5px',
-              height: '400px',
+              height: 'auto',
               padding: 0,
               overflow: 'hidden',
             }}
@@ -190,7 +194,8 @@ const Banner = () => {
               className="bannerImg"
               src={banner1}
               style={{
-                alignItems: 'center',
+                alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>
@@ -203,7 +208,7 @@ const Banner = () => {
             style={{
               //backgroundColor: '#44848c',
               borderRadius: '5px',
-              height: '400px',
+              height: 'auto',
               padding: 0,
               overflow: 'hidden',
             }}
@@ -212,7 +217,8 @@ const Banner = () => {
               className="bannerImg"
               src={banner2}
               style={{
-                alignItems: 'center',
+                alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>
@@ -224,7 +230,7 @@ const Banner = () => {
             style={{
               //backgroundColor: '#44848c',
               borderRadius: '5px',
-              height: '400px',
+              height: 'auto',
               padding: 0,
               overflow: 'hidden',
             }}
@@ -233,7 +239,8 @@ const Banner = () => {
               className="bannerImg"
               src={banner6}
               style={{
-                alignItems: 'center',
+                alignContent: 'center',
+                width: '100%',
               }}
             ></img>
           </div>

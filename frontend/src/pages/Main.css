@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+#bannerArea{
+
+=======
 #bannerArea {
   margin-bottom: 50px;
+>>>>>>> 12806131a004d7e15af542a540e30f8d64315a5e
 }
 
 #idolArea {
@@ -36,7 +41,11 @@
   margin-bottom: 100px;
 }
 
-.headText {
-  font-size: 24px !important;
-  font-weight: bold;
+.headText{
+    font-size: 24px !important;
+    font-weight: bold;
 }
+
+html {
+    scroll-behavior: smooth;
+  }
