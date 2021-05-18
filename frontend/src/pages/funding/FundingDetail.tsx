@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import React, { useEffect, useState } from "react";
+import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
+import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 
 import {
   Badge,
@@ -15,30 +15,30 @@ import {
   Grid,
   Modal,
   SvgIcon,
-} from '@material-ui/core';
-import './FundingDetail.css';
-import { getFundDetail, getFundNotice } from '../../api/fund';
-import FullWidthTabs from '../../components/fundComponent/FullWidthTabs';
-import { FundForm, FundingNotice, IFunding, User } from '../../common/types';
-import { RouteComponentProps, useHistory, useParams } from 'react-router-dom';
-import { Height, PinDropSharp } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
-import { rootState } from '../../reducers';
-import { getFavoriteFunding, setFavoriteFunding } from '../../api/user';
-import FaceIcon from '@material-ui/icons/Face';
-import DoneIcon from '@material-ui/icons/Done';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import AssignmentInd from '@material-ui/icons/AssignmentInd';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
-import kHeartIcon from '../../assets/img/hand-gesture.svg';
-import GroupIcon from '@material-ui/icons/Group';
-import TodayIcon from '@material-ui/icons/Today';
+} from "@material-ui/core";
+import "./FundingDetail.css";
+import { getFundDetail, getFundNotice } from "../../api/fund";
+import FullWidthTabs from "../../components/fundComponent/FullWidthTabs";
+import { FundForm, FundingNotice, IFunding, User } from "../../common/types";
+import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
+import { Height, PinDropSharp } from "@material-ui/icons";
+import { useSelector } from "react-redux";
+import { rootState } from "../../reducers";
+import { getFavoriteFunding, setFavoriteFunding } from "../../api/user";
+import FaceIcon from "@material-ui/icons/Face";
+import DoneIcon from "@material-ui/icons/Done";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import AssignmentInd from "@material-ui/icons/AssignmentInd";
+import CreditCardIcon from "@material-ui/icons/CreditCard";
+import kHeartIcon from "../../assets/img/hand-gesture.svg";
+import GroupIcon from "@material-ui/icons/Group";
+import TodayIcon from "@material-ui/icons/Today";
 import {
   approveFunding,
   completeFunding,
   declineFunding,
-} from '../../api/funding';
+} from "../../api/funding";
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -48,12 +48,12 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     colorPrimary: {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+        theme.palette.grey[theme.palette.type === "light" ? 200 : 700],
     },
     bar: {
       borderRadius: 5,
       background:
-        'linear-gradient(90deg, rgba(252,86,111,0.6225840678068102) 0%, rgba(252,86,111,1) 100%)',
+        "linear-gradient(90deg, rgba(252,86,111,0.6225840678068102) 0%, rgba(252,86,111,1) 100%)",
     },
   })
 )(LinearProgress);
@@ -96,7 +96,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   //.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   const history = useHistory();
   const onClickPayment = () => {
-    const url = '/funding/detail/' + Fund?.fundingId + '/payment';
+    const url = "/funding/detail/" + Fund?.fundingId + "/payment";
     history.push({
       pathname: url,
     });
@@ -121,8 +121,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   const handleApproveBtn = () => {
-    let isGood = window.confirm('good 펀딩으로 지정하시겠습니까?');
-    approveFunding(Fund!.fundingId, isGood ? 'Y' : 'N', token).then(() => {
+    let isGood = window.confirm("good 펀딩으로 지정하시겠습니까?");
+    approveFunding(Fund!.fundingId, isGood ? "Y" : "N", token).then(() => {
       window.location.reload();
     });
   };
@@ -141,10 +141,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [notices, setNotices] = useState<FundingNotice[]>([]);
 
   useEffect(() => {
-    console.log('fundDetailPage');
+    console.log("fundDetailPage");
 
     getFundDetail(Number(match.params.num)).then((response) => {
-      console.log('>>>>' + response.data);
+      console.log(">>>>" + response.data);
       setFund(response.data);
     });
 
@@ -156,7 +156,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   }, [params]);
 
   useEffect(() => {
-    console.log('fundNotices Request');
+    console.log("fundNotices Request");
     getFundNotice(Number(match.params.num)).then((response) => {
       console.log(response.data);
       setNotices(response.data);
@@ -166,21 +166,21 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   console.log({ Fund });
   const loginRedirect = () => {
     history.push({
-      pathname: '/login',
+      pathname: "/login",
       state: {},
     });
   };
 
   const goToIdol = () => {
-    const idolUrl = '/idol/' + Fund?.idolId;
+    const idolUrl = "/idol/" + Fund?.idolId;
     history.push({
       pathname: idolUrl,
       state: {},
     });
   };
 
-  const startdate = Fund?.fundingStartTime?.replaceAll('-', '.').split('T', 1);
-  const enddate = Fund?.fundingEndTime?.replaceAll('-', '.').split('T', 1);
+  const startdate = Fund?.fundingStartTime?.replaceAll("-", ".").split("T", 1);
+  const enddate = Fund?.fundingEndTime?.replaceAll("-", ".").split("T", 1);
 
   const disableBtn = (text: string) => {
     return (
@@ -204,8 +204,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     func2: () => void,
     icon1: any,
     icon2: any,
-    color1: 'inherit' | 'default' | 'primary' | 'secondary' | undefined,
-    color2: 'inherit' | 'default' | 'primary' | 'secondary' | undefined
+    color1: "inherit" | "default" | "primary" | "secondary" | undefined,
+    color2: "inherit" | "default" | "primary" | "secondary" | undefined
   ) => {
     return (
       <>
@@ -251,13 +251,13 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   const buttonRender = () => {
-    if (Fund?.fundingConfirm === 'ApproveIng') {
-      if (user.role === 'ADMIN') {
-        return disableBtn('진행중인 펀딩');
+    if (Fund?.fundingConfirm === "ApproveIng") {
+      if (user.role === "ADMIN") {
+        return disableBtn("진행중인 펀딩");
       } else {
         return doubleBtn(
-          fundingFavorite ? '관심 해제' : '관심 등록',
-          '펀딩하기',
+          fundingFavorite ? "관심 해제" : "관심 등록",
+          "펀딩하기",
           user === null ? loginRedirect : handleFavorite,
           user === null ? loginRedirect : onClickPayment,
           fundingFavorite ? (
@@ -266,50 +266,50 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             <FavoriteBorderIcon color="secondary" />
           ),
           <CreditCardIcon />,
-          'default',
-          'secondary'
+          "default",
+          "secondary"
         );
       }
-    } else if (Fund?.fundingConfirm === 'ApprovePre') {
-      return disableBtn('펀딩 시작전입니다.');
-    } else if (Fund?.fundingConfirm === 'ApprovePost') {
-      if (user.role === 'ADMIN') {
+    } else if (Fund?.fundingConfirm === "ApprovePre") {
+      return disableBtn("펀딩 시작전입니다.");
+    } else if (Fund?.fundingConfirm === "ApprovePost") {
+      if (user.role === "ADMIN") {
         return singleBtn(
-          '펀딩 완료',
+          "펀딩 완료",
           handleCompleteBtn,
           <SentimentVerySatisfiedIcon />
         );
       } else {
-        return disableBtn('기간이 끝난 펀딩입니다.');
+        return disableBtn("기간이 끝난 펀딩입니다.");
       }
-    } else if (Fund?.fundingConfirm === 'Wait') {
-      if (user.role === 'ADMIN') {
+    } else if (Fund?.fundingConfirm === "Wait") {
+      if (user.role === "ADMIN") {
         return doubleBtn(
-          '승인',
-          '거절',
+          "승인",
+          "거절",
           handleApproveBtn,
           handleDeclineBtn,
           <SentimentVerySatisfiedIcon />,
           <SentimentVeryDissatisfiedIcon />,
-          fundingFavorite ? 'secondary' : 'default',
-          'secondary'
+          fundingFavorite ? "secondary" : "default",
+          "secondary"
         );
       } else {
-        return disableBtn('승인 대기중');
+        return disableBtn("승인 대기중");
       }
-    } else if (Fund?.fundingConfirm === 'Decline') {
-      return disableBtn('승인 거절한 펀딩입니다.');
+    } else if (Fund?.fundingConfirm === "Decline") {
+      return disableBtn("승인 거절한 펀딩입니다.");
     } else {
-      return disableBtn('완료 처리된 펀딩입니다.');
+      return disableBtn("완료 처리된 펀딩입니다.");
     }
 
-    if (Fund?.fundingConfirm === 'Success' || Fund?.fundingConfirm === 'Fail') {
-      return disableBtn('기간이 끝난 펀딩입니다.');
-    } else if (Fund?.fundingConfirm === 'Decline') {
-      return disableBtn('거절된 펀딩');
-    } else if (Fund?.fundingConfirm === 'Wait') {
-    } else if (Fund?.fundingConfirm === 'Approve') {
-      if (user.role === 'ADMIN') {
+    if (Fund?.fundingConfirm === "Success" || Fund?.fundingConfirm === "Fail") {
+      return disableBtn("기간이 끝난 펀딩입니다.");
+    } else if (Fund?.fundingConfirm === "Decline") {
+      return disableBtn("거절된 펀딩");
+    } else if (Fund?.fundingConfirm === "Wait") {
+    } else if (Fund?.fundingConfirm === "Approve") {
+      if (user.role === "ADMIN") {
         // if (isTimeOver) {
         //   return singleBtn(
         //     '펀딩 완료',
@@ -321,8 +321,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         // }
       } else {
         return doubleBtn(
-          fundingFavorite ? '관심 해제' : '관심 등록',
-          '펀딩하기',
+          fundingFavorite ? "관심 해제" : "관심 등록",
+          "펀딩하기",
           user === null ? loginRedirect : handleFavorite,
           user === null ? loginRedirect : onClickPayment,
           fundingFavorite ? (
@@ -331,8 +331,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             <FavoriteBorderIcon color="secondary" />
           ),
           <CreditCardIcon />,
-          'default',
-          'secondary'
+          "default",
+          "secondary"
         );
       }
     }
@@ -385,15 +385,16 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                 </div>
                 <div className="col-md-4 fundingInfo">
                   <div className="barInfo d-flex flex-wrap justify-content-end align-items-end">
-                    <span className="fundAmount">
-                      ￦
-                      {Fund?.fundingAmount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    </span>
-                    <span className="fundRate">
-                      {Fund?.fundingAchievementRate}%
-                    </span>
+                    <Box my={1} display="flex" justifyContent="space-between">
+                      <Box className="fundAmount">
+                        {Fund?.fundingAmount
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </Box>
+                      <Box className="fundRate">
+                        {Fund?.fundingAchievementRate}%
+                      </Box>
+                    </Box>
                   </div>
                   <div>
                     <BorderLinearProgress
@@ -484,7 +485,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         variant="outlined"
                         onClick={goToIdol}
                       >
-                        <img style={{ height: '28px' }} src={kHeartIcon} /> 펀딩
+                        <img style={{ height: "28px" }} src={kHeartIcon} /> 펀딩
                         아이돌: {Fund?.idolName}
                       </Button>
                       <Button
@@ -492,10 +493,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         variant="outlined"
                         className="boxbtn nbg_bold col-md-12 col-sm-12"
                       >
-                        목표 금액:{' '}
+                        목표 금액:{" "}
                         {Fund?.fundingGoalAmount
                           .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                         원
                       </Button>
 
@@ -521,10 +522,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       variant="outlined"
                     />
                     <h5>
-                      목표 금액:{' '}
+                      목표 금액:{" "}
                       {Fund?.fundingGoalAmount
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       원
                     </h5>
                   </div>

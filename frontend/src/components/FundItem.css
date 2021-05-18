@@ -4,10 +4,26 @@
   font-size: 0.9em;
 }
 
+.fundDiv{
+  padding-left:0px;
+}
 .WithStyles\(ForwardRef\(LinearProgress\)\)-bar-29 {
   background-color: #f74a64 !important;
 }
 
+.fundNameTxt{
+  margin-top:0px;
+}
+.rankArea{
+  background-color: #f74a64;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  color: white;
+  height: 100%;
+}
+.fundItem{
+
+}
 .ddayBadge {
   height: 28px !important;
   background-color: #f74a64 !important;

@@ -74,22 +74,48 @@ const FundItem = (props: Props) => {
 
   return (
     
-    <div className="fundItem" style={{height:"100px"}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
-        <div className="col-md-1">  <span className="ranking" style={{fontWeight:"bold"}}>{props?.rank+1}</span></div>
-         <div className="col-md-6 itemText" style={{ padding: "5px", height:"100px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+    <div className="fundItem" style={{height:"80px", marginBottom:"5px"}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+        <div className="col-md-1 rankArea">  <span className="ranking" style={{fontWeight:"bold"}}>{props?.rank+1}</span></div>
+        <div className="col-md-5" style={{height:"100px",margin:"0px", padding:"0px", overflow:"hidden"}}> 
+
+    
+
+<Card
+  className="itemClass"
+  style={{
+ 
+    marginLeft:"0px",
+    
+    height: "80px",
+    borderRadius:"0px",
+  }}
+  elevation={0}
+>
+
+      <CardMedia
+        className="cardImgA"
+        component="img"
+        alt="펀딩 카드 이미지"
+        height="100%"
+        image={fundingInfo?.fundingThumbnail}
+        title="Card Image"
+      />
+
+</Card>
+</div>
+         <div className="col-md-6 itemText" style={{ padding: "10px", height:"80px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
       
-        <Typography
-          gutterBottom
+        <h5
+            className="fundNameTxt"
           style={{
             fontWeight: "bold",
             whiteSpace: "nowrap",
-            width: "inherit",
             overflow: "hidden",
             textOverflow: "ellipsis",
           }}
         >
           {fundingInfo?.fundingName}
-        </Typography>
+        </h5>
 
         <Typography variant="body2" color="textSecondary" component="p">
         {dday}
@@ -100,30 +126,7 @@ const FundItem = (props: Props) => {
         </Box>
     
       </div>
-      <div className="col-md-5" style={{height:"100px", padding:"0px", overflow:"hidden"}}> 
-
-    
-
-      <Card
-        className="itemClass"
-        style={{
-          padding: "0",
-          height: "100px",
-        }}
-        elevation={0}
-      >
-    
-            <CardMedia
-              className="cardImgA"
-              component="img"
-              alt="펀딩 카드 이미지"
-              height="100%"
-              image={fundingInfo?.fundingThumbnail}
-              title="Card Image"
-            />
  
-      </Card>
-      </div>
       
 
      

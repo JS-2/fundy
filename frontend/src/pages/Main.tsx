@@ -71,6 +71,7 @@ const Main = () => {
       per_page: 1000,
       status: 2,
     }).then((resp) => {
+      console.log(resp.data);
       let data = resp.data;
       data = data.sort((a: IFunding, b: IFunding) => {
         const aAmount = Number(a.fundingAmount.replace(',', ''));
@@ -80,6 +81,7 @@ const Main = () => {
         } else {
           return bAmount - aAmount;
         }
+        
       });
       setHotFunding(data.slice(0, 6));
     });
@@ -95,7 +97,7 @@ const Main = () => {
 
         <div className="area col-md-10" id="">
           <div className="col-md-8 divA" id="topFundArea">
-            <span className="headText">인기 펀딩</span>
+            <span className="headText">펀딩</span>
             <Box mt={1} display="flex" justifyContent="flex-end" style={{marginBottom:"8px"}}>
               <Link className="nbg" to="/funding">
                 더보기
@@ -105,7 +107,7 @@ const Main = () => {
             <Grid container spacing={3}>
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
-                  <Grid item xs={6} key={funding.fundingId}>
+                  <Grid item xs={6} key={funding.fundingId} style={{padding:"20px"}}>
                     <FundCard funding={funding}></FundCard>
                   </Grid>
                 );
@@ -123,7 +125,7 @@ const Main = () => {
           <Grid container spacing={3} style={{border:"lightgrey 1px solid", padding:"10px"}}>
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
-                  <div className="col-md-12" key={funding.fundingId}>
+                  <div className="col-md-12 fundDiv" style={{height:"80px", marginBottom:"4px"}} key={funding.fundingId}>
                     <FundItem funding={funding} rank={i}></FundItem>
                 
                   </div>
