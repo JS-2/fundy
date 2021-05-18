@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -141,6 +142,7 @@ public class AdminService {
             donation.setIdol(idol);
             donation.setDonationPlace(donationPlace);
             donation.setIdolDonationAmount(fundingAmount);
+            donation.setDonationDate(LocalDate.now());
             donationDao.save(donation);
         }
         fundingDao.save(fundingProject);
