@@ -87,7 +87,7 @@ const Navbar = () => {
           <Box display="flex">
             {user === null ? (
               <>
-                <Box className="font-smooth" mx={2}>
+                <Box className="font-smooth" fontSize="1.1em" mx={2}>
                   <Link
                     to="/login"
                     className="nbg user"
@@ -96,7 +96,7 @@ const Navbar = () => {
                     로그인
                   </Link>
                 </Box>
-                <Box className="font-smooth" mx={2}>
+                <Box className="font-smooth" fontSize="1.1em" mx={2}>
                   <Link
                     to="/regist"
                     className="nbg user"
