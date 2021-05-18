@@ -13,12 +13,13 @@ import SwiperCore, {
 import "./Banner.css";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
-import banner1 from "../assets/img/Banner.png";
-import banner2 from "../assets/img/cBanner.jpg";
-import banner3 from "../assets/img/nBanner.jpg";
-import banner4 from "../assets/img/banner4.png";
+import banner1 from "../assets/img/bannerf.png";
+import banner2 from "../assets/img/BannerY.png";
+import banner3 from "../assets/img/bannerN.png";
+import banner4 from "../assets/img/bannerB.png";
 import banner5 from "../assets/img/banner5.png";
-import banner6 from "../assets/img/banner6.jpg";
+import banner23 from "../assets/img/banner6.jpg";
+import banner6 from "../assets/img/bannerE.png";
 import { CenterFocusStrong } from "@material-ui/icons";
 import fundyTuto from "../assets/img/fundyTuto.png";
 
@@ -27,6 +28,8 @@ const swiperParams: SwiperOptions = {
   slidesPerView: 3,
   spaceBetween: 50,
 };
+
+
 
 const Banner = () => {
   const [open, setOpen] = React.useState(false);
@@ -54,7 +57,7 @@ const Banner = () => {
 
   return (
     <div className="bannerArea">
-      <h3 className="headText">곧 다가오는 아이돌의 생일을 축하해주세요</h3>
+
       <Swiper
         className="bannerBody"
         spaceBetween={10}
@@ -63,6 +66,7 @@ const Banner = () => {
         onSwiper={(swiper) => console.log(swiper)}
         pagination={{ clickable: true }}
         loop
+        navigation={true}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,

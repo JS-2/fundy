@@ -47,6 +47,10 @@ body {
   font-size: 4em;
 }
 
+.mainArea{
+  padding: 0px 0px 0px 0px !important;
+}
+
 .nbg {
   font-family: NanumBarunGothic !important;
   font-size: 1.6rem;

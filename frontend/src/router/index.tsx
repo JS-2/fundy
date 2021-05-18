@@ -33,7 +33,7 @@ const index = () => {
       <Navbar />
       <ScrollToTop />
       <Box display="flex" justifyContent="center">
-        <div className="col-md-12">
+        <div className="mainArea col-md-12">
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/regist" component={Regist} exact />
