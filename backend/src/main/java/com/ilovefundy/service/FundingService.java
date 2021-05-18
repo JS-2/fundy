@@ -4,12 +4,9 @@ import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.IdolDao;
 import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
-import com.ilovefundy.dto.funding.FundingPayRequest;
+import com.ilovefundy.dto.funding.*;
 import com.ilovefundy.dto.user.PayInfoResponse;
 import com.ilovefundy.entity.funding.FundingProject;
-import com.ilovefundy.dto.funding.FundingDetailResponse;
-import com.ilovefundy.dto.funding.FundingListResponse;
-import com.ilovefundy.dto.funding.FundingRequest;
 import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
@@ -22,9 +19,9 @@ import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +30,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -123,6 +119,20 @@ public class FundingService {
         }
         return fundingListResponse;
     }
+    public List<FundingRankListResponse> getFundingListRank(int page, int per_page) {
+        List<FundingRankListResponse> fundingRankListResponse = new LinkedList<>();
+        FundingProject.FundingConfirm isStatus = FundingProject.FundingConfirm.ApproveIng; // 진행중인 펀딩에서 참여자순
+        Page<FundingProject> pages = fundingDao.findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime.now(), LocalDateTime.now(), isStatus, PageRequest.of(page, per_page));
+        List<FundingProject> fundingProjectList = pages.getContent();
+        for (int i=0; i<fundingProjectList.size(); i++){
+            List<PayInfo> payInfoList = payDao.findByFunding(fundingProjectList.get(i));
+            List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
+            int participants = payParticipantsList.size();
+            fundingRankListResponse.add(SetterUtils.setFundingRankListResponse(fundingProjectList.get(i), participants));
+        }
+        Collections.sort(fundingRankListResponse, (a, b) -> b.getFundingParticipants() - a.getFundingParticipants());
+        return fundingRankListResponse;
+    }
 
     public FundingDetailResponse getFunding(int id) {
         FundingProject fundingProject = fundingDao.findByFundingId(id);
@@ -130,7 +140,6 @@ public class FundingService {
         User user = userDao.findByUserId(fundingProject.getUserId());
         List<PayInfo> payInfoList = payDao.findByFunding(fundingProject);
         List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
-
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setIdolId(fundingProject.getIdolId());
