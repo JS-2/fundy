@@ -90,10 +90,9 @@ const FundingMap = (props: Props) => {
   return (
     <>
       <Box
-        mx={1}
         mt={10}
-        mb={5}
-        className="nbg_bold"
+        mb={3}
+        className="nbg_bold font-smooth"
         style={{ fontSize: '2em' }}
       >
         {props.idolInfo?.idolName}의 기부지도

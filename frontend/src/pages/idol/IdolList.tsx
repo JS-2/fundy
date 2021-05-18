@@ -16,7 +16,7 @@ const IdolList = () => {
 
   useEffect(() => {
     getIdolRanking().then((resp) => {
-      console.log(resp.data);
+      console.log('차트데이터>>>>>>>>', resp.data);
       setChartData(
         resp.data.map((idol: IRankingData) => {
           const obj: IChartData = {

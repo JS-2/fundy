@@ -14,7 +14,12 @@ const Chart = (props: Props) => {
   }, [props]);
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '2em' }}>
+      <Box
+        mx={1}
+        my={2}
+        className="nbg_bold font-smooth"
+        style={{ fontSize: '2em' }}
+      >
         {props.title}
       </Box>
       <Box display="flex" justifyContent="center">
