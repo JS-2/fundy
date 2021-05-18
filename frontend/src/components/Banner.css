@@ -31,7 +31,8 @@
 }
 
 .swiper-container{
-
+  height: 300px;
+  overflow: hidden;
 }
 
 /*
@@ -49,18 +50,14 @@ overflow: hidden;
 */
 
 .banner{
-  overflow:hidden;
+
   background-size: cover;
   background-position: center;
-  align-items: center;
+  
   text-align: center;
 
 }
 
 .bannerImg{
-  position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 100%;
+  width:inherit;
 }

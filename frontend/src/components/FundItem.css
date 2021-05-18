@@ -5,7 +5,12 @@
 }
 
 .fundDiv{
-  padding-left:0px;
+  padding:0px;
+}
+
+.fundDiv:hover{
+  -webkit-filter:brightness(0.95);
+  cursor: pointer;
 }
 .WithStyles\(ForwardRef\(LinearProgress\)\)-bar-29 {
   background-color: #f74a64 !important;
@@ -13,13 +18,16 @@
 
 .fundNameTxt{
   margin-top:0px;
+  
 }
 .rankArea{
-  background-color: #f74a64;
+  background-color: #ffffff;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
-  color: white;
-  height: 100%;
+  color: rgb(44, 44, 44);
+  font-size: 16px !important;
+  height: 130px;
+  padding-left: 10px;
 }
 .fundItem{
 
@@ -46,6 +54,10 @@
     transform: scale(1.1, 1.1);
     overflow: hidden;
   
+}
+
+.itemText{
+  background-color: white;
 }
 
 

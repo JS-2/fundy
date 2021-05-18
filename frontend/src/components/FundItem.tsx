@@ -74,19 +74,16 @@ const FundItem = (props: Props) => {
 
   return (
     
-    <div className="fundItem" style={{height:"80px", marginBottom:"5px"}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
-        <div className="col-md-1 rankArea">  <span className="ranking" style={{fontWeight:"bold"}}>{props?.rank+1}</span></div>
-        <div className="col-md-5" style={{height:"100px",margin:"0px", padding:"0px", overflow:"hidden"}}> 
-
-    
-
+    <div className="fundItem" style={{height:"130px", marginBottom:"5px"}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+        <div className="col-md-1 col-sm-1 rankArea">  <span className="ranking" style={{fontWeight:"bold"}}>{props?.rank+1}.</span></div>
+        <div className="col-md-4 col-sm-3" style={{height:"130px",margin:"0px", padding:"0px", overflow:"hidden"}}> 
 <Card
   className="itemClass"
   style={{
  
     marginLeft:"0px",
     
-    height: "80px",
+    height: "130px",
     borderRadius:"0px",
   }}
   elevation={0}
@@ -103,7 +100,7 @@ const FundItem = (props: Props) => {
 
 </Card>
 </div>
-         <div className="col-md-6 itemText" style={{ padding: "10px", height:"80px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+         <div className="col-md-7 col-sm-8 itemText" style={{ padding: "10px", height:"130px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
       
         <h5
             className="fundNameTxt"
@@ -120,9 +117,9 @@ const FundItem = (props: Props) => {
         <Typography variant="body2" color="textSecondary" component="p">
         {dday}
         </Typography>
-        <Box my={1} display="flex" justifyContent="space-between">
-          <Box>{fundingInfo?.fundingAmount}</Box>
-          <Box>{fundingInfo?.fundingAchievementRate}%</Box>
+        <Box my={1} display="flex" justifyContent="space-between " alignItems="flex-end">
+          <div>{fundingInfo?.fundingAmount}</div>
+          <div>{fundingInfo?.fundingAchievementRate}%</div>
         </Box>
     
       </div>

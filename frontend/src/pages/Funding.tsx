@@ -26,6 +26,7 @@ import { getFundingList } from '../api/funding';
 import { IFunding, FundingStatus, User } from '../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../reducers';
+import "./Funding.css";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
@@ -138,8 +139,8 @@ const Funding = () => {
         <Banner></Banner>
       </div>
       <div className="row">
-        <div className="col-md-1 col-sm-2"></div>
-        <div className="col-md-10 col-sm-8">
+        <div className="col-md-1 col-sm-1"></div>
+        <div className="col-md-10 col-sm-10">
           <Box
             mt={4}
             mb={3}
@@ -149,27 +150,27 @@ const Funding = () => {
             {header}
           </Box>
           <Box mb={2}>
-            <Button variant="contained" onClick={handleWaitFunding}>
+            <Button className="fundBtn" variant="contained" onClick={handleWaitFunding}>
               대기중인 펀딩
             </Button>
-            <Button variant="contained" onClick={handleProgressFunding}>
+            <Button className="fundBtn" variant="contained" onClick={handleProgressFunding}>
               진행중인 펀딩
             </Button>
-            <Button variant="contained" onClick={handleEndFunding}>
+            <Button className="fundBtn" variant="contained" onClick={handleEndFunding}>
               완료된 펀딩
             </Button>
             {user !== null && user.role == 'ADMIN' ? (
               <>
-                <Button variant="contained" onClick={handleNeedAcceptFunding}>
+                <Button className="fundBtn" variant="contained" onClick={handleNeedAcceptFunding}>
                   승인 필요 펀딩
                 </Button>
-                <Button variant="contained" onClick={handleDeclineFunding}>
+                <Button className="fundBtn" variant="contained" onClick={handleDeclineFunding}>
                   거절된 펀딩
                 </Button>
-                <Button variant="contained" onClick={handleSuccessFunding}>
+                <Button className="fundBtn" variant="contained" onClick={handleSuccessFunding}>
                   성공한 펀딩
                 </Button>
-                <Button variant="contained" onClick={handleFailFunding}>
+                <Button className="fundBtn" variant="contained" onClick={handleFailFunding}>
                   실패한 펀딩
                 </Button>
               </>
@@ -177,15 +178,15 @@ const Funding = () => {
               <></>
             )}
 
-            <Button variant="contained" onClick={createClick}>
+            <Button className="fundCreateBtn" variant="contained" onClick={createClick}>
               펀딩 제작하기
             </Button>
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
-              <Grid item xs={4} key={funding.fundingId}>
+              <div className="col-md-4" key={funding.fundingId}>
                 <FundCard funding={funding}></FundCard>
-              </Grid>
+              </div>
             ))}
           </Grid>
           {failFundings.length !== 0 ? (
@@ -202,9 +203,9 @@ const Funding = () => {
           )}
           {failFundings.length !== 0 ? (
             failFundings?.map((funding: IFunding, i: number) => (
-              <Grid item xs={4} key={funding.fundingId}>
+              <div className="col-lg-4" key={funding.fundingId}>
                 <FundCard funding={funding}></FundCard>
-              </Grid>
+              </div>
             ))
           ) : (
             <></>
