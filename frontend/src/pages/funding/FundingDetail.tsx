@@ -251,7 +251,9 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   };
 
   const buttonRender = () => {
-    if (Fund?.fundingConfirm === 'ApproveIng') {
+    if (user === null) {
+      return disableBtn('로그인을 해주세요.');
+    } else if (Fund?.fundingConfirm === 'ApproveIng') {
       if (user.role === 'ADMIN') {
         return disableBtn('진행중인 펀딩');
       } else {
