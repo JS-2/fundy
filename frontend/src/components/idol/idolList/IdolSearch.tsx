@@ -66,7 +66,12 @@ const IdolSearch = () => {
   return (
     <div>
       <Box mt={6} mb={6} display="flex" justifyContent="space-between">
-        <Box mx={1} className="nbg_bold" style={{ fontSize: '2em' }}>
+        <Box
+          mt={10}
+          mb={3}
+          className="nbg_bold font-smooth"
+          style={{ fontSize: '2em' }}
+        >
           아이돌 검색
         </Box>
         <Box

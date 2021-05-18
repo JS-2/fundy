@@ -1,14 +1,26 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Grid, Hidden, Modal } from "@material-ui/core";
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogProps,
+  DialogTitle,
+  Grid,
+  Hidden,
+  Modal,
+} from '@material-ui/core';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
-import "swiper/swiper.scss";
+import 'swiper/swiper.scss';
 import SwiperCore, {
   Navigation,
   Pagination,
   Autoplay,
   SwiperOptions,
-} from "swiper";
+} from 'swiper';
 
 import "./Banner.css";
 import "swiper/components/navigation/navigation.scss";
@@ -28,8 +40,6 @@ const swiperParams: SwiperOptions = {
   slidesPerView: 3,
   spaceBetween: 50,
 };
-
-
 
 const Banner = () => {
   const [open, setOpen] = React.useState(false);
@@ -54,15 +64,13 @@ const Banner = () => {
     }
   }, [open]);
 
-
   return (
     <div className="bannerArea">
-
       <Swiper
         className="bannerBody"
         spaceBetween={10}
         slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
+        onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
         pagination={{ clickable: true }}
         loop
@@ -74,14 +82,12 @@ const Banner = () => {
       >
         <SwiperSlide>
           <div
-            className="banner" 
+            className="banner"
             id="banner"
             style={{
-              borderRadius: "5px",
-              width: "100%",
-              height: "500px",
+              borderRadius: '5px',
+              height: '400px',
               padding: 0,
-              
             }}
             onClick={handleClickOpen('body')}
           >
@@ -89,36 +95,32 @@ const Banner = () => {
               src={banner1}
               className="bannerImg"
               style={{
-                alignContent: "center",
+                alignContent: 'center',
               }}
             ></img>
           </div>
         </SwiperSlide>
         <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll={scroll}
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-      >
-      
-        <DialogContent className="dialog" dividers={scroll === 'paper'}>
-          
-             <div className="modalDiv">
-             <img onClick={handleClose} width="100%" src={fundyTuto}></img>
-           </div>
-          
-        </DialogContent>
-        
-      </Dialog>
-        
+          open={open}
+          onClose={handleClose}
+          scroll={scroll}
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+        >
+          <DialogContent className="dialog" dividers={scroll === 'paper'}>
+            <div className="modalDiv">
+              <img onClick={handleClose} width="100%" src={fundyTuto}></img>
+            </div>
+          </DialogContent>
+        </Dialog>
+
         <SwiperSlide>
           <div
             className="banner"
             id="banner"
             style={{
-              borderRadius: "5px",
-              width: "100%",
+              borderRadius: '5px',
+              height: '400px',
               padding: 0,
             }}
           >
@@ -126,8 +128,7 @@ const Banner = () => {
               className="bannerImg"
               src={banner2}
               style={{
-              
-                alignContent: "center",
+                alignContent: 'center',
               }}
             ></img>
           </div>
@@ -138,18 +139,16 @@ const Banner = () => {
             id="banner"
             style={{
               // backgroundColor: '#44848c',
-              borderRadius: "5px",
+              borderRadius: '5px',
               padding: 0,
-              width: "100%",
-
+              height: '400px',
             }}
           >
             <img
               className="bannerImg"
               src={banner4}
               style={{
-              
-                alignContent: "center",
+                alignContent: 'center',
               }}
             ></img>
           </div>
@@ -160,23 +159,42 @@ const Banner = () => {
             id="banner"
             style={{
               // backgroundColor: '#44848c',
-              borderRadius: "5px",
+              borderRadius: '5px',
               padding: 0,
-              width: "100%",
-              overflow: "hidden",
+              height: '400px',
+              overflow: 'hidden',
             }}
           >
             <img
               className="bannerImg"
               src={banner3}
               style={{
-              
-                alignContent: "center",
+                alignContent: 'center',
               }}
             ></img>
           </div>
         </SwiperSlide>
-       
+        <SwiperSlide>
+          <div
+            className="banner"
+            id="banner"
+            style={{
+              //backgroundColor: '#44848c',
+              borderRadius: '5px',
+              height: '400px',
+              padding: 0,
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              className="bannerImg"
+              src={banner1}
+              style={{
+                alignItems: 'center',
+              }}
+            ></img>
+          </div>
+        </SwiperSlide>
 
         <SwiperSlide>
           <div
@@ -184,18 +202,17 @@ const Banner = () => {
             id="banner"
             style={{
               //backgroundColor: '#44848c',
-              borderRadius: "5px",
-              width: "100%",
+              borderRadius: '5px',
+              height: '400px',
               padding: 0,
-              overflow: "hidden",
+              overflow: 'hidden',
             }}
           >
             <img
               className="bannerImg"
               src={banner2}
               style={{
-            
-                alignItems: "center",
+                alignItems: 'center',
               }}
             ></img>
           </div>
@@ -206,18 +223,17 @@ const Banner = () => {
             id="banner"
             style={{
               //backgroundColor: '#44848c',
-              borderRadius: "5px",
-              width: "100%",
+              borderRadius: '5px',
+              height: '400px',
               padding: 0,
-              overflow: "hidden",
+              overflow: 'hidden',
             }}
           >
             <img
               className="bannerImg"
               src={banner6}
               style={{
-         
-                alignItems: "center",
+                alignItems: 'center',
               }}
             ></img>
           </div>

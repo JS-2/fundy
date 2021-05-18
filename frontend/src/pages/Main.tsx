@@ -81,7 +81,6 @@ const Main = () => {
         } else {
           return bAmount - aAmount;
         }
-        
       });
       setHotFunding(data.slice(0, 6));
     });
@@ -97,8 +96,20 @@ const Main = () => {
 
         <div className="area col-md-10" id="">
           <div className="col-md-8 divA" id="topFundArea">
-            <span className="headText">펀딩</span>
-            <Box mt={1} display="flex" justifyContent="flex-end" style={{marginBottom:"8px"}}>
+            <Box
+              mt={2}
+              mb={2}
+              className="nbg_bold font-smooth"
+              style={{ fontSize: '2em' }}
+            >
+              펀딩
+            </Box>
+            <Box
+              mt={1}
+              display="flex"
+              justifyContent="flex-end"
+              style={{ marginBottom: '8px' }}
+            >
               <Link className="nbg" to="/funding">
                 더보기
               </Link>
@@ -107,73 +118,93 @@ const Main = () => {
             <Grid container spacing={3}>
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
-                  <Grid item xs={6} key={funding.fundingId} style={{padding:"20px"}}>
+                  <Grid
+                    item
+                    xs={6}
+                    key={funding.fundingId}
+                    style={{ padding: '20px' }}
+                  >
                     <FundCard funding={funding}></FundCard>
                   </Grid>
                 );
               })}
             </Grid>
-            
           </div>
           <div className="col-md-4 divB">
-          <span className="headText">인기 순위</span>
-          <Box mt={1} display="flex" justifyContent="flex-end" style={{marginBottom:"20px"}}>
+            <Box
+              mt={2}
+              mb={3}
+              className="nbg_bold font-smooth"
+              style={{ fontSize: '2em' }}
+            >
+              인기 순위
+            </Box>
+            <Box
+              mt={1}
+              display="flex"
+              justifyContent="flex-end"
+              style={{ marginBottom: '20px' }}
+            >
               <Link className="nbg" to="/funding">
                 더보기
               </Link>
             </Box>
-          <Grid container spacing={3} style={{border:"lightgrey 1px solid", padding:"10px"}}>
+            <Grid
+              container
+              spacing={3}
+              style={{ border: 'lightgrey 1px solid', padding: '10px' }}
+            >
               {hotFunding?.map((funding: IFunding, i: number) => {
                 return (
-                  <div className="col-md-12 fundDiv" style={{height:"80px", marginBottom:"4px"}} key={funding.fundingId}>
+                  <div
+                    className="col-md-12 fundDiv"
+                    style={{ height: '80px', marginBottom: '4px' }}
+                    key={funding.fundingId}
+                  >
                     <FundItem funding={funding} rank={i}></FundItem>
-                
                   </div>
-                  
                 );
               })}
             </Grid>
-          
           </div>
-          </div>
-          
         </div>
-
-
-
-          <div className="row" id="idolArea">
-            <div className="col-md-1"></div>
-            <div className="col-md-10 divA moveA">
-            <h3 className="headText">아이돌</h3>
-            <Swiper
-              spaceBetween={-380}
-              slidesPerView={3}
-              onSlideChange={() => console.log('slide change')}
-              onSwiper={(swiper) => console.log(swiper)}
-            >
-              {randomIdols.map((idol) => (
-                <SwiperSlide key={idol.idolId}>
-                  <IdolCard idol={idol} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <Box mt={1} display="flex" justifyContent="flex-end">
-              <Link className="nbg" to="/idol">
-                더보기
-              </Link>
-            </Box>
-
-            </div>
-         
-          </div>
-
-          <div data-aos="zoom-in-up">
-            {' '}
-            <p>안녕안녕</p>
-          </div>
-  
       </div>
 
+      <div className="row" id="idolArea">
+        <div className="col-md-1"></div>
+        <div className="col-md-10 divA moveA">
+          <Box
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
+            아이돌
+          </Box>
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={3.3}
+            onSlideChange={() => console.log('slide change')}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {randomIdols.map((idol) => (
+              <SwiperSlide key={idol.idolId}>
+                <IdolCard idol={idol} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Box mt={1} display="flex" justifyContent="flex-end">
+            <Link className="nbg" to="/idol">
+              더보기
+            </Link>
+          </Box>
+        </div>
+      </div>
+
+      <div data-aos="zoom-in-up">
+        {' '}
+        <p>안녕안녕</p>
+      </div>
+    </div>
   );
 };
 

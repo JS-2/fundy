@@ -1,13 +1,12 @@
 package com.ilovefundy.service;
 
-import com.ilovefundy.dao.DonationPlaceDao;
-import com.ilovefundy.dao.FundingDao;
-import com.ilovefundy.dao.FundingRegisterDao;
-import com.ilovefundy.dao.PayDao;
+import com.ilovefundy.dao.*;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.entity.donation.Donation;
 import com.ilovefundy.entity.donation.DonationPlace;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.funding.FundingRegister;
+import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,8 @@ public class AdminService {
     private final UserDao userDao;
     private final FundingDao fundingDao;
     private final DonationPlaceDao donationPlaceDao;
+    private final IdolDao idolDao;
+    private final DonationDao donationDao;
 
     private final MailService mailService;
 
@@ -134,6 +135,13 @@ public class AdminService {
             fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
             donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
             donationPlaceDao.save(donationPlace);
+
+            Idol idol = idolDao.getOne(fundingProject.getIdolId());
+            Donation donation = new Donation();
+            donation.setIdol(idol);
+            donation.setDonationPlace(donationPlace);
+            donation.setIdolDonationAmount(fundingAmount);
+            donationDao.save(donation);
         }
         fundingDao.save(fundingProject);
         return true;

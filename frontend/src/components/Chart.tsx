@@ -15,8 +15,8 @@ const Chart = (props: Props) => {
   return (
     <div>
       <Box
-        mx={1}
-        my={2}
+        mt={10}
+        mb={3}
         className="nbg_bold font-smooth"
         style={{ fontSize: '2em' }}
       >
