@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Checkbox,
   FormControlLabel,
@@ -49,9 +50,15 @@ const SignIn = () => {
       <Grid item className="large_logo main_color mb-5" xs={12}>
         fundy
       </Grid>
-      <Grid item xs={12}>
+      <Grid className="nbg_m" item xs={12}>
         <TextField
           fullWidth
+          inputProps={{
+            style: { fontSize: '1.6em', height: '15px' },
+          }}
+          InputLabelProps={{
+            style: { fontSize: '0.8em' },
+          }}
           error={user.userEmail != '' && !validateds[0]}
           helperText={
             user.userEmail != '' && !validateds[0]
@@ -71,9 +78,15 @@ const SignIn = () => {
           variant="outlined"
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid className="nbg_m" item xs={12}>
         <TextField
           fullWidth
+          inputProps={{
+            style: { fontSize: '1.6em', height: '15px' },
+          }}
+          InputLabelProps={{
+            style: { fontSize: '0.8em' },
+          }}
           value={user.userPassword}
           error={user.userPassword != '' && !validateds[1]}
           onChange={(e) => {
@@ -94,21 +107,26 @@ const SignIn = () => {
           variant="outlined"
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid className="nbg_m font-smooth" item xs={12}>
         <FormControlLabel
           control={<Checkbox checked={saved} />}
-          label="아이디 저장"
+          label={
+            <Box className="nbg_m font-smooth" component="div" fontSize="1.3em">
+              아이디 저장
+            </Box>
+          }
           onChange={(e) => {
             setSaved(!saved);
           }}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid className="font-smooth" item xs={12}>
         <Button
           disabled={validateds.includes(false)}
           disableElevation
           variant="contained"
           size="large"
+          style={{ fontSize: '1.1em' }}
           fullWidth
           onClick={() => {
             loginSubmit(user).then((response) => {

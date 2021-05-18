@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 import { rootState } from '../../../reducers';
 import { getFavorite, setFavorite } from '../../../api/user';
 import { useParams } from 'react-router';
-
+import './IdolInfo.css';
 interface Props {
   idolInfo: Idol | undefined;
 }
@@ -116,7 +116,7 @@ const IdolInfo = (props: Props) => {
                   xs={6}
                   style={{ height: '100%', alignItems: 'center' }}
                 >
-                  <Card style={{ height: '90%' }}>
+                  <Card className="idolCardImg" style={{ height: '90%' }}>
                     <CardMedia
                       component="img"
                       image={props.idolInfo?.idolPicture}
@@ -136,19 +136,22 @@ const IdolInfo = (props: Props) => {
                 >
                   <Box>
                     <Box
-                      className="nbg_bold"
+                      className="nbg_bold font-smooth"
                       mb={3}
                       style={{ color: 'white', fontSize: '4em' }}
                     >
                       {props.idolInfo?.idolName}
                     </Box>
                     {props.idolInfo?.idolAge === null ? (
-                      <Box style={{ color: 'white', fontSize: '1.8em' }}>
+                      <Box
+                        className="font-smooth"
+                        style={{ color: 'white', fontSize: '1.8em' }}
+                      >
                         Since{' '}
                         {props.idolInfo?.idolBirthday?.replaceAll('-', '.')}
                       </Box>
                     ) : (
-                      <Box>
+                      <Box className="font-smooth">
                         <Box
                           mb={1}
                           style={{ color: 'white', fontSize: '1.5em' }}
@@ -187,105 +190,6 @@ const IdolInfo = (props: Props) => {
                           소속사 {props.idolInfo?.idolAgency}
                         </Box>
                       </Box>
-                      // <Card style={{ width: 300 }}>
-                      //   <Table>
-                      //     <TableRow>
-                      //       <TableCell
-                      //         width="30%"
-                      //         className="nbg_bold"
-                      //         style={{
-                      //           backgroundColor: '#f74a64',
-                      //           color: 'white',
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         나이
-                      //       </TableCell>
-                      //       <TableCell
-                      //         style={{
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         {props.idolInfo?.idolAge}
-                      //       </TableCell>
-                      //     </TableRow>
-                      //     <TableRow>
-                      //       <TableCell
-                      //         className="nbg_bold"
-                      //         style={{
-                      //           backgroundColor: '#f74a64',
-                      //           color: 'white',
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         생년월일
-                      //       </TableCell>
-                      //       <TableCell style={{ fontSize: '1em' }}>
-                      //         {props.idolInfo?.idolBirthday}
-                      //       </TableCell>
-                      //     </TableRow>
-                      //     <TableRow>
-                      //       <TableCell
-                      //         className="nbg_bold"
-                      //         style={{
-                      //           backgroundColor: '#f74a64',
-                      //           color: 'white',
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         혈액형
-                      //       </TableCell>
-                      //       <TableCell style={{ fontSize: '1em' }}>
-                      //         {props.idolInfo?.idolBlood}
-                      //       </TableCell>
-                      //     </TableRow>
-                      //     <TableRow>
-                      //       <TableCell
-                      //         className="nbg_bold"
-                      //         style={{
-                      //           backgroundColor: '#f74a64',
-                      //           color: 'white',
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         키
-                      //       </TableCell>
-                      //       <TableCell style={{ fontSize: '1em' }}>
-                      //         {props.idolInfo?.idolHeight}cm
-                      //       </TableCell>
-                      //     </TableRow>
-                      //     <TableRow>
-                      //       <TableCell
-                      //         className="nbg_bold"
-                      //         style={{
-                      //           backgroundColor: '#f74a64',
-                      //           color: 'white',
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         몸무게
-                      //       </TableCell>
-                      //       <TableCell style={{ fontSize: '1em' }}>
-                      //         {props.idolInfo?.idolWeight}kg
-                      //       </TableCell>
-                      //     </TableRow>
-                      //     <TableRow>
-                      //       <TableCell
-                      //         className="nbg_bold"
-                      //         style={{
-                      //           backgroundColor: '#f74a64',
-                      //           color: 'white',
-                      //           fontSize: '1em',
-                      //         }}
-                      //       >
-                      //         소속사
-                      //       </TableCell>
-                      //       <TableCell style={{ fontSize: '1em' }}>
-                      //         {props.idolInfo?.idolAgency}
-                      //       </TableCell>
-                      //     </TableRow>
-                      //   </Table>
-                      // </Card>
                     )}
                   </Box>
                   <Grid item xs={2} />
