@@ -8,9 +8,6 @@ body {
   /* transform: rotate(-0.03deg); */
 }
 
-.App {
-  /* background-color: #fcfcfc ; */
-}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -47,7 +44,7 @@ body {
   font-size: 4em;
 }
 
-.mainArea{
+.mainArea {
   padding: 0px 0px 0px 0px !important;
 }
 

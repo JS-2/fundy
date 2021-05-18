@@ -1,47 +1,42 @@
-#bannerArea{
-    margin-bottom: 50px;
+#bannerArea {
+  margin-bottom: 50px;
 }
 
-#idolArea{
-    margin-bottom: 50px;
+#idolArea {
+  margin-bottom: 50px;
 }
 
-
-#topFundArea{
-    margin-bottom: 30px;
+#topFundArea {
+  margin-bottom: 30px;
 }
-.moveA{
-    right: 10px;
+.moveA {
+  right: 10px;
 }
-.divA{
+.divA {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 10px 10px 10px;
+  -webkit-backdrop-filter: blur(9.5px);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
-    background: rgba( 255, 255, 255, 0.05 );
-    padding: 10px 10px 10px 10px;
--webkit-backdrop-filter: blur( 9.5px );
-border-radius: 5px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
-
-
-    box-shadow: 2px;
+  box-shadow: 2px;
 }
 
-.divB{
+.divB {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 10px 10px 10px;
+  -webkit-backdrop-filter: blur(9.5px);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
-    background: rgba( 255, 255, 255, 0.05 );
-    padding: 10px 10px 10px 10px;
--webkit-backdrop-filter: blur( 9.5px );
-border-radius: 5px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
-
-
-    box-shadow: 2px;
+  box-shadow: 2px;
 }
 
-.area{
-    margin-bottom: 100px
+.area {
+  margin-bottom: 100px;
 }
 
-.headText{
-    font-size: 24px !important;
-    font-weight: bold;
+.headText {
+  font-size: 24px !important;
+  font-weight: bold;
 }

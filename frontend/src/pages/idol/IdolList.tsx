@@ -3,6 +3,7 @@ import { getIdolRanking } from '../../api/idol';
 import { IChartData } from '../../common/types';
 import Banner from '../../components/Banner';
 import Chart from '../../components/Chart';
+import TopChart from '../../components/idol/idolDetail/TopChart';
 import IdolSearch from '../../components/idol/idolList/IdolSearch';
 
 interface IRankingData {
@@ -34,7 +35,8 @@ const IdolList = () => {
       <div className="row">
         <div className="col-md-1"></div>
         <div className="col-md-10">
-          <Chart title="아이돌 차트" data={chartData} />
+          <TopChart></TopChart>
+          {/* <Chart title="아이돌 차트" data={chartData} /> */}
           <IdolSearch></IdolSearch>
         </div>
       </div>
