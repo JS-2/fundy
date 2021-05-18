@@ -51,3 +51,8 @@ export const getIdolDonationData = (idol_id: string) => {
     return axiosInstance
         .get('/donation/' + idol_id);
 }
+
+export const getIdolTopFive = () => {
+    return axiosInstance
+        .get('/donation/idol/ranking/monthly-chart');
+}
