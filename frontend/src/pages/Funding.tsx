@@ -140,7 +140,12 @@ const Funding = () => {
       <div className="row">
         <div className="col-md-1 col-sm-2"></div>
         <div className="col-md-10 col-sm-8">
-          <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+          <Box
+            mt={4}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
             {header}
           </Box>
           <Box mb={2}>
