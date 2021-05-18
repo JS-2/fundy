@@ -29,10 +29,10 @@ import Admin from '../pages/admin/Admin';
 const index = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+     <Navbar />
       <ScrollToTop />
       <Box display="flex" justifyContent="center">
-        <Box className="col-md-12">
+        <div className="col-md-12">
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/regist" component={Regist} exact />
@@ -56,7 +56,7 @@ const index = () => {
             <Route path="/admin" component={Admin} exact />
             <Redirect from="*" to="/" />
           </Switch>
-        </Box>
+        </div>
       </Box>
       <Footer />
     </BrowserRouter>

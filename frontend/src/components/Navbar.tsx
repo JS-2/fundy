@@ -46,19 +46,22 @@ const Navbar = () => {
 
   return (
     <>
-      <Box justifyContent="center" className="nav" minWidth={1080}>
+      <Box justifyContent="center" className="nav"  minWidth={480}>
         <Box
           display="flex"
-          width="100%"
-          maxWidth={1440}
-          minWidth={1080}
+    
+   
+          minWidth={480}
           height={80}
           mb={1}
-          mx={4}
+       
+          style={{marginLeft:"32px"}}
           justifyContent="space-between"
           alignItems="center"
+          alignContent="center"
         >
-          <Box display="flex">
+          <Box display="flex" height={80}  alignItems="center"
+          alignContent="center">
             <Box className="logo" mr={5}>
               <a id="logoAnchor" href="/">
                 fundy
@@ -76,7 +79,7 @@ const Navbar = () => {
             </Box>
             <Box mx={3}>
               <a className="nbg" href="/store">
-                스토어
+                후원기관
               </a>
             </Box>
           </Box>
@@ -105,9 +108,11 @@ const Navbar = () => {
             ) : (
               <>
                 <Box display="flex" alignItems="center">
+                {user.nickname}님
                   <IconButton onClick={handleClick}>
                     <Avatar src={user.picture}></Avatar>
                   </IconButton>
+                  
                 </Box>
               </>
             )}

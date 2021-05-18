@@ -80,17 +80,20 @@ const FundCard = (props: Props) => {
     <Card
       className="cardClass"
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
-      style={{ padding: '0', height: '100%', display: 'block' }}
+      style={{ padding: '0', height: '100%', display: 'block', border:'solid 1px lightgrey'}}
+      elevation={0}
     >
       <CardActionArea>
+        <Card elevation={0}>
         <CardMedia
-          className="cardImg"
+          className="cardImgA"
           component="img"
           alt="펀딩 카드 이미지"
-          height="200"
+          height="250"
           image={fundingInfo?.fundingThumbnail}
           title="Card Image"
         />
+        </Card>
         <CardContent style={{ padding: '5px' }}>
           <Chip className="ddayBadge" label={dday} />
           <Typography

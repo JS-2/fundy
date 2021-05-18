@@ -1,10 +1,20 @@
 
-
 .user {
   color: grey;
   font-size: 0.9em;
 }
+.swiper-pagination{
+  bottom:10px;
+}
+.swiper-pagination-bullet{
+  background-color: rgb(196, 77, 77) !important;
+}
+.bannerBody{
 
+}
+.dialog{
+  padding: 0 0 0 0 !important;
+}
 .swiper-button-next{
   color: red !important;
   font-size: 22px !important;
@@ -19,8 +29,31 @@
   padding: 30px !important;
 }
 
+.swiper-container{
+box-shadow: 0 8px 32px 0 rgba(58, 59, 75, 0.37);
+backdrop-filter: blur( 11.5px );
+-webkit-backdrop-filter: blur( 11.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+margin-bottom: 40px;
+margin-left:20px;
+padding-right: 10px;
+overflow: hidden;
+}
+
+.banner{
+  overflow:hidden;
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+  text-align: center;
+
+}
 
 .bannerImg{
-  padding-left:8% !important;
-  padding-right:8% !important;
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
 }

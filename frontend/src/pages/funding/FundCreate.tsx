@@ -49,6 +49,7 @@ import { getAllIdolList } from '../../api/idol';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FundingPlaceCard from '../../components/fundComponent/FundingPlaceCard';
 import { getAllDonationPlaces } from '../../api/funding';
+import Banner from '../../components/Banner';
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState('Donation');
@@ -285,7 +286,10 @@ const FundCreate = () => {
     }
   };
   return (
+    <div>
+    <Banner></Banner>
     <div className="container">
+      
       <h3>펀딩 작성하기</h3>
       <br></br>
       <hr></hr>
@@ -490,6 +494,7 @@ const FundCreate = () => {
           </Button>
         </div>
       </Box>
+    </div>
     </div>
   );
 };

@@ -7,11 +7,17 @@
   top: 0;
   left: 0;
   right: 0;
+
 }
 
+.logo{
+  top: 10px !important;
+}
 #logoAnchor {
   color: #f74a64 !important;
+
   text-decoration: none !important;
+
 }
 
 .nbg {

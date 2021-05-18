@@ -25,3 +25,15 @@
   transform: scale(1.1, 1.1);
   overflow: hidden;
 }
+
+.fundItem:hover > .cardImgA{
+    transform: scale(1.1, 1.1);
+    overflow: hidden;
+  
+}
+
+
+.ranking{
+  font-weight: bolder;
+  font-size: 2rem;
+}
