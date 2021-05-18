@@ -8,7 +8,7 @@ body {
   /* transform: rotate(-0.03deg); */
 }
 
-.App{
+.App {
   /* background-color: #fcfcfc ; */
 }
 code {
@@ -16,9 +16,9 @@ code {
     monospace;
 }
 
-
-body { font-family: 'Noto Sans KR', sans-serif; }
-
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
 
 @font-face {
   font-family: Shrikhand;
@@ -53,11 +53,16 @@ body { font-family: 'Noto Sans KR', sans-serif; }
 
 .nbg {
   font-family: NanumBarunGothic !important;
-  font-size:1.6rem;
+  font-size: 1.6rem;
 }
 
 .nbg_bold {
   font-family: NanumBarunGothicBold !important;
+}
+
+.nbg_m {
+  font-family: NanumBarunGothic !important;
+  font-size: 1.6rem;
 }
 
 .btn_main {
@@ -79,6 +84,11 @@ h3,
 h4,
 h5,
 h6,
-p,span {
-  font-family: 'Noto Sans KR'  !important;
+p,
+span {
+  font-family: 'Noto Sans KR' !important;
+}
+
+.font-smooth {
+  transform: rotate(-0.03deg) !important;
 }

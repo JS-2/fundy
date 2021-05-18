@@ -25,11 +25,12 @@ import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 import CertManage from '../pages/admin/Admin';
 import Admin from '../pages/admin/Admin';
+import Places from '../pages/Places';
 
 const index = () => {
   return (
     <BrowserRouter>
-     <Navbar />
+      <Navbar />
       <ScrollToTop />
       <Box display="flex" justifyContent="center">
         <div className="mainArea col-md-12">
@@ -54,6 +55,7 @@ const index = () => {
             <Route path="/idol/:idol_id" component={IdolDetail} exact />
             <Route path="/" component={Main} exact />
             <Route path="/admin" component={Admin} exact />
+            <Route path="/places" component={Places} exact />
             <Redirect from="*" to="/" />
           </Switch>
         </div>

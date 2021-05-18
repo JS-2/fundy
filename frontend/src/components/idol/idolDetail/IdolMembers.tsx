@@ -16,7 +16,12 @@ const IdolMembers = (props: Props) => {
   }, [props]);
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+      <Box
+        mt={10}
+        mb={3}
+        className="nbg_bold font-smooth"
+        style={{ fontSize: '2em' }}
+      >
         {props.idolInfo?.idol.idolName} 멤버
       </Box>
       <Grid container spacing={2}>

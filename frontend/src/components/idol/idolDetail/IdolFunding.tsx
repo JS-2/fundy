@@ -19,10 +19,9 @@ const IdolFunding = (props: Props) => {
   return (
     <div>
       <Box
-        mx={1}
         mt={10}
-        mb={5}
-        className="nbg_bold"
+        mb={3}
+        className="nbg_bold font-smooth"
         style={{ fontSize: '2em' }}
       >
         연관 펀딩
@@ -33,6 +32,7 @@ const IdolFunding = (props: Props) => {
         onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
         navigation
+        style={{ boxShadow: 'none', marginLeft: 0, marginRight: 0 }}
       >
         {fundings?.map((funding, i) => (
           <SwiperSlide>
