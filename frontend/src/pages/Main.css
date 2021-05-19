@@ -46,6 +46,13 @@ html {
   }
 
 
+  span{
+    font-size: 14px !important;
+  }
+
+  p{
+    font-size: 16px !important;
+  }
   
 .floating {  
   animation-name: floating;

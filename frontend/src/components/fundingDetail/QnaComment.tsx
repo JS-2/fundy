@@ -27,8 +27,8 @@ const QnaComment = (props: Props) => {
         <Avatar src={com.userPicture}></Avatar>
         <Box p={1}>{com.userNickname}</Box>
       </Box>
-      <Box display="flex" p={1} alignItems="flex-end">
-        <Card elevation={0} style={{ backgroundColor: 'grey', color: 'Ivory' }}>
+      <Box className="commentArea" display="flex" p={1} alignItems="flex-end">
+        <Card elevation={0} style={{ backgroundColor: '#3322dd', color: 'Ivory' }}>
           <Box m={1}>{com.fundingCommentContent}</Box>
         </Card>
         <Box mx={1} style={{ fontSize: '0.7em' }}>
@@ -68,7 +68,7 @@ const QnaComment = (props: Props) => {
           </IconButton>
         </Box>
 
-        <Box mx={1} style={{ fontSize: '1rem' }}>
+        <Box mx={1} style={{ fontSize: '1.4rem' }}>
           {com.fundingCommentTime}
         </Box>
         <Card
@@ -77,11 +77,12 @@ const QnaComment = (props: Props) => {
             backgroundColor: '#f74a64',
             maxWidth: '60%',
             color: '#eeeeee',
-            fontSize:'1.4rem'
+            fontSize:'1.4rem',
+           
             
           }}
         >
-          <Box m={1} style={{ wordBreak: 'break-all' }}>
+          <Box m={1} style={{ wordBreak: 'break-all', borderRadius:'20px', }}>
             {com.fundingCommentContent}
           </Box>
         </Card>
