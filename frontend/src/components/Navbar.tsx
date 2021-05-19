@@ -108,8 +108,13 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Box display="flex" alignItems="center">
-                  {user.nickname}님
+                <Box
+                  display="flex"
+                  className="nbg_m font-smooth"
+                  alignItems="center"
+                  style={{ fontSize: '1em' }}
+                >
+                  <Box mr={1}>{user.nickname}님</Box>
                   <IconButton onClick={handleClick}>
                     <Avatar src={user.picture}></Avatar>
                   </IconButton>
@@ -136,7 +141,14 @@ const Navbar = () => {
               <List style={{ width: 200 }}>
                 <ListItem>
                   <ListItemText
-                    primary={user.nickname}
+                    primary={
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.3em' }}
+                      >
+                        {user.nickname}
+                      </div>
+                    }
                     secondary={user.email}
                   ></ListItemText>
                 </ListItem>
@@ -144,7 +156,16 @@ const Navbar = () => {
                   <>
                     <Divider />
                     <ListItem button onClick={handleAdminBtn}>
-                      <ListItemText primary="인증 관리(ADMIN)"></ListItemText>
+                      <ListItemText
+                        primary={
+                          <div
+                            className="nbg_m font-smooth"
+                            style={{ fontSize: '1.2em' }}
+                          >
+                            인증 관리(ADMIN)
+                          </div>
+                        }
+                      ></ListItemText>
                     </ListItem>
                   </>
                 ) : (
@@ -153,7 +174,16 @@ const Navbar = () => {
 
                 <Divider />
                 <ListItem button onClick={handleMypageBtn}>
-                  <ListItemText primary="마이페이지"></ListItemText>
+                  <ListItemText
+                    primary={
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.2em' }}
+                      >
+                        마이페이지
+                      </div>
+                    }
+                  ></ListItemText>
                 </ListItem>
                 <Divider />
                 <ListItem
@@ -162,7 +192,16 @@ const Navbar = () => {
                     logoutSubmit(dispatch);
                   }}
                 >
-                  <ListItemText primary="로그아웃"></ListItemText>
+                  <ListItemText
+                    primary={
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.2em' }}
+                      >
+                        로그아웃
+                      </div>
+                    }
+                  ></ListItemText>
                 </ListItem>
               </List>
             </Paper>

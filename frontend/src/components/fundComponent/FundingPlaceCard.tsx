@@ -21,23 +21,22 @@ const FundingPlaceCard = (props: Props) => {
   const { place, placeId, setPlaceId } = props;
   return (
     <Card
-      elevation={0}
       onClick={() => {
         setPlaceId(place.donationPlaceId);
       }}
       style={
         place.donationPlaceId === placeId
           ? {
-              border: 'solid 2px #f74a64',
+              border: 'solid 2px #fc798d',
               cursor: 'pointer',
               height: '250px',
-              transition: 'all 0.2s ease-out',
+              transition: 'all 0.1s ease-out',
             }
           : {
-              border: 'solid 2px #e0e0e0',
+              border: 'solid 1px #e0e0e0',
               cursor: 'pointer',
               height: '250px',
-              transition: 'all 0.2s ease-out',
+              transition: 'all 0.1s ease-out',
             }
       }
     >

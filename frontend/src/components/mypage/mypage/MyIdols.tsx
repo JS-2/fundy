@@ -31,6 +31,22 @@ const MyIdols = () => {
           );
         })}
       </Grid>
+      {idols?.length == 0 ? (
+        <Box
+          className="nbg_bold font-smooth"
+          my={3}
+          fontSize="3em"
+          color="silver"
+          height="300px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box>아이돌 리스트가 없습니다.</Box>
+        </Box>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
