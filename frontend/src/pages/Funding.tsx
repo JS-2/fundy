@@ -244,6 +244,7 @@ const Funding = () => {
 
   const handleSearch = () => {
     console.log(searchWord);
+    setIsEnd(false);
     setFundingStatus({ ...fundingStatus, per_page: 3, keyword: searchWord });
   };
 
