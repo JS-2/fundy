@@ -70,7 +70,7 @@ const Funding = () => {
   const [isBottom, setIsBottom] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef(null);
-  const [delay, setDelay] = useState<number>(1000);
+  const [delay, setDelay] = useState<number>(600);
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
