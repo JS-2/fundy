@@ -28,17 +28,17 @@ public interface FundingDao extends JpaRepository<FundingProject, Integer> {
     Page<FundingProject> findByFundingNameContainsAndIsConfirm(String title, FundingProject.FundingConfirm IsStatus, Pageable pageable);
 
     // 승인 - 진행 전
-    Page<FundingProject> findByFundingStartTimeAfterAndIsConfirm(LocalDateTime time, FundingProject.FundingConfirm IsStatus, Pageable pageable);
-    Page<FundingProject> findByFundingStartTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime time, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeAfter(LocalDateTime time, Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeAfterAndFundingNameContains(LocalDateTime time, String keyword, Pageable pageable);
 
     // 승인 - 진행 중
-    Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfter(LocalDateTime time, LocalDateTime time2, Pageable pageable);
     FundingProject findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirm(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus);
-    Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndIsConfirmAndFundingNameContains(LocalDateTime time, LocalDateTime time2, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
+    Page<FundingProject> findByFundingStartTimeBeforeAndFundingEndTimeAfterAndFundingNameContains(LocalDateTime time, LocalDateTime time2, String keyword, Pageable pageable);
 
     // 승인 - 마감
-    Page<FundingProject> findByFundingEndTimeBeforeAndIsConfirm(LocalDateTime time, FundingProject.FundingConfirm IsStatus, Pageable pageable);
-    Page<FundingProject> findByFundingEndTimeBeforeAndIsConfirmAndFundingNameContains(LocalDateTime time, FundingProject.FundingConfirm IsStatus, String keyword, Pageable pageable);
+    Page<FundingProject> findByFundingEndTimeBefore(LocalDateTime time, Pageable pageable);
+    Page<FundingProject> findByFundingEndTimeBeforeAndFundingNameContains(LocalDateTime time, String keyword, Pageable pageable);
 
     // 펀딩 완료(성공)
     @Query(value = "SELECT f.*\n" +
