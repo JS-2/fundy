@@ -26,7 +26,7 @@ import { getFundingList } from '../api/funding';
 import { IFunding, FundingStatus, User, FundForm } from '../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../reducers';
-import "./Funding.css";
+import './Funding.css';
 import FundItem from '../components/FundItem';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -82,9 +82,8 @@ const Funding = () => {
           return bAmount - aAmount;
         }
       });
-      setFundingRank(data.slice(0, 10));
+      setFundingRank(data.slice(0, 3));
     });
-    
   }, [fundingStatus]);
 
   const handleWaitFunding = () => {
@@ -163,8 +162,27 @@ const Funding = () => {
       <div className="row">
         <div className="col-md-1 col-sm-1"></div>
         <div className="col-md-10 col-sm-10">
-
-      
+          <Box
+            mt={4}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
+            인기 펀딩
+          </Box>
+          <div style={{ padding: '0px' }}>
+            {fundingRank?.map((funding: IFunding, i: number) => {
+              return (
+                <div
+                  className="col-md-4"
+                  style={{ marginBottom: '10px' }}
+                  key={funding.fundingId}
+                >
+                  <FundCard funding={funding}></FundCard>
+                </div>
+              );
+            })}
+          </div>
           <Box
             mt={4}
             mb={3}
@@ -174,27 +192,55 @@ const Funding = () => {
             {header}
           </Box>
           <Box mb={2}>
-            <Button className="fundBtn" variant="contained" onClick={handleWaitFunding}>
+            <Button
+              className="fundBtn"
+              variant="contained"
+              onClick={handleWaitFunding}
+            >
               대기중인 펀딩
             </Button>
-            <Button className="fundBtn" variant="contained" onClick={handleProgressFunding}>
+            <Button
+              className="fundBtn"
+              variant="contained"
+              onClick={handleProgressFunding}
+            >
               진행중인 펀딩
             </Button>
-            <Button className="fundBtn" variant="contained" onClick={handleEndFunding}>
+            <Button
+              className="fundBtn"
+              variant="contained"
+              onClick={handleEndFunding}
+            >
               완료된 펀딩
             </Button>
             {user !== null && user.role == 'ADMIN' ? (
               <>
-                <Button className="fundBtn" variant="contained" onClick={handleNeedAcceptFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleNeedAcceptFunding}
+                >
                   승인 필요 펀딩
                 </Button>
-                <Button className="fundBtn" variant="contained" onClick={handleDeclineFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleDeclineFunding}
+                >
                   거절된 펀딩
                 </Button>
-                <Button className="fundBtn" variant="contained" onClick={handleSuccessFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleSuccessFunding}
+                >
                   성공한 펀딩
                 </Button>
-                <Button className="fundBtn" variant="contained" onClick={handleFailFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleFailFunding}
+                >
                   실패한 펀딩
                 </Button>
               </>
@@ -202,13 +248,21 @@ const Funding = () => {
               <></>
             )}
 
-            <Button className="fundCreateBtn" variant="contained" onClick={createClick}>
+            <Button
+              className="fundCreateBtn"
+              variant="contained"
+              onClick={createClick}
+            >
               펀딩 제작하기
             </Button>
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
-              <div className="col-md-4"  style={{ padding: '10px' }} key={funding.fundingId}>
+              <div
+                className="col-md-4"
+                style={{ padding: '10px' }}
+                key={funding.fundingId}
+              >
                 <FundCard funding={funding}></FundCard>
               </div>
             ))}
@@ -234,35 +288,6 @@ const Funding = () => {
           ) : (
             <></>
           )}
-
-
-
-
-
-
-
-  
-<Box
-            mt={4}
-            mb={3}
-            className="nbg_bold font-smooth"
-            style={{ fontSize: '2em' }}
-          >
-            인기 펀딩
-          </Box>
-        <div style={{ padding: "0px" }}>
-          {fundingRank?.map((funding: IFunding, i: number) => {
-            return (
-              <div
-                className="col-md-4"
-                style={{ marginBottom: "10px"}}
-                key={funding.fundingId}
-              >
-                <FundCard funding={funding}></FundCard>
-              </div>
-            );
-          })}
-        </div>
         </div>
       </div>
     </div>
