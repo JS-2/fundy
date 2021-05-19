@@ -32,7 +32,12 @@ const IdolFunding = (props: Props) => {
         onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
         navigation
-        style={{ boxShadow: 'none', marginLeft: 0, marginRight: 0 }}
+        style={{
+          boxShadow: 'none',
+          marginLeft: 0,
+          marginRight: 0,
+          height: '440px',
+        }}
       >
         {fundings?.map((funding, i) => (
           <SwiperSlide>

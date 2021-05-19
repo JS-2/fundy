@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useRef, useState } from 'react';
 import {
   createStyles,
   makeStyles,
@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Grid, Paper, Box } from '@material-ui/core';
+import { Grid, Paper, Box, CircularProgress } from '@material-ui/core';
 import FundCard from '../components/FundCard';
 import 'swiper/swiper.scss';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
@@ -26,7 +26,7 @@ import { getFundingList } from '../api/funding';
 import { IFunding, FundingStatus, User, FundForm } from '../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../reducers';
-import "./Funding.css";
+import './Funding.css';
 import FundItem from '../components/FundItem';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -54,24 +54,81 @@ const Funding = () => {
   const [fundingRank, setFundingRank] = useState<IFunding[]>([]);
   const [fundingStatus, setFundingStatus] = useState<FundingStatus>({
     page: 1,
-    per_page: 1000,
+    per_page: 3,
     status: 2,
   });
   const [header, setHeader] = useState<string>('진행중인 펀딩');
   const user: User = useSelector((state: rootState) => state.userReducer.user);
 
-  useEffect(() => {
-    getFundingList(fundingStatus).then((resp) => {
-      console.log(resp.data);
-      setFundings(resp.data);
-    });
+  const [isBottom, setIsBottom] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const containerRef = useRef(null);
+  const [delay, setDelay] = useState<number>(1000);
+  const [isPlaying, setPlaying] = useState<boolean>(false);
+  const [isEnd, setIsEnd] = useState<boolean>(false);
 
+  function useInterval(callback: () => void, delay: number | null) {
+    const savedCallback = useRef(callback);
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      if (delay === null) {
+        return;
+      }
+
+      const id = setInterval(() => savedCallback.current(), delay);
+
+      return () => clearInterval(id);
+    }, [delay]);
+  }
+
+  useInterval(
+    () => {
+      setFundingStatus({
+        ...fundingStatus,
+        per_page: fundingStatus.per_page + 3,
+      });
+    },
+    isPlaying ? delay : null
+  );
+
+  useEffect(() => {
+    if (isBottom) {
+      setLoading(true);
+      setPlaying(true);
+    } else {
+      setLoading(false);
+      setPlaying(false);
+    }
+  }, [isBottom]);
+
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0,
+  };
+
+  const callback = (entries: any) => {
+    const [entry] = entries;
+    setIsBottom(entry.isIntersecting);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(callback, options);
+    if (containerRef.current) {
+      observer.observe(containerRef.current!);
+    }
+    return () => observer && observer.disconnect();
+  }, [containerRef]);
+
+  useEffect(() => {
     getFundingList({
       page: 1,
       per_page: 1000,
       status: 2,
     }).then((resp) => {
-      console.log(resp.data);
       let data = resp.data;
       data = data.sort((a: FundForm, b: FundForm) => {
         const aAmount = Number(a.fundingParticipants);
@@ -82,66 +139,81 @@ const Funding = () => {
           return bAmount - aAmount;
         }
       });
-      setFundingRank(data.slice(0, 10));
+      setFundingRank(data.slice(0, 3));
     });
-    
+  }, []);
+
+  useEffect(() => {
+    getFundingList(fundingStatus).then((resp) => {
+      if (resp.data.length === fundings.length) {
+        setIsEnd(true);
+      }
+      setFundings(resp.data);
+    });
   }, [fundingStatus]);
 
   const handleWaitFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 1,
     });
     setHeader('대기중인 펀딩');
   };
 
   const handleProgressFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 2,
     });
     setHeader('진행중인 펀딩');
   };
 
   const handleEndFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 3,
     });
     setHeader('완료된 펀딩');
   };
 
   const handleNeedAcceptFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 0,
     });
     setHeader('승인 필요 펀딩');
   };
   const handleDeclineFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 4,
     });
     setHeader('거절된 펀딩');
   };
   const handleSuccessFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 5,
     });
     setHeader('성공한 펀딩');
   };
   const handleFailFunding = () => {
+    setIsEnd(false);
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 6,
     });
     setHeader('실패한 펀딩');
@@ -163,8 +235,23 @@ const Funding = () => {
       <div className="row">
         <div className="col-md-1 col-sm-1"></div>
         <div className="col-md-10 col-sm-10">
-
-      
+          <Box
+            mt={4}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
+            인기 펀딩
+          </Box>
+          <Grid container spacing={3}>
+            {fundingRank?.map((funding: IFunding, i: number) => {
+              return (
+                <Grid item xs={4} style={{ padding: '10px' }}>
+                  <FundCard funding={funding}></FundCard>
+                </Grid>
+              );
+            })}
+          </Grid>
           <Box
             mt={4}
             mb={3}
@@ -174,27 +261,55 @@ const Funding = () => {
             {header}
           </Box>
           <Box mb={2}>
-            <Button className="fundBtn" variant="contained" onClick={handleWaitFunding}>
+            <Button
+              className="fundBtn"
+              variant="contained"
+              onClick={handleWaitFunding}
+            >
               대기중인 펀딩
             </Button>
-            <Button className="fundBtn" variant="contained" onClick={handleProgressFunding}>
+            <Button
+              className="fundBtn"
+              variant="contained"
+              onClick={handleProgressFunding}
+            >
               진행중인 펀딩
             </Button>
-            <Button className="fundBtn" variant="contained" onClick={handleEndFunding}>
+            <Button
+              className="fundBtn"
+              variant="contained"
+              onClick={handleEndFunding}
+            >
               완료된 펀딩
             </Button>
             {user !== null && user.role == 'ADMIN' ? (
               <>
-                <Button className="fundBtn" variant="contained" onClick={handleNeedAcceptFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleNeedAcceptFunding}
+                >
                   승인 필요 펀딩
                 </Button>
-                <Button className="fundBtn" variant="contained" onClick={handleDeclineFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleDeclineFunding}
+                >
                   거절된 펀딩
                 </Button>
-                <Button className="fundBtn" variant="contained" onClick={handleSuccessFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleSuccessFunding}
+                >
                   성공한 펀딩
                 </Button>
-                <Button className="fundBtn" variant="contained" onClick={handleFailFunding}>
+                <Button
+                  className="fundBtn"
+                  variant="contained"
+                  onClick={handleFailFunding}
+                >
                   실패한 펀딩
                 </Button>
               </>
@@ -202,13 +317,21 @@ const Funding = () => {
               <></>
             )}
 
-            <Button className="fundCreateBtn" variant="contained" onClick={createClick}>
+            <Button
+              className="fundCreateBtn"
+              variant="contained"
+              onClick={createClick}
+            >
               펀딩 제작하기
             </Button>
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
-              <div className="col-md-4"  style={{ padding: '10px' }} key={funding.fundingId}>
+              <div
+                className="col-md-4"
+                style={{ padding: '10px' }}
+                key={funding.fundingId}
+              >
                 <FundCard funding={funding}></FundCard>
               </div>
             ))}
@@ -234,37 +357,19 @@ const Funding = () => {
           ) : (
             <></>
           )}
-
-
-
-
-
-
-
-  
-<Box
-            mt={4}
-            mb={3}
-            className="nbg_bold font-smooth"
-            style={{ fontSize: '2em' }}
-          >
-            인기 펀딩
-          </Box>
-        <div style={{ padding: "0px" }}>
-          {fundingRank?.map((funding: IFunding, i: number) => {
-            return (
-              <div
-                className="col-md-4"
-                style={{ marginBottom: "10px"}}
-                key={funding.fundingId}
-              >
-                <FundCard funding={funding}></FundCard>
-              </div>
-            );
-          })}
-        </div>
         </div>
       </div>
+
+      <div ref={containerRef}> </div>
+      <Box mt={10} display="flex" justifyContent="center">
+        <CircularProgress
+          style={{
+            height: !isEnd && loading ? '50px' : '0px',
+            opacity: !isEnd && loading ? 1 : 0,
+            transition: 'height 0.5s ease-in-out, opacity 0.5s ease-in-out',
+          }}
+        />
+      </Box>
     </div>
   );
 };

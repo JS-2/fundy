@@ -20,6 +20,7 @@ import { rootState } from '../../../reducers';
 import { getFavorite, setFavorite } from '../../../api/user';
 import { useParams } from 'react-router';
 import './IdolInfo.css';
+
 interface Props {
   idolInfo: Idol | undefined;
 }
@@ -181,16 +182,19 @@ const IdolInfo = (props: Props) => {
                       <></>
                     ) : (
                       <Box display="flex" justifyContent="flex-end">
-                        <Button
-                          variant="contained"
-                          className="nbg_bold"
-                          size="large"
-                          style={{ fontSize: '1em' }}
-                          color={idolFavorite ? 'secondary' : 'default'}
-                          onClick={handleFavorite}
-                        >
-                          관심 {idolFavorite ? '해제' : '등록'}
-                        </Button>
+                        <IconButton onClick={handleFavorite}>
+                          {idolFavorite ? (
+                            <FavoriteIcon
+                              color="secondary"
+                              style={{ fontSize: '4em' }}
+                            ></FavoriteIcon>
+                          ) : (
+                            <FavoriteBorderIcon
+                              color="secondary"
+                              style={{ fontSize: '4em' }}
+                            ></FavoriteBorderIcon>
+                          )}
+                        </IconButton>
                       </Box>
                     )}
                   </Grid>
