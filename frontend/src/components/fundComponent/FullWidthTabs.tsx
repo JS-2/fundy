@@ -75,11 +75,13 @@ const FullWidthTabs = (props:any) => {
             textColor="secondary"
             variant="fullWidth"
             aria-label="funding tabs"
+            style={{height:'70px', backgroundColor:'white'}}
+   
           >
-            <Tab label="펀딩 스토리" {...a11yProps(0)} />
-            <Tab label="공지사항" {...a11yProps(1)} />
-            <Tab label="문의하기" {...a11yProps(2)} />
-            <Tab label="펀딩 약관" {...a11yProps(3)} />
+            <Tab style={{fontSize:"18px", marginTop:'10px'}} label="펀딩 스토리" {...a11yProps(0)} />
+            <Tab style={{fontSize:"18px", marginTop:'10px'}} label="공지사항" {...a11yProps(1)} />
+            <Tab style={{fontSize:"18px", marginTop:'10px'}} label="문의하기" {...a11yProps(2)} />
+            <Tab style={{fontSize:"18px", marginTop:'10px'}} label="펀딩 약관" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <SwipeableViews

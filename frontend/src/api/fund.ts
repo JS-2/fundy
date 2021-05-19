@@ -46,3 +46,17 @@ export const getFundNotice = (funding_id: number) => {
         }}
         );
 }
+
+
+export const getFundPayList = (auth_token: string) => {
+    return axiosInstance
+    .get('/user/funding',{
+    params: {
+        page: 1,
+        per_page: 100,
+    }, headers: {
+        Authorization: auth_token,
+    },}
+    );
+}
+

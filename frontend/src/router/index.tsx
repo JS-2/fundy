@@ -17,7 +17,7 @@ import Funding from '../pages/Funding';
 import FundingDetail from '../pages/funding/FundingDetail';
 import FundCreate from '../pages/funding/FundCreate';
 import { Create } from '@material-ui/icons';
-import MyFunding from '../pages/mypage/MyFunding';
+import MyFunding from '../components/mypage/mypage/MyFunding';
 import IdolList from '../pages/idol/IdolList';
 import IdolDetail from '../pages/idol/IdolDetail';
 import FundPayment from '../pages/funding/FundPayment';

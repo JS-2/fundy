@@ -103,9 +103,9 @@ const MyFunding = () => {
       <div className="row" style={{ marginTop: '20px' }}>
         <Grid container spacing={1}>
           {showFundings?.map((funding, i) => (
-            <Grid item xs={4}>
+            <div className="col-md-4 col-sm-12" >
               <FundCard funding={funding} key={funding.fundingId}></FundCard>
-            </Grid>
+            </div>
           ))}
         </Grid>
       </div>
