@@ -14,7 +14,13 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Grid, Paper, Box, CircularProgress } from '@material-ui/core';
+import {
+  Grid,
+  Paper,
+  Box,
+  CircularProgress,
+  TextField,
+} from '@material-ui/core';
 import FundCard from '../components/FundCard';
 import 'swiper/swiper.scss';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
@@ -56,6 +62,7 @@ const Funding = () => {
     page: 1,
     per_page: 3,
     status: 2,
+    keyword: '',
   });
   const [header, setHeader] = useState<string>('진행중인 펀딩');
   const user: User = useSelector((state: rootState) => state.userReducer.user);
@@ -66,6 +73,7 @@ const Funding = () => {
   const [delay, setDelay] = useState<number>(1000);
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
+  const [searchWord, setSearchWord] = useState<string>('');
 
   function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback);
@@ -128,6 +136,7 @@ const Funding = () => {
       page: 1,
       per_page: 1000,
       status: 2,
+      keyword: '',
     }).then((resp) => {
       let data = resp.data;
       data = data.sort((a: FundForm, b: FundForm) => {
@@ -154,69 +163,88 @@ const Funding = () => {
 
   const handleWaitFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 1,
+      keyword: '',
     });
     setHeader('대기중인 펀딩');
   };
 
   const handleProgressFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 2,
+      keyword: '',
     });
     setHeader('진행중인 펀딩');
   };
 
   const handleEndFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 3,
+      keyword: '',
     });
     setHeader('완료된 펀딩');
   };
 
   const handleNeedAcceptFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 0,
+      keyword: '',
     });
     setHeader('승인 필요 펀딩');
   };
   const handleDeclineFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 4,
+      keyword: '',
     });
     setHeader('거절된 펀딩');
   };
   const handleSuccessFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 5,
+      keyword: '',
     });
     setHeader('성공한 펀딩');
   };
   const handleFailFunding = () => {
     setIsEnd(false);
+    setSearchWord('');
     setFundingStatus({
       page: 1,
       per_page: 3,
       status: 6,
+      keyword: '',
     });
     setHeader('실패한 펀딩');
+  };
+
+  const handleSearch = () => {
+    console.log(searchWord);
+    setFundingStatus({ ...fundingStatus, per_page: 3, keyword: searchWord });
   };
 
   const history = useHistory();
@@ -252,6 +280,14 @@ const Funding = () => {
               );
             })}
           </Grid>
+
+          <Button
+            className="fundCreateBtn"
+            variant="contained"
+            onClick={createClick}
+          >
+            펀딩 제작하기
+          </Button>
           <Box
             mt={4}
             mb={3}
@@ -260,70 +296,128 @@ const Funding = () => {
           >
             {header}
           </Box>
-          <Box mb={2}>
-            <Button
-              className="fundBtn"
-              variant="contained"
-              onClick={handleWaitFunding}
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={2}
+          >
+            <Box>
+              <Button
+                className="fundBtn"
+                variant="contained"
+                onClick={handleWaitFunding}
+              >
+                대기중인 펀딩
+              </Button>
+              <Button
+                className="fundBtn"
+                variant="contained"
+                onClick={handleProgressFunding}
+              >
+                진행중인 펀딩
+              </Button>
+              <Button
+                className="fundBtn"
+                variant="contained"
+                onClick={handleEndFunding}
+              >
+                완료된 펀딩
+              </Button>
+              {user !== null && user.role == 'ADMIN' ? (
+                <>
+                  <Button
+                    className="fundBtn"
+                    variant="contained"
+                    onClick={handleNeedAcceptFunding}
+                  >
+                    승인 필요 펀딩
+                  </Button>
+                  <Button
+                    className="fundBtn"
+                    variant="contained"
+                    onClick={handleDeclineFunding}
+                  >
+                    거절된 펀딩
+                  </Button>
+                  <Button
+                    className="fundBtn"
+                    variant="contained"
+                    onClick={handleSuccessFunding}
+                  >
+                    성공한 펀딩
+                  </Button>
+                  <Button
+                    className="fundBtn"
+                    variant="contained"
+                    onClick={handleFailFunding}
+                  >
+                    실패한 펀딩
+                  </Button>
+                </>
+              ) : (
+                <></>
+              )}
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              style={{ width: '600px', paddingBottom: '30px' }}
             >
-              대기중인 펀딩
-            </Button>
-            <Button
-              className="fundBtn"
-              variant="contained"
-              onClick={handleProgressFunding}
+              <TextField
+                variant="outlined"
+                value={searchWord}
+                className="searchArea"
+                onChange={(e) => {
+                  setSearchWord(e.target.value);
+                }}
+                inputProps={{
+                  style: {
+                    fontSize: '1.5em',
+                    height: '10px',
+                    borderRadius: '20px',
+                  },
+                }}
+                style={{
+                  paddingRight: '5px',
+                  width: '400px',
+                  borderRadius: '20px',
+                }}
+              ></TextField>
+              <Button
+                className="ml-2 btn_main"
+                disableElevation
+                variant="contained"
+                onClick={handleSearch}
+                style={{ fontSize: '1.4em' }}
+              >
+                {' '}
+                검색{' '}
+              </Button>
+            </Box>
+          </Box>
+          <Box
+            mt={5}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            style={{
+              height: fundings.length === 0 ? '400px' : '0px',
+            }}
+          >
+            <Box
+              fontSize="3em"
+              color="silver"
+              className="nbg_bold font-smooth"
+              style={{
+                transition: 'opacity 0.5s ease-in-out',
+                visibility: fundings.length === 0 ? 'visible' : 'hidden',
+                opacity: fundings.length === 0 ? 1 : 0,
+              }}
             >
-              진행중인 펀딩
-            </Button>
-            <Button
-              className="fundBtn"
-              variant="contained"
-              onClick={handleEndFunding}
-            >
-              완료된 펀딩
-            </Button>
-            {user !== null && user.role == 'ADMIN' ? (
-              <>
-                <Button
-                  className="fundBtn"
-                  variant="contained"
-                  onClick={handleNeedAcceptFunding}
-                >
-                  승인 필요 펀딩
-                </Button>
-                <Button
-                  className="fundBtn"
-                  variant="contained"
-                  onClick={handleDeclineFunding}
-                >
-                  거절된 펀딩
-                </Button>
-                <Button
-                  className="fundBtn"
-                  variant="contained"
-                  onClick={handleSuccessFunding}
-                >
-                  성공한 펀딩
-                </Button>
-                <Button
-                  className="fundBtn"
-                  variant="contained"
-                  onClick={handleFailFunding}
-                >
-                  실패한 펀딩
-                </Button>
-              </>
-            ) : (
-              <></>
-            )}
-
-            <Button
-              className="fundCreateBtn"
-              variant="contained"
-              onClick={createClick}
-            >
-              펀딩 제작하기
-            </Button>
+              검색에 맞는 펀딩을 찾을 수 없습니다.
+            </Box>
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (

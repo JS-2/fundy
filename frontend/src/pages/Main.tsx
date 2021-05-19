@@ -74,6 +74,7 @@ const Main = () => {
       page: 1,
       per_page: 1000,
       status: 2,
+      keyword: '',
     }).then((resp) => {
       console.log(resp.data);
       let data = resp.data;
@@ -93,6 +94,7 @@ const Main = () => {
       page: 1,
       per_page: 1000,
       status: 2,
+      keyword: '',
     }).then((resp) => {
       console.log(resp.data);
       let data = resp.data;
