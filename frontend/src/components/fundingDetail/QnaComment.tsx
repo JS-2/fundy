@@ -28,7 +28,7 @@ const QnaComment = (props: Props) => {
         <Box p={1}>{com.userNickname}</Box>
       </Box>
       <Box className="commentArea" display="flex" p={1} alignItems="flex-end">
-        <Card elevation={0} style={{ backgroundColor: '#3322dd', color: 'Ivory' }}>
+        <Card elevation={0} style={{ backgroundColor: 'rgb(86 158 255)', color: 'Ivory', borderRadius:'20px', padding:'10px'}}>
           <Box m={1}>{com.fundingCommentContent}</Box>
         </Card>
         <Box mx={1} style={{ fontSize: '0.7em' }}>
@@ -78,6 +78,7 @@ const QnaComment = (props: Props) => {
             maxWidth: '60%',
             color: '#eeeeee',
             fontSize:'1.4rem',
+            borderRadius:'20px', padding:'10px'
            
             
           }}
