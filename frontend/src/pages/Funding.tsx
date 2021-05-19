@@ -35,10 +35,10 @@ import { getFundingList } from '../api/funding';
 import { IFunding, FundingStatus, User, FundForm } from '../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../reducers';
-import "./Funding.css";
+import './Funding.css';
 import FundItem from '../components/FundItem';
-import bannerTip from "../assets/img/bannerTip.png";
-import bannerCreate from "../assets/img/bannerCreate.png";
+import bannerTip from '../assets/img/bannerTip.png';
+import bannerCreate from '../assets/img/bannerCreate.png';
 import fundyTuto from '../assets/img/fundyTuto.png';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -61,7 +61,6 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 )(LinearProgress);
 
 const Funding = () => {
-
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
   const [fundings, setFundings] = useState<IFunding[]>([]);
@@ -83,12 +82,12 @@ const Funding = () => {
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
-  const [buttonNumber, setButtonNumber] = useState<number>(2);
+  const [buttonNumber, setButtonNumber] = useState<number>(1);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
     setScroll(scrollType);
-  }
+  };
 
   function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback);
@@ -172,7 +171,6 @@ const Funding = () => {
       });
       setFundingRank(data.slice(0, 3));
     });
-    
   }, [fundingStatus]);
 
   const handleWaitFunding = () => {
@@ -215,18 +213,16 @@ const Funding = () => {
   };
 
   const loginRedirect = () => {
-    alert("로그인 후 펀딩 제작이 가능합니다.");
+    alert('로그인 후 펀딩 제작이 가능합니다.');
     history.push({
-      pathname: "/login",
+      pathname: '/login',
       state: {},
     });
   };
 
-  
-
   const createRedirect = () => {
     history.push({
-      pathname: "funding/create",
+      pathname: 'funding/create',
       state: {},
     });
   };
@@ -288,43 +284,60 @@ const Funding = () => {
 
   const history = useHistory();
 
-
   return (
     <div>
-      
       <div id="bannerArea">
         <Banner></Banner>
       </div>
-      
+
       <div className="row">
         <div className="col-md-1 col-sm-1"></div>
         <div className="col-md-10 col-sm-10">
           <div className="row">
-            <div className="col-md-6" onClick={handleClickOpen('body')} style={{ padding:'5px' }}>
-              <img src={bannerTip} style={{width:'100%', borderRadius:'10px'}}/>
+            <div
+              className="col-md-6"
+              onClick={handleClickOpen('body')}
+              style={{ padding: '5px' }}
+            >
+              <img
+                src={bannerTip}
+                style={{
+                  width: '100%',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                }}
+              />
             </div>
-            <div className="col-md-6" onClick={user === null ? loginRedirect : createRedirect} style={{ padding:'5px'}}>
-            <img src={bannerCreate} style={{width:'100%', borderRadius:'10px'}}/>
-              </div>
+            <div
+              className="col-md-6"
+              onClick={user === null ? loginRedirect : createRedirect}
+              style={{ padding: '5px' }}
+            >
+              <img
+                src={bannerCreate}
+                style={{
+                  width: '100%',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                }}
+              />
+            </div>
           </div>
           <Dialog
-          className="dialogClass"
-          open={open}
-          onClose={handleClose}
-          scroll={scroll}
-          aria-labelledby="scroll-dialog-title"
-          aria-describedby="scroll-dialog-description"
-        >
-          <DialogContent className="dialog" dividers={scroll === 'paper'}>
-            <div className="modalDiv">
-              <img onClick={handleClose} width="100%" src={fundyTuto}></img>
-            </div>
-          </DialogContent>
-        </Dialog>
+            className="dialogClass"
+            open={open}
+            onClose={handleClose}
+            scroll={scroll}
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description"
+          >
+            <DialogContent className="dialog" dividers={scroll === 'paper'}>
+              <div className="modalDiv">
+                <img onClick={handleClose} width="100%" src={fundyTuto}></img>
+              </div>
+            </DialogContent>
+          </Dialog>
 
-          
-
-      
           <Box
             mt={4}
             mb={3}
@@ -346,7 +359,7 @@ const Funding = () => {
             mt={4}
             mb={3}
             className="nbg_bold font-smooth"
-            style={{ fontSize: '2em', marginTop:'80px' }}
+            style={{ fontSize: '2em', marginTop: '80px' }}
           >
             {header}
           </Box>
@@ -489,7 +502,11 @@ const Funding = () => {
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
-              <div className="col-md-4"  style={{ padding: '10px' }} key={funding.fundingId}>
+              <div
+                className="col-md-4"
+                style={{ padding: '10px' }}
+                key={funding.fundingId}
+              >
                 <FundCard funding={funding}></FundCard>
               </div>
             ))}
@@ -515,15 +532,6 @@ const Funding = () => {
           ) : (
             <></>
           )}
-
-
-
-
-
-
-
-  
-
         </div>
       </div>
     </div>
