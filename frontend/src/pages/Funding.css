@@ -7,3 +7,10 @@
     font-size: 0.5vw !important;
     margin-right: 10px !important;
 }
+
+
+
+.MuiDialog-paperWidthSm{
+    min-width: 800px !important;
+
+}

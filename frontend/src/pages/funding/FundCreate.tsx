@@ -53,6 +53,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import FundingPlaceCard from '../../components/fundComponent/FundingPlaceCard';
 import { getAllDonationPlaces } from '../../api/funding';
 import Banner from '../../components/Banner';
+import bannerLong from '../../assets/img/bannerCreateLong.png';
 
 const FundCreate = () => {
   const [fundingType, setFundingType] = useState('Donation');
@@ -297,6 +298,7 @@ const FundCreate = () => {
       <Banner></Banner>
       <div className="container">
         <div className="row">
+        
           <Box style={{ visibility: 'hidden' }}>.</Box>
           <Box
             mt={5}
@@ -304,8 +306,9 @@ const FundCreate = () => {
             className="nbg_bold font-smooth"
             style={{ fontSize: '2em' }}
           >
-            펀딩 작성하기
+            펀딩 제작하기
           </Box>
+          <img src={bannerLong} style={{width:'100%', borderRadius:'10px', marginBottom:'20px'}}></img>
           <FormControl component="fieldset">
             <RadioGroup
               row
@@ -314,7 +317,7 @@ const FundCreate = () => {
               value={fundingType}
               onChange={onChangeFundingType}
             >
-              <LightTooltip title="아이돌의 이름으로 기부되는 펀딩입니다.">
+              <LightTooltip title="아이돌의 이름으로 전액 기부되는 펀딩입니다.">
                 <FormControlLabel
                   value="Donation"
                   control={<Radio />}
@@ -328,7 +331,7 @@ const FundCreate = () => {
                   }
                 />
               </LightTooltip>
-              <LightTooltip title="일반적인 아이돌 펀딩입니다">
+              <LightTooltip title="일반적인 아이돌 펀딩입니다.기부 비율을 설정할 수 있습니다.">
                 <FormControlLabel
                   value="Basic"
                   control={<Radio />}
