@@ -91,6 +91,7 @@ const IdolSearch = () => {
 
   const handleSearch = () => {
     setKeyword(searchWord);
+    setIsEnd(false);
     setIdolList([]);
     setPage(1);
   };
