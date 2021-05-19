@@ -40,6 +40,7 @@ public class AdminService {
             Map<String, Object> userInfo = new LinkedHashMap<>();
             userInfo.put("userId", user.getUserId());
             userInfo.put("userNickname", user.getUserNickname());
+            userInfo.put("userPicture", user.getUserPicture());
             Map<String, Object> tmp = new LinkedHashMap<>();
             tmp.put("user", userInfo);
             tmp.put("officialFanHistory", auth.getOfficialFanHistory());
