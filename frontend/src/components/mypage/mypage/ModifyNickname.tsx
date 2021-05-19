@@ -57,13 +57,29 @@ const ModifyNickname = (props: Props) => {
     });
   };
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>닉네임 변경</DialogTitle>
+    <Dialog onClose={handleClose} open={open} style={{ fontSize: '1.1em' }}>
+      <Box mb={3} style={{ fontWeight: 'bold', backgroundColor: '#f74a64' }}>
+        <Box m={1.5} style={{ color: 'white', fontSize: '1.2em' }}>
+          닉네임 변경
+        </Box>
+      </Box>
       <DialogContent>
-        <Box>변경 전 닉네임: {user.nickname}</Box>
-        <Box>
+        <Box>나만의 멋진 닉네임을 등록하세요.</Box>
+        <Box mt={1} display="flex">
+          <Box>기존 닉네임:</Box>
+          <Box ml={1} className="nbg_bold">
+            {user.nickname}
+          </Box>
+        </Box>
+        <Box my={1}>
           <TextField
             fullWidth
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '1em' },
+            }}
             value={nickName}
             error={nickName != '' && !validate}
             onChange={(e) => {
