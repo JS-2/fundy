@@ -68,7 +68,7 @@ const Funding = () => {
   const [fundingRank, setFundingRank] = useState<IFunding[]>([]);
   const [fundingStatus, setFundingStatus] = useState<FundingStatus>({
     page: 1,
-    per_page: 1000,
+    per_page: 3,
     status: 2,
     keyword: '',
   });
@@ -82,7 +82,7 @@ const Funding = () => {
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
-  const [buttonNumber, setButtonNumber] = useState<number>(1);
+  const [buttonNumber, setButtonNumber] = useState<number>(2);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
@@ -132,9 +132,43 @@ const Funding = () => {
     threshold: 0,
   };
 
+  const callback = (entries: any) => {
+    const [entry] = entries;
+    setIsBottom(entry.isIntersecting);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(callback, options);
+    if (containerRef.current) {
+      observer.observe(containerRef.current!);
+    }
+    return () => observer && observer.disconnect();
+  }, [containerRef]);
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    getFundingList({
+      page: 1,
+      per_page: 1000,
+      status: 2,
+      keyword: '',
+    }).then((resp) => {
+      let data = resp.data;
+      data = data.sort((a: FundForm, b: FundForm) => {
+        const aAmount = Number(a.fundingParticipants);
+        const bAmount = Number(b.fundingParticipants);
+        if (aAmount === bAmount) {
+          return a.fundingId - b.fundingId;
+        } else {
+          return bAmount - aAmount;
+        }
+      });
+      setFundingRank(data.slice(0, 3));
+    });
+  }, []);
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
@@ -148,28 +182,10 @@ const Funding = () => {
 
   useEffect(() => {
     getFundingList(fundingStatus).then((resp) => {
-      console.log(resp.data);
+      if (resp.data.length === fundings.length) {
+        setIsEnd(true);
+      }
       setFundings(resp.data);
-    });
-
-    getFundingList({
-      page: 1,
-      per_page: 1000,
-      status: 2,
-      keyword: '',
-    }).then((resp) => {
-      console.log(resp.data);
-      let data = resp.data;
-      data = data.sort((a: FundForm, b: FundForm) => {
-        const aAmount = Number(a.fundingParticipants);
-        const bAmount = Number(b.fundingParticipants);
-        if (aAmount === bAmount) {
-          return a.fundingId - b.fundingId;
-        } else {
-          return bAmount - aAmount;
-        }
-      });
-      setFundingRank(data.slice(0, 3));
     });
   }, [fundingStatus]);
 
@@ -178,7 +194,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 1,
       keyword: '',
     });
@@ -191,7 +207,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 2,
       keyword: '',
     });
@@ -204,7 +220,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 3,
       keyword: '',
     });
@@ -232,7 +248,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 0,
       keyword: '',
     });
@@ -244,7 +260,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 4,
       keyword: '',
     });
@@ -256,7 +272,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 5,
       keyword: '',
     });
@@ -268,7 +284,7 @@ const Funding = () => {
     setSearchWord('');
     setFundingStatus({
       page: 1,
-      per_page: 1000,
+      per_page: 3,
       status: 6,
       keyword: '',
     });
@@ -534,6 +550,16 @@ const Funding = () => {
           )}
         </div>
       </div>
+      <div ref={containerRef}> </div>
+      <Box mt={10} display="flex" justifyContent="center">
+        <CircularProgress
+          style={{
+            height: !isEnd && loading ? '50px' : '0px',
+            opacity: !isEnd && loading ? 1 : 0,
+            transition: 'height 0.5s ease-in-out, opacity 0.5s ease-in-out',
+          }}
+        />
+      </Box>
     </div>
   );
 };

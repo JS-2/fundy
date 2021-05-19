@@ -98,12 +98,12 @@ const IdolSearch = () => {
 
   return (
     <div>
-      <Box mt={6} mb={6} display="flex" justifyContent="space-between">
+      <Box mt={6} mb={3} display="flex" justifyContent="space-between">
         <Box
           className="nbg_bold font-smooth"
           alignItems="center"
           justifyContent="flex-end"
-          style={{ fontSize: '2em' }}
+          style={{ fontSize: '2em', lineHeight: '70px' }}
         >
           아이돌 검색
         </Box>

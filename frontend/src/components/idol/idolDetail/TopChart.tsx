@@ -34,12 +34,7 @@ const TopChart = () => {
   }, []);
   return (
     <>
-      <Box
-        mt={10}
-        mb={3}
-        className="nbg_bold font-smooth"
-        style={{ fontSize: '2em' }}
-      >
+      <Box mt={3} className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
         아이돌 후원 순위 집계
       </Box>
       <div
