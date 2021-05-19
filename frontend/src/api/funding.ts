@@ -85,3 +85,14 @@ export const completeFunding = (funding_id: number, auth_token: string) => {
         }
     });
 }
+
+
+
+export const postPayment = (auth_token: string, funding_id: string, uid:number, payAmount:number) => {
+    return axiosInstance.post('/fundings/' + funding_id + '/pay',
+     { impUid: uid }, {
+        headers: {
+            Authorization: auth_token
+        }
+    })
+}
