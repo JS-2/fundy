@@ -7,7 +7,7 @@ import {
   CardMedia,
   Typography,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Idol } from '../common/types';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -18,7 +18,14 @@ interface Props {
 
 const IdolCard = (props: Props) => {
   const [isOver, setIsOver] = useState(false);
+  const [show, setShow] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 100);
+  }, []);
   const toDetail = () => {
     history.push('/idol/' + props.idol.idolId);
   };
@@ -28,9 +35,11 @@ const IdolCard = (props: Props) => {
       onClick={toDetail}
       style={{
         width: '100%',
-        height: '350px',
+        height: show ? '350px' : '0px',
         position: 'relative',
         cursor: 'pointer',
+        transition: 'opacity 1s ease-in-out, height 0.5s ease-in-out',
+        opacity: show ? 1 : 0,
       }}
       onMouseOver={() => {
         setIsOver(!isOver);
