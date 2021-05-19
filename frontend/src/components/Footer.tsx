@@ -1,10 +1,13 @@
-import { Box } from "@material-ui/core";
-import React from "react";
-import user from "../reducers/user";
-import "./Footer.css";
+import { Box } from '@material-ui/core';
+import React from 'react';
+import user from '../reducers/user';
+import './Footer.css';
 const Footer = () => {
   return (
-    <div className="foot col-md-12">
+    <div
+      className="foot col-md-12"
+      style={{ position: 'absolute', height: '250px' }}
+    >
       <div className="row"></div>
 
       <div className="row">
@@ -15,7 +18,7 @@ const Footer = () => {
                 메인 페이지
               </a>
             </span>
-            
+
             <span>
               <a className="footernbg" href="/funding">
                 펀딩

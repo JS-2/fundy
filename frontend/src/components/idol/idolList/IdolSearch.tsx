@@ -4,6 +4,7 @@ import {
   Card,
   CardActionArea,
   CardMedia,
+  CircularProgress,
   Grid,
   InputAdornment,
   TextField,
@@ -20,19 +21,52 @@ const IdolSearch = () => {
   const [isBottom, setIsBottom] = useState(false);
   const [keyword, setKeyword] = useState<string>();
   const [searchWord, setSearchWord] = useState<string>('');
-
+  const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef(null);
+  const [delay, setDelay] = useState<number>(1000);
+  const [isPlaying, setPlaying] = useState<boolean>(false);
+  const [isEnd, setIsEnd] = useState<boolean>(false);
 
   useEffect(() => {
     getIdolList(keyword, page).then((response) => {
+      if (response.data.length === idolList.length) {
+        setIsEnd(true);
+      }
       setIdolList([...response.data]);
     });
   }, [page]);
 
+  function useInterval(callback: () => void, delay: number | null) {
+    const savedCallback = useRef(callback);
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      if (delay === null) {
+        return;
+      }
+
+      const id = setInterval(() => savedCallback.current(), delay);
+
+      return () => clearInterval(id);
+    }, [delay]);
+  }
+
+  useInterval(
+    () => {
+      setPage(page + 1);
+    },
+    isPlaying ? delay : null
+  );
+
   useEffect(() => {
     if (isBottom) {
-      console.log('스크롤 추가');
-      setPage(page + 1);
+      setLoading(true);
+      setPlaying(true);
+    } else {
+      setLoading(false);
+      setPlaying(false);
     }
   }, [isBottom]);
 
@@ -57,10 +91,9 @@ const IdolSearch = () => {
 
   const handleSearch = () => {
     setKeyword(searchWord);
+    setIsEnd(false);
     setIdolList([]);
-    setTimeout(() => {
-      setPage(1);
-    }, 500);
+    setPage(1);
   };
 
   return (
@@ -116,6 +149,15 @@ const IdolSearch = () => {
         })}
       </Grid>
       <div ref={containerRef}> </div>
+      <Box mt={10} display="flex" justifyContent="center">
+        <CircularProgress
+          style={{
+            height: !isEnd && loading ? '50px' : '0px',
+            opacity: !isEnd && loading ? 1 : 0,
+            transition: 'height 0.5s ease-in-out, opacity 0.5s ease-in-out',
+          }}
+        />
+      </Box>
     </div>
   );
 };

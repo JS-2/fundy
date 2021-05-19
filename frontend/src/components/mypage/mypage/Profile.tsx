@@ -28,6 +28,7 @@ import { getCerts, setThumbnail } from '../../../api/user';
 import CertUserInfo from './CertUserInfo';
 import CertFan from './CertFan';
 import { setUser } from '../../../reducers/user';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 interface Cert {
   isAdult: string;
@@ -117,89 +118,94 @@ const Profile = () => {
       <ModifyNickname open={openN} onClose={handleCloseN} />
       <CertFan open={openCertFan} onClose={handleCloseFan} />
       <CertUserInfo open={openCertUserInfo} onClose={handleCloseUserInfo} />
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+      <Box
+        mx={1}
+        my={2}
+        className="nbg_bold font-smooth"
+        style={{ fontSize: '2em' }}
+      >
         나의 프로필
       </Box>
       <Card variant="outlined">
         <CardContent>
-          <Grid container>
-            <Grid item xs={2}>
-              <IconButton component="label">
-                <input
-                  type="file"
-                  accept=".gif, .jpg, .png"
-                  onChange={handleImage}
-                  style={{ display: 'none' }}
-                />
-                <Avatar className={styles.avatar}></Avatar>
-              </IconButton>
-            </Grid>
-            <Grid item xs={4}>
-              <Box ml={2} mt={1}>
-                <Grid
-                  container
-                  alignItems="center"
-                  item
-                  xs={12}
-                  className="nbg"
-                  style={{ fontSize: '0.9em' }}
-                >
+          <Box display="flex" justifyContent="space-between">
+            <Box display="flex">
+              <Box>
+                <IconButton component="label">
+                  <input
+                    type="file"
+                    accept=".gif, .jpg, .png"
+                    onChange={handleImage}
+                    style={{ display: 'none' }}
+                  />
+                  <Avatar variant="circle" className={styles.avatar}></Avatar>
+                </IconButton>
+              </Box>
+              <Box ml={2} mt={2}>
+                <Box display="flex">
                   <LockIcon
                     style={{ color: '#DE213D', fontSize: '1.4em' }}
                   ></LockIcon>
-                  <Box style={{ color: '#696969' }}>인증레벨 A+</Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  className="nbg_bold"
-                  style={{ fontSize: '1.4em' }}
+                  <Box
+                    className="nbg_m font-smooth"
+                    style={{ color: '#696969', fontSize: '1em' }}
+                  >
+                    인증레벨 {user.level}
+                  </Box>
+                </Box>
+                <Box
+                  className="nbg_bold font-smooth"
+                  style={{ fontSize: '1.7em', marginTop: '5px' }}
                 >
-                  <Box mt={1}>{user.nickname}님</Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  className="nbg_bold"
+                  {user.nickname}님
+                </Box>
+                <Box
+                  className="nbg_m font-smooth"
                   style={{ fontSize: '1em', color: 'grey' }}
                 >
                   {user.email}
-                </Grid>
+                </Box>
               </Box>
-            </Grid>
-            <Grid item xs={6}>
+            </Box>
+            <Box mr={2} style={{ marginTop: '12px' }}>
               <Box display="flex" justifyContent="flex-end">
                 <Button
                   variant="contained"
-                  className="btn_main nbg_bold"
+                  style={{ fontSize: '0.9em' }}
+                  className="btn_main nbg_bold font-smooth"
                   onClick={handleOpenN}
                 >
                   닉네임 변경
                 </Button>
                 <Button
                   variant="contained"
-                  className="btn_main nbg_bold"
-                  style={{ marginLeft: '15px' }}
+                  className="btn_main nbg_bold font-smooth"
+                  style={{ fontSize: '0.9em', marginLeft: '15px' }}
                   onClick={handleOpenPw}
                 >
                   비밀번호 변경
                 </Button>
               </Box>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </CardContent>
         <Collapse in={!fold}>
+          <Divider />
           <CardContent>
             <Grid container>
               <Grid container item xs={12}>
-                <LockIcon
-                  style={{ color: '#DE213D', fontSize: '1.4em' }}
-                ></LockIcon>
-                <Box className="nbg_bold" style={{ color: '#696969' }}>
-                  인증레벨 A+
+                <VerifiedUserIcon
+                  style={{
+                    color: '#4bb360',
+                    fontSize: '1.4em',
+                    marginRight: '3px',
+                  }}
+                />
+                <Box className="nbg_bold font-smooth" fontSize="1.1em">
+                  인증 기능
                 </Box>
               </Grid>
-              <Grid item container xs={12}>
+              <Grid item container xs={12} style={{ margin: '5px' }}>
                 <Grid item xs={3}>
                   <Grid item container xs={12} justify="center">
                     <IconButton size="small" disabled={cert?.isAdult !== 'N'}>
@@ -215,7 +221,7 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold">성인 인증</Box>
+                    <Box className="nbg_bold font-smooth">성인 인증</Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -240,7 +246,7 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold">팬활동 인증</Box>
+                    <Box className="nbg_bold font-smooth">팬활동 인증</Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -264,7 +270,7 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold">총대 신상 인증</Box>
+                    <Box className="nbg_bold font-smooth">총대 신상 인증</Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -282,7 +288,7 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold">플러스 인증</Box>
+                    <Box className="nbg_bold font-smooth">플러스 인증</Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -292,6 +298,8 @@ const Profile = () => {
         <Box display="flex" justifyContent="center">
           <Button
             fullWidth
+            style={{ borderRadius: 0 }}
+            variant="contained"
             onClick={() => {
               setFold(!fold);
             }}
