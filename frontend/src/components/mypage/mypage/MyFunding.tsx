@@ -57,6 +57,7 @@ const MyFunding = () => {
       </Box>
       <Box>
         <Button
+          className="fundBtn"
           variant="contained"
           style={{ fontSize: '1em' }}
           onClick={() => {
@@ -66,6 +67,7 @@ const MyFunding = () => {
           관심 펀딩
         </Button>
         <Button
+          className="fundBtn"
           style={{ marginLeft: '10px', fontSize: '1em' }}
           variant="contained"
           onClick={() => {
@@ -75,6 +77,7 @@ const MyFunding = () => {
           펀딩 내역
         </Button>
         <Button
+          className="fundBtn"
           style={{ marginLeft: '10px', fontSize: '1em' }}
           variant="contained"
           onClick={() => {
@@ -103,7 +106,7 @@ const MyFunding = () => {
       <div className="row" style={{ marginTop: '20px' }}>
         <Grid container spacing={1}>
           {showFundings?.map((funding, i) => (
-            <div className="col-md-4 col-sm-12" >
+            <div className="col-md-4 col-sm-12">
               <FundCard funding={funding} key={funding.fundingId}></FundCard>
             </div>
           ))}

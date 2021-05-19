@@ -52,6 +52,7 @@ const Navbar = () => {
           minWidth={480}
           height={80}
           mb={1}
+          mx={3}
           style={{ marginLeft: '32px' }}
           justifyContent="space-between"
           alignItems="center"
