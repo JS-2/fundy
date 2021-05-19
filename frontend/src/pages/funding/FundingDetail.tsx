@@ -394,7 +394,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       </Box>
                       <Box className="fundRate">
-                        {Fund?.fundingAchievementRate}%
+                        {Fund?.fundingAchievementRate}% {Fund?.fundingParticipants}
                       </Box>
                     </Box>
                   </div>

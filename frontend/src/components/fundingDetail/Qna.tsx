@@ -44,8 +44,8 @@ const Qna = () => {
   }, [params]);
 
   return (
-    <div>
-      <Grid container>
+    <div style={{border:'1px solid lightgrey', borderRadius:'20px', padding:'10px 10px 0px 10px',marginTop:'50px'}}>
+      <Grid container className="qnacontainer" >
         {comments.length !== 0 ? (
           comments.map((com) => {
             return (
@@ -76,6 +76,7 @@ const Qna = () => {
         <Grid item xs={10}>
           <TextField
             variant="outlined"
+            style={{height: 100, padding:0, fontSize: '14px'}}
             value={comment}
             onChange={(e) => {
               setComment(e.target.value);
@@ -89,7 +90,7 @@ const Qna = () => {
             fullWidth
             size="large"
             variant="contained"
-            style={{ height: 55 }}
+            style={{ height: 55, fontSize:'1.7rem',}}
             onClick={() => {
               postComment(comment, token, params.num).then(() => {
                 setComment('');

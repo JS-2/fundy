@@ -22,7 +22,7 @@ const QnaComment = (props: Props) => {
   };
 
   return user === null || user.nickname !== com.userNickname ? (
-    <Grid item xs={12}>
+    <Grid className="commentArea" item xs={12}>
       <Box display="flex" alignItems="center">
         <Avatar src={com.userPicture}></Avatar>
         <Box p={1}>{com.userNickname}</Box>
@@ -68,7 +68,7 @@ const QnaComment = (props: Props) => {
           </IconButton>
         </Box>
 
-        <Box mx={1} style={{ fontSize: '0.7em' }}>
+        <Box mx={1} style={{ fontSize: '1rem' }}>
           {com.fundingCommentTime}
         </Box>
         <Card
@@ -77,6 +77,8 @@ const QnaComment = (props: Props) => {
             backgroundColor: '#f74a64',
             maxWidth: '60%',
             color: '#eeeeee',
+            fontSize:'1.4rem'
+            
           }}
         >
           <Box m={1} style={{ wordBreak: 'break-all' }}>

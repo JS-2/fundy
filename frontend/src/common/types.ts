@@ -77,6 +77,7 @@ export interface FundForm {
   fundingName: string;
   idolName: string| null;
   fundingGoalAmount: number;
+  fundingParticipants: number;
   fundingStartTime: string| null;
   fundingEndTime: string| null;
   fundingContent: string;
@@ -103,6 +104,7 @@ export interface IFunding {
   fundingStartTime: string;
   fundingSubtitle: string;
   fundingThumbnail: string;
+  fundingParticipants: number;
 }
 
 export interface IChartData {

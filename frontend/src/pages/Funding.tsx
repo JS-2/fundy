@@ -184,7 +184,7 @@ const Funding = () => {
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
-              <div className="col-md-4" key={funding.fundingId}>
+              <div className="col-md-4"  style={{ padding: '10px' }} key={funding.fundingId}>
                 <FundCard funding={funding}></FundCard>
               </div>
             ))}
