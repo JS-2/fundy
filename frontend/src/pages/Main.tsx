@@ -20,12 +20,13 @@ import 'swiper/swiper.scss';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
 import './Main.css';
 import Banner from '../components/Banner';
-import { Idol, IFunding } from '../common/types';
-import { getFundingList } from '../api/funding';
+import { FundForm, FundingForm, Idol, IFunding } from '../common/types';
+import { getFundingList, getFundingRank } from '../api/funding';
 import { getAllIdolList } from '../api/idol';
 import IdolCard from '../components/IdolCard';
 import { Link } from 'react-router-dom';
 import FundItem from '../components/FundItem';
+import { BorderLeft } from '@material-ui/icons';
 
 // Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -58,6 +59,7 @@ function shuffle(a: Idol[]) {
 }
 const Main = () => {
   const [hotFunding, setHotFunding] = useState<IFunding[]>([]);
+  const [fundingRank, setFundingRank] = useState<IFunding[]>([]);
   const [randomIdols, setRandomIdols] = useState<Idol[]>([]);
 
   useEffect(() => {
@@ -66,6 +68,7 @@ const Main = () => {
       shuffle(data);
       setRandomIdols(data.slice(0, 8));
     });
+
     getFundingList({
       page: 1,
       per_page: 1000,
@@ -84,6 +87,28 @@ const Main = () => {
       });
       setHotFunding(data.slice(0, 6));
     });
+
+
+    getFundingList({
+      page: 1,
+      per_page: 1000,
+      status: 2,
+    }).then((resp) => {
+      console.log(resp.data);
+      let data = resp.data;
+      data = data.sort((a: FundForm, b: FundForm) => {
+        const aAmount = Number(a.fundingParticipants);
+        const bAmount = Number(b.fundingParticipants);
+        if (aAmount === bAmount) {
+          return a.fundingId - b.fundingId;
+        } else {
+          return bAmount - aAmount;
+        }
+      });
+      setFundingRank(data.slice(0, 5));
+    });
+
+
   }, []);
 
   return (
@@ -105,6 +130,22 @@ const Main = () => {
             >
               펀딩
             </Box>
+           
+
+            <Grid container spacing={3} style={{ borderRight:'0.1em solid lightgrey', paddingRight:'20px', paddingTop:0}}>
+              {hotFunding?.map((funding: IFunding, i: number) => {
+                return (
+                  <Grid
+                    item
+                    xs={6}
+                    key={funding.fundingId}
+                    style={{ padding: '10px' }}
+                  >
+                    <FundCard funding={funding}></FundCard>
+                  </Grid>
+                );
+              })}
+            </Grid>
             <Box
               mt={1}
               display="flex"
@@ -115,46 +156,22 @@ const Main = () => {
                 더보기
               </Link>
             </Box>
-
-            <Grid container spacing={3}>
-              {hotFunding?.map((funding: IFunding, i: number) => {
-                return (
-                  <Grid
-                    item
-                    xs={6}
-                    key={funding.fundingId}
-                    style={{ padding: '20px' }}
-                  >
-                    <FundCard funding={funding}></FundCard>
-                  </Grid>
-                );
-              })}
-            </Grid>
           </div>
-          <div className="col-md-4 divB">
+          <div className="col-md-4 divB" style={{paddingLeft:'20px', }}>
             <Box
               mt={2}
               mb={3}
               className="nbg_bold font-smooth"
-              style={{ fontSize: '2em' }}
+              style={{ fontSize: '2em'}}
             >
               인기 순위
             </Box>
-            <Box
-              mt={1}
-              display="flex"
-              justifyContent="flex-end"
-              style={{ marginBottom: '20px' }}
-            >
-              <Link className="nbg" to="/funding">
-                더보기
-              </Link>
-            </Box>
+        
             <div
              
               style={{ padding: '0px' }}
             >
-              {hotFunding?.map((funding: IFunding, i: number) => {
+              {fundingRank?.map((funding: IFunding, i: number) => {
                 return (
                   <div
                     className="fundDiv"

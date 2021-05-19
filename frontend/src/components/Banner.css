@@ -33,6 +33,7 @@
 .swiper-container{
   height: 300px;
   overflow: hidden;
+  margin-bottom: 100px;
 }
 
 /*

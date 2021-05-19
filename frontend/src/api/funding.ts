@@ -14,6 +14,20 @@ export const getFundingList = (fundingStatus: FundingStatus) => {
         });
 }
 
+
+export const getFundingRank = (pagep:number, per_pagep:number) => {
+    const page =pagep;
+    const per_page = per_pagep;
+    
+    return axiosInstance
+        .get('/fundings/rank', {
+            params: {
+                page,
+                per_page,
+            }
+        });
+}
+
 export const getFavoriteFundingList = (auth_token: string) => {
     return axiosInstance.get('/user/my-funding');
 }
