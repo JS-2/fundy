@@ -25,6 +25,7 @@ import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 import CertManage from '../pages/admin/Admin';
 import Admin from '../pages/admin/Admin';
+import Places from '../pages/Places';
 
 const index = () => {
   return (
@@ -32,7 +33,7 @@ const index = () => {
       <Navbar />
       <ScrollToTop />
       <Box display="flex" justifyContent="center">
-        <Box className="col-md-12">
+        <div className="mainArea col-md-12">
           <Switch>
             <Route path="/login" component={Login} exact />
             <Route path="/regist" component={Regist} exact />
@@ -54,9 +55,10 @@ const index = () => {
             <Route path="/idol/:idol_id" component={IdolDetail} exact />
             <Route path="/" component={Main} exact />
             <Route path="/admin" component={Admin} exact />
+            <Route path="/places" component={Places} exact />
             <Redirect from="*" to="/" />
           </Switch>
-        </Box>
+        </div>
       </Box>
       <Footer />
     </BrowserRouter>

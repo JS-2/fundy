@@ -18,7 +18,7 @@ import { Grid, Paper, Box } from '@material-ui/core';
 import FundCard from '../components/FundCard';
 import 'swiper/swiper.scss';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
-import { withRouter } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import Banner from '../components/Banner';
 import FundCreate from '../pages/funding/FundCreate';
 import './Main.css';
@@ -26,6 +26,7 @@ import { getFundingList } from '../api/funding';
 import { IFunding, FundingStatus, User } from '../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../reducers';
+import "./Funding.css";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
@@ -52,29 +53,16 @@ const Funding = () => {
   const [fundingStatus, setFundingStatus] = useState<FundingStatus>({
     page: 1,
     per_page: 1000,
-    status: 1,
-    time: 1,
+    status: 2,
   });
   const [header, setHeader] = useState<string>('진행중인 펀딩');
   const user: User = useSelector((state: rootState) => state.userReducer.user);
 
   useEffect(() => {
     getFundingList(fundingStatus).then((resp) => {
+      console.log(resp.data);
       setFundings(resp.data);
     });
-    if (fundingStatus.time === 2) {
-      getFundingList({
-        page: 1,
-        per_page: 1000,
-        status: 1,
-        time: 3,
-      }).then((resp) => {
-        console.log('실패펀딩들', resp.data);
-        setFailFundings(resp.data);
-      });
-    } else {
-      setFailFundings([]);
-    }
   }, [fundingStatus]);
 
   const handleWaitFunding = () => {
@@ -82,7 +70,6 @@ const Funding = () => {
       page: 1,
       per_page: 1000,
       status: 1,
-      time: 0,
     });
     setHeader('대기중인 펀딩');
   };
@@ -91,8 +78,7 @@ const Funding = () => {
     setFundingStatus({
       page: 1,
       per_page: 1000,
-      status: 1,
-      time: 1,
+      status: 2,
     });
     setHeader('진행중인 펀딩');
   };
@@ -101,8 +87,7 @@ const Funding = () => {
     setFundingStatus({
       page: 1,
       per_page: 1000,
-      status: 1,
-      time: 2,
+      status: 3,
     });
     setHeader('완료된 펀딩');
   };
@@ -112,7 +97,6 @@ const Funding = () => {
       page: 1,
       per_page: 1000,
       status: 0,
-      time: 1,
     });
     setHeader('승인 필요 펀딩');
   };
@@ -120,10 +104,33 @@ const Funding = () => {
     setFundingStatus({
       page: 1,
       per_page: 1000,
-      status: 2,
-      time: 1,
+      status: 4,
     });
     setHeader('거절된 펀딩');
+  };
+  const handleSuccessFunding = () => {
+    setFundingStatus({
+      page: 1,
+      per_page: 1000,
+      status: 5,
+    });
+    setHeader('성공한 펀딩');
+  };
+  const handleFailFunding = () => {
+    setFundingStatus({
+      page: 1,
+      per_page: 1000,
+      status: 6,
+    });
+    setHeader('실패한 펀딩');
+  };
+
+  const history = useHistory();
+  const createClick = () => {
+    history.push({
+      pathname: '/funding/create',
+      state: {},
+    });
   };
 
   return (
@@ -132,39 +139,54 @@ const Funding = () => {
         <Banner></Banner>
       </div>
       <div className="row">
-        <div className="col-md-1 col-sm-2"></div>
-        <div className="col-md-10 col-sm-8">
-          <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+        <div className="col-md-1 col-sm-1"></div>
+        <div className="col-md-10 col-sm-10">
+          <Box
+            mt={4}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
             {header}
           </Box>
           <Box mb={2}>
-            <Button variant="contained" onClick={handleWaitFunding}>
+            <Button className="fundBtn" variant="contained" onClick={handleWaitFunding}>
               대기중인 펀딩
             </Button>
-            <Button variant="contained" onClick={handleProgressFunding}>
+            <Button className="fundBtn" variant="contained" onClick={handleProgressFunding}>
               진행중인 펀딩
             </Button>
-            <Button variant="contained" onClick={handleEndFunding}>
+            <Button className="fundBtn" variant="contained" onClick={handleEndFunding}>
               완료된 펀딩
             </Button>
-            {user.role == 'ADMIN' ? (
+            {user !== null && user.role == 'ADMIN' ? (
               <>
-                <Button variant="contained" onClick={handleNeedAcceptFunding}>
+                <Button className="fundBtn" variant="contained" onClick={handleNeedAcceptFunding}>
                   승인 필요 펀딩
                 </Button>
-                <Button variant="contained" onClick={handleDeclineFunding}>
+                <Button className="fundBtn" variant="contained" onClick={handleDeclineFunding}>
                   거절된 펀딩
+                </Button>
+                <Button className="fundBtn" variant="contained" onClick={handleSuccessFunding}>
+                  성공한 펀딩
+                </Button>
+                <Button className="fundBtn" variant="contained" onClick={handleFailFunding}>
+                  실패한 펀딩
                 </Button>
               </>
             ) : (
               <></>
             )}
+
+            <Button className="fundCreateBtn" variant="contained" onClick={createClick}>
+              펀딩 제작하기
+            </Button>
           </Box>
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
-              <Grid item xs={4} key={funding.fundingId}>
+              <div className="col-md-4"  style={{ padding: '10px' }} key={funding.fundingId}>
                 <FundCard funding={funding}></FundCard>
-              </Grid>
+              </div>
             ))}
           </Grid>
           {failFundings.length !== 0 ? (
@@ -181,9 +203,9 @@ const Funding = () => {
           )}
           {failFundings.length !== 0 ? (
             failFundings?.map((funding: IFunding, i: number) => (
-              <Grid item xs={4} key={funding.fundingId}>
+              <div className="col-lg-4" key={funding.fundingId}>
                 <FundCard funding={funding}></FundCard>
-              </Grid>
+              </div>
             ))
           ) : (
             <></>

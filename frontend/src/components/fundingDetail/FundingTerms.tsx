@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
-import './FundingBoard.css';
+import './FundingTerms.css';
 import { Table } from "@material-ui/core";
+import termsBanner from '../../assets/img/termsBanner.png'
+
 
 
 
@@ -20,39 +22,26 @@ const useStyles = makeStyles((theme) =>
 
 class FundingTerms extends Component {
 
- 
-
-    state = {
-      boards: [
-        {
-          brdno: 1,
-          brdwriter: "Lee SunSin",
-          brdtitle: "If you intend to live then you die",
-          brddate: new Date(),
-        },
-        {
-          brdno: 2,
-          brdwriter: "So SiNo",
-          brdtitle: "Founder for two countries",
-          brddate: new Date(),
-        },
-      ],
-    };
-  
     
     render() {
       return (
      
-        <div className="container">
-            <h2>펀딩 약관</h2>
+        <div className="terms">
+     
+            <img className="termsBanner col-md-12 col-sm-12" style={{borderRadius:'50px'}} src={termsBanner}></img>
 
-            <h5>펀딩 약관 영역입니다 펀디는 펀딩을 주관하는 플랫폼입니다.</h5>
+
+        
+            <article>
+              <hr></hr>
+              <br></br>
+
+            <h1>펀딩 약관</h1>
             <hr>
             </hr>
             <br></br>
-            <article>
 
-  <h1>개인정보처리방침</h1>
+  <h2>개인정보처리방침</h2>
   <p>fundy (주)는 이용자들의 개인정보를 소중히 다루고 있습니다.</p>
   <div className="update">
     <h5>업데이트 노트</h5>
@@ -85,7 +74,7 @@ class FundingTerms extends Component {
   </div>
   <hr/>
   <h2 id="1-개인정보처리방침의-기본방향">1. 개인정보처리방침의 기본방향</h2>
-  <p>WADIZ 서비스를 제공하는 와디즈플랫폼 (주)(이하 회사)는 서비스 이용을 위해 회원이 제공하신 개인 정보를 매우 중요하게 여기고, 개인정보처리방침을 수립하여 이를 엄격히 준수하고 있습니다. 회사의 개인정보처리방침은 관련 법령 및 정보통신부가 제정한 개인정보보호지침을 준수하고 있으며, 개인정보가 유출되어 피해를 입지 않도록 개인정보 보호에 최선을 다할 것입니다. 회원 여러분은 언제든지 이 처리방침을 열람하여 확인하실 수 있으며, 개인정보처리방침은 법령 및 정부지침의 변경과 보다 나은 서비스 제공을 위해서 그 내용이 변경될 수 있습니다.</p>
+  <p>fundy 서비스를 제공하는 펀디플랫폼 (주)(이하 회사)는 서비스 이용을 위해 회원이 제공하신 개인 정보를 매우 중요하게 여기고, 개인정보처리방침을 수립하여 이를 엄격히 준수하고 있습니다. 회사의 개인정보처리방침은 관련 법령 및 정보통신부가 제정한 개인정보보호지침을 준수하고 있으며, 개인정보가 유출되어 피해를 입지 않도록 개인정보 보호에 최선을 다할 것입니다. 회원 여러분은 언제든지 이 처리방침을 열람하여 확인하실 수 있으며, 개인정보처리방침은 법령 및 정부지침의 변경과 보다 나은 서비스 제공을 위해서 그 내용이 변경될 수 있습니다.</p>
   <h2 id="2-목차">2. 목차</h2>
   <p>회사의 개인정보처리방침은 다음과 같은 내용을 담고 있습니다.</p>
   <ul >
@@ -111,7 +100,7 @@ class FundingTerms extends Component {
       </ul>
     </li>
     <li>취급정지 요구
-      <ul>
+      <ul>  
         <li>제1항에 따른 권리 행사는 회사에 대해 서면, 전화, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있으며 회사는 이에 대해 지체없이 조치하겠습니다.</li>
         <li>이용자가 개인정보의 오류 등에 대한 정정 또는 삭제를 요구한 경우에는 회사는 정정 또는 삭제를 완료할 때까지 당해 개인정보를 이용하거나 제공하지 않습니다.</li>
         <li>만 14세 미만 아동의 경우, 제1항에 따른 권리 행사는 이용자의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다. 이 경우, 법정대리인은 이용자의 모든 권리를 가집니다.</li>
@@ -326,10 +315,10 @@ class FundingTerms extends Component {
     </li>
     <li>아래의 경우에 해당하는 경우 회원의 권익보호를 위하여 휴면 상태로 전환되지 않습니다.
       <ul>
-        <li>와디즈 계좌에 잔금이 남아있는 회원</li>
+        <li>펀디 계좌에 잔금이 남아있는 회원</li>
         <li>W9 가입 후 유효기간이 만료되지 않은 회원</li>
-        <li>펀딩에 참여하여 와디즈의 서비스를 제공받고 있는 중인 회원</li>
-        <li>투자에 참여하여 와디즈의 서비스를 제공받고 있는 중인 회원</li>
+        <li>펀딩에 참여하여 펀디의 서비스를 제공받고 있는 중인 회원</li>
+        <li>투자에 참여하여 펀디의 서비스를 제공받고 있는 중인 회원</li>
       </ul>
     </li>
     <li>휴면 상태 전환 30일 전까지 휴면 예정 회원에게 휴면 전환 예정일, 별도 분리 보관되는 사실 및 개인정보 항목이 이메일을 통해 사전 안내됩니다. 해당 통지 수단에 대한 정보가 부재 또는 오류인 경우에는 홈페이지 공지사항 게시로 대체됩니다.</li>

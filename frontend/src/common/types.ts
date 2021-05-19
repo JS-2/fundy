@@ -61,9 +61,13 @@ export interface IdolDetailInfo {
 }
 
 export interface FundForm {
+  donationPlaceId: number | null;
+  donationRate: number;
+  fundingAchievementRate: string|null;
+  fundingAmount: number;
+  fundingConfirm: string;
   fundingId: number;
   userPays: number[]|null;
-  donationPlaceId: number | null;
   idolId: number;
   userId: number;
   userNickname: string;
@@ -73,6 +77,7 @@ export interface FundForm {
   fundingName: string;
   idolName: string| null;
   fundingGoalAmount: number;
+  fundingParticipants: number;
   fundingStartTime: string| null;
   fundingEndTime: string| null;
   fundingContent: string;
@@ -85,21 +90,21 @@ export interface FundForm {
   location: string|null;
   fundDetail: string|null;
   isGoodFunding: boolean|null;
-  fundingAchievementRate: string|null;
-  fundingAmount: number;
   fundingSubtitle: string;
   fundingRemainDay: number;
 }
 
 export interface IFunding {
-  fundingId: number;
-  fundingName: string;
-  fundingSubtitle: string | null;
-  fundingThumbnail: string;
-  fundingRemainDay: number;
   fundingAchievementRate: number;
   fundingAmount: string;
-  fundingGoalAmount: number;
+  fundingEndTime: string;
+  fundingId: number;
+  fundingName: string;
+  fundingRemainDay: number;
+  fundingStartTime: string;
+  fundingSubtitle: string;
+  fundingThumbnail: string;
+  fundingParticipants: number;
 }
 
 export interface IChartData {
@@ -169,5 +174,4 @@ export interface FundingStatus {
   page: number;
   per_page: number;
   status: number;
-  time: number;
 }

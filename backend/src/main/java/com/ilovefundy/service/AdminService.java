@@ -1,13 +1,12 @@
 package com.ilovefundy.service;
 
-import com.ilovefundy.dao.DonationPlaceDao;
-import com.ilovefundy.dao.FundingDao;
-import com.ilovefundy.dao.FundingRegisterDao;
-import com.ilovefundy.dao.PayDao;
+import com.ilovefundy.dao.*;
 import com.ilovefundy.dao.user.UserDao;
+import com.ilovefundy.entity.donation.Donation;
 import com.ilovefundy.entity.donation.DonationPlace;
 import com.ilovefundy.entity.funding.FundingProject;
 import com.ilovefundy.entity.funding.FundingRegister;
+import com.ilovefundy.entity.idol.Idol;
 import com.ilovefundy.entity.pay.PayInfo;
 import com.ilovefundy.entity.user.User;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -25,6 +25,8 @@ public class AdminService {
     private final UserDao userDao;
     private final FundingDao fundingDao;
     private final DonationPlaceDao donationPlaceDao;
+    private final IdolDao idolDao;
+    private final DonationDao donationDao;
 
     private final MailService mailService;
 
@@ -110,30 +112,38 @@ public class AdminService {
     @Transactional
     public boolean completeFunding(int funding_id) {
         FundingProject fundingProject = fundingDao.findByFundingId(funding_id);
-        // 이미 완료 처리된 프로젝트라면
-        if(fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Success ||
-            fundingProject.getIsConfirm() == FundingProject.FundingConfirm.Fail) {
+        // 승인된 펀딩 중, 기한 마감된 펀딩이 아닐 때
+        if(fundingProject.getIsConfirm() != FundingProject.FundingConfirm.ApprovePost) {
             return false;
+        }
+        // 펀딩 모금액
+        long fundingAmount = 0;
+        List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
+        for(PayInfo payInfo : fundingPayInfoList) {
+            fundingAmount += payInfo.getPayAmount();
+        }
+        // 펀딩 성공
+        if(fundingAmount >= fundingProject.getFundingGoalAmount()) {
+            // 성공표시
+            fundingProject.setIsConfirm(FundingProject.FundingConfirm.Success);
+        }
+        else {
+            fundingProject.setIsConfirm(FundingProject.FundingConfirm.Fail);
         }
         // 기부와 관련된 프로젝트라면
         if(fundingProject.getDonationRate() > 0) {
             DonationPlace donationPlace = donationPlaceDao.findByDonationPlaceId(fundingProject.getDonationPlaceId());
-            long fundingAmount = 0;
-            List<PayInfo> fundingPayInfoList = fundingProject.getUserPays();
-            for(PayInfo payInfo : fundingPayInfoList) {
-                fundingAmount += payInfo.getPayAmount();
-            }
-            // 펀딩 성공
-            if(fundingAmount >= fundingProject.getFundingGoalAmount()) {
-                // 기부처에 전달
-                fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
-                donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
-                donationPlaceDao.save(donationPlace);
-                fundingProject.setIsConfirm(FundingProject.FundingConfirm.Success);
-            }
-            else {
-                fundingProject.setIsConfirm(FundingProject.FundingConfirm.Fail);
-            }
+            fundingAmount *= (fundingProject.getDonationRate() * 0.01); // 기부금액
+            donationPlace.setPlaceTotalAmount(donationPlace.getPlaceTotalAmount() + fundingAmount);
+            donationPlaceDao.save(donationPlace);
+
+            Idol idol = idolDao.getOne(fundingProject.getIdolId());
+            Donation donation = new Donation();
+            donation.setIdol(idol);
+            donation.setDonationPlace(donationPlace);
+            donation.setIdolDonationAmount(fundingAmount);
+            donation.setDonationDate(LocalDate.now());
+            donationDao.save(donation);
         }
         fundingDao.save(fundingProject);
         return true;

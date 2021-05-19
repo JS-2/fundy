@@ -27,7 +27,7 @@ const IdolCard = (props: Props) => {
     <Card
       onClick={toDetail}
       style={{
-        width: '225px',
+        width: '100%',
         height: '350px',
         position: 'relative',
         cursor: 'pointer',
@@ -52,14 +52,14 @@ const IdolCard = (props: Props) => {
         }
       />
       <div
-        className="nbg_bold"
+        className="nbg_bold font-smooth"
         style={
           isOver
             ? {
                 position: 'absolute',
                 bottom: -25,
                 right: 12,
-                fontSize: '2.1em',
+                fontSize: '2.5em',
                 color: 'white',
                 opacity: 0,
                 transition: 'all 0.3s ease-out',
@@ -68,7 +68,7 @@ const IdolCard = (props: Props) => {
                 position: 'absolute',
                 bottom: 5,
                 right: 12,
-                fontSize: '2.1em',
+                fontSize: '2.5em',
                 color: 'white',
                 opacity: 0.88,
                 transition: 'all 0.3s ease-out',

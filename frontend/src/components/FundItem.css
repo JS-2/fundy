@@ -1,0 +1,67 @@
+
+.user {
+  color: grey;
+  font-size: 0.9em;
+}
+
+.fundDiv{
+  padding:0px;
+}
+
+.fundDiv:hover{
+  -webkit-filter:brightness(0.95);
+  cursor: pointer;
+}
+.WithStyles\(ForwardRef\(LinearProgress\)\)-bar-29 {
+  background-color: #f74a64 !important;
+}
+
+.fundNameTxt{
+  margin-top:0px;
+  
+}
+.rankArea{
+  background-color: #ffffff;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  color: rgb(44, 44, 44);
+  font-size: 16px !important;
+  height: 130px;
+  padding-left: 10px;
+}
+.fundItem{
+
+}
+.ddayBadge {
+  height: 28px !important;
+  background-color: #f74a64 !important;
+  color: white !important;
+  font-weight: bold;
+  padding-right: 3px !important;
+  padding-left: 3px !important;
+}
+.cardImgA {
+  transform: scale(1, 1);
+  transition: all 0.2s ease-in-out !important;
+}
+
+.cardImgA:hover {
+  transform: scale(1.1, 1.1);
+  overflow: hidden;
+}
+
+.fundItem:hover > .cardImgA{
+    transform: scale(1.1, 1.1);
+    overflow: hidden;
+  
+}
+
+.itemText{
+  background-color: white;
+}
+
+
+.ranking{
+  font-weight: bolder;
+  font-size: 2rem;
+}

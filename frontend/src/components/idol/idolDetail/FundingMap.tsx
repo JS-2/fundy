@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Card } from '@material-ui/core';
 import { Opacity } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { Idol, IDonationPlace } from '../../../common/types';
@@ -12,95 +12,114 @@ declare global {
 interface Props {
   idolInfo: Idol | undefined;
   data: IDonationPlace[];
+  handleGetPlaceId: (place_id: number) => void;
 }
 
 const { kakao } = window;
 
 const FundingMap = (props: Props) => {
-  const circleSet = (map: any, place: IDonationPlace, geocoder: any) => {
+  const markerSet = (map: any, place: IDonationPlace, geocoder: any) => {
     geocoder.addressSearch(place.placeAddress, (result: any, status: any) => {
       if (status == kakao.maps.services.Status.OK) {
         let iwPosition = new kakao.maps.LatLng(result[0].y, result[0].x);
-        var circle = new kakao.maps.Circle({
-          center: iwPosition, // 원의 중심좌표 입니다
-          radius: 10000, // 미터 단위의 원의 반지름입니다
-          strokeWeight: 1, // 선의 두께입니다
-          strokeColor: '#f74a64', // 선의 색깔입니다
-          strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
 
-          fillColor: '#f74a64', // 채우기 색깔입니다
-          fillOpacity: 0.5, // 채우기 불투명도 입니다
+        var imageSrc;
+        if (place.donationPlaceId === 1) {
+          imageSrc = require('../../../assets/img/heart_marker.png').default;
+        } else if (place.donationPlaceId === 2) {
+          imageSrc = require('../../../assets/img/pretty_marker.png').default;
+        } else if (place.donationPlaceId === 3) {
+          imageSrc = require('../../../assets/img/good_marker.png').default;
+        } else if (place.donationPlaceId === 4) {
+          imageSrc = require('../../../assets/img/pu_marker.png').default;
+        }
+        var imageSize = new kakao.maps.Size(50, 60); // 마커이미지의 크기입니다
+        var imageOption = { offset: new kakao.maps.Point(26.5, 67) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          ),
+          markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+        var marker = new kakao.maps.Marker({
+          position: iwPosition,
+          image: markerImage,
         });
 
-        circle.setMap(map);
-        var infowindow: any;
+        marker.setMap(map);
+        var logo: any;
+        if (place.donationPlaceId === 1) {
+          logo = require('../../../assets/img/heart_logo.jpg').default;
+        } else if (place.donationPlaceId === 2) {
+          logo = require('../../../assets/img/pretty_logo.png').default;
+        } else if (place.donationPlaceId === 3) {
+          logo = require('../../../assets/img/good_logo.jpg').default;
+        } else if (place.donationPlaceId === 4) {
+          logo = require('../../../assets/img/pu_logo.jpg').default;
+        }
+        var iwContent = `
+          <span style="display: block; padding:10px; width:180px;">
+            <div style="display: flex; align-items: center;">
+              <img src="${logo}" style="width: 50px; height: 50px; margin-left: 10px; margin-right: 5px;"/>
+              <div>
+                <div style="font-weight: bold;">
+                  ${place.placeName}
+                </div>
+                <div>
+                  ${place.idolDonationPlaceAmount}원
+                </div>
+              </div>
+            </div>
+          </span>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
-        kakao.maps.event.addListener(circle, 'mouseover', function () {
-          infowindow = new kakao.maps.InfoWindow({
-            map: map, // 인포윈도우가 표시될 지도
-            position: iwPosition,
-            content: `
-            <div style='width: 200px; height:50px'>
-              ${place.placeName}<br/>
-              ${place.idolDonationPlaceAmount}원
-            </div>`,
-          });
-          for (let i = 0; i < 30; i++) {
-            setTimeout(() => {
-              circle.setOptions({ fillOpacity: 0.5 + 0.01 * i });
-            }, i * 5);
-          }
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+          content: iwContent,
         });
 
-        kakao.maps.event.addListener(circle, 'mouseout', function () {
-          for (let i = 0; i < 30; i++) {
-            setTimeout(() => {
-              circle.setOptions({ fillOpacity: 0.8 - 0.01 * i });
-            }, i * 5);
-          }
+        // 마커에 클릭이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+          // 마커 위에 인포윈도우를 표시합니다
+          props.handleGetPlaceId(place.donationPlaceId);
+          infowindow.open(map, marker);
+        });
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+          props.handleGetPlaceId(0);
           infowindow.close();
         });
-
-        kakao.maps.event.addListener(
-          circle,
-          'mousemove',
-          function (mouseEvent: any) {
-            let position = new kakao.maps.LatLng(
-              mouseEvent.latLng.Ma + 0.05,
-              mouseEvent.latLng.La
-            );
-            infowindow.setPosition(position);
-          }
-        );
       }
     });
   };
   useEffect(() => {
     const container = document.getElementById('myMap');
     const options = {
-      center: new kakao.maps.LatLng(36, 128),
-      level: 13,
-      draggable: false,
-      zoomable: false,
+      center: new kakao.maps.LatLng(37.5, 127),
+      level: 10,
     };
     const map = new kakao.maps.Map(container, options);
     let geocoder = new kakao.maps.services.Geocoder();
     props.data.forEach((place: IDonationPlace) => {
-      circleSet(map, place, geocoder);
+      markerSet(map, place, geocoder);
     });
-  }, [props]);
+  }, [props.data]);
   return (
     <>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
-        {props.idolInfo?.idolName}의 기부지도
-      </Box>
       <div
-        id="myMap"
         style={{
-          width: '600px',
-          height: '700px',
+          width: '100%',
+          height: '600px',
         }}
-      ></div>
+      >
+        <div
+          id="myMap"
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+        ></div>
+      </div>
     </>
   );
 };

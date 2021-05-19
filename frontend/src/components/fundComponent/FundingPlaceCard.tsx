@@ -27,13 +27,25 @@ const FundingPlaceCard = (props: Props) => {
       }}
       style={
         place.donationPlaceId === placeId
-          ? { border: 'solid 3px #f74a64', cursor: 'pointer' }
-          : { border: 'solid 3px silver', cursor: 'pointer' }
+          ? {
+              border: 'solid 2px #f74a64',
+              cursor: 'pointer',
+              height: '250px',
+              transition: 'all 0.2s ease-out',
+            }
+          : {
+              border: 'solid 2px #e0e0e0',
+              cursor: 'pointer',
+              height: '250px',
+              transition: 'all 0.2s ease-out',
+            }
       }
     >
       <CardHeader
-        title={place.placeName}
-        subheader={place.placeAddress}
+        title={<div className="nbg_bold font-smooth">{place.placeName}</div>}
+        subheader={
+          <div className="nbg_bold font-smooth">{place.placeAddress}</div>
+        }
         action={
           <CheckIcon
             style={
@@ -57,7 +69,9 @@ const FundingPlaceCard = (props: Props) => {
             </Card>
           </Grid>
           <Grid item xs={9} container alignContent="center">
-            <Box>{place.placeDescription}</Box>
+            <Box className="nbg_m font-smooth" fontSize="1em">
+              {place.placeDescription}
+            </Box>
           </Grid>
         </Grid>
       </CardContent>

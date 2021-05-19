@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 @font-face {
   font-family: Shrikhand;
   src: url(./assets/fonts/Shrikhand-Regular.ttf) format('truetype');
@@ -40,12 +44,23 @@ code {
   font-size: 4em;
 }
 
+.mainArea {
+  padding: 0px 0px 0px 0px !important;
+  width:100%;
+}
+
 .nbg {
   font-family: NanumBarunGothic !important;
+  font-size: 1.6rem;
 }
 
 .nbg_bold {
   font-family: NanumBarunGothicBold !important;
+}
+
+.nbg_m {
+  font-family: NanumBarunGothic !important;
+  font-size: 1.6rem;
 }
 
 .btn_main {
@@ -67,6 +82,42 @@ h3,
 h4,
 h5,
 h6,
-p {
-  font-family: NanumBarunGothic !important;
+p,
+span {
+  font-family: 'Noto Sans KR' !important;
+}
+
+.font-smooth {
+  transform: rotate(-0.03deg) !important;
+}
+
+h1{
+  font-size: 10px;
+}
+h2{
+  font-size: 10px;
+}
+h3{
+  font-size: 10px;
+}
+h4{
+  font-size: 10px;
+}
+h5{
+  font-size: 10px;
+}
+h6{
+  font-size: 10px;
+}
+
+input{
+  font-size: 15px !important;
+}
+
+.MuiInputBase{
+  padding: 5px 5px 5px 5px !important;
+}
+
+.Muioption-popup{
+  font-size: 20px !important;
 }

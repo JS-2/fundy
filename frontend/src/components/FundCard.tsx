@@ -40,26 +40,29 @@ interface Props {
 const FundCard = (props: Props) => {
   const [fundingInfo, setFundingInfo] = useState<IFunding>();
   const history = useHistory();
-  const [dday, setDday]= useState<string>();
-  const [percentage, setPercentage]= useState<number>();
-  
-
+  const [dday, setDday] = useState<string>();
+  const [percentage, setPercentage] = useState<number>();
 
   useEffect(() => {
     if (props.funding !== null) {
-      if(props.funding.fundingRemainDay==0){
-        setDday("마감 임박");
-      }else if(props.funding.fundingRemainDay<0){
-        setDday("펀딩 마감");
-      }else{
-        setDday("D-"+props.funding.fundingRemainDay);
+      if (
+        new Date(props.funding.fundingEndTime).getTime() -
+          new Date().getTime() <
+        0
+      ) {
+        setDday('펀딩 마감');
+      } else if (props.funding.fundingRemainDay == 0) {
+        setDday('마감 임박');
+      } else if (props.funding.fundingRemainDay < 0) {
+        setDday('펀딩 마감');
+      } else {
+        setDday('D-' + props.funding.fundingRemainDay);
       }
       setFundingInfo(props.funding);
-      if(fundingInfo?.fundingAchievementRate!=null){
-        if(fundingInfo?.fundingAchievementRate>=100){
+      if (fundingInfo?.fundingAchievementRate != null) {
+        if (fundingInfo?.fundingAchievementRate >= 100) {
           setPercentage(100);
-        }else setPercentage(fundingInfo?.fundingAchievementRate);
-
+        } else setPercentage(fundingInfo?.fundingAchievementRate);
       }
     }
   }, [props]);
@@ -73,31 +76,38 @@ const FundCard = (props: Props) => {
     });
   };
 
-
-  return (  
+  return (
+    <div className="  ">
     <Card
       className="cardClass"
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
-      style={{ padding: '0', height: '100%', display: 'block' }}
+      style={{ padding: '0', height: '100%', display: 'block', border:'solid 1px lightgrey', borderRadius:'10px', paddingBottom:''}}
+      elevation={0}
     >
       <CardActionArea>
+        <Card elevation={0} >
         <CardMedia
-          className="cardImg"
+          className="cardImgA"
           component="img"
           alt="펀딩 카드 이미지"
-          height="200"
+          height="250"
+          
+  
+          
           image={fundingInfo?.fundingThumbnail}
           title="Card Image"
-          
         />
-        <CardContent style={{ padding: '5px' }}>
-          <Chip className="ddayBadge" label={dday} /> 
+        </Card>
+        <CardContent style={{ padding: '10px' }}>
+          <Chip className="ddayBadge" label={dday} />
+          <h5>{fundingInfo?.fundingParticipants}명 참여</h5>
           <Typography
             gutterBottom
-            variant="h6"
-            component="h6"
+            variant="h5"
+            component="h5"
             style={{
               fontWeight: 'bold',
+              fontSize: '2rem',
               whiteSpace: 'nowrap',
               width: 'inherit',
               overflow: 'hidden',
@@ -107,20 +117,31 @@ const FundCard = (props: Props) => {
             {fundingInfo?.fundingName}
           </Typography>
 
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="h5" color="textSecondary" component="h4" 
+          style={{
+              whiteSpace: 'nowrap',
+              width: 'inherit',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}>
             {fundingInfo?.fundingSubtitle}
           </Typography>
           <Box my={1} display="flex" justifyContent="space-between">
-            <Box>{fundingInfo?.fundingAmount}원</Box>
-            <Box>{fundingInfo?.fundingAchievementRate}%</Box>
+            <Box className="fundingAmountTxt">{fundingInfo?.fundingAmount}원</Box>
+            <Box className="fundingAmountTxt">{fundingInfo?.fundingAchievementRate}%</Box>
           </Box>
           <BorderLinearProgress
             variant="determinate"
-            value={percentage}
+            value={
+              Number(fundingInfo?.fundingAchievementRate) > 100
+                ? 100
+                : Number(fundingInfo?.fundingAchievementRate)
+            }
           />
         </CardContent>
       </CardActionArea>
     </Card>
+    </div>
   );
 };
 

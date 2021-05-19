@@ -1,9 +1,3 @@
-.nav {
-  top: 0;
-  left: 0;
-  right: 0;
-  line-height: 110px;
-}
 
 .user {
   color: grey;
@@ -22,12 +16,12 @@
   padding-right: 3px !important;
   padding-left: 3px !important;
 }
-.cardClass {
+.cardImgA {
   transform: scale(1, 1);
   transition: all 0.2s ease-in-out !important;
 }
 
-.cardClass:hover {
-  transform: scale(1.05, 1.05);
+.cardImgA:hover {
+  transform: scale(1.1, 1.1);
   overflow: hidden;
 }

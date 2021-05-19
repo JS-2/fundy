@@ -46,44 +46,48 @@ const Navbar = () => {
 
   return (
     <>
-      <Box justifyContent="center" className="nav" minWidth={1080}>
+      <Box justifyContent="center" className="nav" minWidth={480}>
         <Box
           display="flex"
-          width="100%"
-          maxWidth={1440}
-          minWidth={1080}
+          minWidth={480}
           height={80}
           mb={1}
-          mx={4}
+          style={{ marginLeft: '32px' }}
           justifyContent="space-between"
           alignItems="center"
+          alignContent="center"
         >
-          <Box display="flex">
+          <Box
+            display="flex"
+            height={80}
+            alignItems="center"
+            alignContent="center"
+          >
             <Box className="logo" mr={5}>
               <a id="logoAnchor" href="/">
                 fundy
               </a>
             </Box>
-            <Box mx={3}>
+            <Box className="font-smooth" mx={3}>
               <a className="nbg" href="/funding">
                 펀딩
               </a>
             </Box>
-            <Box mx={3}>
+            <Box className="font-smooth" mx={3}>
               <a className="nbg" href="/idol">
                 아이돌
               </a>
             </Box>
-            <Box mx={3}>
-              <a className="nbg" href="/store">
-                스토어
+            <Box className="font-smooth" mx={3}>
+              <a className="nbg" href="/places">
+                후원기관
               </a>
             </Box>
           </Box>
           <Box display="flex">
             {user === null ? (
               <>
-                <Box mx={2}>
+                <Box className="font-smooth" fontSize="1.1em" mx={2}>
                   <Link
                     to="/login"
                     className="nbg user"
@@ -92,7 +96,7 @@ const Navbar = () => {
                     로그인
                   </Link>
                 </Box>
-                <Box mx={2}>
+                <Box className="font-smooth" fontSize="1.1em" mx={2}>
                   <Link
                     to="/regist"
                     className="nbg user"
@@ -105,6 +109,7 @@ const Navbar = () => {
             ) : (
               <>
                 <Box display="flex" alignItems="center">
+                  {user.nickname}님
                   <IconButton onClick={handleClick}>
                     <Avatar src={user.picture}></Avatar>
                   </IconButton>

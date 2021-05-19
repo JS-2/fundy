@@ -151,3 +151,11 @@ export const getCerts = (auth_token: string) => {
         }
       });
 }
+
+export const sendAuthMail = (email: string) => {
+  return axiosInstance.post('/auth-mail/send', { email });
+}
+
+export const sendCode = (code: string) => {
+  return axiosInstance.post('/auth-mail/check-code', { code });
+}

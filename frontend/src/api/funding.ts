@@ -2,7 +2,7 @@ import axiosInstance from "./axiosConfig"
 import { FundingStatus } from "../common/types";
 
 export const getFundingList = (fundingStatus: FundingStatus) => {
-    const { page, per_page, status, time } = fundingStatus;
+    const { page, per_page, status } = fundingStatus;
     
     return axiosInstance
         .get('/fundings', {
@@ -10,7 +10,20 @@ export const getFundingList = (fundingStatus: FundingStatus) => {
                 page,
                 per_page,
                 status,
-                time
+            }
+        });
+}
+
+
+export const getFundingRank = (pagep:number, per_pagep:number) => {
+    const page =pagep;
+    const per_page = per_pagep;
+    
+    return axiosInstance
+        .get('/fundings/rank', {
+            params: {
+                page,
+                per_page,
             }
         });
 }
@@ -44,4 +57,31 @@ export const deleteComment = (funding_comment_id: string, auth_token: string) =>
 
 export const getAllDonationPlaces = () => {
     return axiosInstance.get('/donation-places');
+}
+
+export const declineFunding = (funding_id: number, auth_token: string) => {
+    return axiosInstance.patch('/admin/funding/' + funding_id + '/decline',{}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth_token
+        }
+    });
+}
+
+export const approveFunding = (funding_id: number, good: string, auth_token: string) => {
+    return axiosInstance.patch('/admin/funding/' + funding_id + '/accept',{isGoodProject : good}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth_token
+        }
+    });
+}
+
+export const completeFunding = (funding_id: number, auth_token: string) => {
+    return axiosInstance.patch('/admin/funding-complete/' + funding_id, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth_token
+        }
+    });
 }
