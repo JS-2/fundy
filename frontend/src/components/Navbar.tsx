@@ -115,9 +115,12 @@ const Navbar = () => {
                   alignItems="center"
                   style={{ fontSize: '1em' }}
                 >
-                  <Box mr={1}>{user.nickname}님</Box>
+                  {/* <Box mr={1}>{user.nickname}님</Box> */}
                   <IconButton onClick={handleClick}>
-                    <Avatar src={user.picture}></Avatar>
+                    <Avatar
+                      src={user.picture}
+                      style={{ width: '45px', height: '45px' }}
+                    ></Avatar>
                   </IconButton>
                 </Box>
               </>
