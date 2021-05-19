@@ -74,6 +74,7 @@ const Funding = () => {
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
+  const [buttonNumber, setButtonNumber] = useState<number>(2);
 
   function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback);
@@ -170,6 +171,7 @@ const Funding = () => {
       status: 1,
       keyword: '',
     });
+    setButtonNumber(0);
     setHeader('대기중인 펀딩');
   };
 
@@ -182,6 +184,7 @@ const Funding = () => {
       status: 2,
       keyword: '',
     });
+    setButtonNumber(1);
     setHeader('진행중인 펀딩');
   };
 
@@ -194,6 +197,7 @@ const Funding = () => {
       status: 3,
       keyword: '',
     });
+    setButtonNumber(2);
     setHeader('완료된 펀딩');
   };
 
@@ -206,6 +210,7 @@ const Funding = () => {
       status: 0,
       keyword: '',
     });
+    setButtonNumber(3);
     setHeader('승인 필요 펀딩');
   };
   const handleDeclineFunding = () => {
@@ -217,6 +222,7 @@ const Funding = () => {
       status: 4,
       keyword: '',
     });
+    setButtonNumber(4);
     setHeader('거절된 펀딩');
   };
   const handleSuccessFunding = () => {
@@ -228,6 +234,7 @@ const Funding = () => {
       status: 5,
       keyword: '',
     });
+    setButtonNumber(5);
     setHeader('성공한 펀딩');
   };
   const handleFailFunding = () => {
@@ -239,6 +246,7 @@ const Funding = () => {
       status: 6,
       keyword: '',
     });
+    setButtonNumber(6);
     setHeader('실패한 펀딩');
   };
 
@@ -304,52 +312,66 @@ const Funding = () => {
             mb={2}
           >
             <Box>
-              <Button
-                className="fundBtn"
-                variant="contained"
-                onClick={handleWaitFunding}
-              >
-                대기중인 펀딩
-              </Button>
-              <Button
-                className="fundBtn"
-                variant="contained"
-                onClick={handleProgressFunding}
-              >
-                진행중인 펀딩
-              </Button>
-              <Button
-                className="fundBtn"
-                variant="contained"
-                onClick={handleEndFunding}
-              >
-                완료된 펀딩
-              </Button>
+              <Box mb={1}>
+                <Button
+                  className={buttonNumber == 0 ? 'fundBtn' : 'unselect_fundBtn'}
+                  variant="contained"
+                  onClick={handleWaitFunding}
+                >
+                  대기중인 펀딩
+                </Button>
+                <Button
+                  className={
+                    buttonNumber === 1 ? 'fundBtn' : 'unselect_fundBtn'
+                  }
+                  variant="contained"
+                  onClick={handleProgressFunding}
+                >
+                  진행중인 펀딩
+                </Button>
+                <Button
+                  className={
+                    buttonNumber === 2 ? 'fundBtn' : 'unselect_fundBtn'
+                  }
+                  variant="contained"
+                  onClick={handleEndFunding}
+                >
+                  완료된 펀딩
+                </Button>
+              </Box>
               {user !== null && user.role == 'ADMIN' ? (
                 <>
                   <Button
-                    className="fundBtn"
+                    className={
+                      buttonNumber === 3 ? 'fundBtn' : 'unselect_fundBtn'
+                    }
                     variant="contained"
                     onClick={handleNeedAcceptFunding}
                   >
                     승인 필요 펀딩
                   </Button>
                   <Button
-                    className="fundBtn"
+                    className={
+                      buttonNumber === 4 ? 'fundBtn' : 'unselect_fundBtn'
+                    }
                     variant="contained"
                     onClick={handleDeclineFunding}
                   >
                     거절된 펀딩
                   </Button>
                   <Button
-                    className="fundBtn"
+                    className={
+                      buttonNumber === 5 ? 'fundBtn' : 'unselect_fundBtn'
+                    }
                     variant="contained"
                     onClick={handleSuccessFunding}
                   >
                     성공한 펀딩
                   </Button>
                   <Button
-                    className="fundBtn"
+                    className={
+                      buttonNumber === 6 ? 'fundBtn' : 'unselect_fundBtn'
+                    }
                     variant="contained"
                     onClick={handleFailFunding}
                   >

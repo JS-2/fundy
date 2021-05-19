@@ -1,9 +1,19 @@
-.fundBtn{
-    background-color: #f1524df3 !important;
-    border-radius:  20px !important;
-    width:120px;
-    height:40px;
-    color:white !important;
-    font-size: 0.5vw !important;
-    margin-right: 10px !important;
+.fundBtn {
+  background-color: #f1524df3 !important;
+  border-radius: 20px !important;
+  width: 120px;
+  height: 40px;
+  color: white !important;
+  font-size: 0.5vw !important;
+  margin-right: 10px !important;
+}
+
+.unselect_fundBtn {
+  background-color: grey !important;
+  border-radius: 20px !important;
+  width: 120px;
+  height: 40px;
+  color: white !important;
+  font-size: 0.5vw !important;
+  margin-right: 10px !important;
 }
