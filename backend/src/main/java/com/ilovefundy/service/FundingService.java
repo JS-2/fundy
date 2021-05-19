@@ -114,9 +114,13 @@ public class FundingService {
         }
 
         List<FundingProject> fundingProjectList = pages.getContent();
-        for (FundingProject fundingProject : fundingProjectList){
-            fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProject));
+        for (int i=0; i<fundingProjectList.size(); i++){
+            List<PayInfo> payInfoList = payDao.findByFunding(fundingProjectList.get(i));
+            List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
+            int participants = payParticipantsList.size();
+            fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProjectList.get(i), participants));
         }
+
         return fundingListResponse;
     }
     public List<FundingRankListResponse> getFundingListRank(int page, int per_page) {

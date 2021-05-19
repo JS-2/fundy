@@ -1,7 +1,16 @@
 import { Box, Button, Card, CardContent, Divider } from '@material-ui/core';
 import React from 'react';
+import { FundingPay } from '../../../common/types';
 
-const PaidFunding = () => {
+
+interface Props {
+  fundPay: FundingPay | null;
+}
+
+
+
+const PaidFunding = (props: Props) => {
+
   return (
     <div>
       <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
@@ -11,7 +20,7 @@ const PaidFunding = () => {
         <CardContent>
           <Box display="flex" justifyContent="space-between">
             <Box className="nbg_bold" style={{ fontSize: '2em' }}>
-              싸피싸피 데뷔 1주년 기념 펀딩
+              {props.fundPay?.fundingName}
             </Box>
             <Box>
               <Button
@@ -20,19 +29,19 @@ const PaidFunding = () => {
                 variant="contained"
                 className="btn_main"
               >
-                진행중
+                {props.fundPay?.fundingStatement}
               </Button>
             </Box>
           </Box>
           <Box className="nbg" style={{ fontSize: '0.9em', color: 'grey' }}>
-            싸피싸피의 데뷔 1주년을 기념하여 후원 물품을 전달하는 펀딩입니다.
+          {props.fundPay?.fundingSubtitle}
           </Box>
           <Box display="flex" justifyContent="space-between">
             <Box className="nbg_bold" mt={1} style={{ fontSize: '0.9em' }}>
-              by. 싸피싸피팬01 (A+)
+              by. {props.fundPay?.userNickname}
             </Box>
             <Box className="nbg_bold" mt={1} style={{ fontSize: '2em' }}>
-              \30,000
+            {props.fundPay?.payAmount}
             </Box>
           </Box>
           <Box display="flex"></Box>
@@ -46,8 +55,8 @@ const PaidFunding = () => {
             display="flex"
             justifyContent="space-between"
           >
-            <Box>결제 번호</Box>
-            <Box>결제번호부여</Box>
+            <Box>결제 번호 {props.fundPay?.paymentId}</Box>
+            <Box>결제번호부여 {props.fundPay?.paymentId}</Box>
           </Box>
           <Box
             className="nbg"
@@ -56,7 +65,7 @@ const PaidFunding = () => {
             justifyContent="space-between"
           >
             <Box>펀딩 날짜</Box>
-            <Box>2021.04.21 13:43:22</Box>
+            <Box>{props.fundPay?.payDatetime}</Box>
           </Box>
           <Box
             className="nbg"
@@ -65,7 +74,7 @@ const PaidFunding = () => {
             justifyContent="space-between"
           >
             <Box>펀딩 종료일</Box>
-            <Box>2021.05.03</Box>
+            <Box>{props.fundPay?.fundingEndTime}</Box>
           </Box>
           <Box
             className="nbg"
@@ -74,7 +83,7 @@ const PaidFunding = () => {
             justifyContent="space-between"
           >
             <Box>펀딩 상태</Box>
-            <Box>결제 완료</Box>
+            <Box>{props.fundPay?.fundingStatement}</Box>
           </Box>
         </CardContent>
       </Card>

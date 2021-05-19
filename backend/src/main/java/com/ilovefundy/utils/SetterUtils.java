@@ -36,6 +36,23 @@ public class SetterUtils {
         return idolResponse;
     }
 
+    public static FundingListResponse setFundingListResponse(FundingProject fundingProject, int participants) {
+        FundingListResponse fundingResponse = new FundingListResponse();
+        fundingResponse.setFundingId(fundingProject.getFundingId());
+        fundingResponse.setFundingName(fundingProject.getFundingName());
+        fundingResponse.setFundingSubtitle(fundingProject.getFundingSubtitle());
+        fundingResponse.setFundingThumbnail(fundingProject.getFundingThumbnail());
+        fundingResponse.setFundingStartTime(fundingProject.getFundingStartTime());
+        fundingResponse.setFundingEndTime(fundingProject.getFundingEndTime());
+        fundingResponse.setFundingParticipants(participants);
+        int remainDay = fundingProject.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+        fundingResponse.setFundingRemainDay(remainDay);
+        int amount = CalculationUtils.getFundingAmount(fundingProject);
+        fundingResponse.setFundingAmount(String.format("%,d", amount));
+        int achievementRate = CalculationUtils.getAchievementRate(amount, fundingProject.getFundingGoalAmount());
+        fundingResponse.setFundingAchievementRate(achievementRate);
+        return fundingResponse;
+    }
     public static FundingListResponse setFundingListResponse(FundingProject fundingProject) {
         FundingListResponse fundingResponse = new FundingListResponse();
         fundingResponse.setFundingId(fundingProject.getFundingId());

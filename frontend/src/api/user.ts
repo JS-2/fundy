@@ -159,3 +159,21 @@ export const sendAuthMail = (email: string) => {
 export const sendCode = (code: string) => {
   return axiosInstance.post('/auth-mail/check-code', { code });
 }
+
+export const getPaidFunding = (auth_token: string) => {
+  return axiosInstance
+      .get('/user/funding',{
+        headers: {
+          Authorization: auth_token
+          }
+        });
+}
+
+export const getRegistedFunding = (auth_token: string) => {
+  return axiosInstance
+      .get('/user/registered-funding',{
+        headers: {
+          Authorization: auth_token
+          }
+        });
+}

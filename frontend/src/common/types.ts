@@ -175,3 +175,17 @@ export interface FundingStatus {
   per_page: number;
   status: number;
 }
+
+
+export interface FundingPay{
+  fundingEndTime: Date,
+  fundingId: number,
+  fundingName: string
+  fundingStatement: string
+  fundingSubtitle: string
+  payAmount: string
+  payDatetime: Date;
+  paymentId: number;
+  userLevel: string;
+  userNickname: string;
+}

@@ -43,6 +43,14 @@ const FundCard = (props: Props) => {
   const [dday, setDday] = useState<string>();
   const [percentage, setPercentage] = useState<number>();
 
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 100);
+  }, []);
+
   useEffect(() => {
     if (props.funding !== null) {
       if (
@@ -59,6 +67,7 @@ const FundCard = (props: Props) => {
         setDday('D-' + props.funding.fundingRemainDay);
       }
       setFundingInfo(props.funding);
+      console.log(props.funding);
       if (fundingInfo?.fundingAchievementRate != null) {
         if (fundingInfo?.fundingAchievementRate >= 100) {
           setPercentage(100);
@@ -78,69 +87,83 @@ const FundCard = (props: Props) => {
 
   return (
     <div className="  ">
-    <Card
-      className="cardClass"
-      onClick={(e) => redirect(e, fundingInfo?.fundingId)}
-      style={{ padding: '0', height: '100%', display: 'block', border:'solid 1px lightgrey', borderRadius:'10px', paddingBottom:''}}
-      elevation={0}
-    >
-      <CardActionArea>
-        <Card elevation={0} >
-        <CardMedia
-          className="cardImgA"
-          component="img"
-          alt="펀딩 카드 이미지"
-          height="250"
-          
-  
-          
-          image={fundingInfo?.fundingThumbnail}
-          title="Card Image"
-        />
-        </Card>
-        <CardContent style={{ padding: '10px' }}>
-          <Chip className="ddayBadge" label={dday} />
-          <h5>{fundingInfo?.fundingParticipants}명 참여</h5>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="h5"
-            style={{
-              fontWeight: 'bold',
-              fontSize: '2rem',
-              whiteSpace: 'nowrap',
-              width: 'inherit',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {fundingInfo?.fundingName}
-          </Typography>
+      <Card
+        className="cardClass"
+        onClick={(e) => redirect(e, fundingInfo?.fundingId)}
+        style={{
+          padding: '0',
+          height: '100%',
+          display: 'block',
+          border: 'solid 1px lightgrey',
+          borderRadius: '10px',
+          paddingBottom: '',
+          transition: 'opacity 0.5s ease-in-out',
+          opacity: show ? 1 : 0,
+        }}
+        elevation={0}
+      >
+        <CardActionArea>
+          <Card elevation={0}>
+            <CardMedia
+              className="cardImgA"
+              component="img"
+              alt="펀딩 카드 이미지"
+              height="250"
+              image={fundingInfo?.fundingThumbnail}
+              title="Card Image"
+            />
+          </Card>
+          <CardContent style={{ padding: '10px' }}>
+            <Chip className="ddayBadge" label={dday} />
+            <h5>{fundingInfo?.fundingParticipants}명 참여</h5>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h5"
+              style={{
+                fontWeight: 'bold',
+                fontSize: '2rem',
+                whiteSpace: 'nowrap',
+                width: 'inherit',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {fundingInfo?.fundingName}
+            </Typography>
 
-          <Typography variant="h5" color="textSecondary" component="h4" 
-          style={{
-              whiteSpace: 'nowrap',
-              width: 'inherit',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}>
-            {fundingInfo?.fundingSubtitle}
-          </Typography>
-          <Box my={1} display="flex" justifyContent="space-between">
-            <Box className="fundingAmountTxt">{fundingInfo?.fundingAmount}원</Box>
-            <Box className="fundingAmountTxt">{fundingInfo?.fundingAchievementRate}%</Box>
-          </Box>
-          <BorderLinearProgress
-            variant="determinate"
-            value={
-              Number(fundingInfo?.fundingAchievementRate) > 100
-                ? 100
-                : Number(fundingInfo?.fundingAchievementRate)
-            }
-          />
-        </CardContent>
-      </CardActionArea>
-    </Card>
+            <Typography
+              variant="h5"
+              color="textSecondary"
+              component="h4"
+              style={{
+                whiteSpace: 'nowrap',
+                width: 'inherit',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {fundingInfo?.fundingSubtitle}
+            </Typography>
+            <Box my={1} display="flex" justifyContent="space-between">
+              <Box className="fundingAmountTxt">
+                {fundingInfo?.fundingAmount}원
+              </Box>
+              <Box className="fundingAmountTxt">
+                {fundingInfo?.fundingAchievementRate}%
+              </Box>
+            </Box>
+            <BorderLinearProgress
+              variant="determinate"
+              value={
+                Number(fundingInfo?.fundingAchievementRate) > 100
+                  ? 100
+                  : Number(fundingInfo?.fundingAchievementRate)
+              }
+            />
+          </CardContent>
+        </CardActionArea>
+      </Card>
     </div>
   );
 };

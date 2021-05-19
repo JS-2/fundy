@@ -62,8 +62,12 @@ const ModifyPassword = (props: Props) => {
   }, [newPassword, newPasswordConfirm]);
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>비밀번호 변경</DialogTitle>
+    <Dialog onClose={handleClose} open={open} style={{ fontSize: '1.1em' }}>
+      <Box mb={3} style={{ fontWeight: 'bold', backgroundColor: '#f74a64' }}>
+        <Box m={1.5} style={{ color: 'white', fontSize: '1.2em' }}>
+          비밀번호 변경
+        </Box>
+      </Box>
       <DialogContent>
         <Box>안전한 비밀번호로 내정보를 보호하세요</Box>
         <Box>다른 아이디/사이트에서 사용한 적 없는 비밀번호</Box>{' '}
@@ -72,6 +76,12 @@ const ModifyPassword = (props: Props) => {
           <TextField
             fullWidth
             value={oldPassword}
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '1em' },
+            }}
             onChange={(e) => {
               if (validateds[0] !== (e.target.value.length !== 0)) {
                 let newValidateds = [...validateds];
@@ -87,6 +97,12 @@ const ModifyPassword = (props: Props) => {
         <Box>
           <TextField
             fullWidth
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '1em' },
+            }}
             value={newPassword}
             error={newPassword != '' && !validateds[1]}
             onChange={(e) => {
@@ -109,6 +125,12 @@ const ModifyPassword = (props: Props) => {
         <Box>
           <TextField
             fullWidth
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '1em' },
+            }}
             value={newPasswordConfirm}
             error={newPasswordConfirm != '' && !validateds[2]}
             onChange={(e) => {
@@ -124,7 +146,7 @@ const ModifyPassword = (props: Props) => {
           ></TextField>
         </Box>
       </DialogContent>
-      <DialogActions>
+      <DialogActions style={{ marginTop: '10px' }}>
         <Button
           disabled={validateds.includes(false)}
           fullWidth

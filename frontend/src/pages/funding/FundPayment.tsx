@@ -1,6 +1,10 @@
-import { Box, Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Box, Button, CardMedia, Modal, TextField } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { RouteComponentProps, useParams } from 'react-router-dom';
+import { getFundDetail } from '../../api/fund';
+import { FundForm } from '../../common/types';
+import Banner from '../../components/Banner';
 
 declare global {
   interface Window {
@@ -8,9 +12,28 @@ declare global {
   }
 }
 const { IMP } = window;
+interface MatchParams {
+  num: string;
+}
 
-const FundPayment = () => {
-  const [money, setMoney] = useState<number>(0);
+const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
+  const params: Params = useParams();
+  interface Params {
+    fund_id: string;
+  }
+  const [Fund, setFund] = useState<FundForm>();
+  console.log(match.params.num);
+  useEffect(() => {
+    console.log("fundDetailPage");
+
+    getFundDetail(Number(match.params.num)).then((response) => {
+      console.log(">>>>" + response.data);
+      setFund(response.data);
+    });
+
+  }, [params]);
+  
+  const [money, setMoney] = useState<number>(10000);
 
   const handlerMoney = (e: any) => {
     setMoney(Number(e.target.value));
@@ -37,23 +60,47 @@ const FundPayment = () => {
       function (rsp: any) {
         if (rsp.success) {
           var msg = '결제가 완료되었습니다.';
+          alert(msg);
+          history.push('/mypage/1');
         } else {
           var msg = '결제에 실패하였습니다.';
           msg += '에러내용 : ' + rsp.error_msg;
+          var urlBack='/funding/detail/'+Fund?.fundingId;
+          alert(msg);
+          history.push(urlBack);
         }
-        alert(msg);
-        history.push('/mypage/1');
+       
       }
     );
   };
 
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+      <Banner></Banner>
+      <div>
+
+      </div>
+      <div className="col-md-1"></div>
+      <div className="col-md-10">
+      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '2em' }}>
         펀딩 결제하기
       </Box>
-      <img src="https://d1o7cxaf8di5ts.cloudfront.net/file/project/singer_hotissue_01/info/hotissue_01_thumb_v2.png" />
+      <div className="row">
+      <div className="col-md-8 imgArea">
+                  <CardMedia
+                    className="cardImg"
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    height="100%"
+         
+                    image={Fund?.fundingThumbnail}
+                    title="Card Image"
+                  />
+
+                </div>
+
       <TextField
+
         value={money}
         onChange={handlerMoney}
         label="후원금"
@@ -62,6 +109,11 @@ const FundPayment = () => {
       <Button className="btn_main" variant="contained" onClick={payment_test}>
         후원하기
       </Button>
+
+      </div>
+   
+      </div>
+     
     </div>
   );
 };

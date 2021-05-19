@@ -67,11 +67,12 @@ const FundCreate = () => {
   const [fundDetail, setFundDetail] = useState('');
   let [selectedValue] = React.useState('0');
   const [file, setFile] = useState<any>();
-  const [fileURL, setFileURL] = useState<any>();
+  const [fileURL, setFileURL] = useState<any>('');
   const [selectedStartDate, handleStartDateChange] =
     useState<MaterialUiPickersDate>(new Date());
+  var now = new Date();
   const [selectedEndDate, handleEndDateChange] =
-    useState<MaterialUiPickersDate>(new Date());
+    useState<MaterialUiPickersDate>(new Date(now.setMonth(now.getMonth() + 1)));
   const [fundingPercent, setFundingPercent] = useState<number>(0);
 
   const [idolNames, setIdolNames] = useState<string[]>([]);
@@ -287,21 +288,24 @@ const FundCreate = () => {
         setFileURL(reader.result);
       };
       reader.readAsDataURL(file);
+    } else {
+      setFileURL('');
     }
   };
   return (
     <div>
       <Banner></Banner>
       <div className="container">
-        <Box
-          mt={10}
-          mb={3}
-          className="nbg_bold font-smooth"
-          style={{ fontSize: '2em' }}
-        >
-          펀딩 작성하기
-        </Box>
         <div className="row">
+          <Box style={{ visibility: 'hidden' }}>.</Box>
+          <Box
+            mt={5}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
+            펀딩 작성하기
+          </Box>
           <FormControl component="fieldset">
             <RadioGroup
               row
@@ -399,7 +403,6 @@ const FundCreate = () => {
             label="펀딩 한줄 소개"
             value={fundShortInfo}
             variant="outlined"
-            multiline
             onChange={onChangeFundShortInfo}
           ></TextField>
         </div>
@@ -414,28 +417,48 @@ const FundCreate = () => {
             펀딩 썸네일 업로드
           </Box>
           <div>
-            <input
-              type="file"
-              accept="image/jpg,impge/png,image/jpeg,image/gif"
-              name="profile_img"
-              onChange={handleFileOnChange}
-            ></input>
-            {file !== undefined ? (
-              <Card
-                style={{
-                  width: '450px',
-                  height: '300px',
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  alt="아이돌 카드 이미지"
-                  image={fileURL}
-                ></CardMedia>
-              </Card>
-            ) : (
-              <></>
-            )}
+            <Card
+              elevation={0}
+              style={{
+                width: '480px',
+                border: 'solid 1px silver',
+                transition: 'all 0.4s ease-in-out',
+              }}
+            >
+              <CardContent>
+                <input
+                  type="file"
+                  accept="image/jpg,impge/png,image/jpeg,image/gif"
+                  name="profile_img"
+                  onChange={handleFileOnChange}
+                ></input>
+                <Card
+                  style={
+                    fileURL === ''
+                      ? {
+                          width: '450px',
+                          height: '0px',
+                          transition: 'all 0.4s ease-in-out',
+                        }
+                      : {
+                          width: '450px',
+                          height: '300px',
+                          transition: 'all 0.4s ease-in-out',
+                        }
+                  }
+                >
+                  {fileURL === '' ? (
+                    <></>
+                  ) : (
+                    <CardMedia
+                      component="img"
+                      alt="아이돌 카드 이미지"
+                      image={fileURL}
+                    ></CardMedia>
+                  )}
+                </Card>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
@@ -458,7 +481,23 @@ const FundCreate = () => {
             onChange={onChangeGoalAmount}
           />
         </div>
-        <div className="row">
+        <div
+          className="row"
+          style={
+            fundingType == 'Donation'
+              ? {
+                  visibility: 'hidden',
+                  transition: 'all 0.4s ease-in-out',
+                  height: 0,
+                  overflow: 'hidden',
+                }
+              : {
+                  transition: 'all 0.4s ease-in-out',
+                  height: '40px',
+                  overflow: 'hidden',
+                }
+          }
+        >
           <RadioGroup
             row
             value={fundingPercent}
@@ -504,50 +543,54 @@ const FundCreate = () => {
           </RadioGroup>
         </div>
         <div className="row">
-          <Box display="flex">
-            <Box mr={6} ml={1}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDateTimePicker
-                  required
-                  inputProps={{
-                    shrink: true,
-                    style: { fontSize: '1.6em', height: '15px' },
-                  }}
-                  InputLabelProps={{
-                    style: { fontSize: '1em' },
-                  }}
-                  value={selectedStartDate}
-                  onChange={handleStartDateChange}
-                  label="펀딩 시작"
-                  onError={console.log}
-                  minDate={new Date('2018-01-01T00:00')}
-                  format="yyyy/MM/dd hh:mm a"
-                  disablePast
-                />
-              </MuiPickersUtilsProvider>
-            </Box>
-            <Box>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDateTimePicker
-                  inputProps={{
-                    shrink: true,
-                    style: { fontSize: '1.6em', height: '15px' },
-                  }}
-                  InputLabelProps={{
-                    style: { fontSize: '1em' },
-                  }}
-                  required
-                  value={selectedEndDate}
-                  onChange={handleEndDateChange}
-                  label="펀딩 종료"
-                  onError={console.log}
-                  minDate={selectedStartDate}
-                  format="yyyy/MM/dd hh:mm a"
-                  disablePast
-                />
-              </MuiPickersUtilsProvider>
-            </Box>
-          </Box>
+          <Card elevation={0} style={{ border: 'solid 1px silver' }}>
+            <CardContent>
+              <Box display="flex">
+                <Box mr={6} ml={1}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDateTimePicker
+                      required
+                      inputProps={{
+                        shrink: true,
+                        style: { fontSize: '1.6em', height: '15px' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1em' },
+                      }}
+                      value={selectedStartDate}
+                      onChange={handleStartDateChange}
+                      label="펀딩 시작"
+                      onError={console.log}
+                      minDate={new Date('2018-01-01T00:00')}
+                      format="yyyy/MM/dd hh:mm a"
+                      disablePast
+                    />
+                  </MuiPickersUtilsProvider>
+                </Box>
+                <Box>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDateTimePicker
+                      inputProps={{
+                        shrink: true,
+                        style: { fontSize: '1.6em', height: '15px' },
+                      }}
+                      InputLabelProps={{
+                        style: { fontSize: '1em' },
+                      }}
+                      required
+                      value={selectedEndDate}
+                      onChange={handleEndDateChange}
+                      label="펀딩 종료"
+                      onError={console.log}
+                      minDate={selectedStartDate}
+                      format="yyyy/MM/dd hh:mm a"
+                      disablePast
+                    />
+                  </MuiPickersUtilsProvider>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
         </div>
         <div className="row" style={{ marginTop: '40px' }}>
           <Grid container spacing={3}>

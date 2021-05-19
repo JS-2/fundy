@@ -212,7 +212,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         <Button
           startIcon={icon1}
           variant="outlined"
-          className="favbtn nbg_bold col-md-6 col-sm-6"
+          className="favbtn nbg_bold col-md-6 col-sm-6 overlayLeftBtn"
           color={color1}
           onClick={func1}
         >
@@ -221,7 +221,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
         <Button
           startIcon={icon2}
-          className="paybtn col-md-6 col-sm-6"
+          className="paybtn col-md-6 col-sm-6 circleScaleBtn"
           variant="contained"
           color={color2}
           size="large"
@@ -252,10 +252,10 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const buttonRender = () => {
     if (user === null) {
-      return disableBtn('로그인을 해주세요.');
-    } else if (Fund?.fundingConfirm === 'ApproveIng') {
-      if (user.role === 'ADMIN') {
-        return disableBtn('진행중인 펀딩');
+      return disableBtn("로그인을 해주세요.");
+    } else if (Fund?.fundingConfirm === "ApproveIng") {
+      if (user.role === "ADMIN") {
+        return disableBtn("진행중인 펀딩");
       } else {
         return doubleBtn(
           fundingFavorite ? "관심 해제" : "관심 등록",
@@ -343,6 +343,13 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   console.log(token);
   return (
     <div>
+       <div
+                className="titleArea"
+                style={{ height: "158px" }} //background: `url(${Fund?.fundingThumbnail})`}}
+              >
+                <h3 className="fundingTitle">{Fund?.fundingName}</h3>
+                <h5 className="fundingSub">{Fund?.fundingSubtitle}</h5>
+              </div>
       <div className="row">
         <div className="col-md-1"></div>
         <div className="col-md-10">
@@ -351,12 +358,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             //style={{ background: `url(${Fund?.fundingThumbnail})`}}
           >
             <div className="none">
-              <div
-                className="titleArea" //style={{ background: `url(${Fund?.fundingThumbnail})`}}
-              >
-                <h3 className="fundingTitle">{Fund?.fundingName}</h3>
-                <h5 className="fundingSub">{Fund?.fundingSubtitle}</h5>
-              </div>
+       
+             
 
               <div className="row">
                 <div className="col-md-8 imgArea">
@@ -388,13 +391,14 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                 <div className="col-md-4 fundingInfo">
                   <div className="barInfo d-flex flex-wrap justify-content-end align-items-end">
                     <Box my={1} display="flex" justifyContent="space-between">
+                      <Box className="fundRate">
+                        {Fund?.fundingAchievementRate}%
+                      </Box>
                       <Box className="fundAmount">
                         {Fund?.fundingAmount
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      </Box>
-                      <Box className="fundRate">
-                        {Fund?.fundingAchievementRate}% {Fund?.fundingParticipants}
+                        원 모금
                       </Box>
                     </Box>
                   </div>
@@ -411,68 +415,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                   </div>
 
                   <div>
-                    {buttonRender()}
-                    {/* {
-                    user.role === 'ADMIN' &&
-                    Fund?.fundingConfirm === 'Wait' ? (
-                      <>
-                        <Button
-                          startIcon={<SentimentVerySatisfiedIcon />}
-                          className="paybtn col-md-6 col-sm-6"
-                          variant="contained"
-                          color="secondary"
-                          size="large"
-                          onClick={handleApproveBtn}
-                        >
-                          승인
-                        </Button>
-                        <Button
-                          startIcon={<SentimentVeryDissatisfiedIcon />}
-                          variant="outlined"
-                          className="favbtn nbg_bold col-md-6 col-sm-6"
-                          color="default"
-                          onClick={handleDeclineBtn}
-                        >
-                          거절
-                        </Button>
-                      </>
-                    ) : Fund?.fundingConfirm == 'Approve' && !isTimeOver ? (
-                      <>
-                        <Button
-                          startIcon={
-                            fundingFavorite ? (
-                              <FavoriteIcon color="secondary" />
-                            ) : (
-                              <FavoriteBorderIcon color="secondary" />
-                            )
-                          }
-                          variant="outlined"
-                          className="favbtn nbg_bold col-md-6 col-sm-6"
-                          color={fundingFavorite ? 'secondary' : 'default'}
-                          onClick={
-                            user === null ? loginRedirect : handleFavorite
-                          }
-                        >
-                          관심 {fundingFavorite ? '해제' : '등록'}
-                        </Button>
-
-                        <Button
-                          startIcon={<CreditCardIcon />}
-                          className="paybtn col-md-6 col-sm-6"
-                          variant="contained"
-                          color="secondary"
-                          size="large"
-                          onClick={
-                            user === null ? loginRedirect : onClickPayment
-                          }
-                        >
-                          펀딩하기
-                        </Button>
-                      </>
-                    ) : (
-                      <>펀딩불가</>
-                    )} */}
-
                     <div className="infoBox" style={{}}>
                       <Button
                         startIcon={<AssignmentInd />}
@@ -480,6 +422,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         className="boxbtn nbg_bold col-md-12 col-sm-12"
                       >
                         펀딩 개설자: {Fund?.userNickname}
+                        {Fund?.fundingParticipants}명 참여 중
                       </Button>
 
                       <Button
@@ -510,26 +453,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         {startdate}~{enddate}
                       </Button>
                     </div>
-
-                    <Chip
-                      label="Custom delete icon"
-                      deleteIcon={<DoneIcon />}
-                      color="primary"
-                      variant="outlined"
-                    />
-                    <Chip
-                      icon={<AssignmentInd />}
-                      label={Fund?.userNickname}
-                      color="primary"
-                      variant="outlined"
-                    />
-                    <h5>
-                      목표 금액:{" "}
-                      {Fund?.fundingGoalAmount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      원
-                    </h5>
+                    {buttonRender()}
                   </div>
                 </div>
               </div>
