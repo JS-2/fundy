@@ -23,7 +23,7 @@ const IdolSearch = () => {
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef(null);
-  const [delay, setDelay] = useState<number>(1000);
+  const [delay, setDelay] = useState<number>(600);
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
 
@@ -90,8 +90,8 @@ const IdolSearch = () => {
   }, [containerRef]);
 
   const handleSearch = () => {
-    setKeyword(searchWord);
     setIsEnd(false);
+    setKeyword(searchWord);
     setIdolList([]);
     setPage(1);
   };
@@ -100,7 +100,6 @@ const IdolSearch = () => {
     <div>
       <Box mt={6} mb={6} display="flex" justifyContent="space-between">
         <Box
-         
           className="nbg_bold font-smooth"
           alignItems="center"
           justifyContent="flex-end"
@@ -123,9 +122,17 @@ const IdolSearch = () => {
               setSearchWord(e.target.value);
             }}
             inputProps={{
-              style: { fontSize: '1.5em', height: '10px',  borderRadius:'20px' },
+              style: {
+                fontSize: '1.5em',
+                height: '10px',
+                borderRadius: '20px',
+              },
             }}
-            style={{ paddingRight: '5px', width: '400px', borderRadius:'20px' }}
+            style={{
+              paddingRight: '5px',
+              width: '400px',
+              borderRadius: '20px',
+            }}
           ></TextField>
           <Button
             className="ml-2 btn_main"

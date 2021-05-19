@@ -16,10 +16,11 @@ const MyFunding = () => {
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
-  const [favFundings, setFavFundings] = useState<IFunding[]>();
-  const [paidFundings, setPaidFundings] = useState<IFunding[]>();
-  const [regFundings, setRegFundings] = useState<IFunding[]>();
-  const [showFundings, setShowFundings] = useState<IFunding[]>();
+  const [favFundings, setFavFundings] = useState<IFunding[]>([]);
+  const [paidFundings, setPaidFundings] = useState<IFunding[]>([]);
+  const [regFundings, setRegFundings] = useState<IFunding[]>([]);
+  const [showFundings, setShowFundings] = useState<IFunding[]>([]);
+  const [selectedBtn, setSelectedBtn] = useState<number>(1);
 
   useEffect(() => {
     console.log(token);
@@ -37,11 +38,23 @@ const MyFunding = () => {
 
   const handleChoiceBtn = (num: number) => {
     if (num == 1) {
-      setShowFundings(favFundings);
+      setShowFundings([]);
+      setTimeout(() => {
+        setShowFundings(favFundings);
+      }, 10);
+      setSelectedBtn(1);
     } else if (num == 2) {
-      setShowFundings(paidFundings);
+      setShowFundings([]);
+      setTimeout(() => {
+        setShowFundings(paidFundings);
+      }, 10);
+      setSelectedBtn(2);
     } else if (num == 3) {
-      setShowFundings(regFundings);
+      setShowFundings([]);
+      setTimeout(() => {
+        setShowFundings(regFundings);
+      }, 10);
+      setSelectedBtn(3);
     }
   };
   return (
@@ -57,7 +70,7 @@ const MyFunding = () => {
       </Box>
       <Box>
         <Button
-          className="fundBtn"
+          className={selectedBtn == 1 ? 'fundBtn' : 'unselect_fundBtn'}
           variant="contained"
           style={{ fontSize: '1em' }}
           onClick={() => {
@@ -67,7 +80,7 @@ const MyFunding = () => {
           관심 펀딩
         </Button>
         <Button
-          className="fundBtn"
+          className={selectedBtn == 2 ? 'fundBtn' : 'unselect_fundBtn'}
           style={{ marginLeft: '10px', fontSize: '1em' }}
           variant="contained"
           onClick={() => {
@@ -77,7 +90,7 @@ const MyFunding = () => {
           펀딩 내역
         </Button>
         <Button
-          className="fundBtn"
+          className={selectedBtn == 3 ? 'fundBtn' : 'unselect_fundBtn'}
           style={{ marginLeft: '10px', fontSize: '1em' }}
           variant="contained"
           onClick={() => {
@@ -87,26 +100,32 @@ const MyFunding = () => {
           등록 펀딩
         </Button>
       </Box>
-      {showFundings?.length == 0 ? (
-        <Box
-          className="nbg_bold font-smooth"
-          my={3}
-          fontSize="3em"
-          color="silver"
-          height="300px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Box>펀딩 리스트가 없습니다.</Box>
-        </Box>
-      ) : (
-        <></>
-      )}
+      <Box
+        className="nbg_bold font-smooth"
+        my={3}
+        fontSize="3em"
+        color="silver"
+        height="300px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        style={{
+          transition: 'opacity 0.5s ease-in-out',
+          opacity: showFundings?.length === 0 ? 1 : 0,
+          visibility: showFundings?.length === 0 ? 'visible' : 'hidden',
+          height: showFundings?.length === 0 ? '300px' : '0px',
+        }}
+      >
+        <Box>펀딩 리스트가 없습니다.</Box>
+      </Box>
       <div className="row" style={{ marginTop: '20px' }}>
         <Grid container spacing={1}>
           {showFundings?.map((funding, i) => (
-            <div className="col-md-4 col-sm-12">
+            <div
+              className="col-md-4 col-sm-12"
+              style={{ marginBottom: '20px' }}
+              key={i}
+            >
               <FundCard funding={funding} key={funding.fundingId}></FundCard>
             </div>
           ))}

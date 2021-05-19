@@ -2,7 +2,7 @@ import axiosInstance from "./axiosConfig"
 import { FundingStatus } from "../common/types";
 
 export const getFundingList = (fundingStatus: FundingStatus) => {
-    const { page, per_page, status } = fundingStatus;
+    const { page, per_page, status, keyword } = fundingStatus;
     
     return axiosInstance
         .get('/fundings', {
@@ -10,6 +10,7 @@ export const getFundingList = (fundingStatus: FundingStatus) => {
                 page,
                 per_page,
                 status,
+                keyword
             }
         });
 }

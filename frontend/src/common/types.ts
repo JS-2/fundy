@@ -174,6 +174,7 @@ export interface FundingStatus {
   page: number;
   per_page: number;
   status: number;
+  keyword: string;
 }
 
 
