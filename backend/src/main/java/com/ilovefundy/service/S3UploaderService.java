@@ -28,7 +28,8 @@ public class S3UploaderService {
     @Value("${cloud.aws.s3.bucket.url}")
     private String defaultUrl;
 
-    private final static String TEMP_FILE_PATH = "/src/main/resources/";
+    @Value("${temp_path}")
+    private String TEMP_FILE_PATH;
 
     public String upload(MultipartFile uploadFile, String dirName) throws IOException {
         String origName = uploadFile.getOriginalFilename();
