@@ -18,7 +18,7 @@ const Regist = () => {
   };
   return (
     <Box display="flex" justifyContent="center">
-      <Box mt={10} width={480}>
+      <Box mt={10} width={480} minHeight={480}>
         {certified ? (
           <SignUp user={user} />
         ) : (
