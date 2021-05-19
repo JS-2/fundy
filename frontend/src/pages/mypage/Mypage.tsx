@@ -8,7 +8,7 @@ import MyFundingPaid from '../../components/mypage/mypage/MyFundingPaid';
 const Mypage = () => {
   return (
     <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
-      <Box style={{ width: '80%',  minHeight: '720px' }}>
+      <Box style={{ width: '80%', maxWidth: '1080px' }}>
         <Profile />
         <MyFunding />
         <MyIdols />

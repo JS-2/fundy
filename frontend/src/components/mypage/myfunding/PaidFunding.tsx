@@ -1,25 +1,35 @@
 import { Box, Button, Card, CardContent, Divider } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router';
 import { FundingPay } from '../../../common/types';
-
 
 interface Props {
   fundPay: FundingPay | null;
 }
 
-
-
 const PaidFunding = (props: Props) => {
+  const history = useHistory();
 
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
-        나의 펀딩 상세
-      </Box>
       <Card className="p-3">
         <CardContent>
           <Box display="flex" justifyContent="space-between">
-            <Box className="nbg_bold" style={{ fontSize: '2em' }}>
+            <Box
+              className="nbg_bold font-smooth"
+              style={{
+                fontSize: '2em',
+                width: '400px',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+              }}
+              onClick={() => {
+                history.push('/funding/detail/' + props.fundPay?.fundingId);
+              }}
+            >
               {props.fundPay?.fundingName}
             </Box>
             <Box>
@@ -27,21 +37,43 @@ const PaidFunding = (props: Props) => {
                 disableElevation
                 disabled
                 variant="contained"
-                className="btn_main"
+                className={
+                  props.fundPay?.fundingStatement !== '종료'
+                    ? 'btn_main font-smooth'
+                    : 'font-smooth'
+                }
               >
                 {props.fundPay?.fundingStatement}
               </Button>
             </Box>
           </Box>
-          <Box className="nbg" style={{ fontSize: '0.9em', color: 'grey' }}>
-          {props.fundPay?.fundingSubtitle}
+          <Box
+            className="nbg_m font-smooth"
+            mt={1}
+            style={{
+              fontSize: '0.9em',
+              color: 'grey',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {props.fundPay?.fundingSubtitle}
           </Box>
           <Box display="flex" justifyContent="space-between">
-            <Box className="nbg_bold" mt={1} style={{ fontSize: '0.9em' }}>
+            <Box
+              className="nbg_bold font-smooth"
+              mt={1}
+              style={{ fontSize: '0.9em' }}
+            >
               by. {props.fundPay?.userNickname}
             </Box>
-            <Box className="nbg_bold" mt={1} style={{ fontSize: '2em' }}>
-            {props.fundPay?.payAmount}
+            <Box
+              className="nbg_bold font-smooth"
+              mt={1}
+              style={{ fontSize: '2em' }}
+            >
+              {props.fundPay?.payAmount}
             </Box>
           </Box>
           <Box display="flex"></Box>
@@ -50,16 +82,16 @@ const PaidFunding = (props: Props) => {
         <Divider></Divider>
         <CardContent style={{ fontSize: '0.9em' }}>
           <Box
-            className="nbg"
+            className="nbg_m font-smooth"
             mt={3}
             display="flex"
             justifyContent="space-between"
           >
-            <Box>결제 번호 {props.fundPay?.paymentId}</Box>
-            <Box>결제번호부여 {props.fundPay?.paymentId}</Box>
+            <Box>결제 번호</Box>
+            <Box>{props.fundPay?.paymentId}</Box>
           </Box>
           <Box
-            className="nbg"
+            className="nbg_m font-smooth"
             mt={5}
             display="flex"
             justifyContent="space-between"
@@ -68,7 +100,7 @@ const PaidFunding = (props: Props) => {
             <Box>{props.fundPay?.payDatetime}</Box>
           </Box>
           <Box
-            className="nbg"
+            className="nbg_m font-smooth"
             mt={5}
             display="flex"
             justifyContent="space-between"
@@ -77,7 +109,7 @@ const PaidFunding = (props: Props) => {
             <Box>{props.fundPay?.fundingEndTime}</Box>
           </Box>
           <Box
-            className="nbg"
+            className="nbg_m font-smooth"
             mt={5}
             display="flex"
             justifyContent="space-between"

@@ -22,6 +22,7 @@ import {
 interface PostUser {
   userId: number;
   userNickname: string;
+  userPicture: string | undefined;
 }
 interface Post {
   user: PostUser;
@@ -56,7 +57,7 @@ const CertFanBoard = () => {
   return (
     <div>
       <Grid container xs={12}>
-        {/* {posts.map((post: Post) => (
+        {posts.map((post: Post) => (
           <>
             <Grid item container xs={6} style={{ justifyContent: 'center' }}>
               <Accordion style={{ width: '600px' }}>
@@ -68,23 +69,12 @@ const CertFanBoard = () => {
                   >
                     <Box display="flex">
                       <Avatar
-                        src={post.profile.profilePicture}
+                        src={post.user.userPicture}
                         style={{ width: '100px', height: '100px' }}
-                        variant="square"
                       ></Avatar>
                       <Box ml={2} mt={1}>
                         <Box className="nbg_bold font-smooth" fontSize="1.3em">
                           {post.user.userNickname}
-                        </Box>
-                        <Box
-                          mt={1}
-                          className="nbg_m font-smooth"
-                          fontSize="1.1em"
-                        >
-                          이름: {post.profile.profileName}
-                        </Box>
-                        <Box className="nbg_m font-smooth" fontSize="1.1em">
-                          나이: {post.profile.profileAge}
                         </Box>
                       </Box>
                     </Box>
@@ -95,7 +85,7 @@ const CertFanBoard = () => {
                         onClick={() => {
                           handleAcceptBtn(post.user.userId);
                         }}
-                        style={{ marginRight: '10px' }}
+                        style={{ marginRight: '10px', width: '80px' }}
                       >
                         승인
                       </Button>
@@ -104,6 +94,7 @@ const CertFanBoard = () => {
                         onClick={() => {
                           handleDeclineBtn(post.user.userId);
                         }}
+                        style={{ width: '80px' }}
                       >
                         거부
                       </Button>
@@ -135,7 +126,7 @@ const CertFanBoard = () => {
               </Accordion>
             </Grid>
           </>
-        ))} */}
+        ))}
       </Grid>
     </div>
   );

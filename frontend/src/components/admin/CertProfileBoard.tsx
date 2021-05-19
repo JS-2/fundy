@@ -99,11 +99,12 @@ const CertProfileBoard = () => {
                         onClick={() => {
                           handleAcceptBtn(post.user.userId);
                         }}
-                        style={{ marginRight: '10px' }}
+                        style={{ marginRight: '10px', width: '80px' }}
                       >
                         승인
                       </Button>
                       <Button
+                        style={{ width: '80px' }}
                         variant="contained"
                         onClick={() => {
                           handleDeclineBtn(post.user.userId);

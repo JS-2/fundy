@@ -19,7 +19,7 @@ const MyIdols = () => {
   }, []);
   return (
     <div>
-      <Box mx={1} my={2} className="nbg_bold" style={{ fontSize: '1.2em' }}>
+      <Box my={2} className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
         나의 아이돌
       </Box>
       <Grid container spacing={2}>
