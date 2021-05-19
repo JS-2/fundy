@@ -67,9 +67,10 @@ const IdolSearch = () => {
     <div>
       <Box mt={6} mb={6} display="flex" justifyContent="space-between">
         <Box
-          mt={10}
-          mb={3}
+         
           className="nbg_bold font-smooth"
+          alignItems="center"
+          justifyContent="flex-end"
           style={{ fontSize: '2em' }}
         >
           아이돌 검색
@@ -83,14 +84,15 @@ const IdolSearch = () => {
           <TextField
             variant="outlined"
             value={searchWord}
+            className="searchArea"
             onChange={(e) => {
               console.log(e.target.value);
               setSearchWord(e.target.value);
             }}
             inputProps={{
-              style: { fontSize: '1.5em', height: '10px' },
+              style: { fontSize: '1.5em', height: '10px',  borderRadius:'20px' },
             }}
-            style={{ paddingRight: '5px', width: '400px' }}
+            style={{ paddingRight: '5px', width: '400px', borderRadius:'20px' }}
           ></TextField>
           <Button
             className="ml-2 btn_main"

@@ -59,6 +59,7 @@ const FundCard = (props: Props) => {
         setDday('D-' + props.funding.fundingRemainDay);
       }
       setFundingInfo(props.funding);
+      console.log(props.funding);
       if (fundingInfo?.fundingAchievementRate != null) {
         if (fundingInfo?.fundingAchievementRate >= 100) {
           setPercentage(100);

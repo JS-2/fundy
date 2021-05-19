@@ -23,10 +23,11 @@ import Banner from '../components/Banner';
 import FundCreate from '../pages/funding/FundCreate';
 import './Main.css';
 import { getFundingList } from '../api/funding';
-import { IFunding, FundingStatus, User } from '../common/types';
+import { IFunding, FundingStatus, User, FundForm } from '../common/types';
 import { useSelector } from 'react-redux';
 import { rootState } from '../reducers';
 import "./Funding.css";
+import FundItem from '../components/FundItem';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
@@ -50,6 +51,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 const Funding = () => {
   const [fundings, setFundings] = useState<IFunding[]>([]);
   const [failFundings, setFailFundings] = useState<IFunding[]>([]);
+  const [fundingRank, setFundingRank] = useState<IFunding[]>([]);
   const [fundingStatus, setFundingStatus] = useState<FundingStatus>({
     page: 1,
     per_page: 1000,
@@ -63,6 +65,26 @@ const Funding = () => {
       console.log(resp.data);
       setFundings(resp.data);
     });
+
+    getFundingList({
+      page: 1,
+      per_page: 1000,
+      status: 2,
+    }).then((resp) => {
+      console.log(resp.data);
+      let data = resp.data;
+      data = data.sort((a: FundForm, b: FundForm) => {
+        const aAmount = Number(a.fundingParticipants);
+        const bAmount = Number(b.fundingParticipants);
+        if (aAmount === bAmount) {
+          return a.fundingId - b.fundingId;
+        } else {
+          return bAmount - aAmount;
+        }
+      });
+      setFundingRank(data.slice(0, 10));
+    });
+    
   }, [fundingStatus]);
 
   const handleWaitFunding = () => {
@@ -141,6 +163,8 @@ const Funding = () => {
       <div className="row">
         <div className="col-md-1 col-sm-1"></div>
         <div className="col-md-10 col-sm-10">
+
+      
           <Box
             mt={4}
             mb={3}
@@ -210,6 +234,35 @@ const Funding = () => {
           ) : (
             <></>
           )}
+
+
+
+
+
+
+
+  
+<Box
+            mt={4}
+            mb={3}
+            className="nbg_bold font-smooth"
+            style={{ fontSize: '2em' }}
+          >
+            인기 펀딩
+          </Box>
+        <div style={{ padding: "0px" }}>
+          {fundingRank?.map((funding: IFunding, i: number) => {
+            return (
+              <div
+                className="col-md-4"
+                style={{ marginBottom: "10px"}}
+                key={funding.fundingId}
+              >
+                <FundCard funding={funding}></FundCard>
+              </div>
+            );
+          })}
+        </div>
         </div>
       </div>
     </div>
