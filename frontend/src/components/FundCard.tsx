@@ -67,7 +67,6 @@ const FundCard = (props: Props) => {
         setDday('D-' + props.funding.fundingRemainDay);
       }
       setFundingInfo(props.funding);
-      console.log(props.funding);
       if (fundingInfo?.fundingAchievementRate != null) {
         if (fundingInfo?.fundingAchievementRate >= 100) {
           setPercentage(100);
@@ -77,7 +76,6 @@ const FundCard = (props: Props) => {
   }, [props]);
 
   const redirect = (e: any, id: any) => {
-    console.log('redirecting...');
     const url = '/funding/detail/' + id;
     history.push({
       pathname: url,
@@ -91,12 +89,12 @@ const FundCard = (props: Props) => {
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
       style={{
         padding: '0',
-        height: show ? '100%' : 0,
+        height: show ? '450px' : '0px',
         display: 'block',
         border: 'solid 1px lightgrey',
         borderRadius: '10px',
         paddingBottom: '',
-        transition: 'opacity 1.2s ease-in-out, height 0.7s ease-in-out',
+        transition: 'opacity 1s ease-in-out, height 0.5s ease-in-out',
         opacity: show ? 1 : 0,
       }}
       elevation={0}
