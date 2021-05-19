@@ -27,4 +27,6 @@ public class FundingListResponse {
     private LocalDateTime fundingStartTime;
     @ApiModelProperty(example = "2021-05-22 17:22:20")
     private LocalDateTime fundingEndTime;
+    @ApiModelProperty(example = "240")
+    private Integer fundingParticipants;
 }
