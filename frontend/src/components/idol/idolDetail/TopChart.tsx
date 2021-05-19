@@ -28,7 +28,7 @@ const TopChart = () => {
 
   useEffect(() => {
     getIdolTopFive().then((resp) => {
-      console.log(resp.data);
+      console.log('top5>>>>', resp.data);
       setData(resp.data);
     });
   }, []);
@@ -61,7 +61,6 @@ const TopChart = () => {
             type: 'linear',
             min: 'auto',
             max: 'auto',
-            stacked: true,
             reverse: false,
           }}
           axisBottom={axisBottom}

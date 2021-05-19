@@ -80,10 +80,7 @@ const CertProfileBoard = () => {
           <AccordionDetails>
             <Box>
               <Box display="flex">
-                <Avatar
-                  variant="rounded"
-                  src={post.profile.profilePicture}
-                ></Avatar>
+                <Avatar src={post.profile.profilePicture}></Avatar>
                 <Box ml={2}>
                   <Box>이름: {post.profile.profileName}</Box>
                   <Box>나이: {post.profile.profileAge}</Box>
