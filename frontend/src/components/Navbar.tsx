@@ -145,12 +145,19 @@ const Navbar = () => {
                     primary={
                       <div
                         className="nbg_m font-smooth"
-                        style={{ fontSize: '1.3em' }}
+                        style={{ fontSize: '1.2em' }}
                       >
                         {user.nickname}
                       </div>
                     }
-                    secondary={user.email}
+                    secondary={
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '0.8em' }}
+                      >
+                        {user.email}
+                      </div>
+                    }
                   ></ListItemText>
                 </ListItem>
                 {user.role == 'ADMIN' ? (
@@ -161,7 +168,7 @@ const Navbar = () => {
                         primary={
                           <div
                             className="nbg_m font-smooth"
-                            style={{ fontSize: '1.2em' }}
+                            style={{ fontSize: '1.1em' }}
                           >
                             인증 관리(ADMIN)
                           </div>
@@ -179,7 +186,7 @@ const Navbar = () => {
                     primary={
                       <div
                         className="nbg_m font-smooth"
-                        style={{ fontSize: '1.2em' }}
+                        style={{ fontSize: '1.1em' }}
                       >
                         마이페이지
                       </div>
@@ -197,7 +204,7 @@ const Navbar = () => {
                     primary={
                       <div
                         className="nbg_m font-smooth"
-                        style={{ fontSize: '1.2em' }}
+                        style={{ fontSize: '1.1em' }}
                       >
                         로그아웃
                       </div>
