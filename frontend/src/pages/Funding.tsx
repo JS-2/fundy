@@ -78,7 +78,7 @@ const Funding = () => {
   const [isBottom, setIsBottom] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef(null);
-  const [delay, setDelay] = useState<number>(600);
+  const [delay, setDelay] = useState<number>(700);
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
@@ -376,7 +376,12 @@ const Funding = () => {
           <Grid container spacing={3}>
             {fundingRank?.map((funding: IFunding, i: number) => {
               return (
-                <Grid item xs={4} style={{ padding: '10px' }}>
+                <Grid
+                  item
+                  xs={4}
+                  style={{ padding: '10px' }}
+                  key={funding.fundingId}
+                >
                   <FundCard funding={funding}></FundCard>
                 </Grid>
               );
