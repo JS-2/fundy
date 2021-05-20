@@ -112,8 +112,15 @@ const FundCard = (props: Props) => {
           />
         </Card>
         <CardContent style={{ padding: '10px' }}>
-          <Chip className="ddayBadge" label={dday} />
-          <h5>{fundingInfo?.fundingParticipants}명 참여</h5>
+        <Box my={1} display="flex" justifyContent="space-between">
+            <Box className="fundingAmountTxt">
+            <Chip className="ddayBadge" label={dday} />
+            </Box>
+            <Box className="fundingRateTxt">
+            <h5>{fundingInfo?.fundingParticipants}명 참여 중</h5>
+            </Box>
+          </Box>
+       
           <Typography
             gutterBottom
             variant="h5"
@@ -147,7 +154,7 @@ const FundCard = (props: Props) => {
             <Box className="fundingAmountTxt">
               {fundingInfo?.fundingAmount}원
             </Box>
-            <Box className="fundingAmountTxt">
+            <Box className="fundingRateTxt">
               {fundingInfo?.fundingAchievementRate}%
             </Box>
           </Box>

@@ -4,7 +4,7 @@ import SignIn from '../../components/member/login/SignIn';
 const Login = () => {
   return (
     <Box display="flex" justifyContent="center">
-      <Box mt={10} width={480} minHeight={480}>
+      <Box className="loginn" mt={10} width={520} minHeight={520}>
         <SignIn />
       </Box>
     </Box>

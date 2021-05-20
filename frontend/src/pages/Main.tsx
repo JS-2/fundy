@@ -28,6 +28,7 @@ import { Link } from 'react-router-dom';
 import FundItem from '../components/FundItem';
 import { BorderLeft } from '@material-ui/icons';
 import rankBanner from '../assets/img/a.png';
+import FundBanner from '../components/fundComponent/FunBanner';
 
 // Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -107,7 +108,7 @@ const Main = () => {
           return bAmount - aAmount;
         }
       });
-      setFundingRank(data.slice(0, 10));
+      setFundingRank(data.slice(0, 7));
     });
   }, []);
 
@@ -116,14 +117,23 @@ const Main = () => {
       <div id="bannerArea">
         <Banner></Banner>
       </div>
+  
+      
       <div className="col-md-12">
         <div className="row justify-content-center" style={{margin: 'auto'}}>
-        <div className="area col-md-1  " id=""></div>
+        <div className="col-md-1  " id="" style={{height:'10px'}}></div>
 
           <div className="area col-md-10  " id="">
-            <div className="col-md-8 divA" id="topFundArea">
+          <FundBanner></FundBanner>
+            <div className="col-md-8 divA" id="topFundArea" >
               <div className="" style={{ marginRight: '20px' }}>
-                <div className="headText" style={{ marginBottom: '20px'}}>펀디의 최신 펀딩 리스트</div>
+              <Box
+              mb={3}
+              className="nbg_bold font-smooth"
+              style={{ fontSize: '2em' }}
+            >
+              펀디의 최신 펀딩 리스트
+            </Box>
               </div>
 
               <Grid
@@ -155,7 +165,13 @@ const Main = () => {
             </div>
             <div className="col-md-4 col-sm-12 col-xs-12 divB" style={{ paddingLeft: '20px' , height:'100%'}}>
               <div className="">
-                <div className="headText"style={{ marginBottom: '20px'}} >펀디 인기 펀딩 Top 10</div>
+                <Box
+              mb={3}
+              className="nbg_bold font-smooth"
+              style={{ fontSize: '2em' }}
+            >
+              펀디 인기 펀딩 Top 7
+            </Box>
               </div>
 
               <div style={{ padding: '0px' }}>
@@ -188,7 +204,10 @@ const Main = () => {
             >
               아이돌
             </Box>
-            <Swiper
+           
+          </div>
+        </div>
+        <Swiper
               spaceBetween={10}
               slidesPerView={3.3}
               onSlideChange={() => console.log('slide change')}
@@ -206,8 +225,6 @@ const Main = () => {
                 더보기
               </Link>
             </Box>
-          </div>
-        </div>
 
         <div data-aos="zoom-in-up">
           {' '}
