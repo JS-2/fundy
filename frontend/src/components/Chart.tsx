@@ -91,7 +91,7 @@ const Chart = (props: Props) => {
             id: 'lines',
           },
         ]}
-        colors={'#ffd991'}
+        colors={'#ff8597'}
         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         axisLeft={{
           tickSize: 20,
