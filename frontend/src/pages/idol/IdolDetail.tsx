@@ -30,6 +30,7 @@ const IdolDetail = () => {
   const [mouseOverPlace, setMouseOverPlace] = useState<number>(0);
 
   useEffect(() => {
+    setShow(false);
     setTimeout(() => {
       setShow(true);
     }, 10);
@@ -61,7 +62,7 @@ const IdolDetail = () => {
     <div
       style={{
         opacity: show ? 1 : 0,
-        transition: 'all 0.5s ease-in-out',
+        transition: show ? 'all 0.5s ease-in-out' : '',
       }}
     >
       <div className="row">

@@ -43,7 +43,7 @@ import {
   approveFunding,
   completeFunding,
   declineFunding,
-} from "../../api/funding";
+} from '../../api/funding';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
@@ -53,7 +53,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import styles from '../../components/mypage/mypage/Profile.module.css';
 import classNames from 'classnames';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import certBanner from '../../assets/img/cert.png'
+import certBanner from '../../assets/img/cert.png';
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -83,7 +83,8 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [percentage, setPercentage] = useState<number>();
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
+  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
+  const [show, setShow] = useState<boolean>(false);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
@@ -94,8 +95,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     setOpen(false);
   };
 
-  
-  const handleClickOpen2 = (scrollType: DialogProps["scroll"]) => () => {
+  const handleClickOpen2 = (scrollType: DialogProps['scroll']) => () => {
     setOpen2(true);
     setScroll(scrollType);
   };
@@ -107,6 +107,13 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
+  }, []);
+
   useEffect(() => {
     if (user === null) return;
     getFavoriteFunding(token).then((resp) => {
@@ -358,7 +365,12 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     }
   };
   return (
-    <div>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: show ? 'all 0.5s ease-in-out' : '',
+      }}
+    >
       <div
         className="titleArea"
         style={{ height: '158px' }} //background: `url(${Fund?.fundingThumbnail})`}}
@@ -376,7 +388,27 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             <div className="none">
               <div className="row">
                 <div className="col-md-8 imgArea">
-                  {Fund?.isGoodFunding==='Y'? (<div style={{color:'white', backgroundColor:'#f74a64', textAlign:'center', fontWeight: 'bold',  width:'150px', height:'50px', alignItems:'center', position:'absolute', top:"0px", zIndex:'auto', lineHeight:'50px'}}>Good Funding</div>):(<></>)}
+                  {Fund?.isGoodFunding === 'Y' ? (
+                    <div
+                      style={{
+                        color: 'white',
+                        backgroundColor: '#f74a64',
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        width: '150px',
+                        height: '50px',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        top: '0px',
+                        zIndex: 'auto',
+                        lineHeight: '50px',
+                      }}
+                    >
+                      Good Funding
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                   <CardMedia
                     className="cardImg"
                     component="img"
@@ -446,7 +478,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         startIcon={<AssignmentInd />}
                         variant="outlined"
                         className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-4"
-                        onClick={handleClickOpen2("body")}
+                        onClick={handleClickOpen2('body')}
                       >
                         {Fund?.userNickname}
                       </Button>
@@ -493,170 +525,181 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
               </div>
             </div>
           </div>
-      
 
           <Dialog
-                    open={open2}
-                    onClose={handleClose2}
-                    scroll={scroll}
-                    aria-labelledby="scroll-dialog-title"
-                    aria-describedby="scroll-dialog-description"
-                  >
-                    <DialogContent
-                      className="dialog"
-                      dividers={scroll === "paper"}
-                    >
-                          <CardContent className="cardDialog" style={{ height:'300px', paddingBottom: '0px' }} onClick={handleClose2}>
-            <Grid container>
-              <Grid container item xs={12}>
-                <VerifiedUserIcon
-                  style={{
-                    color: 'black',
-                    fontSize: '1.6em',
-                    marginRight: '3px',
-                    marginLeft: '10px',
-                    opacity: 0.8,
-                  }}
-                />
-                <Box
-                  style={{ color: 'black', opacity: 0.8, marginBottom:'50px'}}
-                  className="nbg_bold font-smooth"
-                  fontSize="1.2em"
-                >
-                  {Fund?.userNickname}님의 인증 내역
-                </Box>
-              </Grid>
-              <Grid item container xs={12} style={{ margin: '5px' }}>
-                <Grid item xs={3}>
-                  <Grid item container xs={12} justify="center">
-                    <IconButton size="small" disabled={Fund?.isAdult !== 'N'}>
-                      <PersonOutlineIcon
-                        className={
-                          Fund?.isAdult === 'Y'
-                            ? styles.cert_icon
-                            : Fund?.isAdult === 'Waiting'
-                            ? styles.waiting_icon
-                            : styles.uncert_icon
-                        }
-                      />
-                    </IconButton>
-                  </Grid>
-                  <Grid item container xs={12} justify="center">
+            open={open2}
+            onClose={handleClose2}
+            scroll={scroll}
+            aria-labelledby="scroll-dialog-title"
+            aria-describedby="scroll-dialog-description"
+          >
+            <DialogContent className="dialog" dividers={scroll === 'paper'}>
+              <CardContent
+                className="cardDialog"
+                style={{ height: '300px', paddingBottom: '0px' }}
+                onClick={handleClose2}
+              >
+                <Grid container>
+                  <Grid container item xs={12}>
+                    <VerifiedUserIcon
+                      style={{
+                        color: 'black',
+                        fontSize: '1.6em',
+                        marginRight: '3px',
+                        marginLeft: '10px',
+                        opacity: 0.8,
+                      }}
+                    />
                     <Box
                       style={{
                         color: 'black',
                         opacity: 0.8,
-                        fontSize: '1.2em',
+                        marginBottom: '50px',
                       }}
                       className="nbg_bold font-smooth"
+                      fontSize="1.2em"
                     >
-                      성인 인증
+                      {Fund?.userNickname}님의 인증 내역
                     </Box>
                   </Grid>
+                  <Grid item container xs={12} style={{ margin: '5px' }}>
+                    <Grid item xs={3}>
+                      <Grid item container xs={12} justify="center">
+                        <IconButton
+                          size="small"
+                          disabled={Fund?.isAdult !== 'N'}
+                        >
+                          <PersonOutlineIcon
+                            className={
+                              Fund?.isAdult === 'Y'
+                                ? styles.cert_icon
+                                : Fund?.isAdult === 'Waiting'
+                                ? styles.waiting_icon
+                                : styles.uncert_icon
+                            }
+                          />
+                        </IconButton>
+                      </Grid>
+                      <Grid item container xs={12} justify="center">
+                        <Box
+                          style={{
+                            color: 'black',
+                            opacity: 0.8,
+                            fontSize: '1.2em',
+                          }}
+                          className="nbg_bold font-smooth"
+                        >
+                          성인 인증
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Grid item container xs={12} justify="center">
+                        <IconButton
+                          size="small"
+                          disabled={
+                            Fund?.isOfficialFan !== 'N' &&
+                            Fund?.isOfficialFan !== 'Decline'
+                          }
+                        >
+                          <FavoriteBorderIcon
+                            className={
+                              Fund?.isOfficialFan === 'Approve'
+                                ? styles.cert_icon
+                                : Fund?.isOfficialFan === 'Waiting'
+                                ? styles.waiting_icon
+                                : styles.uncert_icon
+                            }
+                          />
+                        </IconButton>
+                      </Grid>
+                      <Grid item container xs={12} justify="center">
+                        <Box
+                          style={{
+                            color: 'black',
+                            opacity: 0.8,
+                            fontSize: '1.2em',
+                          }}
+                          className="nbg_bold font-smooth"
+                        >
+                          팬활동 인증
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Grid item container xs={12} justify="center">
+                        <IconButton
+                          size="small"
+                          disabled={
+                            Fund?.isProfile !== 'N' &&
+                            Fund?.isProfile !== 'Decline'
+                          }
+                        >
+                          <EmojiPeopleIcon
+                            className={
+                              Fund?.isProfile === 'Approve'
+                                ? styles.cert_icon
+                                : Fund?.isProfile === 'Waiting'
+                                ? styles.waiting_icon
+                                : styles.uncert_icon
+                            }
+                          />
+                        </IconButton>
+                      </Grid>
+                      <Grid item container xs={12} justify="center">
+                        <Box
+                          style={{
+                            color: 'black',
+                            opacity: 0.8,
+                            fontSize: '1.2em',
+                          }}
+                          className="nbg_bold font-smooth black"
+                        >
+                          총대 신상 인증
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Grid item container xs={12} justify="center">
+                        <IconButton
+                          size="small"
+                          disabled={Fund?.isPlus !== 'N'}
+                        >
+                          <AddCircleOutlineIcon
+                            className={
+                              Fund?.isPlus === 'Y'
+                                ? styles.cert_icon
+                                : Fund?.isPlus === 'Waiting'
+                                ? styles.waiting_icon
+                                : styles.uncert_icon
+                            }
+                          />
+                        </IconButton>
+                      </Grid>
+                      <Grid
+                        style={{
+                          color: 'black',
+                          opacity: 0.8,
+                          fontSize: '1.2em',
+                        }}
+                        item
+                        container
+                        xs={12}
+                        justify="center"
+                      >
+                        <Box className="nbg_bold black font-smooth">
+                          플러스 인증
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                  <Grid item container xs={12} justify="center">
-                    <IconButton
-                      size="small"
-                      disabled={
-                        Fund?.isOfficialFan !== 'N' &&
-                        Fund?.isOfficialFan !== 'Decline'
-                      }
-    
-                    >
-                      <FavoriteBorderIcon
-                        className={
-                          Fund?.isOfficialFan === 'Approve'
-                            ? styles.cert_icon
-                            : Fund?.isOfficialFan === 'Waiting'
-                            ? styles.waiting_icon
-                            : styles.uncert_icon
-                        }
-                      />
-                    </IconButton>
-                  </Grid>
-                  <Grid item container xs={12} justify="center">
-                    <Box
-                      style={{
-                        color: 'black',
-                        opacity: 0.8,
-                        fontSize: '1.2em',
-                      }}
-                      className="nbg_bold font-smooth"
-                    >
-                      팬활동 인증
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid item xs={3}>
-                  <Grid item container xs={12} justify="center">
-                    <IconButton
-                      size="small"
-                      disabled={
-                        Fund?.isProfile !== 'N' && Fund?.isProfile !== 'Decline'
-                      }
-                    
-                    >
-                      <EmojiPeopleIcon
-                        className={
-                          Fund?.isProfile === 'Approve'
-                            ? styles.cert_icon
-                            : Fund?.isProfile === 'Waiting'
-                            ? styles.waiting_icon
-                            : styles.uncert_icon
-                        }
-                      />
-                    </IconButton>
-                  </Grid>
-                  <Grid item container xs={12} justify="center">
-                    <Box
-                      style={{
-                        color: 'black',
-                        opacity: 0.8,
-                        fontSize: '1.2em',
-                      }}
-                      className="nbg_bold font-smooth black"
-                    >
-                      총대 신상 인증
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid item xs={3}>
-                  <Grid item container xs={12} justify="center">
-                    <IconButton size="small" disabled={Fund?.isPlus !== 'N'}>
-                      <AddCircleOutlineIcon
-                        className={
-                          Fund?.isPlus === 'Y'
-                            ? styles.cert_icon
-                            : Fund?.isPlus === 'Waiting'
-                            ? styles.waiting_icon
-                            : styles.uncert_icon
-                        }
-                      />
-                    </IconButton>
-                  </Grid>
-                  <Grid
-                    style={{
-                      color: 'black',
-                      opacity: 0.8,
-                      fontSize: '1.2em',
-                    }}
-                    item
-                    container
-                    xs={12}
-                    justify="center"
-                  >
-                    <Box className="nbg_bold black font-smooth">플러스 인증</Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </CardContent>
-          <div>
-            <img src={certBanner}></img>
-          </div>
-                    </DialogContent>
-                  </Dialog>
+              </CardContent>
+              <div>
+                <img src={certBanner}></img>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           <div>
             <FullWidthTabs

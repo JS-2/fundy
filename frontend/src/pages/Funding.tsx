@@ -330,7 +330,7 @@ const Funding = () => {
     <div
       style={{
         opacity: show ? 1 : 0,
-        transition: 'all 0.5s ease-in-out',
+        transition: show ? 'all 0.5s ease-in-out' : '',
       }}
     >
       <div id="bannerArea">
