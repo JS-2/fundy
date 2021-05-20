@@ -2,13 +2,14 @@
 
 <br/>
 
-<center>
-<h1>
-    펀디
-    </h1>
-</center>
-<div><center>아이돌과 팬을 연결해주는 크라우드 펀딩 플랫폼</center></div>
-<div><center><a href="https://framer.com/projects/nq3RKAROYiLd77SMeajY-gRgqD?node=fnXmMIrcT-page">UI/UX기획안</a> · <a href="https://drive.google.com/file/d/1Md6e8NxUM11q6FLsfwttKSz59WVhBOXa/view?usp=sharing">프로젝트 계획서</a></center></div>
+<div align="center">
+	<h1>
+    	펀디
+	</h1>
+</div>
+<div align="center">아이돌과 팬을 연결해주는 크라우드 펀딩 플랫폼</center></div>
+<div align="center">
+    <a href="https://framer.com/projects/nq3RKAROYiLd77SMeajY-gRgqD?node=fnXmMIrcT-page">UI/UX기획안</a> · <a href="https://drive.google.com/file/d/1Md6e8NxUM11q6FLsfwttKSz59WVhBOXa/view?usp=sharing">프로젝트 계획서</a></div>
 
 
 
@@ -35,7 +36,7 @@
 기존의 펀딩 서비스에서 항상 언급되는 문제는 펀딩 주최자에 대한 신뢰를 가늠할 수 없다는 것이었습니다. 이에 따라, 저희는 팬들이 믿고 후원할 수 있는 가장 좋은 방법은 펀딩의 주최자에 대한 신뢰를 높이는 것이라 생각했고, 이에 펀딩 주최자를 검증하는 단계별 인증 시스템을 도입했습니다.또한, 기존 아이돌 펀딩 서비스에 더하여 기부 전용 펀딩을 만들어 아이돌의 이름으로 사회에 선한 영향력을 끼칠 수 있도록 서비스를 기획했습니다.
 기존 아이돌 크라우드 펀딩 서비스와 차별점으로 팬들이 아이돌 활동을 지원하기 위해 믿고 펀딩할 수 있는 ‘인증절차'를 도입하고 ‘기부’를 강조해 사회에 도움이 되는 서비스를 만드는 것이 저희의 목표입니다.
 
-
+<br/>
 
 ### 📋 프로젝트 산출물
 
@@ -44,7 +45,7 @@
 - [플로우 차트](https://app.diagrams.net/#G1o_Rt7eHdJsrH3c5dRuHwS_2vpibGvGel)
 - [와이어프레임 및 기획안](https://framer.com/projects/nq3RKAROYiLd77SMeajY-gRgqD?node=fnXmMIrcT-page)
 
-
+<br/>
 
 ### 🏗️ Built With
 
@@ -53,7 +54,7 @@
 - React
 - Spring Boot
 
-
+<br/>
 
 ## ⚙️ Getting Started
 
@@ -83,14 +84,14 @@
 
 2. Install npm packages
 
-    ```
-    yarn -i
-    ```
+```
+yarn -i
+```
 
 3. Run
-   ```
-   yarn start
-   ```
+```
+yarn start
+```
 
 
 
@@ -98,17 +99,17 @@
 
 1.  Change directory
 
-   ```
-   cd backend
-   ```
+```
+cd backend
+```
 
 2. Run
 
-   ```
-   .\gradlew bootRun
-   ```
+```
+.\gradlew bootRun
+```
 
-
+<br/>
 
 
 ## ⚒️ 개발스택
@@ -134,7 +135,7 @@ Library
 - Redux
 - JWT
 
-
+<br/>
 
 ## 👥 Contact
 
