@@ -139,12 +139,18 @@ const Main = () => {
           <FundBanner></FundBanner>
             <div className="col-md-8 divA" id="topFundArea" >
               <div className="" style={{ marginRight: '20px' }}>
-              <Box
-              mb={3}
+              <div
               className="nbg_bold font-smooth"
               style={{ fontSize: '2em' }}
             >
-              펀디의 최신 펀딩 리스트
+              펀디가 추천하는 오늘의 펀딩
+            </div>
+            <Box
+              mb={3}
+              className="font-smooth"
+              style={{ fontSize: '1.2em', marginTop:'10px' }}
+            >
+              
             </Box>
               </div>
 
@@ -164,12 +170,7 @@ const Main = () => {
                   );
                 })}
               </Grid>
-              <Box
-                mt={1}
-                display="flex"
-                justifyContent="flex-end"
-                style={{ marginBottom: '8px' }}
-              >
+              <Box mt={1} className="boxbox" display="flex" justifyContent="flex-end" style={{marginTop:'50px'}}>
                 <Link className="nbg" to="/funding">
                   더보기
                 </Link>
@@ -208,14 +209,23 @@ const Main = () => {
 
         <div className="row" id="idolArea">
           <div className="col-md-1"></div>
-          <div className="col-md-10 divA moveA">
-            <Box
-              mb={3}
+          <div className="col-md-10 ">
+          <div className="col-md-12">
+            <div
+        
               className="nbg_bold font-smooth"
               style={{ fontSize: '2em' }}
             >
               아이돌
+            </div>
+            <Box
+              mb={3}
+              className="font-smooth"
+              style={{ fontSize: '1.2em', marginTop:'10px' }}
+            >
+              당신의 아이돌의 기부 현황을 알아보세요
             </Box>
+            </div>
            
           </div>
         </div>
@@ -232,16 +242,21 @@ const Main = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <Box mt={1} display="flex" justifyContent="flex-end">
-              <Link className="nbg" to="/idol">
-                더보기
-              </Link>
-            </Box>
 
-        <div data-aos="zoom-in-up">
-          {' '}
-          <p>안녕안녕</p>
-        </div>
+            <div className="col-md-1"></div>
+            <div className="col-md-10">
+            <Box mt={1} className="boxbox" display="flex" justifyContent="flex-end" style={{marginTop:'50px'}}>
+
+
+<Link className="nbg linkBtn" to="/idol" >
+  더보기
+</Link>
+
+</Box>
+
+            </div>
+      
+
       </div>
     </div>
   );

@@ -50,12 +50,13 @@ body {
 }
 
 .nbg {
-  font-family: NanumBarunGothic !important;
-  font-size: 1.6rem;
+  font-family: 'Noto Sans KR' !important;
+  font-size: 1.8rem;
 }
 
 .nbg_bold {
-  font-family: NanumBarunGothicBold !important;
+  font-family: 'Noto Sans KR' !important;
+  font-weight: bold;
 }
 
 .nbg_m {

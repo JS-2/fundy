@@ -38,10 +38,9 @@ const AccordionComp=(props: Props)=> {
           <br></br><hr></hr>
           <p>{props?.notice.userNickname}</p>
         </AccordionSummary>
-        <AccordionDetails className="contentArea" style={{backgroundColor:"lightgrey"}}>
-          <Typography>
-          {props?.notice.fundingNoticeContent}
-          </Typography>
+        <AccordionDetails className="contentArea" style={{backgroundColor:"#fefefe"}}>
+        <div style={{wordBreak:"break-all"}} dangerouslySetInnerHTML={ {__html: props?.notice.fundingNoticeContent} }></div>
+      
         </AccordionDetails>
       </Accordion>
     </div>
