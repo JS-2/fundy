@@ -155,6 +155,34 @@ public class User implements UserDetails {
             this.value = value;
         }
 
+        public static Level LevelUp(Level level) {
+            switch (level) {
+                case D:
+                    return C;
+                case C:
+                    return B;
+                case B:
+                    return A;
+            }
+            throw new AssertionError("can't level up: " + level);
+        }
+
+        public static Level PlusAuth(Level level) {
+            switch (level) {
+                case C:
+                    return CC;
+                case B:
+                    return BB;
+                case A:
+                    return AA;
+            }
+            throw new AssertionError("can't plus up: " + level);
+        }
+
+        public static boolean isNoPlus(Level level) {
+            return (level == A || level == B || level == C);
+        }
+
         public String getValue() {
             return value;
         }

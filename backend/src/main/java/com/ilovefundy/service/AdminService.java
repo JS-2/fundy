@@ -54,6 +54,7 @@ public class AdminService {
         // 승인
         if(isAccept) {
             user.setIsOfficialFan(User.IsCertification.Approve);
+            user.setUserLevel(User.Level.LevelUp(user.getUserLevel()));
             userDao.save(user);
         }
         // 거절
@@ -94,6 +95,7 @@ public class AdminService {
         // 승인
         if(isAccept) {
             user.setIsProfile(User.IsCertification.Approve);
+            user.setUserLevel(User.Level.LevelUp(user.getUserLevel()));
             userDao.save(user);
         }
         // 거절
