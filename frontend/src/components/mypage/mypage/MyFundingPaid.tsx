@@ -14,8 +14,12 @@ const MyFundingPaid = () => {
     (state: rootState) => state.userReducer.token
   );
   const [fundingPays, setFundingPays] = useState<FundingPay[]>([]);
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 800);
     console.log('받아오기 시작');
     getFundPayList(token).then((resp) => {
       console.log('>>>>펀딩 결제 목록>>>' + resp.data);
@@ -24,7 +28,12 @@ const MyFundingPaid = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <Box
         mt={5}
         mb={2}

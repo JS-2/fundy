@@ -1,15 +1,18 @@
 .uncert_icon {
-  font-size: 8em !important;
-  color: silver;
+  font-size: 9em !important;
+  color: rgb(216, 216, 216);
+  opacity: 0.6;
 }
 
 .cert_icon {
-  font-size: 8em !important;
-  color: #2ecc71;
+  font-size: 9em !important;
+  color: #2ecc70;
+  opacity: 0.75;
 }
 
 .waiting_icon {
-  font-size: 8em !important;
+  font-size: 9em !important;
+  opacity: 0.75;
   color: #fcc200;
 }
 

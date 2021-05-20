@@ -49,6 +49,7 @@ const Profile = () => {
   const [openCertUserInfo, setOpenCertUserInfo] = useState(false);
   const [cert, setCert] = useState<Cert>();
   const dispatch = useDispatch();
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
     getCerts(token).then((resp) => {
@@ -112,22 +113,35 @@ const Profile = () => {
     });
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 200);
+  }, []);
+
   return (
-    <div>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <ModifyPassword open={openPw} onClose={handleClosePw} />
       <ModifyNickname open={openN} onClose={handleCloseN} />
       <CertFan open={openCertFan} onClose={handleCloseFan} />
       <CertUserInfo open={openCertUserInfo} onClose={handleCloseUserInfo} />
       <Box
         mx={1}
-        my={2}
+        mt={6}
         className="nbg_bold font-smooth"
-        style={{ fontSize: '2em' }}
+        style={{ fontSize: '2em', color: 'white', opacity: 0.95 }}
+      ></Box>
+      <Card
+        className="hover-big card-zone"
+        elevation={0}
+        style={{ position: 'relative' }}
       >
-        나의 프로필
-      </Box>
-      <Card variant="outlined">
-        <CardContent>
+        <CardContent style={{ paddingBottom: '0px' }}>
           <Box display="flex" justifyContent="space-between">
             <Box display="flex">
               <Box>
@@ -138,30 +152,35 @@ const Profile = () => {
                     onChange={handleImage}
                     style={{ display: 'none' }}
                   />
-                  <Avatar variant="circle" className={styles.avatar}></Avatar>
+                  <Avatar variant="square" className={styles.avatar}></Avatar>
                 </IconButton>
               </Box>
               <Box ml={2} mt={2}>
                 <Box display="flex">
                   <LockIcon
-                    style={{ color: '#DE213D', fontSize: '1.4em' }}
+                    style={{ color: 'red', fontSize: '1.4em', opacity: 0.6 }}
                   ></LockIcon>
                   <Box
                     className="nbg_m font-smooth"
-                    style={{ color: '#696969', fontSize: '1em' }}
+                    style={{ color: '#f5f5f5', fontSize: '1em', opacity: 0.85 }}
                   >
                     인증레벨 {user.level}
                   </Box>
                 </Box>
                 <Box
                   className="nbg_bold font-smooth"
-                  style={{ fontSize: '1.7em', marginTop: '5px' }}
+                  style={{
+                    color: 'white',
+                    fontSize: '1.7em',
+                    marginTop: '10px',
+                    opacity: 0.9,
+                  }}
                 >
                   {user.nickname}님
                 </Box>
                 <Box
                   className="nbg_m font-smooth"
-                  style={{ fontSize: '1em', color: 'grey' }}
+                  style={{ fontSize: '1em', opacity: 0.8, color: '#f5f5f5' }}
                 >
                   {user.email}
                 </Box>
@@ -171,16 +190,21 @@ const Profile = () => {
               <Box display="flex" justifyContent="flex-end">
                 <Button
                   variant="contained"
-                  style={{ fontSize: '0.9em' }}
-                  className="btn_main nbg_bold font-smooth"
+                  style={{
+                    fontSize: '0.9em',
+                  }}
+                  className="mypage-btn nbg_bold font-smooth"
                   onClick={handleOpenN}
                 >
                   닉네임 변경
                 </Button>
                 <Button
                   variant="contained"
-                  className="btn_main nbg_bold font-smooth"
-                  style={{ fontSize: '0.9em', marginLeft: '15px' }}
+                  className="mypage-btn nbg_bold font-smooth"
+                  style={{
+                    fontSize: '0.9em',
+                    marginLeft: '15px',
+                  }}
                   onClick={handleOpenPw}
                 >
                   비밀번호 변경
@@ -191,18 +215,24 @@ const Profile = () => {
         </CardContent>
         <Collapse in={!fold}>
           <Divider />
-          <CardContent>
+          <CardContent style={{ paddingBottom: '0px' }}>
             <Grid container>
               <Grid container item xs={12}>
                 <VerifiedUserIcon
                   style={{
-                    color: '#4bb360',
-                    fontSize: '1.4em',
+                    color: 'white',
+                    fontSize: '1.6em',
                     marginRight: '3px',
+                    marginLeft: '10px',
+                    opacity: 0.8,
                   }}
                 />
-                <Box className="nbg_bold font-smooth" fontSize="1.1em">
-                  인증 기능
+                <Box
+                  style={{ color: 'white', opacity: 0.8 }}
+                  className="nbg_bold font-smooth"
+                  fontSize="1.2em"
+                >
+                  인증하기
                 </Box>
               </Grid>
               <Grid item container xs={12} style={{ margin: '5px' }}>
@@ -221,7 +251,16 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold font-smooth">성인 인증</Box>
+                    <Box
+                      style={{
+                        color: 'white',
+                        opacity: 0.8,
+                        fontSize: '1.2em',
+                      }}
+                      className="nbg_bold font-smooth"
+                    >
+                      성인 인증
+                    </Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -246,7 +285,16 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold font-smooth">팬활동 인증</Box>
+                    <Box
+                      style={{
+                        color: 'white',
+                        opacity: 0.8,
+                        fontSize: '1.2em',
+                      }}
+                      className="nbg_bold font-smooth"
+                    >
+                      팬활동 인증
+                    </Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -270,7 +318,16 @@ const Profile = () => {
                     </IconButton>
                   </Grid>
                   <Grid item container xs={12} justify="center">
-                    <Box className="nbg_bold font-smooth">총대 신상 인증</Box>
+                    <Box
+                      style={{
+                        color: 'white',
+                        opacity: 0.8,
+                        fontSize: '1.2em',
+                      }}
+                      className="nbg_bold font-smooth"
+                    >
+                      총대 신상 인증
+                    </Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -287,7 +344,17 @@ const Profile = () => {
                       />
                     </IconButton>
                   </Grid>
-                  <Grid item container xs={12} justify="center">
+                  <Grid
+                    style={{
+                      color: 'white',
+                      opacity: 0.8,
+                      fontSize: '1.2em',
+                    }}
+                    item
+                    container
+                    xs={12}
+                    justify="center"
+                  >
                     <Box className="nbg_bold font-smooth">플러스 인증</Box>
                   </Grid>
                 </Grid>
@@ -298,16 +365,16 @@ const Profile = () => {
         <Box display="flex" justifyContent="center">
           <Button
             fullWidth
+            size="small"
             style={{ borderRadius: 0 }}
-            variant="contained"
             onClick={() => {
               setFold(!fold);
             }}
           >
             {fold ? (
-              <KeyboardArrowDownIcon style={{ fontSize: '2em' }} />
+              <KeyboardArrowDownIcon style={{ fontSize: '2.5em' }} />
             ) : (
-              <KeyboardArrowUpIcon style={{ fontSize: '2em' }} />
+              <KeyboardArrowUpIcon style={{ fontSize: '2.5em' }} />
             )}
           </Button>
         </Box>
