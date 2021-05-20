@@ -7,17 +7,15 @@
   top: 0;
   left: 0;
   right: 0;
-
 }
 
-.logo{
+.logo {
   top: 10px !important;
 }
 #logoAnchor {
   color: #f74a64 !important;
 
   text-decoration: none !important;
-
 }
 
 .nbg {
@@ -26,10 +24,9 @@
   padding: 0px 10px;
   padding-bottom: 10px;
   position: relative;
-
 }
 .nbg:hover {
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 .nbg:after {
   background: none repeat scroll 0 0 transparent;

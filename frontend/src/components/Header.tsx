@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { ReactComponent as CloseMenu } from "../assets/x.svg";
-import { ReactComponent as MenuIcon } from "../assets/menu.svg";
+import React, { useState } from 'react';
+import { ReactComponent as CloseMenu } from '../assets/x.svg';
+import { ReactComponent as MenuIcon } from '../assets/menu.svg';
 
-import "./header.css";
-import "./Navbar.css";
-import { Link, useHistory } from "react-router-dom";
+import './header.css';
+import './Navbar.css';
+import { Link, useHistory } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -16,11 +16,11 @@ import {
   ListItemText,
   Paper,
   Popper,
-} from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
-import { User } from "../common/types";
-import { rootState } from "../reducers";
-import { logoutSubmit } from "../api/user";
+} from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { User } from '../common/types';
+import { rootState } from '../reducers';
+import { logoutSubmit } from '../api/user';
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -51,39 +51,39 @@ const Header = () => {
   return (
     <div className="header">
       <div className="logo-nav">
-        <div className="logo-container" style={{ marginRight: "40px" }}>
+        <div className="logo-container" style={{ marginRight: '40px' }}>
           <Link id="logoAnchor" to="/" onClick={closeMobileMenu}>
             fundy
           </Link>
         </div>
 
         <ul
-          className={click ? "nav-options active" : "nav-options"}
-          style={{ marginTop: "5px" }}
+          className={click ? 'nav-options active' : 'nav-options'}
+          style={{ marginTop: '5px' }}
         >
-          <li className="option" onClick={closeMobileMenu}>
-            <Link className="nbg" to="/funding">
+          <li className="option font-smooth" onClick={closeMobileMenu}>
+            <Link style={{ fontSize: '0.55em' }} className="nbg" to="/funding">
               펀딩
             </Link>
           </li>
-          <li className="option" onClick={closeMobileMenu}>
-            <Link className="nbg" to="/idol">
+          <li className="option font-smooth" onClick={closeMobileMenu}>
+            <Link style={{ fontSize: '0.55em' }} className="nbg" to="/idol">
               아이돌
             </Link>
           </li>
-          <li className="option" onClick={closeMobileMenu}>
-            <Link className="nbg" to="/places">
+          <li className="option font-smooth" onClick={closeMobileMenu}>
+            <Link style={{ fontSize: '0.55em' }} className="nbg" to="/places">
               후원기관
             </Link>
           </li>
           {user === null ? (
-          <>    <li className="option" onClick={closeMobileMenu}>
-          <Link to="/login" className="nbg">
+          <>    <li className="option font-smooth rightTo" onClick={closeMobileMenu}>
+          <Link style={{ fontSize: '0.55em' }} to="/login" className="nbg">
             로그인
           </Link>
         </li>
-        <li className="option" onClick={closeMobileMenu}>
-          <Link to="/regist" className="nbg">
+        <li className="option font-smooth " onClick={closeMobileMenu}>
+          <Link style={{ fontSize: '0.55em' }} to="/regist" className="nbg">
             회원가입
           </Link>
         </li></>
@@ -99,12 +99,12 @@ const Header = () => {
               display="flex"
               className="nbg_m font-smooth"
               alignItems="center"
-              style={{ fontSize: "1em", position: "absolute", right: "60px" }}
+              style={{ fontSize: '1em', position: 'absolute', right: '60px' }}
             >
               <IconButton onClick={handleClick}>
                 <Avatar
                   src={user.picture}
-                  style={{ width: "45px", height: "45px" }}
+                  style={{ width: '45px', height: '45px' }}
                 ></Avatar>
               </IconButton>
             </Box>
@@ -173,7 +173,7 @@ const Header = () => {
                 <ListItem button onClick={handleMypageBtn}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: "1.1em" }}>
+                      <div className="nbg_m font-smooth" style={{ fontSize: "1.1em" }}>
                         마이페이지
                       </div>
                     }
@@ -188,7 +188,7 @@ const Header = () => {
                 >
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: "1.1em" }}>
+                      <div className="nbg_m font-smooth" style={{ fontSize: "1.1em" }}>
                         로그아웃
                       </div>
                     }
