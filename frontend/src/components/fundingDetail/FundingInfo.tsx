@@ -7,6 +7,7 @@ import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Editor, Viewer } from "@toast-ui/react-editor";
 import bannerinfo from '../../assets/img/bannerInfo.png'
 import Qna from "./Qna";
+import { CardMedia } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) =>
@@ -32,7 +33,16 @@ const FundingInfo = (props: any) => {
   return (
     <div className="new">
       <div style={{borderRadius:'20px', overflow:'hidden', marginBottom:'50px'}}>
-      <img className="termsBanner col-md-12 col-sm-12" style={{padding:0}} src={bannerinfo}></img>
+   
+      <CardMedia
+                    className="cardImg"
+                    component="img"
+                    alt="펀딩 카드 이미지"
+                    width="100%"
+    
+                    image={bannerinfo}
+                    title="Card Image"
+                  />
       </div>
        
       <div className="col-md-12">

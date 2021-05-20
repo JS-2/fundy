@@ -105,7 +105,7 @@ const FundItem = (props: Props) => {
 </div>
          <div className="col-lg-8 col-md-8 col-sm-7 col-xs-7 itemText" style={{ padding: "10px", height:"120px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
       
-        <h5
+        <h4
             className="fundNameTxt"
           style={{
             fontWeight: "bold",
@@ -116,7 +116,7 @@ const FundItem = (props: Props) => {
           }}
         >
           {fundingInfo?.fundingName}
-        </h5>
+        </h4>
 
         <Typography className="ddayTxt" variant="body2" color="textSecondary" component="p" style={{textAlign:'left'}}>
         {dday}

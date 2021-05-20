@@ -218,10 +218,11 @@ const IdolInfo = (props: Props) => {
                         <Button
                           variant="contained"
                           onClick={handleFavorite}
-                          color={idolFavorite ? 'secondary' : 'default'}
+                          color={idolFavorite ? 'secondary' : 'primary'}
                           size="large"
                           style={{
                             width: '100%',
+                            height: '100px',
                             opacity: idolFavorite ? 0.8 : 0.6,
                           }}
                         >

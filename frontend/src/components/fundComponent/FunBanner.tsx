@@ -50,7 +50,7 @@ const FundBanner = () => {
     <div className="col-md-12" style={{marginBottom:'3vw'}}>
         <div className="row ">
             <div
-              className="col-md-6 col-xs-6 tutoBaneer hover14"
+              className="col-md-6 col-xs-12 tutoBaneer hover14"
               onClick={handleClickOpen('body')}
               style={{ padding: '5px' }}
             >
@@ -65,7 +65,7 @@ const FundBanner = () => {
               /></figure>
             </div>
             <div
-              className="col-md-6 col-xs-6 createBanner hover15"
+              className="col-md-6 col-xs-12 createBanner hover15"
               onClick={user === null ? loginRedirect : createRedirect}
               style={{ padding: '5px' }}
             >

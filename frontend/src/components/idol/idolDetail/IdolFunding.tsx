@@ -17,7 +17,7 @@ const IdolFunding = (props: Props) => {
     setFundings(props.funding);
   }, [props]);
   return (
-    <div>
+    <div style={{display:'inline-block'}}>
       <Box
         mt={10}
         mb={3}
@@ -39,26 +39,18 @@ const IdolFunding = (props: Props) => {
           <Box>연관 펀딩이 없습니다.</Box>
         </Box>
       ) : (
-        <Swiper
-          spaceBetween={5}
-          slidesPerView={3}
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
-          navigation
-          style={{
-            boxShadow: 'none',
-            marginLeft: 0,
-            marginRight: 0,
-            height: '440px',
-          }}
-        >
+    <>
           {fundings?.map((funding, i) => (
-            <SwiperSlide key={i}>
+            <div className="col-md-12 col-xs-12" style={{marginBottom:'20px'}}>
+
               <FundCard funding={funding}></FundCard>
-            </SwiperSlide>
+
+            </div>
           ))}
-        </Swiper>
-      )}
+ 
+      </>)}
+  
+      <div style={{color:'white'}}>d</div>
     </div>
   );
 };

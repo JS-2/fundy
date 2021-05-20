@@ -6,12 +6,13 @@ const Footer = () => {
   return (
     <div
       className="foot col-md-12"
-      style={{ position: 'absolute', height: '250px' }}
+      style={{  height: '250px' }}
     >
-      <div className="row"></div>
+  
 
       <div className="row">
-        <div className="col-md-10 textInfo">
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
           <div className="footInfo">
             <span>
               <a className="footernbg" href="/">
@@ -40,16 +41,16 @@ const Footer = () => {
           <a id="footA" className="logo" href="/">
             fundy
           </a>
-          <div className="marginleft">
+  
             <div className="teamInfoFoot">
-              <span id="dev">Developed by PRODUCE 303 </span>
+              <div id="dev">Developed by PRODUCE 303 </div>
 
               <span className="white">공지사항</span>
               <span className="white">펀딩 약관</span>
-              <span className="white">고객 센터: 1344-4747</span>
               <span className="white">이용 안내</span>
+              <span className="white">고객 센터: 1344-4747</span>
             </div>
-          </div>
+     
         </div>
       </div>
     </div>

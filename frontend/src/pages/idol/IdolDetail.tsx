@@ -86,14 +86,14 @@ const IdolDetail = () => {
           <Card elevation={0}>
             {donationData.length === 0 ? (
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <FundingMap
                     idolInfo={detailInfo?.idolInfo.idol}
                     data={donationPlaceData}
                     handleGetPlaceId={handleGetPlaceId}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Box
                     display="flex"
                     justifyContent="center"
@@ -112,14 +112,14 @@ const IdolDetail = () => {
               </Grid>
             ) : (
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <FundingMap
                     idolInfo={detailInfo?.idolInfo.idol}
                     data={donationPlaceData}
                     handleGetPlaceId={handleGetPlaceId}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Chart
                     title={
                       detailInfo?.idolInfo.idol.idolName + '가 남긴 기부 발자취'

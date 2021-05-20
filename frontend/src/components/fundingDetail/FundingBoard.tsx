@@ -19,9 +19,9 @@ const FundingBoard = (props: any) => {
             alignItems: 'center',
           }}
         >
-          <h3 style={{ color: '#aaaaaa', lineHeight: '300px' }}>
+          <h4 style={{ color: '#aaaaaa', lineHeight: '300px' }}>
             아직 공지사항이 올라오지 않았습니다!
-          </h3>
+          </h4>
         </div>
       ) : (
         <></>

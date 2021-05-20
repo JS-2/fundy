@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
-
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import {
   Badge,
   Box,
@@ -24,7 +24,7 @@ import { getFundDetail, getFundNotice } from "../../api/fund";
 import FullWidthTabs from "../../components/fundComponent/FullWidthTabs";
 import { FundForm, FundingNotice, IFunding, User } from "../../common/types";
 import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
-import { Height, PinDropSharp } from "@material-ui/icons";
+import { Group, Height, PinDropSharp } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { rootState } from "../../reducers";
 import { getFavoriteFunding, setFavoriteFunding } from "../../api/user";
@@ -217,7 +217,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         <Button
           startIcon={icon1}
           variant="outlined"
-          className="favbtn nbg_bold col-md-6 col-sm-6 overlayLeftBtn"
+          className="favbtn nbg_bold col-md-6 col-sm-6 col-xs-6 overlayLeftBtn"
           color={color1}
           onClick={func1}
         >
@@ -226,7 +226,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
         <Button
           startIcon={icon2}
-          className="paybtn col-md-6 col-sm-6 circleScaleBtn"
+          className="paybtn col-md-6 col-sm-6 col-xs-6  circleScaleBtn"
           variant="contained"
           color={color2}
           size="large"
@@ -243,7 +243,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       <>
         <Button
           startIcon={icon}
-          className="paybtn col-md-12 col-sm-12"
+          className="paybtn col-md-12 col-sm-12 col-xs-12"
           variant="contained"
           color="secondary"
           size="large"
@@ -422,27 +422,39 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
                   <div>
                     <div className="infoBox" style={{}}>
-                      <Button
-                        startIcon={<AssignmentInd />}
-                        variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
-                      >
-                        펀딩 개설자: {Fund?.userNickname}
-                        {Fund?.fundingParticipants}명 참여 중
-                      </Button>
-
-                      <Button
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
-                        variant="outlined"
+                    <Button
+                        className="idolbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
+                        variant="contained"
+                       
                         onClick={goToIdol}
                       >
-                        <img style={{ height: "28px" }} src={kHeartIcon} /> 펀딩
+                        <img style={{ height: "40px" }} src={kHeartIcon} /> 펀딩
                         아이돌: {Fund?.idolName}
                       </Button>
                       <Button
+                        startIcon={<AssignmentInd />}
+                        variant="outlined"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                      >
+                        {Fund?.userNickname}
+                  
+                      </Button>
+                      <Button
+                        startIcon={<GroupIcon/>}
+                        variant="outlined"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                      > {Fund?.fundingParticipants}명 참여</Button>
+                         <Button
+                        startIcon={<ScheduleIcon/>}
+                        variant="outlined"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                      > {Fund?.fundingRemainDay}일 남음</Button>
+
+                
+                      <Button
                         startIcon={<DoneIcon />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
+                        className="boxbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
                       >
                         목표 금액:{" "}
                         {Fund?.fundingGoalAmount
@@ -454,7 +466,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       <Button
                         startIcon={<TodayIcon />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
+                        className="boxbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
                       >
                         {startdate}~{enddate}
                       </Button>

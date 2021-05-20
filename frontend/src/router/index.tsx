@@ -26,11 +26,13 @@ import ScrollToTop from '../components/ScrollToTop';
 import CertManage from '../pages/admin/Admin';
 import Admin from '../pages/admin/Admin';
 import Places from '../pages/Places';
+import Header from '../components/Header';
 
 const index = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+    <Header></Header>
+
       <ScrollToTop />
       <Box display="flex" justifyContent="center">
         <div className="mainArea col-md-12">

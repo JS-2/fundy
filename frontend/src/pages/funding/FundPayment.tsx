@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, Modal, TextField } from "@material-ui/core";
+import { Box, Button, CardMedia, Checkbox, FormControlLabel, Modal, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -12,6 +12,9 @@ import { rootState } from "../../reducers";
 import "./FundingDetail.css";
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import  { CheckboxProps } from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -41,8 +44,16 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
   interface Params {
     fund_id: string;
   }
+
+  const [agree,setAgree]=useState<boolean>(false);
   const [Fund, setFund] = useState<FundForm>();
   console.log(match.params.num);
+  const [state, setState] = React.useState({
+    checkedA: true,
+    checkedB: false,
+    checkedF: true,
+    checkedG: true,
+  });
   useEffect(() => {
     console.log("fundDetailPage");
 
@@ -138,6 +149,11 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
     );
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
+
   return (
     <div>
       <div></div>
@@ -173,6 +189,25 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
               <div className="noticetxt"> 펀딩 목표 달성에 성공하였을 경우 펀딩 제작자에게 금액이 전달되고,</div>
               <div className="noticetxt"> 이후 펀디와의 연계를 통해 펀딩 진행 상황을 펀딩 공지사항으로 안내드립니다.</div>
               <div className="noticetxt"> 해당 안내 사항에 동의 버튼을 눌러 펀딩을 진행할 수 있습니다.</div>
+
+
+<div style={{fontSize:'20px'}}>
+<FormControlLabel
+        control={
+          <Checkbox
+          onChange={handleChange}
+          name="checkedB"
+          checked={state.checkedB}
+            icon={<CheckBoxOutlineBlankIcon fontSize="large" />}
+            checkedIcon={<CheckBoxIcon fontSize="large" />}
+          />
+        }
+        label="본 안내 사항에 동의합니다."
+      />
+
+
+</div>
+
 
         
             <TextField
