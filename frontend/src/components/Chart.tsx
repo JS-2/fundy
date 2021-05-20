@@ -34,13 +34,19 @@ const Chart = (props: Props) => {
     >
       <ResponsiveBar
         theme={{
-          fontSize: 12,
+          fontSize: 16,
+          fontFamily: 'NanumBarunGothic',
         }}
+        labelFormat={(labelValue) =>
+          (
+            <tspan y={-13} x={40}>
+              {labelValue}
+            </tspan>
+          ) as unknown as string
+        }
         tooltip={(node) => (
           <div>
-            <div style={{ textAlign: 'center' }} className="nbg_bold">
-              {String(node.indexValue)}
-            </div>
+            <div style={{ textAlign: 'center' }}>{String(node.indexValue)}</div>
             <div>
               {String(node.value).replace(
                 /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
@@ -61,7 +67,7 @@ const Chart = (props: Props) => {
         data={props.data}
         keys={['금액']}
         indexBy="name"
-        margin={{ top: 10, right: 50, bottom: 50, left: 120 }}
+        margin={{ top: 50, right: 50, bottom: 50, left: 120 }}
         padding={0.5}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
@@ -85,7 +91,7 @@ const Chart = (props: Props) => {
             id: 'lines',
           },
         ]}
-        colors={'silver'}
+        colors={'#ff8fa0'}
         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         axisLeft={{
           tickSize: 20,
@@ -103,15 +109,10 @@ const Chart = (props: Props) => {
           legendOffset: 32,
         }}
         enableLabel={true}
-        label={(d) =>
-          `\\ ${String(d.value).replace(
-            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-            ','
-          )}`
-        }
+        label={(d) => ``}
         labelTextColor={{
           from: 'color',
-          modifiers: [['darker', 1.6]],
+          modifiers: [['darker', 10]],
         }}
         legends={[]}
         animate={true}

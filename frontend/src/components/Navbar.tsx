@@ -65,24 +65,24 @@ const Navbar = () => {
             alignContent="center"
           >
             <Box className="logo" mr={5}>
-              <a id="logoAnchor" href="/">
+              <Link id="logoAnchor" to="/">
                 fundy
-              </a>
+              </Link>
             </Box>
             <Box className="font-smooth" mx={3}>
-              <a className="nbg" href="/funding">
+              <Link className="nbg" to="/funding">
                 펀딩
-              </a>
+              </Link>
             </Box>
             <Box className="font-smooth" mx={3}>
-              <a className="nbg" href="/idol">
+              <Link className="nbg" to="/idol">
                 아이돌
-              </a>
+              </Link>
             </Box>
             <Box className="font-smooth" mx={3}>
-              <a className="nbg" href="/places">
+              <Link className="nbg" to="/places">
                 후원기관
-              </a>
+              </Link>
             </Box>
           </Box>
           <Box display="flex">

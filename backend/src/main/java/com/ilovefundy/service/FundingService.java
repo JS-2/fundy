@@ -115,7 +115,7 @@ public class FundingService {
 
         List<FundingProject> fundingProjectList = pages.getContent();
         for (int i=0; i<fundingProjectList.size(); i++){
-            List<PayInfo> payInfoList = payDao.findByFunding(fundingProjectList.get(i));
+            List<PayInfo> payInfoList = payDao.findByFundingAndPayAmountIsGreaterThan(fundingProjectList.get(i), 0);
             List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
             int participants = payParticipantsList.size();
             fundingListResponse.add(SetterUtils.setFundingListResponse(fundingProjectList.get(i), participants));
@@ -129,7 +129,7 @@ public class FundingService {
         Page<FundingProject> pages = fundingDao.findByFundingStartTimeBeforeAndFundingEndTimeAfter(LocalDateTime.now(), LocalDateTime.now(), PageRequest.of(page, per_page));
         List<FundingProject> fundingProjectList = pages.getContent();
         for (int i=0; i<fundingProjectList.size(); i++){
-            List<PayInfo> payInfoList = payDao.findByFunding(fundingProjectList.get(i));
+            List<PayInfo> payInfoList = payDao.findByFundingAndPayAmountIsGreaterThan(fundingProjectList.get(i), 0);
             List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
             int participants = payParticipantsList.size();
             fundingRankListResponse.add(SetterUtils.setFundingRankListResponse(fundingProjectList.get(i), participants));
@@ -142,7 +142,7 @@ public class FundingService {
         FundingProject fundingProject = fundingDao.findByFundingId(id);
         FundingDetailResponse fundingDetailResponse = new FundingDetailResponse();
         User user = userDao.findByUserId(fundingProject.getUserId());
-        List<PayInfo> payInfoList = payDao.findByFunding(fundingProject);
+        List<PayInfo> payInfoList = payDao.findByFundingAndPayAmountIsGreaterThan(fundingProject, 0);
         List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());
         fundingDetailResponse.setFundingId(fundingProject.getFundingId());

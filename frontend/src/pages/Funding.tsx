@@ -83,6 +83,7 @@ const Funding = () => {
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
   const [buttonNumber, setButtonNumber] = useState<number>(2);
+  const [show, setShow] = useState<boolean>(false);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
@@ -150,6 +151,9 @@ const Funding = () => {
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
     getFundingList({
       page: 1,
       per_page: 1000,
@@ -301,9 +305,16 @@ const Funding = () => {
   const history = useHistory();
 
   return (
-    <div>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <div id="bannerArea">
-        <Banner></Banner>
+        <div style={{ minHeight: '500px' }}>
+          <Banner />
+        </div>
       </div>
 
       <div className="row">

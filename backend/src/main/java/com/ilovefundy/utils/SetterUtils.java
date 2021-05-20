@@ -125,6 +125,8 @@ public class SetterUtils {
         payInfoResponse.setUserLevel(user.getUserLevel().getValue());
         payInfoResponse.setFundingStatement(LocalDateTime.now().isBefore(funding.getFundingEndTime()) ? "진행중" : "종료");
         payInfoResponse.setPaymentId(payInfo.getPaymentId());
+        int remainDay =  funding.getFundingEndTime().getDayOfYear() - LocalDateTime.now().getDayOfYear();
+        payInfoResponse.setFundingRemainDay(remainDay);
         payInfoResponse.setPayAmount(String.format("%,d", payInfo.getPayAmount()));
         payInfoResponse.setPayDatetime(payInfo.getPayDatetime());
         payInfoResponse.setFundingEndTime(funding.getFundingEndTime());

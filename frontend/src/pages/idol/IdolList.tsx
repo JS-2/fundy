@@ -14,8 +14,12 @@ interface IRankingData {
 
 const IdolList = () => {
   const [chartData, setChartData] = useState<IChartData[]>([]);
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
     getIdolRanking().then((resp) => {
       setChartData(
         resp.data.map((idol: IRankingData) => {
@@ -29,14 +33,20 @@ const IdolList = () => {
     });
   }, []);
   return (
-    <div>
-      <Banner />
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
+      <div style={{ minHeight: '500px' }}>
+        <Banner />
+      </div>
       <div className="row">
         <div className="col-md-1"></div>
         <div className="col-md-10">
-          <TopChart></TopChart>
-          {/* <Chart title="아이돌 차트" data={chartData} /> */}
-          <IdolSearch></IdolSearch>
+          <TopChart />
+          <IdolSearch />
         </div>
       </div>
     </div>

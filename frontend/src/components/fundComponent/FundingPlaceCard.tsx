@@ -21,6 +21,7 @@ const FundingPlaceCard = (props: Props) => {
   const { place, placeId, setPlaceId } = props;
   return (
     <Card
+      className="hover-big-s"
       onClick={() => {
         setPlaceId(place.donationPlaceId);
       }}

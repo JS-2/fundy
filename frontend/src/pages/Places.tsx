@@ -11,7 +11,6 @@ import { getAllDonationPlaces } from '../api/funding';
 import banner from '../assets/img/placesBanner.png';
 
 const placeItem = (place: any) => {
-  console.log(place);
   return (
     <>
       <Grid item container xs={12} style={{ marginTop: '30px' }}>
@@ -45,7 +44,7 @@ const placeItem = (place: any) => {
           </Box>
         </Grid>
         <Grid item xs={8} style={{ paddingRight: '30px' }}>
-          <Box className="nbg_bold font-smooth" mb={1} fontSize="2em">
+          <Box className="nbg_bold font-smooth" mt={1} mb={2} fontSize="1.5em">
             {place.placeName}
           </Box>
           <Box className="nbg_m font-smooth" fontSize="1em">
@@ -62,13 +61,25 @@ const placeItem = (place: any) => {
 
 const Places = () => {
   const [places, setPlaces] = useState([]);
+  const [show, setShow] = useState<boolean>(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
+  }, []);
   useEffect(() => {
     getAllDonationPlaces().then((resp: any) => {
       setPlaces(resp.data);
     });
   }, []);
   return (
-    <div>
+    <div
+      style={{
+        minHeight: '900px',
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <div className="row">
         <img src={banner} style={{ width: '100%' }}></img>
       </div>
