@@ -15,7 +15,10 @@ export const registSubmit = (user: RegistUser, history: ReturnType<typeof useHis
   axiosInstance
     .post('signup', user)
     .then(() => { history.push('/'); })
-    .catch((e: AxiosError) => { console.log(e) });
+    .catch((e: AxiosError) => {
+      if (e.response?.status === 409) {
+        alert('중복되는 이메일 또는 닉네임이 있습니다.')
+    } });
 }
 
 export const logoutSubmit = (dispatch: ReturnType<typeof useDispatch>) => {
