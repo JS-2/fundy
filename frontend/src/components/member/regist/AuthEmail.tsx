@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Grid, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import styles from './AuthEmail.module.css';
 import classNames from 'classnames';
@@ -19,9 +19,13 @@ const AuthEmail = (props: Props) => {
   };
 
   const handleSendCode = () => {
-    sendCode(code).then((resp) => {
-      props.setUserEmail(email);
-    });
+    sendCode(code)
+      .then((resp) => {
+        props.setUserEmail(email);
+      })
+      .catch(() => {
+        alert('인증번호가 틀렸습니다.');
+      });
   };
 
   return (
@@ -35,15 +39,25 @@ const AuthEmail = (props: Props) => {
       </Grid>
       <Grid item xs={8}>
         <TextField
+          inputProps={{
+            style: { fontSize: '1.6em', height: '15px' },
+          }}
+          InputLabelProps={{
+            style: { fontSize: '0.8em' },
+          }}
           fullWidth
           error={email !== '' && !validated}
           label="아이디(이메일)"
           variant="outlined"
           value={email}
           helperText={
-            email !== '' && !validated
-              ? '이메일 형식이 올바른지 확인해주세요.'
-              : ''
+            email !== '' && !validated ? (
+              <Box className="nbg_m" fontSize="0.7em">
+                이메일 형식이 올바른지 확인해주세요.
+              </Box>
+            ) : (
+              <></>
+            )
           }
           onChange={(e) => {
             if (validated !== validateId(e.target.value)) {
@@ -72,6 +86,12 @@ const AuthEmail = (props: Props) => {
       </Grid>
       <Grid item xs={12}>
         <TextField
+          inputProps={{
+            style: { fontSize: '1.6em', height: '15px' },
+          }}
+          InputLabelProps={{
+            style: { fontSize: '0.8em' },
+          }}
           fullWidth
           label="인증번호"
           variant="outlined"

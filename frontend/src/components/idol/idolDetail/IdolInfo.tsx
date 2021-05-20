@@ -115,10 +115,10 @@ const IdolInfo = (props: Props) => {
                     />
                   </Card>
                 </Grid>
-                <Grid item xs={1}></Grid>
+                <Grid item xs={2}></Grid>
                 <Grid
                   item
-                  xs={5}
+                  xs={4}
                   style={{
                     height: '100%',
                     display: 'flex',
@@ -126,7 +126,7 @@ const IdolInfo = (props: Props) => {
                     justifyContent: 'flex-start',
                   }}
                 >
-                  <Box>
+                  <Box width="300px">
                     <Box
                       className="nbg_bold font-smooth"
                       mb={3}
@@ -211,31 +211,25 @@ const IdolInfo = (props: Props) => {
                         </Box>
                       </Box>
                     )}
-                  </Box>
-                  <Grid item xs={2} style={{ height: '90%' }}>
                     {user === null ? (
                       <></>
                     ) : (
-                      <Box display="flex" justifyContent="flex-end">
-                        <IconButton onClick={handleFavorite}>
-                          {idolFavorite ? (
-                            <FavoriteIcon
-                              color="secondary"
-                              style={{ fontSize: '4em' }}
-                            ></FavoriteIcon>
-                          ) : (
-                            <FavoriteIcon
-                              style={{
-                                fontSize: '4em',
-                                color: 'white',
-                                opacity: 0.4,
-                              }}
-                            ></FavoriteIcon>
-                          )}
-                        </IconButton>
+                      <Box display="flex" mt={5}>
+                        <Button
+                          variant="contained"
+                          onClick={handleFavorite}
+                          color={idolFavorite ? 'secondary' : 'default'}
+                          size="large"
+                          style={{
+                            width: '100%',
+                            opacity: idolFavorite ? 0.8 : 0.6,
+                          }}
+                        >
+                          관심 아이돌 {idolFavorite ? '해제' : '등록'}
+                        </Button>
                       </Box>
                     )}
-                  </Grid>
+                  </Box>
                 </Grid>
               </Grid>
             </CardContent>

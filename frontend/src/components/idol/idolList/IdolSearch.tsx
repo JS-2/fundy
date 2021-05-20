@@ -23,7 +23,7 @@ const IdolSearch = () => {
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef(null);
-  const [delay, setDelay] = useState<number>(600);
+  const [delay, setDelay] = useState<number>(700);
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
 
@@ -150,7 +150,7 @@ const IdolSearch = () => {
         {idolList.map((idol, index) => {
           return (
             <Grid item container xs={3} justify="center" key={index}>
-              <IdolCard idol={idol} key={index} />
+              <IdolCard idol={idol} />
             </Grid>
           );
         })}

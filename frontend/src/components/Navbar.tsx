@@ -143,21 +143,15 @@ const Navbar = () => {
           >
             <Paper>
               <List style={{ width: 200 }}>
-                <ListItem>
+                <ListItem style={{ cursor: 'default' }}>
                   <ListItemText
                     primary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.2em' }}
-                      >
+                      <div className="nbg_m" style={{ fontSize: '1.2em' }}>
                         {user.nickname}
                       </div>
                     }
                     secondary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '0.8em' }}
-                      >
+                      <div className="nbg_m" style={{ fontSize: '0.8em' }}>
                         {user.email}
                       </div>
                     }
@@ -187,10 +181,7 @@ const Navbar = () => {
                 <ListItem button onClick={handleMypageBtn}>
                   <ListItemText
                     primary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.1em' }}
-                      >
+                      <div className="nbg_m" style={{ fontSize: '1.1em' }}>
                         마이페이지
                       </div>
                     }
@@ -205,10 +196,7 @@ const Navbar = () => {
                 >
                   <ListItemText
                     primary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.1em' }}
-                      >
+                      <div className="nbg_m" style={{ fontSize: '1.1em' }}>
                         로그아웃
                       </div>
                     }

@@ -12,7 +12,7 @@ import banner from '../assets/img/placesBanner.png';
 
 const placeItem = (place: any) => {
   return (
-    <>
+    <div key={place.donationPlaceId}>
       <Grid item container xs={12} style={{ marginTop: '30px' }}>
         <Grid
           item
@@ -55,7 +55,7 @@ const placeItem = (place: any) => {
       <Grid item xs={12}>
         <Divider style={{ marginTop: 30 }} />
       </Grid>
-    </>
+    </div>
   );
 };
 

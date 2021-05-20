@@ -53,8 +53,8 @@ const IdolFunding = (props: Props) => {
           }}
         >
           {fundings?.map((funding, i) => (
-            <SwiperSlide>
-              <FundCard funding={funding} key={i}></FundCard>
+            <SwiperSlide key={i}>
+              <FundCard funding={funding}></FundCard>
             </SwiperSlide>
           ))}
         </Swiper>

@@ -24,8 +24,16 @@ const IdolDetail = () => {
   const [donationPlaceData, setDonationPlaceData] = useState<IDonationPlace[]>(
     []
   );
+  const [show, setShow] = useState<boolean>(false);
+
   const params: Params = useParams();
   const [mouseOverPlace, setMouseOverPlace] = useState<number>(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
+  }, []);
 
   useEffect(() => {
     getIdolInfo(Number(params.idol_id)).then((resp) => {
@@ -50,7 +58,12 @@ const IdolDetail = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <div className="row">
         <IdolInfo idolInfo={detailInfo?.idolInfo.idol} />
         <div className="col-md-1"></div>

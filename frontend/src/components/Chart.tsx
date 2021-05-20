@@ -94,7 +94,14 @@ const Chart = (props: Props) => {
         colors={'#ff8fa0'}
         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         axisLeft={{
-          tickSize: 20,
+          format: (v) => {
+            return (
+              <tspan style={{ fontSize: '10px' }}>
+                {String(v).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}
+              </tspan>
+            );
+          },
+          tickSize: 10,
           tickPadding: 5,
           tickRotation: 0,
           legend: '금액',

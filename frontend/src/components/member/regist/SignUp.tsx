@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Grid, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { RegistUser } from '../../../common/types';
 import {
@@ -21,7 +21,7 @@ const SignUp = (props: Props) => {
     false,
     false,
   ]);
-
+  const [show, setShow] = useState<boolean>(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -32,104 +32,147 @@ const SignUp = (props: Props) => {
     }
   }, [user.password, confirmPassword]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
+  }, []);
   return (
-    <Grid container spacing={2}>
-      <Grid className="large_logo main_color mb-5" item xs={12}>
-        fundy
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          InputProps={{
-            readOnly: true,
-            className: 'disabled_input',
-          }}
-          fullWidth
-          value={user.email}
-          label="아이디(이메일)"
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          value={user.password}
-          error={user.password != '' && !validateds[0]}
-          onChange={(e) => {
-            if (validateds[0] !== validatePassword(e.target.value)) {
-              let newValidateds = [...validateds];
-              newValidateds[0] = !newValidateds[0];
-              setValidateds(newValidateds);
+    <div style={{ opacity: show ? 1 : 0, transition: 'all 0.5s ease-in-out' }}>
+      <Grid container spacing={2}>
+        <Grid className="large_logo main_color mb-5" item xs={12}>
+          fundy
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '0.8em' },
+            }}
+            InputProps={{
+              readOnly: true,
+              className: 'disabled_input',
+            }}
+            fullWidth
+            value={user.email}
+            label="아이디(이메일)"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '0.8em' },
+            }}
+            fullWidth
+            value={user.password}
+            error={user.password != '' && !validateds[0]}
+            onChange={(e) => {
+              if (validateds[0] !== validatePassword(e.target.value)) {
+                let newValidateds = [...validateds];
+                newValidateds[0] = !newValidateds[0];
+                setValidateds(newValidateds);
+              }
+              setUser({ ...user, password: e.target.value });
+            }}
+            helperText={
+              user.password != '' && !validateds[0] ? (
+                <Box className="nbg_m" fontSize="0.7em">
+                  8자 이상의 영문 대소문자, 숫자, 특수문자만 가능합니다.
+                </Box>
+              ) : (
+                ''
+              )
             }
-            setUser({ ...user, password: e.target.value });
-          }}
-          helperText={
-            user.password != '' && !validateds[0]
-              ? '비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8글자 이상의 비밀번호여야 합니다.'
-              : ''
-          }
-          type="password"
-          label="비밀번호"
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          value={confirmPassword}
-          error={confirmPassword != '' && !validateds[1]}
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
-          }}
-          helperText={
-            confirmPassword != '' && !validateds[1]
-              ? '비밀번호와 동일한지 확인해주세요.'
-              : ''
-          }
-          type="password"
-          label="비밀번호 확인"
-          variant="outlined"
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          value={user.nickname}
-          error={user.nickname != '' && !validateds[2]}
-          onChange={(e) => {
-            if (validateds[2] !== validateNickName(e.target.value)) {
-              let newValidateds = [...validateds];
-              newValidateds[2] = !newValidateds[2];
-              setValidateds(newValidateds);
+            type="password"
+            label="비밀번호"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '0.8em' },
+            }}
+            fullWidth
+            value={confirmPassword}
+            error={confirmPassword != '' && !validateds[1]}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+            }}
+            helperText={
+              confirmPassword != '' && !validateds[1] ? (
+                <Box className="nbg_m" fontSize="0.7em">
+                  비밀번호가 동일한지 확인해주세요.
+                </Box>
+              ) : (
+                ''
+              )
             }
-            setUser({ ...user, nickname: e.target.value });
-          }}
-          helperText={
-            user.nickname != '' && !validateds[2]
-              ? '닉네임은 영문 or 한글이 포함된 2~8글자 사이여야 합니다.'
-              : ''
-          }
-          label="닉네임"
-          variant="outlined"
-        />
+            type="password"
+            label="비밀번호 확인"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            inputProps={{
+              style: { fontSize: '1.6em', height: '15px' },
+            }}
+            InputLabelProps={{
+              style: { fontSize: '0.8em' },
+            }}
+            fullWidth
+            value={user.nickname}
+            error={user.nickname != '' && !validateds[2]}
+            onChange={(e) => {
+              if (validateds[2] !== validateNickName(e.target.value)) {
+                let newValidateds = [...validateds];
+                newValidateds[2] = !newValidateds[2];
+                setValidateds(newValidateds);
+              }
+              setUser({ ...user, nickname: e.target.value });
+            }}
+            helperText={
+              user.nickname != '' && !validateds[2] ? (
+                <Box className="nbg_m" fontSize="0.7em">
+                  닉네임은 영문 or 한글이 포함된 2~8글자 사이여야 합니다.
+                </Box>
+              ) : (
+                ''
+              )
+            }
+            label="닉네임"
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            disabled={validateds.includes(false)}
+            disableElevation
+            variant="contained"
+            size="large"
+            onClick={() => {
+              registSubmit(user, history);
+            }}
+            fullWidth
+            className={
+              !validateds.includes(false) ? 'btn_main nbg_bold' : 'nbg_bold'
+            }
+          >
+            회원가입
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Button
-          disabled={validateds.includes(false)}
-          disableElevation
-          variant="contained"
-          size="large"
-          onClick={() => {
-            registSubmit(user, history);
-          }}
-          fullWidth
-          className={
-            !validateds.includes(false) ? 'btn_main nbg_bold' : 'nbg_bold'
-          }
-        >
-          회원가입
-        </Button>
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 

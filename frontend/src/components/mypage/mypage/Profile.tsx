@@ -152,7 +152,7 @@ const Profile = () => {
                     onChange={handleImage}
                     style={{ display: 'none' }}
                   />
-                  <Avatar variant="square" className={styles.avatar}></Avatar>
+                  <Avatar className={styles.avatar}></Avatar>
                 </IconButton>
               </Box>
               <Box ml={2} mt={2}>

@@ -78,7 +78,7 @@ const Funding = () => {
   const [isBottom, setIsBottom] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef(null);
-  const [delay, setDelay] = useState<number>(600);
+  const [delay, setDelay] = useState<number>(700);
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
@@ -377,6 +377,7 @@ const Funding = () => {
             {fundingRank?.map((funding: IFunding, i: number) => {
               return (
                 <div className="col-md-4 col-sm-6 col-xs-12"
+                key={funding.fundingId}
                 style={{ padding: '10px' }}>
                   <FundCard funding={funding}></FundCard>
                 </div>

@@ -61,9 +61,13 @@ const SignIn = () => {
           }}
           error={user.userEmail != '' && !validateds[0]}
           helperText={
-            user.userEmail != '' && !validateds[0]
-              ? '이메일 형식이 올바른지 확인해주세요.'
-              : ''
+            user.userEmail != '' && !validateds[0] ? (
+              <Box className="nbg_m" fontSize="0.7em">
+                이메일 형식이 올바른지 확인해주세요.
+              </Box>
+            ) : (
+              ''
+            )
           }
           value={user.userEmail}
           onChange={(e) => {
@@ -98,9 +102,13 @@ const SignIn = () => {
             setUserInfo({ ...user, userPassword: e.target.value });
           }}
           helperText={
-            user.userPassword != '' && !validateds[1]
-              ? '비밀번호는 8자 이상으로 입력해주세요.'
-              : ''
+            user.userPassword != '' && !validateds[1] ? (
+              <Box className="nbg_m" fontSize="0.7em">
+                8자 이상의 영문 대소문자, 숫자, 특수문자만 가능합니다.
+              </Box>
+            ) : (
+              ''
+            )
           }
           type="password"
           label="비밀번호"
@@ -129,15 +137,23 @@ const SignIn = () => {
           style={{ fontSize: '1.1em' }}
           fullWidth
           onClick={() => {
-            loginSubmit(user).then((response) => {
-              dispatch(setUser(response.data, response.headers.token));
-              if (saved) {
-                localStorage.setItem('saveEmail', user.userEmail);
-              } else {
-                localStorage.setItem('saveEmail', '');
-              }
-              history.push('/');
-            });
+            loginSubmit(user)
+              .then((response) => {
+                dispatch(setUser(response.data, response.headers.token));
+                if (saved) {
+                  localStorage.setItem('saveEmail', user.userEmail);
+                } else {
+                  localStorage.setItem('saveEmail', '');
+                }
+                history.push('/');
+              })
+              .catch((e) => {
+                if (e.response?.status === 401) {
+                  alert('유저정보가 없습니다.');
+                } else {
+                  alert('통신 오류입니다.');
+                }
+              });
           }}
           className={
             !validateds.includes(false) ? 'btn_main nbg_bold' : 'nbg_bold'

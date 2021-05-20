@@ -298,7 +298,6 @@ const FundCreate = () => {
       <Banner></Banner>
       <div className="container">
         <div className="row">
-        
           <Box style={{ visibility: 'hidden' }}>.</Box>
           <Box
             mt={5}
@@ -308,7 +307,14 @@ const FundCreate = () => {
           >
             펀딩 제작하기
           </Box>
-          <img src={bannerLong} style={{width:'100%', borderRadius:'10px', marginBottom:'20px'}}></img>
+          <img
+            src={bannerLong}
+            style={{
+              width: '100%',
+              borderRadius: '10px',
+              marginBottom: '20px',
+            }}
+          ></img>
           <FormControl component="fieldset">
             <RadioGroup
               row
@@ -597,8 +603,8 @@ const FundCreate = () => {
         </div>
         <div className="row" style={{ marginTop: '40px' }}>
           <Grid container spacing={3}>
-            {places.map((place) => (
-              <Grid item xs={6}>
+            {places.map((place, i) => (
+              <Grid item xs={6} key={i}>
                 <FundingPlaceCard
                   place={place}
                   placeId={placeId}
