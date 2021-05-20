@@ -35,19 +35,7 @@ const MyIdols = () => {
       <Box my={3} className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
         나의 아이돌
       </Box>
-      <Swiper
-        spaceBetween={10}
-        slidesPerView={3.3}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
-        style={{ height: '350px' }}
-      >
-        {idols?.map((idol) => (
-          <SwiperSlide key={idol.idolId}>
-            <IdolCard idol={idol} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+
       {idols?.length == 0 ? (
         <Box
           className="nbg_bold font-smooth"
@@ -62,7 +50,19 @@ const MyIdols = () => {
           <Box>아이돌 리스트가 없습니다.</Box>
         </Box>
       ) : (
-        <></>
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={3.3}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+          style={{ height: '350px' }}
+        >
+          {idols?.map((idol) => (
+            <SwiperSlide key={idol.idolId}>
+              <IdolCard idol={idol} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       )}
     </div>
   );
