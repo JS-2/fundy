@@ -218,12 +218,13 @@ const IdolInfo = (props: Props) => {
                         <Button
                           variant="contained"
                           onClick={handleFavorite}
-                          color={idolFavorite ? 'secondary' : 'primary'}
+                          color={idolFavorite ? 'primary' : 'secondary'}
                           size="large"
                           style={{
                             width: '100%',
-                            height: '100px',
-                            opacity: idolFavorite ? 0.8 : 0.6,
+                            height: '45px',
+                            fontSize: '1.1em',
+                            opacity: idolFavorite ? 0.85 : 0.6,
                           }}
                         >
                           관심 아이돌 {idolFavorite ? '해제' : '등록'}

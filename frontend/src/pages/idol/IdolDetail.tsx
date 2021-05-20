@@ -33,7 +33,7 @@ const IdolDetail = () => {
     setTimeout(() => {
       setShow(true);
     }, 10);
-  }, []);
+  }, [params]);
 
   useEffect(() => {
     getIdolInfo(Number(params.idol_id)).then((resp) => {
