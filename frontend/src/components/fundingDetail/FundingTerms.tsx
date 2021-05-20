@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import './FundingTerms.css';
-import { Table } from "@material-ui/core";
+import { CardMedia, Table } from "@material-ui/core";
 import termsBanner from '../../assets/img/termsBanner.png'
 
 
@@ -27,8 +27,21 @@ class FundingTerms extends Component {
       return (
      
         <div className="terms">
+
+
      
-            <img className="termsBanner col-md-12 col-sm-12" style={{borderRadius:'50px'}} src={termsBanner}></img>
+<div style={{borderRadius:'20px', overflow:'hidden', marginBottom:'50px'}}>
+   
+   <CardMedia
+                 className="cardImg"
+                 component="img"
+                 alt="펀딩 카드 이미지"
+                 width="100%"
+ 
+                 image={termsBanner}
+                 title="Card Image"
+               />
+   </div>
 
 
         

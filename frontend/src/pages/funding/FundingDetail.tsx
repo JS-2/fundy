@@ -217,7 +217,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         <Button
           startIcon={icon1}
           variant="outlined"
-          className="favbtn nbg_bold col-md-6 col-sm-6 overlayLeftBtn"
+          className="favbtn nbg_bold col-md-6 col-sm-6 col-xs-6 overlayLeftBtn"
           color={color1}
           onClick={func1}
         >
@@ -226,7 +226,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
         <Button
           startIcon={icon2}
-          className="paybtn col-md-6 col-sm-6 circleScaleBtn"
+          className="paybtn col-md-6 col-sm-6 col-xs-6  circleScaleBtn"
           variant="contained"
           color={color2}
           size="large"
@@ -243,7 +243,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
       <>
         <Button
           startIcon={icon}
-          className="paybtn col-md-12 col-sm-12"
+          className="paybtn col-md-12 col-sm-12 col-xs-12"
           variant="contained"
           color="secondary"
           size="large"
@@ -425,14 +425,19 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       <Button
                         startIcon={<AssignmentInd />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
+                        className="boxbtn nbg_bold col-md-6 col-sm-6 col-xs-6"
                       >
                         펀딩 개설자: {Fund?.userNickname}
-                        {Fund?.fundingParticipants}명 참여 중
+                  
                       </Button>
+                      <Button
+                        startIcon={<AssignmentInd />}
+                        variant="outlined"
+                        className="boxbtn nbg_bold col-md-6 col-sm-6 col-xs-6"
+                      > {Fund?.fundingParticipants}명 참여</Button>
 
                       <Button
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
+                        className="boxbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
                         variant="outlined"
                         onClick={goToIdol}
                       >
@@ -442,7 +447,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       <Button
                         startIcon={<DoneIcon />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
+                        className="boxbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
                       >
                         목표 금액:{" "}
                         {Fund?.fundingGoalAmount
@@ -454,7 +459,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       <Button
                         startIcon={<TodayIcon />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-12 col-sm-12"
+                        className="boxbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
                       >
                         {startdate}~{enddate}
                       </Button>

@@ -1,29 +1,21 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  ClickAwayListener,
-  Divider,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Paper,
-  Popper,
-} from '@material-ui/core';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps, useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { logoutSubmit } from '../api/user';
-import { User } from '../common/types';
-import { rootState } from '../reducers';
-import './Navbar.css';
+import React, { useState } from "react";
+import { ReactComponent as CloseMenu } from "../assets/x.svg";
+import { ReactComponent as MenuIcon } from "../assets/menu.svg";
 
-const Navbar = () => {
+import "./header.css";
+import "./Navbar.css";
+import { Link, useHistory } from "react-router-dom";
+import { Avatar, Box, ClickAwayListener, Divider, IconButton, List, ListItem, ListItemText, Paper, Popper } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import { User } from "../common/types";
+import { rootState } from "../reducers";
+import { logoutSubmit } from '../api/user';
+
+const Header = () => {
+  const [click, setClick] = useState(false);
+  const handleClick2 = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
   const user: User = useSelector((state: rootState) => state.userReducer.user);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -31,6 +23,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    closeMobileMenu();
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
@@ -42,80 +35,68 @@ const Navbar = () => {
     history.push('/admin');
   };
 
+  
   const open = Boolean(anchorEl);
-
+  
   return (
-    <>
-      <Box justifyContent="center" className="nav" minWidth={380}>
-        <Box
-          display="flex"
-          minWidth={380}
-          height={80}
-          mb={1}
-          mx={3}
-          style={{ marginLeft: '32px' }}
-          justifyContent="space-between"
-          alignItems="center"
-          alignContent="center"
-        >
-          <Box
-            display="flex"
-            height={80}
-            alignItems="center"
-            alignContent="center"
-          >
-            <Box className="logo" mr={5}>
-              <Link id="logoAnchor" to="/">
+    <div className="header">
+      <div className="logo-nav">
+        <div className="logo-container" style={{marginRight:'40px'}}>
+        <Link id="logoAnchor" to="/">
                 fundy
               </Link>
-            </Box>
-            <Box className="font-smooth" mx={3}>
-              <Link className="nbg" to="/funding">
+        </div>
+
+        <ul className={click ? "nav-options active" : "nav-options"} style={{marginTop:'5px'}} >
+          <li className="option" onClick={closeMobileMenu}>
+          <Link className="nbg" to="/funding">
                 펀딩
               </Link>
-            </Box>
-            <Box className="font-smooth" mx={3}>
-              <Link className="nbg" to="/idol">
+          </li>
+          <li className="option" onClick={closeMobileMenu}>
+          <Link className="nbg" to="/idol">
                 아이돌
               </Link>
-            </Box>
-            <Box className="font-smooth" mx={3}>
-              <Link className="nbg" to="/places">
+          </li>
+          <li className="option" onClick={closeMobileMenu}>
+          <Link className="nbg" to="/places">
                 후원기관
               </Link>
-            </Box>
-          </Box>
-          <Box display="flex">
-            {user === null ? (
-              <>
-                <Box className="font-smooth" fontSize="1.1em" mx={2}>
+          </li>
+        </ul>
+
+        {user === null ? (
+              <ul className={click ? "nav-options active" : "nav-options"} style={{position:'absolute', right:'0px'}}>
+                <li className="option" onClick={closeMobileMenu}>
                   <Link
                     to="/login"
-                    className="nbg user"
+                    className="nbg"
                     style={{ textDecoration: 'none' }}
                   >
                     로그인
                   </Link>
-                </Box>
-                <Box className="font-smooth" fontSize="1.1em" mx={2}>
+                </li>
+                <li className="option" onClick={closeMobileMenu}>
                   <Link
                     to="/regist"
-                    className="nbg user"
+                    className="nbg"
                     style={{ textDecoration: 'none' }}
                   >
                     회원가입
                   </Link>
-                </Box>
-              </>
+               </li>
+               </ul>
+            
+             
             ) : (
               <>
                 <Box
                   display="flex"
                   className="nbg_m font-smooth"
                   alignItems="center"
-                  style={{ fontSize: '1em' }}
+                  style={{ fontSize: '1em',position:'absolute', right:'60px' }}
                 >
-                  {/* <Box mr={1}>{user.nickname}님</Box> */}
+              
                   <IconButton onClick={handleClick}>
                     <Avatar
                       src={user.picture}
@@ -125,16 +106,23 @@ const Navbar = () => {
                 </Box>
               </>
             )}
-          </Box>
-        </Box>
-      </Box>
+      </div>
+     
+      <div className="mobile-menu" onClick={handleClick2}>
+        {click ? (
+          <CloseMenu className="menu-icon" />
+        ) : (
+          <MenuIcon className="menu-icon" />
+        )}
+      </div>
+
       {user === null ? (
         <></>
       ) : (
         <Popper
           open={open}
           anchorEl={anchorEl}
-          style={{ zIndex: 1, marginTop: -10 }}
+          style={{ zIndex: 1, marginTop: -10}}
         >
           <ClickAwayListener
             onClickAway={() => {
@@ -146,12 +134,12 @@ const Navbar = () => {
                 <ListItem style={{ cursor: 'default' }}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: '1.2em' }}>
+                      <div className="nbg_m" style={{ fontSize: '2rem' }}>
                         {user.nickname}
                       </div>
                     }
                     secondary={
-                      <div className="nbg_m" style={{ fontSize: '0.8em' }}>
+                      <div className="nbg_m" style={{ fontSize: '1.2rem' }}>
                         {user.email}
                       </div>
                     }
@@ -165,7 +153,7 @@ const Navbar = () => {
                         primary={
                           <div
                             className="nbg_m font-smooth"
-                            style={{ fontSize: '1.1em' }}
+                            style={{ fontSize: '1.6rem' }}
                           >
                             인증 관리(ADMIN)
                           </div>
@@ -207,8 +195,8 @@ const Navbar = () => {
           </ClickAwayListener>
         </Popper>
       )}
-    </>
+    </div>
   );
 };
 
-export default Navbar;
+export default Header;

@@ -131,7 +131,7 @@
   color: rgb(255, 255, 255);
   text-shadow: 1px 1px 3px rgb(82, 82, 82);
   font-weight: bold;
-  font-size: 2vw;
+  font-size: 30px;
 }
 .fundingSub{
   text-align: center;
@@ -139,7 +139,7 @@ z-index: 1;
 color: rgb(255, 255, 255);
 text-shadow: 1px 1px 3px rgb(82, 82, 82);
 margin-bottom:0;
-font-size: 1vw;
+font-size: 16px;
 }
 
 
@@ -254,4 +254,8 @@ font-size: 1vw;
 
 .noticetxt{
   font-size:16px;
+}
+
+.MuiFormControlLabel-label{
+  font-size: 20px !important;
 }
