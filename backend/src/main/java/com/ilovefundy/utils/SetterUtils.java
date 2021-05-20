@@ -116,11 +116,12 @@ public class SetterUtils {
         return myRegisteredFundingResponse;
     }
 
-    public static PayInfoResponse setMyPayInfo(PayInfo payInfo, FundingProject funding, User user) {
+    public static PayInfoResponse setMyPayInfo(PayInfo payInfo, FundingProject funding, User user, int participants) {
         PayInfoResponse payInfoResponse = new PayInfoResponse();
         payInfoResponse.setFundingId(funding.getFundingId());
         payInfoResponse.setFundingName(funding.getFundingName());
         payInfoResponse.setFundingSubtitle(funding.getFundingSubtitle());
+        payInfoResponse.setFundingThumbnail(funding.getFundingThumbnail());
         payInfoResponse.setUserNickname(user.getUserNickname());
         payInfoResponse.setUserLevel(user.getUserLevel().getValue());
         payInfoResponse.setFundingStatement(LocalDateTime.now().isBefore(funding.getFundingEndTime()) ? "진행중" : "종료");
@@ -130,6 +131,11 @@ public class SetterUtils {
         payInfoResponse.setPayAmount(String.format("%,d", payInfo.getPayAmount()));
         payInfoResponse.setPayDatetime(payInfo.getPayDatetime());
         payInfoResponse.setFundingEndTime(funding.getFundingEndTime());
+        int amount = CalculationUtils.getFundingAmount(funding);
+        payInfoResponse.setFundingAmount(String.format("%,d", amount));
+        int achievementRate = CalculationUtils.getAchievementRate(amount, funding.getFundingGoalAmount());
+        payInfoResponse.setFundingAchievementRate(achievementRate);
+        payInfoResponse.setFundingParticipants(participants);
         return payInfoResponse;
     }
 }

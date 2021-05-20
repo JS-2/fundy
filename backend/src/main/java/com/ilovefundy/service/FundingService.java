@@ -265,7 +265,10 @@ public class FundingService {
 
         FundingProject funding = tmpPayInfo.getFunding();
         User u = userDao.findByUserId(funding.getUserId());
-        PayInfoResponse payInfoResponse = SetterUtils.setMyPayInfo(payInfo, funding, u);
+        List<PayInfo> payInfoList = payDao.findByFundingAndPayAmountIsGreaterThan(funding, 0);
+        List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
+        int participants = payParticipantsList.size();
+        PayInfoResponse payInfoResponse = SetterUtils.setMyPayInfo(payInfo, funding, u, participants);
         return payInfoResponse;
     }
 
