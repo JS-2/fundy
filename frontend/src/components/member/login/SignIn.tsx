@@ -147,7 +147,7 @@ const SignIn = () => {
         <FormControlLabel
           control={<Checkbox checked={saved} />}
           label={
-            <Box className="nbg_m font-smooth" component="div" fontSize="1em">
+            <Box className="nbg_m font-smooth" component="div" fontSize="0.7em">
               아이디 저장
             </Box>
           }

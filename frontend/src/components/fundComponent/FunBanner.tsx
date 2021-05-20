@@ -49,6 +49,7 @@ const FundBanner = () => {
       loginRedirect('로그인 후 펀딩 제작이 가능합니다.', '/login');
     } else {
       getCerts(token).then((resp) => {
+        console.log(resp.data.isAdult);
         if (resp.data.isAdult === 'Y') {
           createRedirect();
         } else {
