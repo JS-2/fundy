@@ -82,7 +82,7 @@ const Funding = () => {
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
-  const [buttonNumber, setButtonNumber] = useState<number>(2);
+  const [buttonNumber, setButtonNumber] = useState<number>(1);
   const [show, setShow] = useState<boolean>(false);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
@@ -302,6 +302,12 @@ const Funding = () => {
     setFundingStatus({ ...fundingStatus, per_page: 3, keyword: searchWord });
   };
 
+  const handleKeyPress = (e: any) => {
+    if (e.keyCode == 13) {
+      handleSearch();
+    }
+  };
+
   const history = useHistory();
 
   return (
@@ -312,7 +318,7 @@ const Funding = () => {
       }}
     >
       <div id="bannerArea">
-        <div style={{ minHeight: '500px' }}>
+        <div>
           <Banner />
         </div>
       </div>
@@ -376,9 +382,11 @@ const Funding = () => {
           <Grid container spacing={3}>
             {fundingRank?.map((funding: IFunding, i: number) => {
               return (
-                <div className="col-md-4 col-sm-6 col-xs-12"
-                key={funding.fundingId}
-                style={{ padding: '10px' }}>
+                <div
+                  className="col-md-4 col-sm-6 col-xs-12"
+                  key={funding.fundingId}
+                  style={{ padding: '10px' }}
+                >
                   <FundCard funding={funding}></FundCard>
                 </div>
               );
@@ -482,6 +490,7 @@ const Funding = () => {
                 onChange={(e) => {
                   setSearchWord(e.target.value);
                 }}
+                onKeyDown={handleKeyPress}
                 inputProps={{
                   style: {
                     fontSize: '1.5em',
@@ -500,7 +509,7 @@ const Funding = () => {
                 disableElevation
                 variant="contained"
                 onClick={handleSearch}
-                style={{ fontSize: '1.4em' }}
+                style={{ fontSize: '1.4em', height: '45px', marginTop: '1px' }}
               >
                 {' '}
                 검색{' '}

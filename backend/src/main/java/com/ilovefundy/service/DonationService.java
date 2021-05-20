@@ -49,7 +49,6 @@ public class DonationService {
         for(IIdolDonation donation : idolDonationList) {
             IdolDonationListResponse idolDonationListResponse = new IdolDonationListResponse();
             idolDonationListResponse.setDonationPlaceId(donation.getDonationPlaceId());
-            System.out.println(donation.getDonationPlaceId());
             DonationPlace place = donationPlaceDao.findByDonationPlaceId(donation.getDonationPlaceId());
             idolDonationListResponse.setPlaceName(place.getPlaceName());
             idolDonationListResponse.setPlaceAddress(place.getPlaceAddress());

@@ -39,7 +39,7 @@ const IdolList = () => {
         transition: 'all 0.5s ease-in-out',
       }}
     >
-      <div style={{ minHeight: '500px' }}>
+      <div>
         <Banner />
       </div>
       <div className="row">

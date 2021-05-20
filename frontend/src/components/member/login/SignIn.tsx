@@ -45,6 +45,32 @@ const SignIn = () => {
     }
   }, [user]);
 
+  const handleKeyPress = (e: any) => {
+    if (e.keyCode == 13 && !validateds.includes(false)) {
+      handleLoginBtn();
+    }
+  };
+
+  const handleLoginBtn = () => {
+    loginSubmit(user)
+      .then((response) => {
+        dispatch(setUser(response.data, response.headers.token));
+        if (saved) {
+          localStorage.setItem('saveEmail', user.userEmail);
+        } else {
+          localStorage.setItem('saveEmail', '');
+        }
+        history.push('/');
+      })
+      .catch((e) => {
+        if (e.response?.status === 401) {
+          alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
+        } else {
+          alert('통신 오류입니다.');
+        }
+      });
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item className="large_logo main_color mb-5" xs={12}>
@@ -53,6 +79,7 @@ const SignIn = () => {
       <Grid className="nbg_m" item xs={12}>
         <TextField
           fullWidth
+          onKeyDown={handleKeyPress}
           inputProps={{
             style: { fontSize: '1.6em', height: '15px' },
           }}
@@ -85,6 +112,7 @@ const SignIn = () => {
       <Grid className="nbg_m" item xs={12}>
         <TextField
           fullWidth
+          onKeyDown={handleKeyPress}
           inputProps={{
             style: { fontSize: '1.6em', height: '15px' },
           }}
@@ -119,7 +147,7 @@ const SignIn = () => {
         <FormControlLabel
           control={<Checkbox checked={saved} />}
           label={
-            <Box className="nbg_m font-smooth" component="div" fontSize="1.3em">
+            <Box className="nbg_m font-smooth" component="div" fontSize="1em">
               아이디 저장
             </Box>
           }
@@ -136,25 +164,7 @@ const SignIn = () => {
           size="large"
           style={{ fontSize: '1.1em' }}
           fullWidth
-          onClick={() => {
-            loginSubmit(user)
-              .then((response) => {
-                dispatch(setUser(response.data, response.headers.token));
-                if (saved) {
-                  localStorage.setItem('saveEmail', user.userEmail);
-                } else {
-                  localStorage.setItem('saveEmail', '');
-                }
-                history.push('/');
-              })
-              .catch((e) => {
-                if (e.response?.status === 401) {
-                  alert('유저정보가 없습니다.');
-                } else {
-                  alert('통신 오류입니다.');
-                }
-              });
-          }}
+          onClick={handleLoginBtn}
           className={
             !validateds.includes(false) ? 'btn_main nbg_bold' : 'nbg_bold'
           }
