@@ -89,9 +89,13 @@ export interface FundForm {
   fundDate: string |null;
   location: string|null;
   fundDetail: string|null;
-  isGoodFunding: boolean|null;
+  isGoodFunding: string|null;
   fundingSubtitle: string;
   fundingRemainDay: number;
+  isPlus:string;
+  isAdult:string;
+  isOfficialFan: string;
+  isProfile:string;
 }
 
 export interface IFunding {

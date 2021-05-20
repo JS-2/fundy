@@ -6,14 +6,14 @@
 
 .cert_icon {
   font-size: 9em !important;
-  color: #00ff6a;
+  color: #2aff83;
   opacity: 0.6;
 }
 
 .waiting_icon {
   font-size: 9em !important;
   opacity: 0.9;
-  color: #fcc200;
+  color: #ffdd19;
 }
 
 .uncert_card {

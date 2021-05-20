@@ -58,6 +58,10 @@
     padding-left:10px;
 }
 
+
+.cardDialog{
+  background: white;
+}
 .boxbtn{
   font-size:18px !important;
   height: 70px;
