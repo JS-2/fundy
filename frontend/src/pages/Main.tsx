@@ -221,7 +221,7 @@ const Main = () => {
               </div>
               <Box
                 mb={3}
-                className="font-smooth"
+                className="nbg_m font-smooth"
                 style={{ fontSize: '1.2em', marginTop: '10px' }}
               >
                 당신의 아이돌의 기부 현황을 알아보세요
