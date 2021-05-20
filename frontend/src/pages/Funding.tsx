@@ -82,7 +82,7 @@ const Funding = () => {
   const [isPlaying, setPlaying] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [searchWord, setSearchWord] = useState<string>('');
-  const [buttonNumber, setButtonNumber] = useState<number>(2);
+  const [buttonNumber, setButtonNumber] = useState<number>(1);
   const [show, setShow] = useState<boolean>(false);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
@@ -312,7 +312,7 @@ const Funding = () => {
       }}
     >
       <div id="bannerArea">
-        <div style={{ minHeight: '500px' }}>
+        <div>
           <Banner />
         </div>
       </div>
@@ -376,9 +376,11 @@ const Funding = () => {
           <Grid container spacing={3}>
             {fundingRank?.map((funding: IFunding, i: number) => {
               return (
-                <div className="col-md-4 col-sm-6 col-xs-12"
-                key={funding.fundingId}
-                style={{ padding: '10px' }}>
+                <div
+                  className="col-md-4 col-sm-6 col-xs-12"
+                  key={funding.fundingId}
+                  style={{ padding: '10px' }}
+                >
                   <FundCard funding={funding}></FundCard>
                 </div>
               );

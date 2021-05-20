@@ -119,49 +119,42 @@ const Main = () => {
   return (
     <div
       style={{
-        minHeight: '500px',
         opacity: show ? 1 : 0,
         transition: 'all 0.5s ease-in-out',
       }}
     >
       <div id="bannerArea">
-        <div style={{ minHeight: '500px' }}>
+        <div>
           <Banner />
         </div>
       </div>
-  
-      
+
       <div className="col-md-12">
-        <div className="row justify-content-center" style={{margin: 'auto'}}>
-        <div className="col-md-1  " id="" style={{height:'10px'}}></div>
+        <div className="row justify-content-center" style={{ margin: 'auto' }}>
+          <div className="col-md-1  " id="" style={{ height: '10px' }}></div>
 
           <div className="area col-md-10  " id="">
-          <FundBanner></FundBanner>
-            <div className="col-md-8 divA" id="topFundArea" >
+            <FundBanner></FundBanner>
+            <div className="col-md-8 divA" id="topFundArea">
               <div className="" style={{ marginRight: '20px' }}>
-              <div
-              className="nbg_bold font-smooth"
-              style={{ fontSize: '2em' }}
-            >
-              펀디가 추천하는 오늘의 펀딩
-            </div>
-            <Box
-              mb={3}
-              className="font-smooth"
-              style={{ fontSize: '1.2em', marginTop:'10px' }}
-            >
-              
-            </Box>
+                <div
+                  className="nbg_bold font-smooth"
+                  style={{ fontSize: '2em' }}
+                >
+                  펀디가 추천하는 오늘의 펀딩
+                </div>
+                <Box
+                  mb={3}
+                  className="font-smooth"
+                  style={{ fontSize: '1.2em', marginTop: '10px' }}
+                ></Box>
               </div>
 
-              <Grid
-                container
-                spacing={3}
-             
-              >
+              <Grid container spacing={3}>
                 {hotFunding?.map((funding: IFunding, i: number) => {
                   return (
-                    <div className="col-md-6 col-sm-12 col-xs-12"
+                    <div
+                      className="col-md-6 col-sm-12 col-xs-12"
                       key={funding.fundingId}
                       style={{ padding: '10px' }}
                     >
@@ -170,21 +163,30 @@ const Main = () => {
                   );
                 })}
               </Grid>
-              <Box mt={1} className="boxbox" display="flex" justifyContent="flex-end" style={{marginTop:'50px'}}>
+              <Box
+                mt={1}
+                className="boxbox"
+                display="flex"
+                justifyContent="flex-end"
+                style={{ marginTop: '50px' }}
+              >
                 <Link className="nbg" to="/funding">
                   더보기
                 </Link>
               </Box>
             </div>
-            <div className="col-md-4 col-sm-12 col-xs-12 divB" style={{ paddingLeft: '20px' , height:'100%'}}>
+            <div
+              className="col-md-4 col-sm-12 col-xs-12 divB"
+              style={{ paddingLeft: '20px', height: '100%' }}
+            >
               <div className="">
                 <Box
-              mb={3}
-              className="nbg_bold font-smooth"
-              style={{ fontSize: '2em' }}
-            >
-              펀디 인기 펀딩 Top 7
-            </Box>
+                  mb={3}
+                  className="nbg_bold font-smooth"
+                  style={{ fontSize: '2em' }}
+                >
+                  펀디 인기 펀딩 Top 7
+                </Box>
               </div>
 
               <div style={{ padding: '0px' }}>
@@ -192,9 +194,13 @@ const Main = () => {
                   return (
                     <div
                       className="fundDiv col-md-12"
-                      style={{ height: '130px', width: '100%', marginBottom: '10px', display:'inline-block' }}
+                      style={{
+                        height: '130px',
+                        width: '100%',
+                        marginBottom: '10px',
+                        display: 'inline-block',
+                      }}
                       key={funding.fundingId}
-
                     >
                       <FundItem funding={funding} rank={i}></FundItem>
                     </div>
@@ -204,59 +210,53 @@ const Main = () => {
             </div>
           </div>
           <div className="area col-md-1  " id=""></div>
-      
         </div>
 
         <div className="row" id="idolArea">
           <div className="col-md-1"></div>
           <div className="col-md-10 ">
-          <div className="col-md-12">
-            <div
-        
-              className="nbg_bold font-smooth"
-              style={{ fontSize: '2em' }}
-            >
-              아이돌
+            <div className="col-md-12">
+              <div className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
+                아이돌
+              </div>
+              <Box
+                mb={3}
+                className="font-smooth"
+                style={{ fontSize: '1.2em', marginTop: '10px' }}
+              >
+                당신의 아이돌의 기부 현황을 알아보세요
+              </Box>
             </div>
-            <Box
-              mb={3}
-              className="font-smooth"
-              style={{ fontSize: '1.2em', marginTop:'10px' }}
-            >
-              당신의 아이돌의 기부 현황을 알아보세요
-            </Box>
-            </div>
-           
           </div>
         </div>
         <Swiper
-              spaceBetween={10}
-              slidesPerView={3.3}
-              onSlideChange={() => console.log('slide change')}
-              onSwiper={(swiper) => console.log(swiper)}
-              style={{ height: '350px' }}
-            >
-              {randomIdols.map((idol) => (
-                <SwiperSlide key={idol.idolId}>
-                  <IdolCard idol={idol} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+          spaceBetween={10}
+          slidesPerView={3.3}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+          style={{ height: '350px' }}
+        >
+          {randomIdols.map((idol) => (
+            <SwiperSlide key={idol.idolId}>
+              <IdolCard idol={idol} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-            <div className="col-md-1"></div>
-            <div className="col-md-10">
-            <Box mt={1} className="boxbox" display="flex" justifyContent="flex-end" style={{marginTop:'50px'}}>
-
-
-<Link className="nbg linkBtn" to="/idol" >
-  더보기
-</Link>
-
-</Box>
-
-            </div>
-      
-
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
+          <Box
+            mt={1}
+            className="boxbox"
+            display="flex"
+            justifyContent="flex-end"
+            style={{ marginTop: '50px' }}
+          >
+            <Link className="nbg linkBtn" to="/idol">
+              더보기
+            </Link>
+          </Box>
+        </div>
       </div>
     </div>
   );
