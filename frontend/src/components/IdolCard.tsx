@@ -35,11 +35,13 @@ const IdolCard = (props: Props) => {
       onClick={toDetail}
       style={{
         width: '100%',
+      
         height: show ? '350px' : '0px',
         position: 'relative',
         cursor: 'pointer',
         transition: 'opacity 1s ease-in-out, height 0.5s ease-in-out',
         opacity: show ? 1 : 0,
+        marginRight:'20px'
       }}
       onMouseOver={() => {
         setIsOver(!isOver);

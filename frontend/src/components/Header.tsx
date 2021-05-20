@@ -5,11 +5,22 @@ import { ReactComponent as MenuIcon } from "../assets/menu.svg";
 import "./header.css";
 import "./Navbar.css";
 import { Link, useHistory } from "react-router-dom";
-import { Avatar, Box, ClickAwayListener, Divider, IconButton, List, ListItem, ListItemText, Paper, Popper } from "@material-ui/core";
+import {
+  Avatar,
+  Box,
+  ClickAwayListener,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Popper,
+} from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { User } from "../common/types";
 import { rootState } from "../reducers";
-import { logoutSubmit } from '../api/user';
+import { logoutSubmit } from "../api/user";
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -28,86 +39,79 @@ const Header = () => {
   };
 
   const handleMypageBtn = () => {
-    history.push('/mypage');
+    history.push("/mypage");
   };
 
   const handleAdminBtn = () => {
-    history.push('/admin');
+    history.push("/admin");
   };
 
-  
   const open = Boolean(anchorEl);
-  
+
   return (
     <div className="header">
       <div className="logo-nav">
-        <div className="logo-container" style={{marginRight:'40px'}}>
-        <Link id="logoAnchor" to="/" onClick={closeMobileMenu}>
-                fundy
-              </Link>
+        <div className="logo-container" style={{ marginRight: "40px" }}>
+          <Link id="logoAnchor" to="/" onClick={closeMobileMenu}>
+            fundy
+          </Link>
         </div>
 
-        <ul className={click ? "nav-options active" : "nav-options"} style={{marginTop:'5px'}} >
+        <ul
+          className={click ? "nav-options active" : "nav-options"}
+          style={{ marginTop: "5px" }}
+        >
           <li className="option" onClick={closeMobileMenu}>
-          <Link className="nbg" to="/funding">
-                펀딩
-              </Link>
+            <Link className="nbg" to="/funding">
+              펀딩
+            </Link>
           </li>
           <li className="option" onClick={closeMobileMenu}>
-          <Link className="nbg" to="/idol">
-                아이돌
-              </Link>
+            <Link className="nbg" to="/idol">
+              아이돌
+            </Link>
           </li>
           <li className="option" onClick={closeMobileMenu}>
-          <Link className="nbg" to="/places">
-                후원기관
-              </Link>
+            <Link className="nbg" to="/places">
+              후원기관
+            </Link>
           </li>
+          {user === null ? (
+          <>    <li className="option" onClick={closeMobileMenu}>
+          <Link to="/login" className="nbg">
+            로그인
+          </Link>
+        </li>
+        <li className="option" onClick={closeMobileMenu}>
+          <Link to="/regist" className="nbg">
+            회원가입
+          </Link>
+        </li></>
+        ) :(<></>)}
+    
         </ul>
 
         {user === null ? (
-              <ul className={click ? "nav-options active" : "nav-options"} style={{position:'absolute', right:'0px'}}>
-                <li className="option" onClick={closeMobileMenu}>
-                  <Link
-                    to="/login"
-                    className="nbg"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    로그인
-                  </Link>
-                </li>
-                <li className="option" onClick={closeMobileMenu}>
-                  <Link
-                    to="/regist"
-                    className="nbg"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    회원가입
-                  </Link>
-               </li>
-               </ul>
-            
-             
-            ) : (
-              <>
-                <Box
-                  display="flex"
-                  className="nbg_m font-smooth"
-                  alignItems="center"
-                  style={{ fontSize: '1em',position:'absolute', right:'60px' }}
-                >
-              
-                  <IconButton onClick={handleClick}>
-                    <Avatar
-                      src={user.picture}
-                      style={{ width: '45px', height: '45px' }}
-                    ></Avatar>
-                  </IconButton>
-                </Box>
-              </>
-            )}
+          <></>
+        ) : (
+          <>
+            <Box
+              display="flex"
+              className="nbg_m font-smooth"
+              alignItems="center"
+              style={{ fontSize: "1em", position: "absolute", right: "60px" }}
+            >
+              <IconButton onClick={handleClick}>
+                <Avatar
+                  src={user.picture}
+                  style={{ width: "45px", height: "45px" }}
+                ></Avatar>
+              </IconButton>
+            </Box>
+          </>
+        )}
       </div>
-     
+
       <div className="mobile-menu" onClick={handleClick2}>
         {click ? (
           <CloseMenu className="menu-icon" />
@@ -122,7 +126,7 @@ const Header = () => {
         <Popper
           open={open}
           anchorEl={anchorEl}
-          style={{ zIndex: 1, marginTop: -10}}
+          style={{ zIndex: 1, marginTop: -10 }}
         >
           <ClickAwayListener
             onClickAway={() => {
@@ -131,21 +135,21 @@ const Header = () => {
           >
             <Paper>
               <List style={{ width: 200 }}>
-                <ListItem style={{ cursor: 'default' }}>
+                <ListItem style={{ cursor: "default" }}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: '2rem' }}>
+                      <div className="nbg_m" style={{ fontSize: "2rem" }}>
                         {user.nickname}
                       </div>
                     }
                     secondary={
-                      <div className="nbg_m" style={{ fontSize: '1.2rem' }}>
+                      <div className="nbg_m" style={{ fontSize: "1.2rem" }}>
                         {user.email}
                       </div>
                     }
                   ></ListItemText>
                 </ListItem>
-                {user.role == 'ADMIN' ? (
+                {user.role == "ADMIN" ? (
                   <>
                     <Divider />
                     <ListItem button onClick={handleAdminBtn}>
@@ -153,7 +157,7 @@ const Header = () => {
                         primary={
                           <div
                             className="nbg_m font-smooth"
-                            style={{ fontSize: '1.6rem' }}
+                            style={{ fontSize: "1.6rem" }}
                           >
                             인증 관리(ADMIN)
                           </div>
@@ -169,7 +173,7 @@ const Header = () => {
                 <ListItem button onClick={handleMypageBtn}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: '1.1em' }}>
+                      <div className="nbg_m" style={{ fontSize: "1.1em" }}>
                         마이페이지
                       </div>
                     }
@@ -184,7 +188,7 @@ const Header = () => {
                 >
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: '1.1em' }}>
+                      <div className="nbg_m" style={{ fontSize: "1.1em" }}>
                         로그아웃
                       </div>
                     }

@@ -149,7 +149,7 @@
   color: rgb(255, 255, 255);
   text-shadow: 1px 1px 3px rgb(27, 27, 27);
   font-weight: bold;
-  font-size: 30px;
+  font-size: 2.2vh;
 }
 .fundingSub{
   text-align: center;
@@ -157,7 +157,7 @@ z-index: 1;
 color: rgb(255, 255, 255);
 text-shadow: 1px 1px 3px rgb(82, 82, 82);
 margin-bottom:0;
-font-size: 16px;
+font-size: 1.8vh;
 }
 
 

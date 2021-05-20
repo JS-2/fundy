@@ -392,6 +392,7 @@ const Funding = () => {
               );
             })}
           </Grid>
+          
           <Box
             mt={4}
             mb={3}
@@ -400,13 +401,8 @@ const Funding = () => {
           >
             {header}
           </Box>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={2}
-          >
-            <Box>
+          <div className="row">
+            <div className="col-md-4">
               <Box mb={1}>
                 <Button
                   className={buttonNumber == 0 ? 'fundBtn' : 'unselect_fundBtn'}
@@ -476,12 +472,13 @@ const Funding = () => {
               ) : (
                 <></>
               )}
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-              style={{ width: '600px', paddingBottom: '30px' }}
+            </div>
+            <div className="col-md-4"></div>
+            <div
+            className="col-md-4"
+
+
+              style={{ paddingBottom: '30px' }}
             >
               <TextField
                 variant="outlined"
@@ -514,8 +511,8 @@ const Funding = () => {
                 {' '}
                 검색{' '}
               </Button>
-            </Box>
-          </Box>
+            </div>
+            </div>
           <Box
             mt={5}
             display="flex"
