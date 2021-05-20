@@ -8,9 +8,11 @@
 	</h1>
 </div>
 <div align="center">아이돌과 팬을 연결해주는 크라우드 펀딩 플랫폼</center></div>
+<br/><br/>
 <div align="center">
     <a href="https://framer.com/projects/nq3RKAROYiLd77SMeajY-gRgqD?node=fnXmMIrcT-page">UI/UX기획안</a> · <a href="https://drive.google.com/file/d/1Md6e8NxUM11q6FLsfwttKSz59WVhBOXa/view?usp=sharing">프로젝트 계획서</a></div>
 
+<br/>
 
 
 
