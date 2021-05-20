@@ -365,9 +365,10 @@ const Funding = () => {
           <Grid container spacing={3}>
             {fundingRank?.map((funding: IFunding, i: number) => {
               return (
-                <Grid item xs={4} style={{ padding: '10px' }}>
+                <div className="col-md-4 col-sm-6 col-xs-12"
+                style={{ padding: '10px' }}>
                   <FundCard funding={funding}></FundCard>
-                </Grid>
+                </div>
               );
             })}
           </Grid>
@@ -519,7 +520,7 @@ const Funding = () => {
           <Grid container spacing={3}>
             {fundings?.map((funding: IFunding, i: number) => (
               <div
-                className="col-md-4"
+                className="col-md-4 col-sm-6 col-xs-12"
                 style={{ padding: '10px' }}
                 key={funding.fundingId}
               >
@@ -549,6 +550,7 @@ const Funding = () => {
             <></>
           )}
         </div>
+        <div className="col-md-1 col-sm-1"></div>
       </div>
       <div ref={containerRef}> </div>
       <Box mt={10} display="flex" justifyContent="center">

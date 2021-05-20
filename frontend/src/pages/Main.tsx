@@ -117,34 +117,28 @@ const Main = () => {
         <Banner></Banner>
       </div>
       <div className="col-md-12">
-        <div className="row">
-          <div className="col-md-1"></div>
+        <div className="row justify-content-center" style={{margin: 'auto'}}>
+        <div className="area col-md-1  " id=""></div>
 
-          <div className="area col-md-10" id="">
+          <div className="area col-md-10  " id="">
             <div className="col-md-8 divA" id="topFundArea">
-              <div className="rankHeading" style={{ marginRight: '20px' }}>
-                <div className="floating rankText">펀디의 최신 펀딩 리스트</div>
+              <div className="" style={{ marginRight: '20px' }}>
+                <div className="headText" style={{ marginBottom: '20px'}}>펀디의 최신 펀딩 리스트</div>
               </div>
 
               <Grid
                 container
                 spacing={3}
-                style={{
-                  borderRight: '0.1em solid lightgrey',
-                  paddingRight: '20px',
-                  paddingTop: 0,
-                }}
+             
               >
                 {hotFunding?.map((funding: IFunding, i: number) => {
                   return (
-                    <Grid
-                      item
-                      xs={6}
+                    <div className="col-md-6 col-sm-12 col-xs-12"
                       key={funding.fundingId}
                       style={{ padding: '10px' }}
                     >
                       <FundCard funding={funding}></FundCard>
-                    </Grid>
+                    </div>
                   );
                 })}
               </Grid>
@@ -159,18 +153,19 @@ const Main = () => {
                 </Link>
               </Box>
             </div>
-            <div className="col-md-4 divB" style={{ paddingLeft: '20px' }}>
-              <div className="rankHeading">
-                <div className="floating rankText">펀디 인기 펀딩 Top 10</div>
+            <div className="col-md-4 col-sm-12 col-xs-12 divB" style={{ paddingLeft: '20px' , height:'100%'}}>
+              <div className="">
+                <div className="headText"style={{ marginBottom: '20px'}} >펀디 인기 펀딩 Top 10</div>
               </div>
 
               <div style={{ padding: '0px' }}>
                 {fundingRank?.map((funding: IFunding, i: number) => {
                   return (
                     <div
-                      className="fundDiv"
-                      style={{ height: '130px', marginBottom: '10px' }}
+                      className="fundDiv col-md-12"
+                      style={{ height: '130px', width: '100%', marginBottom: '10px', display:'inline-block' }}
                       key={funding.fundingId}
+
                     >
                       <FundItem funding={funding} rank={i}></FundItem>
                     </div>
@@ -179,6 +174,8 @@ const Main = () => {
               </div>
             </div>
           </div>
+          <div className="area col-md-1  " id=""></div>
+      
         </div>
 
         <div className="row" id="idolArea">

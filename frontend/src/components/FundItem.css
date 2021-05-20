@@ -8,10 +8,13 @@
   padding:0px;
 }
 
-.fundDiv:hover{
-  -webkit-filter:brightness(0.95);
+.fundItem:hover{
+  transition: all 0.4s ease-in-out;
+  
   cursor: pointer;
 }
+
+
 .WithStyles\(ForwardRef\(LinearProgress\)\)-bar-29 {
   background-color: #f74a64 !important;
 }
@@ -25,12 +28,12 @@
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   color: rgb(44, 44, 44);
-  font-size: 16px !important;
-  height: 130px;
+
+  height: auto; 
   padding-left: 10px;
 }
-.fundItem{
-
+.fundItem:hover>.rankArea{
+  color:#f74a64;
 }
 .ddayBadge {
   height: 28px !important;
@@ -63,5 +66,5 @@
 
 .ranking{
   font-weight: bolder;
-  font-size: 2rem;
+  font-size: 2vw !important;
 }

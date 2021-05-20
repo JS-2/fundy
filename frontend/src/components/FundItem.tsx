@@ -74,23 +74,26 @@ const FundItem = (props: Props) => {
 
   return (
     
-    <div className="fundItem" style={{height:"130px", marginBottom:"5px"}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
-        <div className="col-md-1 col-sm-1 rankArea">  <span className="ranking" style={{fontWeight:"bold"}}>{props?.rank+1}.</span></div>
-        <div className="col-md-4 col-sm-3" style={{height:"130px",margin:"0px", padding:"0px", overflow:"hidden"}}> 
+    <div className="fundItem" style={{height:"130px", marginBottom:"10px", width:'100%', backgroundColor:'white'}} onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+        <div className="col-md-1 col-sm-0 rankArea" style={{display:"inline-block", float:'left'}}>  <span className="ranking" style={{fontWeight:"bold",display:"inline-block"}}>{props?.rank+1}.</span></div>
+      <div className="col-md-11">
+      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4" style={{height:"",margin:"0px", padding:"0px", overflow:"hidden"}}> 
 <Card
   className="itemClass"
   style={{
  
     marginLeft:"0px",
     
-    height: "130px",
+    height: "120px",
     borderRadius:"0px",
+  
   }}
   elevation={0}
 >
 
       <CardMedia
         className="cardImgA"
+        id="cardImg1"
         component="img"
         alt="펀딩 카드 이미지"
         height="100%"
@@ -100,7 +103,7 @@ const FundItem = (props: Props) => {
 
 </Card>
 </div>
-         <div className="col-md-7 col-sm-8 itemText" style={{ padding: "10px", height:"130px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
+         <div className="col-lg-8 col-md-8 col-sm-7 col-xs-7 itemText" style={{ padding: "10px", height:"120px" }}  onClick={(e) => redirect(e, fundingInfo?.fundingId)}>
       
         <h5
             className="fundNameTxt"
@@ -125,6 +128,10 @@ const FundItem = (props: Props) => {
       </div>
  
       
+
+      </div>
+      
+     
 
      
     </div>

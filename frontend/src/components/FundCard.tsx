@@ -106,6 +106,7 @@ const FundCard = (props: Props) => {
             component="img"
             alt="펀딩 카드 이미지"
             height="250"
+            width="inherit"
             image={fundingInfo?.fundingThumbnail}
             title="Card Image"
           />

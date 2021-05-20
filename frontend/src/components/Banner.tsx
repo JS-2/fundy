@@ -29,11 +29,13 @@ import banner1 from "../assets/img/bannerf.png";
 import banner2 from "../assets/img/BannerY.png";
 import banner3 from "../assets/img/bannerN.png";
 import banner4 from "../assets/img/bannerB.png";
+import bannerBr from "../assets/img/bannerBr.png";
 
 import banner23 from "../assets/img/banner6.jpg";
 import banner6 from "../assets/img/bannerE.png";
 import { CenterFocusStrong } from "@material-ui/icons";
 import fundyTuto from "../assets/img/fundyTuto.png";
+import { useHistory } from 'react-router-dom';
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 const swiperParams: SwiperOptions = {
@@ -52,6 +54,13 @@ const Banner = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const history = useHistory();
+
+  const bannerRedirect = (page:string) =>()=> {
+    history.push({
+      pathname: 'funding/detail/'+page
+    });
   };
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
@@ -124,10 +133,12 @@ const Banner = () => {
               height:'auto',
               padding: 0,
             }}
+            onClick={bannerRedirect('16')}
           >
             <img
               className="bannerImg"
               src={banner2}
+       
               style={{
                 alignContent: 'center',
                 width: '100%',
@@ -145,6 +156,7 @@ const Banner = () => {
               padding: 0,
               height: 'auto',
             }}
+            onClick={bannerRedirect('13')}
           >
             <img
               className="bannerImg"
@@ -167,6 +179,7 @@ const Banner = () => {
               height: 'auto',
               overflow: 'hidden',
             }}
+            onClick={bannerRedirect('23')}
           >
             <img
               className="bannerImg"
@@ -215,7 +228,8 @@ const Banner = () => {
           >
             <img
               className="bannerImg"
-              src={banner2}
+              src={bannerBr}
+              onClick={bannerRedirect('22')}
               style={{
                 alignContent: 'center',
                 width: '100%',
@@ -234,6 +248,7 @@ const Banner = () => {
               padding: 0,
               overflow: 'hidden',
             }}
+            onClick={bannerRedirect('15')}
           >
             <img
               className="bannerImg"

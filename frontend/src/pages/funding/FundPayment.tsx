@@ -100,9 +100,9 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
         name: "펀디 결제: "+Fund?.fundingName,
         amount: money, //판매 가격
         buyer_email: "iamport@siot.do",
-        buyer_name: "구매자이름",
+        buyer_name: user.nickname,
         buyer_tel: "010-1234-5678",
-        buyer_addr: "서울특별시 강남구 삼성동",
+        buyer_addr: "서울특별시 강남구 삼성동 47 펀디타워",
         buyer_postcode: "123-456",
       },
       function (rsp: any) {
@@ -114,7 +114,7 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
         } else {
           var msg = "결제에 실패하였습니다.";
           msg += "에러내용 : " + rsp.error_msg;
-          setPayment(token, Number(match.params.num), "imp09514011", money);
+     
           var urlBack = "/funding/detail/" + Fund?.fundingId;
           alert(msg);
           history.push(urlBack);
