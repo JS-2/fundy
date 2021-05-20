@@ -20,7 +20,7 @@ import 'swiper/swiper.scss';
 import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
 import './Main.css';
 import Banner from '../components/Banner';
-import { FundForm, FundingForm, Idol, IFunding } from '../common/types';
+import { FundForm, FundingForm, Idol, IFunding, User } from '../common/types';
 import { getFundingList, getFundingRank } from '../api/funding';
 import { getAllIdolList } from '../api/idol';
 import IdolCard from '../components/IdolCard';
@@ -29,6 +29,8 @@ import FundItem from '../components/FundItem';
 import { BorderLeft } from '@material-ui/icons';
 import rankBanner from '../assets/img/a.png';
 import FundBanner from '../components/fundComponent/FunBanner';
+import { useSelector } from 'react-redux';
+import { rootState } from '../reducers';
 
 // Install modules
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
@@ -64,7 +66,6 @@ const Main = () => {
   const [fundingRank, setFundingRank] = useState<IFunding[]>([]);
   const [randomIdols, setRandomIdols] = useState<Idol[]>([]);
   const [show, setShow] = useState<boolean>(false);
-
   useEffect(() => {
     setTimeout(() => {
       setShow(true);

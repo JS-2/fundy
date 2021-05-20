@@ -40,6 +40,7 @@ import FundItem from '../components/FundItem';
 import bannerTip from '../assets/img/bannerTip.png';
 import bannerCreate from '../assets/img/bannerCreate.png';
 import fundyTuto from '../assets/img/fundyTuto.png';
+import { getCerts } from '../api/user';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar]);
 
@@ -84,7 +85,9 @@ const Funding = () => {
   const [searchWord, setSearchWord] = useState<string>('');
   const [buttonNumber, setButtonNumber] = useState<number>(1);
   const [show, setShow] = useState<boolean>(false);
-
+  const token: string = useSelector(
+    (state: rootState) => state.userReducer.token
+  );
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -232,10 +235,10 @@ const Funding = () => {
     setHeader('완료된 펀딩');
   };
 
-  const loginRedirect = () => {
-    alert('로그인 후 펀딩 제작이 가능합니다.');
+  const loginRedirect = (msg: string, path: string) => {
+    alert(msg);
     history.push({
-      pathname: '/login',
+      pathname: path,
       state: {},
     });
   };
@@ -309,6 +312,20 @@ const Funding = () => {
 
   const history = useHistory();
 
+  const handleCreateBanner = () => {
+    if (user === null) {
+      loginRedirect('로그인 후 펀딩 제작이 가능합니다.', '/login');
+    } else {
+      getCerts(token).then((resp) => {
+        if (resp.data.isAdult === 'Y') {
+          createRedirect();
+        } else {
+          loginRedirect('성인 인증 후 제작이 가능합니다.', '/mypage');
+        }
+      });
+    }
+  };
+
   return (
     <div
       style={{
@@ -342,7 +359,7 @@ const Funding = () => {
             </div>
             <div
               className="col-md-6"
-              onClick={user === null ? loginRedirect : createRedirect}
+              onClick={handleCreateBanner}
               style={{ padding: '5px' }}
             >
               <img
