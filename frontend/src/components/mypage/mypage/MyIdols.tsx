@@ -53,8 +53,6 @@ const MyIdols = () => {
         <Swiper
           spaceBetween={10}
           slidesPerView={3.3}
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
           style={{ height: '350px' }}
         >
           {idols?.map((idol) => (

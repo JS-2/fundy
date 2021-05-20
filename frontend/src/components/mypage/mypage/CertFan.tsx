@@ -39,7 +39,6 @@ const CertFan = (props: Props) => {
     });
   };
   const onChangeEdit = (content: any) => {
-    console.log('onChange ', content);
     setContentHtml(content);
   };
 

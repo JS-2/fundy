@@ -28,7 +28,6 @@ const TopChart = () => {
 
   useEffect(() => {
     getIdolTopFive().then((resp) => {
-      console.log('top5>>>>', resp.data);
       setData(resp.data);
     });
   }, []);

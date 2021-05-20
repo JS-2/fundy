@@ -297,7 +297,6 @@ const Funding = () => {
   };
 
   const handleSearch = () => {
-    console.log(searchWord);
     setIsEnd(false);
     setFundingStatus({ ...fundingStatus, per_page: 3, keyword: searchWord });
   };
@@ -392,7 +391,7 @@ const Funding = () => {
               );
             })}
           </Grid>
-          
+
           <Box
             mt={4}
             mb={3}
@@ -474,12 +473,7 @@ const Funding = () => {
               )}
             </div>
             <div className="col-md-4"></div>
-            <div
-            className="col-md-4"
-
-
-              style={{ paddingBottom: '30px' }}
-            >
+            <div className="col-md-4" style={{ paddingBottom: '30px' }}>
               <TextField
                 variant="outlined"
                 value={searchWord}
@@ -512,7 +506,7 @@ const Funding = () => {
                 검색{' '}
               </Button>
             </div>
-            </div>
+          </div>
           <Box
             mt={5}
             display="flex"

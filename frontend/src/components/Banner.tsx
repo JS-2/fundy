@@ -22,19 +22,19 @@ import SwiperCore, {
   SwiperOptions,
 } from 'swiper';
 
-import "./Banner.css";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
-import banner1 from "../assets/img/bannerf.png";
-import banner2 from "../assets/img/BannerY.png";
-import banner3 from "../assets/img/bannerN.png";
-import banner4 from "../assets/img/bannerB.png";
-import bannerBr from "../assets/img/bannerBr.png";
+import './Banner.css';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
+import banner1 from '../assets/img/bannerf.png';
+import banner2 from '../assets/img/BannerY.png';
+import banner3 from '../assets/img/bannerN.png';
+import banner4 from '../assets/img/bannerB.png';
+import bannerBr from '../assets/img/bannerBr.png';
 
-import banner23 from "../assets/img/banner6.jpg";
-import banner6 from "../assets/img/bannerE.png";
-import { CenterFocusStrong } from "@material-ui/icons";
-import fundyTuto from "../assets/img/fundyTuto.png";
+import banner23 from '../assets/img/banner6.jpg';
+import banner6 from '../assets/img/bannerE.png';
+import { CenterFocusStrong } from '@material-ui/icons';
+import fundyTuto from '../assets/img/fundyTuto.png';
 import { useHistory } from 'react-router-dom';
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -57,9 +57,9 @@ const Banner = () => {
   };
   const history = useHistory();
 
-  const bannerRedirect = (page:string) =>()=> {
+  const bannerRedirect = (page: string) => () => {
     history.push({
-      pathname: 'funding/detail/'+page
+      pathname: 'funding/detail/' + page,
     });
   };
 
@@ -74,13 +74,14 @@ const Banner = () => {
   }, [open]);
 
   return (
-    <div className="col-md-12 bannerArea" style={{overflowX:'hidden', padding:'0px'}}>
+    <div
+      className="col-md-12 bannerArea"
+      style={{ overflowX: 'hidden', padding: '0px' }}
+    >
       <Swiper
         className="col-md-12 col-sm-12 bannerBody"
         spaceBetween={10}
         slidesPerView={1}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
         pagination={{ clickable: true }}
         loop
         navigation={true}
@@ -88,7 +89,7 @@ const Banner = () => {
           delay: 3000,
           disableOnInteraction: false,
         }}
-        style={{height:'auto'}}
+        style={{ height: 'auto' }}
       >
         <SwiperSlide>
           <div
@@ -130,7 +131,7 @@ const Banner = () => {
             id="banner"
             style={{
               borderRadius: '5px',
-              height:'auto',
+              height: 'auto',
               padding: 0,
             }}
             onClick={bannerRedirect('16')}
@@ -138,7 +139,6 @@ const Banner = () => {
             <img
               className="bannerImg"
               src={banner2}
-       
               style={{
                 alignContent: 'center',
                 width: '100%',

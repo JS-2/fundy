@@ -53,14 +53,12 @@ const Profile = () => {
 
   useEffect(() => {
     getCerts(token).then((resp) => {
-      console.log(resp);
       const certObj: Cert = {
         isAdult: resp.data.isAdult,
         isOfficialFan: resp.data.isOfficialFan,
         isPlus: resp.data.isPlus,
         isProfile: resp.data.isProfile,
       };
-      console.log(certObj);
       setCert(certObj);
     });
   }, [token]);
@@ -99,7 +97,6 @@ const Profile = () => {
 
   const handleImage = (e: any) => {
     setThumbnail(e.target.files[0], token).then((resp: any) => {
-      console.log(resp.data.userPicture);
       const newUser: ResponseUser = {
         userEmail: user.email,
         userId: user.user_id,

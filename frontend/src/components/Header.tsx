@@ -63,7 +63,74 @@ const Header = () => {
           style={{ lineHeight: '80px' }}
           className={click ? 'nav-options active' : 'nav-options'}
         >
-          <Box display="flex">
+          <li className="option font-smooth" onClick={closeMobileMenu}>
+            <Link style={{ fontSize: '0.55em' }} className="nbg" to="/funding">
+              펀딩
+            </Link>
+          </li>
+          <li className="option font-smooth" onClick={closeMobileMenu}>
+            <Link style={{ fontSize: '0.55em' }} className="nbg" to="/idol">
+              아이돌
+            </Link>
+          </li>
+          <li className="option font-smooth" onClick={closeMobileMenu}>
+            <Link style={{ fontSize: '0.55em' }} className="nbg" to="/places">
+              후원기관
+            </Link>
+          </li>
+          {user === null ? (
+            <>
+              {' '}
+              <li
+                className="option font-smooth rightTo reverse_login_box"
+                onClick={closeMobileMenu}
+              >
+                <Link
+                  style={{ fontSize: '0.55em' }}
+                  to="/login"
+                  className="nbg"
+                >
+                  로그인
+                </Link>
+              </li>
+              <li
+                className="option font-smooth reverse_login_box"
+                onClick={closeMobileMenu}
+              >
+                <Link
+                  style={{ fontSize: '0.55em' }}
+                  to="/regist"
+                  className="nbg"
+                >
+                  회원가입
+                </Link>
+              </li>
+            </>
+          ) : (
+            <></>
+          )}
+        </ul>
+
+        {user === null ? (
+          <Box
+            display="flex"
+            className="nbg_m font-smooth login_box"
+            alignItems="center"
+            style={{ fontSize: '1em', position: 'absolute', right: '60px' }}
+          >
+            <Box mr={1}>
+              <Link style={{ fontSize: '0.48em' }} to="/login" className="nbg">
+                로그인
+              </Link>
+            </Box>
+            <Box className="option font-smooth " onClick={closeMobileMenu}>
+              <Link style={{ fontSize: '0.48em' }} to="/regist" className="nbg">
+                회원가입
+              </Link>
+            </Box>
+          </Box>
+        ) : (
+          <>
             <Box
               ml={2}
               mr={5}
@@ -165,7 +232,10 @@ const Header = () => {
                 <ListItem style={{ cursor: 'default' }}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: '1.6rem' }}>
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.6rem' }}
+                      >
                         {user.nickname}
                       </div>
                     }

@@ -89,7 +89,6 @@ const FundCreate = () => {
       setIdolNames(resp.data);
     });
     getAllDonationPlaces().then((resp) => {
-      console.log(resp.data);
       setPlaces(resp.data);
     });
   }, []);
@@ -108,10 +107,6 @@ const FundCreate = () => {
       startTime: selectedStartDate,
       thumbnail: file,
     };
-    console.log({
-      fundForm,
-    });
-    console.log(fundDetail);
     setFundCreate(fundForm, token).then(() => {
       history.push({
         pathname: '/funding',
@@ -154,7 +149,6 @@ const FundCreate = () => {
 
   const onDrop = (thumbnail: any) => {
     setThumbnails(thumbnail);
-    console.log('IMG FILE>>>>>' + thumbnails);
   };
 
   const LightTooltip = withStyles((theme: Theme) => ({
@@ -181,9 +175,6 @@ const FundCreate = () => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-
-    console.log(fullAddress);
-
     selectedValue = fullAddress;
     handleClose(fullAddress);
     onlocation(fullAddress);
@@ -243,7 +234,6 @@ const FundCreate = () => {
   };
 
   const handleRadio = (e: any) => {
-    console.log(e.target.value);
     setFundingPercent(Number(e.target.value));
   };
   const editorRef: any = useRef();
@@ -251,15 +241,12 @@ const FundCreate = () => {
   const getEditor = () => {
     const editorInstance = editorRef.current.getInstance();
     const getContent_md = editorInstance.getMarkdown();
-    console.log(getContent_md);
     const getContent_html = editorInstance.getHtml();
-    console.log(getContent_html);
 
     return getContent_html;
   };
 
   const onChangeEdit = (content: any) => {
-    console.log('onChange ', content);
     setFundDetail(content);
   };
 
@@ -282,7 +269,6 @@ const FundCreate = () => {
     event.preventDefault();
     const reader = new FileReader();
     let file = event.target.files[0];
-    console.log(file);
     setFile(file);
     if (file !== undefined) {
       reader.onloadend = () => {
