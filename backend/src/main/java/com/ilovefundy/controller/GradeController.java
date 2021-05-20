@@ -91,6 +91,7 @@ public class GradeController {
             return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
         }
         user.setIsAdult(User.YesOrNo.Y);
+        user.setUserLevel(User.Level.LevelUp(user.getUserLevel()));
         userDao.save(user);
         result.put("message", "성인 인증에 성공했습니다");
         return new ResponseEntity<>(result, HttpStatus.OK);
