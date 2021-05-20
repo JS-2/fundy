@@ -23,6 +23,8 @@ public class PayInfoResponse {
     private String fundingStatement;
     @ApiModelProperty(example = "2")
     private Integer paymentId;
+    @ApiModelProperty(example = "5")
+    private Integer fundingRemainDay;
     @ApiModelProperty(example = "250,000")
     private String payAmount;
     @ApiModelProperty(example = "2021-05-06 09:30:15")
