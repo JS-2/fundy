@@ -33,13 +33,11 @@ const CertUserInfo = (props: Props) => {
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
   );
-  console.log(token);
   const handleClose = () => {
     onClose();
   };
 
   const handleImage = (e: any) => {
-    console.log(e.target.files[0]);
     setProfilePicture(e.target.files[0]);
   };
 

@@ -81,7 +81,6 @@ const Main = () => {
       status: 2,
       keyword: '',
     }).then((resp) => {
-      console.log(resp.data);
       let data = resp.data;
       data = data.sort((a: IFunding, b: IFunding) => {
         const aAmount = Number(a.fundingAmount.replace(',', ''));
@@ -101,7 +100,6 @@ const Main = () => {
       status: 2,
       keyword: '',
     }).then((resp) => {
-      console.log(resp.data);
       let data = resp.data;
       data = data.sort((a: FundForm, b: FundForm) => {
         const aAmount = Number(a.fundingParticipants);
@@ -220,7 +218,6 @@ const Main = () => {
                 아이돌
               </div>
               <Box
-                mb={3}
                 className="nbg_m font-smooth"
                 style={{ fontSize: '1.2em', marginTop: '10px' }}
               >
@@ -232,8 +229,6 @@ const Main = () => {
         <Swiper
           spaceBetween={10}
           slidesPerView={3.3}
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
           style={{ height: '350px' }}
         >
           {randomIdols.map((idol) => (

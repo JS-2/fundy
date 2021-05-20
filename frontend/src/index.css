@@ -153,6 +153,6 @@ input {
   width: 120px;
   height: 40px;
   color: white !important;
-  font-size: 0.5vw !important;
+  font-size: 1em !important;
   margin-right: 10px !important;
 }

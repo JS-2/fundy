@@ -49,7 +49,6 @@ const CertFanBoard = () => {
 
   useEffect(() => {
     getFanCertPosts(token).then((resp) => {
-      console.log(resp.data);
       setPosts(resp.data);
     });
   }, [token]);

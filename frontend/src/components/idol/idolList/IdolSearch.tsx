@@ -124,7 +124,6 @@ const IdolSearch = () => {
             value={searchWord}
             className="searchArea"
             onChange={(e) => {
-              console.log(e.target.value);
               setSearchWord(e.target.value);
             }}
             onKeyDown={handleKeyPress}

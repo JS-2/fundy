@@ -39,11 +39,11 @@ const Header = () => {
   };
 
   const handleMypageBtn = () => {
-    history.push("/mypage");
+    history.push('/mypage');
   };
 
   const handleAdminBtn = () => {
-    history.push("/admin");
+    history.push('/admin');
   };
 
   const open = Boolean(anchorEl);
@@ -77,22 +77,56 @@ const Header = () => {
             </Link>
           </li>
           {user === null ? (
-          <>    <li className="option font-smooth rightTo" onClick={closeMobileMenu}>
-          <Link style={{ fontSize: '0.55em' }} to="/login" className="nbg">
-            로그인
-          </Link>
-        </li>
-        <li className="option font-smooth " onClick={closeMobileMenu}>
-          <Link style={{ fontSize: '0.55em' }} to="/regist" className="nbg">
-            회원가입
-          </Link>
-        </li></>
-        ) :(<></>)}
-    
+            <>
+              {' '}
+              <li
+                className="option font-smooth rightTo reverse_login_box"
+                onClick={closeMobileMenu}
+              >
+                <Link
+                  style={{ fontSize: '0.55em' }}
+                  to="/login"
+                  className="nbg"
+                >
+                  로그인
+                </Link>
+              </li>
+              <li
+                className="option font-smooth reverse_login_box"
+                onClick={closeMobileMenu}
+              >
+                <Link
+                  style={{ fontSize: '0.55em' }}
+                  to="/regist"
+                  className="nbg"
+                >
+                  회원가입
+                </Link>
+              </li>
+            </>
+          ) : (
+            <></>
+          )}
         </ul>
 
         {user === null ? (
-          <></>
+          <Box
+            display="flex"
+            className="nbg_m font-smooth login_box"
+            alignItems="center"
+            style={{ fontSize: '1em', position: 'absolute', right: '60px' }}
+          >
+            <Box mr={1}>
+              <Link style={{ fontSize: '0.48em' }} to="/login" className="nbg">
+                로그인
+              </Link>
+            </Box>
+            <Box className="option font-smooth " onClick={closeMobileMenu}>
+              <Link style={{ fontSize: '0.48em' }} to="/regist" className="nbg">
+                회원가입
+              </Link>
+            </Box>
+          </Box>
         ) : (
           <>
             <Box
@@ -135,21 +169,24 @@ const Header = () => {
           >
             <Paper>
               <List style={{ width: 200 }}>
-                <ListItem style={{ cursor: "default" }}>
+                <ListItem style={{ cursor: 'default' }}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m" style={{ fontSize: "2rem" }}>
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.6rem' }}
+                      >
                         {user.nickname}
                       </div>
                     }
                     secondary={
-                      <div className="nbg_m" style={{ fontSize: "1.2rem" }}>
+                      <div className="nbg_m" style={{ fontSize: '1.1rem' }}>
                         {user.email}
                       </div>
                     }
                   ></ListItemText>
                 </ListItem>
-                {user.role == "ADMIN" ? (
+                {user.role == 'ADMIN' ? (
                   <>
                     <Divider />
                     <ListItem button onClick={handleAdminBtn}>
@@ -157,7 +194,7 @@ const Header = () => {
                         primary={
                           <div
                             className="nbg_m font-smooth"
-                            style={{ fontSize: "1.6rem" }}
+                            style={{ fontSize: '1.4rem' }}
                           >
                             인증 관리(ADMIN)
                           </div>
@@ -173,7 +210,10 @@ const Header = () => {
                 <ListItem button onClick={handleMypageBtn}>
                   <ListItemText
                     primary={
-                      <div className="nbg_m font-smooth" style={{ fontSize: "1.1em" }}>
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.4em' }}
+                      >
                         마이페이지
                       </div>
                     }
@@ -188,7 +228,10 @@ const Header = () => {
                 >
                   <ListItemText
                     primary={
-                      <div className="nbg_m font-smooth" style={{ fontSize: "1.1em" }}>
+                      <div
+                        className="nbg_m font-smooth"
+                        style={{ fontSize: '1.4em' }}
+                      >
                         로그아웃
                       </div>
                     }

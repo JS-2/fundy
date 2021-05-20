@@ -20,9 +20,7 @@ const MyFundingPaid = () => {
     setTimeout(() => {
       setShow(true);
     }, 800);
-    console.log('받아오기 시작');
     getFundPayList(token).then((resp) => {
-      console.log('>>>>펀딩 결제 목록>>>' + resp.data);
       setFundingPays(resp.data);
     });
   }, []);
