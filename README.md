@@ -23,7 +23,7 @@
 
 <img src="README.assets/introduce.png"  width="100%">
 
-
+<br/>
 
 **펀디는 기존 크라우드 펀딩 서비스와는 다른 ‘기부'라는 차별화를 가진 서비스입니다.**
 
@@ -45,14 +45,16 @@
 - [플로우 차트](https://app.diagrams.net/#G1o_Rt7eHdJsrH3c5dRuHwS_2vpibGvGel)
 - [와이어프레임 및 기획안](https://framer.com/projects/nq3RKAROYiLd77SMeajY-gRgqD?node=fnXmMIrcT-page)
 
-<br/>
+
+
+
 
 ### 🏗️ Built With
 
 ##### 사용한 프레임워크
 
-- React
-- Spring Boot
+- [React](https://reactjs.org/)
+- [Spring](https://spring.io/)
 
 <br/>
 
@@ -77,9 +79,9 @@
 
 1. Change directory
 
-    ```
-    cd frontend
-    ```
+```
+cd frontend
+```
 
 
 2. Install npm packages
