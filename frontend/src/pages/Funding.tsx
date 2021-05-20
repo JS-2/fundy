@@ -302,6 +302,12 @@ const Funding = () => {
     setFundingStatus({ ...fundingStatus, per_page: 3, keyword: searchWord });
   };
 
+  const handleKeyPress = (e: any) => {
+    if (e.keyCode == 13) {
+      handleSearch();
+    }
+  };
+
   const history = useHistory();
 
   return (
@@ -484,6 +490,7 @@ const Funding = () => {
                 onChange={(e) => {
                   setSearchWord(e.target.value);
                 }}
+                onKeyDown={handleKeyPress}
                 inputProps={{
                   style: {
                     fontSize: '1.5em',
@@ -502,7 +509,7 @@ const Funding = () => {
                 disableElevation
                 variant="contained"
                 onClick={handleSearch}
-                style={{ fontSize: '1.4em' }}
+                style={{ fontSize: '1.4em', height: '45px', marginTop: '1px' }}
               >
                 {' '}
                 검색{' '}

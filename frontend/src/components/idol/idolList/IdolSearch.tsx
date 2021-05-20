@@ -96,6 +96,12 @@ const IdolSearch = () => {
     setPage(1);
   };
 
+  const handleKeyPress = (e: any) => {
+    if (e.keyCode == 13) {
+      handleSearch();
+    }
+  };
+
   return (
     <div>
       <Box mt={6} mb={3} display="flex" justifyContent="space-between">
@@ -121,6 +127,7 @@ const IdolSearch = () => {
               console.log(e.target.value);
               setSearchWord(e.target.value);
             }}
+            onKeyDown={handleKeyPress}
             inputProps={{
               style: {
                 fontSize: '1.5em',
@@ -139,7 +146,7 @@ const IdolSearch = () => {
             disableElevation
             variant="contained"
             onClick={handleSearch}
-            style={{ fontSize: '1.4em' }}
+            style={{ fontSize: '1.4em', height: '45px', marginTop: '1px' }}
           >
             {' '}
             검색{' '}
