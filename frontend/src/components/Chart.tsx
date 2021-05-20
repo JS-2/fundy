@@ -91,7 +91,7 @@ const Chart = (props: Props) => {
             id: 'lines',
           },
         ]}
-        colors={'#ff8597'}
+        colors={'#ff8fa0'}
         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         axisLeft={{
           tickSize: 20,
@@ -109,12 +109,7 @@ const Chart = (props: Props) => {
           legendOffset: 32,
         }}
         enableLabel={true}
-        label={(d) =>
-          `\\ ${String(d.value).replace(
-            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
-            ','
-          )}`
-        }
+        label={(d) => ``}
         labelTextColor={{
           from: 'color',
           modifiers: [['darker', 10]],
