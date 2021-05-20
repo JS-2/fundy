@@ -32,7 +32,7 @@ const index = () => {
   return (
     <BrowserRouter>
     <Header></Header>
-      <Navbar />
+
       <ScrollToTop />
       <Box display="flex" justifyContent="center">
         <div className="mainArea col-md-12">

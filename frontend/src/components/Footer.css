@@ -70,14 +70,19 @@ a.footernbg{
     margin-left: 10px;
 }
 
-
+.footInfo{
+    margin-top:40px;
+    font-family: 'Noto Sans Kr';
+}
 #dev{
 
     color: white;
-    margin-right: 240px;
+    font-weight: bold;
+ 
 }
 
 .white{
     color: white;
-    margin-left: 80px;
+    margin-right:20px;
+  
 }

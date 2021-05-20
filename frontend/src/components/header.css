@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0px 40px;
-  height: 80px;
+  height: 88px;
 }
 
 #logoAnchor {
@@ -98,7 +98,7 @@
   }
   a{
     text-decoration: none !important;
-    color:black !important;
+ 
   }
 
   a:hover{

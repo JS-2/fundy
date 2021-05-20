@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
-
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import {
   Badge,
   Box,
@@ -24,7 +24,7 @@ import { getFundDetail, getFundNotice } from "../../api/fund";
 import FullWidthTabs from "../../components/fundComponent/FullWidthTabs";
 import { FundForm, FundingNotice, IFunding, User } from "../../common/types";
 import { RouteComponentProps, useHistory, useParams } from "react-router-dom";
-import { Height, PinDropSharp } from "@material-ui/icons";
+import { Group, Height, PinDropSharp } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { rootState } from "../../reducers";
 import { getFavoriteFunding, setFavoriteFunding } from "../../api/user";
@@ -422,28 +422,35 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
 
                   <div>
                     <div className="infoBox" style={{}}>
+                    <Button
+                        className="idolbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
+                        variant="contained"
+                       
+                        onClick={goToIdol}
+                      >
+                        <img style={{ height: "40px" }} src={kHeartIcon} /> 펀딩
+                        아이돌: {Fund?.idolName}
+                      </Button>
                       <Button
                         startIcon={<AssignmentInd />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-6 col-sm-6 col-xs-6"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
                       >
-                        펀딩 개설자: {Fund?.userNickname}
+                        {Fund?.userNickname}
                   
                       </Button>
                       <Button
-                        startIcon={<AssignmentInd />}
+                        startIcon={<GroupIcon/>}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-6 col-sm-6 col-xs-6"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
                       > {Fund?.fundingParticipants}명 참여</Button>
-
-                      <Button
-                        className="boxbtn nbg_bold col-md-12 col-sm-12 col-xs-12"
+                         <Button
+                        startIcon={<ScheduleIcon/>}
                         variant="outlined"
-                        onClick={goToIdol}
-                      >
-                        <img style={{ height: "28px" }} src={kHeartIcon} /> 펀딩
-                        아이돌: {Fund?.idolName}
-                      </Button>
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                      > {Fund?.fundingRemainDay}일 남음</Button>
+
+                
                       <Button
                         startIcon={<DoneIcon />}
                         variant="outlined"

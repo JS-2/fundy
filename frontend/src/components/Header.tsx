@@ -42,7 +42,7 @@ const Header = () => {
     <div className="header">
       <div className="logo-nav">
         <div className="logo-container" style={{marginRight:'40px'}}>
-        <Link id="logoAnchor" to="/">
+        <Link id="logoAnchor" to="/" onClick={closeMobileMenu}>
                 fundy
               </Link>
         </div>

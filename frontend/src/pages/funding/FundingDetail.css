@@ -59,10 +59,29 @@
 }
 
 .boxbtn{
-  font-size:16px !important;
-  height: 50px;
+  font-size:18px !important;
+  height: 70px;
   align-items: center !important;
-  border: 2px 2px 2px 2px;
+  border-top:none !important;
+  border-left:none !important;
+  border-right:none !important;
+  border-bottom: 1px !important;
+  text-align: right !important;
+
+}
+
+
+.idolbtn{
+  font-size:20px !important;
+  background-color: #fdfdfd !important;
+  font-weight: 600 !important;
+  height: 70px;
+  align-items: center !important;
+  text-align: right !important;
+  border-radius: 10px !important;
+
+  color: rgb(44, 44, 44) !important;
+
 }
 .barInfo{
 
@@ -71,10 +90,8 @@
 }
 
 .infoBox{
-  border-style: solid; 
-  border-color: lightgrey;
-  border-width: 0.3px;
-  margin-bottom:20px;
+
+  margin-top:20px;
 }
 
 .parentSpan{
@@ -105,6 +122,7 @@
  
 }
 
+
 .none{
   -webkit-filter: none;
   opacity: 1;
@@ -129,7 +147,7 @@
 .fundingTitle{
   text-align: center;
   color: rgb(255, 255, 255);
-  text-shadow: 1px 1px 3px rgb(82, 82, 82);
+  text-shadow: 1px 1px 3px rgb(27, 27, 27);
   font-weight: bold;
   font-size: 30px;
 }

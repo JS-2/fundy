@@ -106,14 +106,17 @@ const FundingMap = (props: Props) => {
   }, [props.data]);
   return (
     <>
+    <br></br>
       <div
         style={{
           width: '100%',
           height: '600px',
+          display:'block'
         }}
       >
         <div
           id="myMap"
+          
           style={{
             width: '100%',
             height: '100%',
