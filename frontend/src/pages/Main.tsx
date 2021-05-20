@@ -62,8 +62,12 @@ const Main = () => {
   const [hotFunding, setHotFunding] = useState<IFunding[]>([]);
   const [fundingRank, setFundingRank] = useState<IFunding[]>([]);
   const [randomIdols, setRandomIdols] = useState<Idol[]>([]);
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 10);
     getAllIdolList().then((resp) => {
       let data = resp.data;
       shuffle(data);
@@ -112,9 +116,17 @@ const Main = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: '500px',
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <div id="bannerArea">
-        <Banner></Banner>
+        <div style={{ minHeight: '500px' }}>
+          <Banner />
+        </div>
       </div>
       <div className="col-md-12">
         <div className="row">
