@@ -84,12 +84,15 @@ const FundCard = (props: Props) => {
   };
 
   return (
+    <div>
+         {/* <span className="ddayBadges" style={{ width:"100px", position:'absolute'}}>{dday}</span> */}
+
     <Card
       className="cardClass"
       onClick={(e) => redirect(e, fundingInfo?.fundingId)}
       style={{
         padding: '0',
-        height: show ? '450px' : '0px',
+        height: show ? '100%' : '0px',
         display: 'block',
         border: 'solid 1px lightgrey',
         borderRadius: '10px',
@@ -99,6 +102,7 @@ const FundCard = (props: Props) => {
       }}
       elevation={0}
     >
+      
       <CardActionArea>
         <Card elevation={0}>
           <CardMedia
@@ -106,13 +110,22 @@ const FundCard = (props: Props) => {
             component="img"
             alt="펀딩 카드 이미지"
             height="250"
+            width="inherit"
             image={fundingInfo?.fundingThumbnail}
             title="Card Image"
           />
         </Card>
-        <CardContent style={{ padding: '10px' }}>
-          <Chip className="ddayBadge" label={dday} />
-          <h5>{fundingInfo?.fundingParticipants}명 참여</h5>
+        <CardContent style={{ padding: '0px 10px 10px 10px' }}>
+        <Box my={1} display="flex" justifyContent="space-between">
+            <Box className="">
+            <Chip className="ddayBadge" style={{height:'100%', width:'120%', borderRadius:'45px'}}label={dday} />
+            </Box>
+            <Box className="">
+            <h5>{fundingInfo?.fundingParticipants}명 참여</h5>
+         
+            </Box>
+          </Box>
+       
           <Typography
             gutterBottom
             variant="h5"
@@ -146,7 +159,7 @@ const FundCard = (props: Props) => {
             <Box className="fundingAmountTxt">
               {fundingInfo?.fundingAmount}원
             </Box>
-            <Box className="fundingAmountTxt">
+            <Box className="fundingRateTxt">
               {fundingInfo?.fundingAchievementRate}%
             </Box>
           </Box>
@@ -161,6 +174,7 @@ const FundCard = (props: Props) => {
         </CardContent>
       </CardActionArea>
     </Card>
+    </div>
   );
 };
 

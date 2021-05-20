@@ -12,6 +12,9 @@ import {
   CardActionArea,
   CardMedia,
   Chip,
+  Dialog,
+  DialogContent,
+  DialogProps,
   Grid,
   Modal,
   SvgIcon,
@@ -69,6 +72,17 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [fundingFavorite, setFundingFavorite] = useState<boolean>(false);
   const user: User = useSelector((state: rootState) => state.userReducer.user);
   const [percentage, setPercentage] = useState<number>();
+  const [open, setOpen] = React.useState(false);
+  const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
+
+  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
+    setOpen(true);
+    setScroll(scrollType);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const token: string = useSelector(
     (state: rootState) => state.userReducer.token
@@ -110,15 +124,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   interface Props {
     fundInfo: FundForm | undefined;
   }
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleApproveBtn = () => {
     let isGood = window.confirm("good 펀딩으로 지정하시겠습니까?");
@@ -343,13 +348,13 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   console.log(token);
   return (
     <div>
-       <div
-                className="titleArea"
-                style={{ height: "158px" }} //background: `url(${Fund?.fundingThumbnail})`}}
-              >
-                <h3 className="fundingTitle">{Fund?.fundingName}</h3>
-                <h5 className="fundingSub">{Fund?.fundingSubtitle}</h5>
-              </div>
+      <div
+        className="titleArea"
+        style={{ height: "158px" }} //background: `url(${Fund?.fundingThumbnail})`}}
+      >
+        <h3 className="fundingTitle">{Fund?.fundingName}</h3>
+        <h5 className="fundingSub">{Fund?.fundingSubtitle}</h5>
+      </div>
       <div className="row">
         <div className="col-md-1"></div>
         <div className="col-md-10">
@@ -358,9 +363,6 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
             //style={{ background: `url(${Fund?.fundingThumbnail})`}}
           >
             <div className="none">
-       
-             
-
               <div className="row">
                 <div className="col-md-8 imgArea">
                   <CardMedia
@@ -368,25 +370,29 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                     component="img"
                     alt="펀딩 카드 이미지"
                     height="100%"
-                    onClick={handleOpen}
+                    onClick={handleClickOpen("body")}
                     image={Fund?.fundingThumbnail}
                     title="Card Image"
                   />
 
-                  <Modal
+                  <Dialog
                     open={open}
                     onClose={handleClose}
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
+                    scroll={scroll}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
                   >
-                    <div className="modalDiv">
+                    <DialogContent
+                      className="dialog"
+                      dividers={scroll === "paper"}
+                    >
                       <img
                         onClick={handleClose}
-                        width="60%"
+                        width="100%"
                         src={Fund?.fundingThumbnail}
                       ></img>
-                    </div>
-                  </Modal>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 <div className="col-md-4 fundingInfo">
                   <div className="barInfo d-flex flex-wrap justify-content-end align-items-end">

@@ -12,6 +12,13 @@
 .moveA {
   right: 10px;
 }
+
+.linkBtn{
+  margin-top:20px;
+}
+.boxbox{
+  margin: top 100px !important;;
+}
 .divA {
   background: rgba(255, 255, 255, 0.05);
   padding: 10px 10px 10px 10px;

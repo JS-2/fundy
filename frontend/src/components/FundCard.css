@@ -9,12 +9,29 @@
 }
 
 .ddayBadge {
-  height: 28px !important;
+  height: 100% !important;
   background-color: #f74a64 !important;
   color: white !important;
   font-weight: bold;
   padding-right: 3px !important;
   padding-left: 3px !important;
+}
+.ddayBadges {
+  margin-left: 10px;
+  height: 70px !important;
+  width: 60px !important;
+  background-color: #f74a64 !important;
+  color: white !important;
+  font-weight: bold;
+  text-align: center;
+  padding-top:25px;
+  
+ 
+  padding-right: 3px !important;
+  padding-left: 3px !important;
+  z-index: 1;
+  align-content: center;
+  align-items: center;
 }
 .cardImgA {
   transform: scale(1, 1);
@@ -25,3 +42,21 @@
   transform: scale(1.1, 1.1);
   overflow: hidden;
 }
+
+
+.fundingAmountTxt{
+  font-size: 20px;
+  font-family: 'Noto Sans';
+  font-weight: bold;
+  color:#464646 !important;
+  margin-top:5px;
+}
+
+
+.fundingRateTxt{
+  font-size: 24px;
+  font-family: 'Noto Sans';
+  font-weight: bolder;
+  color:#313131 !important;
+}
+

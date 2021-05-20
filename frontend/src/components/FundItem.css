@@ -4,14 +4,22 @@
   font-size: 0.9em;
 }
 
+
+
+.fundItem{
+  border-radius: 10px;
+}
 .fundDiv{
   padding:0px;
 }
 
-.fundDiv:hover{
-  -webkit-filter:brightness(0.95);
+.fundItem:hover{
+  transition: all 0.4s ease-in-out;
+
   cursor: pointer;
 }
+
+
 .WithStyles\(ForwardRef\(LinearProgress\)\)-bar-29 {
   background-color: #f74a64 !important;
 }
@@ -24,21 +32,19 @@
   background-color: #ffffff;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
-  color: rgb(44, 44, 44);
-  font-size: 16px !important;
-  height: 130px;
+  color: rgb(73, 73, 73);
+  
+  height: auto; 
   padding-left: 10px;
 }
-.fundItem{
 
+.fundItem:hover>.rankArea{
+  color:#f74a64;
 }
-.ddayBadge {
-  height: 28px !important;
-  background-color: #f74a64 !important;
-  color: white !important;
-  font-weight: bold;
-  padding-right: 3px !important;
-  padding-left: 3px !important;
+
+
+.cardItem{
+  border-radius: 20px;
 }
 .cardImgA {
   transform: scale(1, 1);
@@ -55,7 +61,10 @@
     overflow: hidden;
   
 }
+.cardItem:hover{
+  filter: drop-shadow(2px 2px 2px rgb(223, 223, 223));
 
+}
 .itemText{
   background-color: white;
 }
@@ -63,5 +72,23 @@
 
 .ranking{
   font-weight: bolder;
-  font-size: 2rem;
+  font-size: 1.8vw !important;
+
+}
+.amountTxt{
+  font-size:14px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+
+.rateTxt{
+  font-size:16px;
+  margin-top: 20px;
+  font-weight: bold;
+  color:#250200;
+}
+
+.ddayTxt{
+  font-size:13px !important;
 }

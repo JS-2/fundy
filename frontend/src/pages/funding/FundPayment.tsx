@@ -10,6 +10,21 @@ import Banner from "../../components/Banner";
 import FullWidthTabs from "../../components/fundComponent/FullWidthTabs";
 import { rootState } from "../../reducers";
 import "./FundingDetail.css";
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 declare global {
   interface Window {
@@ -100,9 +115,9 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
         name: "펀디 결제: "+Fund?.fundingName,
         amount: money, //판매 가격
         buyer_email: "iamport@siot.do",
-        buyer_name: "구매자이름",
+        buyer_name: user.nickname,
         buyer_tel: "010-1234-5678",
-        buyer_addr: "서울특별시 강남구 삼성동",
+        buyer_addr: "서울특별시 강남구 삼성동 47 펀디타워",
         buyer_postcode: "123-456",
       },
       function (rsp: any) {
@@ -114,7 +129,7 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
         } else {
           var msg = "결제에 실패하였습니다.";
           msg += "에러내용 : " + rsp.error_msg;
-          setPayment(token, Number(match.params.num), "imp09514011", money);
+     
           var urlBack = "/funding/detail/" + Fund?.fundingId;
           alert(msg);
           history.push(urlBack);
@@ -139,7 +154,7 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
           펀딩 결제하기
         </Box>
         <div className="row">
-          <div className="col-md-4 imgArea">
+          <div className="col-md-6 imgArea">
             <CardMedia
               className="cardImg"
               component="img"
@@ -149,7 +164,17 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
               title="Card Image"
             />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
+          <Alert severity="error">반드시 펀딩 스토리와 공지사항을 숙지하고 후원에 참여해주세요!</Alert>
+              <h3>펀딩: {Fund?.fundingName}</h3>
+              <div className="noticetxt">
+                본 펀딩은 마감일 기준 목표 달성률에 도달하지 못할 경우 결제 금액이 전액 환불됩니다.
+              </div>
+              <div className="noticetxt"> 펀딩 목표 달성에 성공하였을 경우 펀딩 제작자에게 금액이 전달되고,</div>
+              <div className="noticetxt"> 이후 펀디와의 연계를 통해 펀딩 진행 상황을 펀딩 공지사항으로 안내드립니다.</div>
+              <div className="noticetxt"> 해당 안내 사항에 동의 버튼을 눌러 펀딩을 진행할 수 있습니다.</div>
+
+        
             <TextField
               value={money}
               onChange={handlerMoney}
