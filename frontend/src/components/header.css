@@ -19,7 +19,6 @@
 .logo-nav {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
   font-size: 32px;
   margin-left: 6px;
 }
@@ -35,7 +34,6 @@
 }
 .nav-options {
   padding-left: 25px;
-  display: grid;
   grid-template-columns: repeat(6, auto);
   grid-gap: 50px;
   list-style-type: none;
