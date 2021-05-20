@@ -185,7 +185,7 @@ const Main = () => {
                   className="nbg_bold font-smooth"
                   style={{ fontSize: '2em' }}
                 >
-                  펀디 인기 펀딩 Top 7
+                  인기 펀딩 Top 7
                 </Box>
               </div>
 

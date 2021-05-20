@@ -39,11 +39,11 @@ const Header = () => {
   };
 
   const handleMypageBtn = () => {
-    history.push('/mypage');
+    history.push("/mypage");
   };
 
   const handleAdminBtn = () => {
-    history.push('/admin');
+    history.push("/admin");
   };
 
   const open = Boolean(anchorEl);
@@ -76,32 +76,23 @@ const Header = () => {
               후원기관
             </Link>
           </li>
+          {user === null ? (
+          <>    <li className="option font-smooth rightTo" onClick={closeMobileMenu}>
+          <Link style={{ fontSize: '0.55em' }} to="/login" className="nbg">
+            로그인
+          </Link>
+        </li>
+        <li className="option font-smooth " onClick={closeMobileMenu}>
+          <Link style={{ fontSize: '0.55em' }} to="/regist" className="nbg">
+            회원가입
+          </Link>
+        </li></>
+        ) :(<></>)}
+    
         </ul>
 
         {user === null ? (
-          <ul
-            className={click ? 'nav-options active' : 'nav-options'}
-            style={{ position: 'absolute', right: '0px' }}
-          >
-            <li className="option font-smooth" onClick={closeMobileMenu}>
-              <Link
-                to="/login"
-                className="nbg"
-                style={{ textDecoration: 'none', fontSize: '0.51em' }}
-              >
-                로그인
-              </Link>
-            </li>
-            <li className="option font-smooth" onClick={closeMobileMenu}>
-              <Link
-                to="/regist"
-                className="nbg"
-                style={{ textDecoration: 'none', fontSize: '0.51em' }}
-              >
-                회원가입
-              </Link>
-            </li>
-          </ul>
+          <></>
         ) : (
           <>
             <Box
@@ -144,27 +135,21 @@ const Header = () => {
           >
             <Paper>
               <List style={{ width: 200 }}>
-                <ListItem style={{ cursor: 'default' }}>
+                <ListItem style={{ cursor: "default" }}>
                   <ListItemText
                     primary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.6rem' }}
-                      >
+                      <div className="nbg_m" style={{ fontSize: "2rem" }}>
                         {user.nickname}
                       </div>
                     }
                     secondary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.2rem' }}
-                      >
+                      <div className="nbg_m" style={{ fontSize: "1.2rem" }}>
                         {user.email}
                       </div>
                     }
                   ></ListItemText>
                 </ListItem>
-                {user.role == 'ADMIN' ? (
+                {user.role == "ADMIN" ? (
                   <>
                     <Divider />
                     <ListItem button onClick={handleAdminBtn}>
@@ -172,7 +157,7 @@ const Header = () => {
                         primary={
                           <div
                             className="nbg_m font-smooth"
-                            style={{ fontSize: '1.6rem' }}
+                            style={{ fontSize: "1.6rem" }}
                           >
                             인증 관리(ADMIN)
                           </div>
@@ -188,10 +173,7 @@ const Header = () => {
                 <ListItem button onClick={handleMypageBtn}>
                   <ListItemText
                     primary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.4em' }}
-                      >
+                      <div className="nbg_m font-smooth" style={{ fontSize: "1.1em" }}>
                         마이페이지
                       </div>
                     }
@@ -206,10 +188,7 @@ const Header = () => {
                 >
                   <ListItemText
                     primary={
-                      <div
-                        className="nbg_m font-smooth"
-                        style={{ fontSize: '1.4em' }}
-                      >
+                      <div className="nbg_m font-smooth" style={{ fontSize: "1.1em" }}>
                         로그아웃
                       </div>
                     }

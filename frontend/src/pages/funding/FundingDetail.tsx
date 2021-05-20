@@ -191,7 +191,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     return (
       <Button
         startIcon={<SentimentVeryDissatisfiedIcon />}
-        className="paybtn col-md-12 col-sm-12"
+        className="paybtn col-md-12 col-sm-12 col-xs-12"
         variant="contained"
         color="secondary"
         size="large"
@@ -434,7 +434,7 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       <Button
                         startIcon={<AssignmentInd />}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-4"
                       >
                         {Fund?.userNickname}
                   
@@ -442,12 +442,12 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                       <Button
                         startIcon={<GroupIcon/>}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-4"
                       > {Fund?.fundingParticipants}명 참여</Button>
                          <Button
                         startIcon={<ScheduleIcon/>}
                         variant="outlined"
-                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-6"
+                        className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-4"
                       > {Fund?.fundingRemainDay}일 남음</Button>
 
                 
