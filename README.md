@@ -1,13 +1,12 @@
 <img src="README.assets/Banner.png"  width="100%">
 
-<br/>
-
-<div align="center">
+<div align="center" style="margin-top: 30px">
 	<h1>
     	펀디
 	</h1>
 </div>
 <div align="center">아이돌과 팬을 연결해주는 크라우드 펀딩 플랫폼</center></div>
+
 <br/>
 
 <div align="center" style="font-weight: bold;">
