@@ -21,9 +21,12 @@ const MyFunding = () => {
   const [regFundings, setRegFundings] = useState<IFunding[]>([]);
   const [showFundings, setShowFundings] = useState<IFunding[]>([]);
   const [selectedBtn, setSelectedBtn] = useState<number>(1);
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(token);
+    setTimeout(() => {
+      setShow(true);
+    }, 400);
     getFavoriteFunding(token).then((resp) => {
       setFavFundings(resp.data);
       setShowFundings(resp.data);
@@ -58,7 +61,12 @@ const MyFunding = () => {
     }
   };
   return (
-    <div>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
       <Box
         mx={1}
         mt={5}

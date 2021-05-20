@@ -12,14 +12,24 @@ const MyIdols = () => {
     (state: rootState) => state.userReducer.token
   );
   const [idols, setIdols] = useState<Idol[]>();
+  const [show, setShow] = useState<boolean>(false);
   useEffect(() => {
     getFavorite(token).then((resp) => {
       setIdols(resp.data);
     });
+    setTimeout(() => {
+      setShow(true);
+    }, 600);
   }, []);
+
   return (
-    <div>
-      <Box my={2} className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
+    <div
+      style={{
+        opacity: show ? 1 : 0,
+        transition: 'all 0.5s ease-in-out',
+      }}
+    >
+      <Box my={3} className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
         나의 아이돌
       </Box>
       <Grid container spacing={2}>

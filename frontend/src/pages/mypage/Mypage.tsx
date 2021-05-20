@@ -7,14 +7,25 @@ import MyFundingPaid from '../../components/mypage/mypage/MyFundingPaid';
 
 const Mypage = () => {
   return (
-    <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
-      <Box style={{ width: '80%', maxWidth: '1080px' }}>
-        <Profile />
-        <MyFunding />
-        <MyIdols />
-        <MyFundingPaid></MyFundingPaid>
+    <>
+      <Box
+        display="flex"
+        justifyContent="center"
+        className="mypage-title"
+        style={{ width: '100%' }}
+      >
+        <Box mb={6} style={{ width: '80%', maxWidth: '1080px' }}>
+          <Profile />
+        </Box>
       </Box>
-    </Box>
+      <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
+        <Box style={{ width: '80%', maxWidth: '1080px' }}>
+          <MyFunding />
+          <MyIdols />
+          <MyFundingPaid></MyFundingPaid>
+        </Box>
+      </Box>
+    </>
   );
 };
 
