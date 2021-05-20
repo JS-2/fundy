@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface PayDao extends JpaRepository<PayInfo, Integer> {
     // 펀딩별 결제리스트
-    List<PayInfo> findByFunding(FundingProject funding_id);
+    List<PayInfo> findByFundingAndPayAmountIsGreaterThan(FundingProject funding_id, long funding_amount);
 }
