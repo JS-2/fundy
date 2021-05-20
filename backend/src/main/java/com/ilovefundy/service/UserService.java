@@ -3,6 +3,7 @@ package com.ilovefundy.service;
 import com.ilovefundy.dao.FundingDao;
 import com.ilovefundy.dao.FundingRegisterDao;
 import com.ilovefundy.dao.IdolDao;
+import com.ilovefundy.dao.PayDao;
 import com.ilovefundy.dao.user.UserDao;
 import com.ilovefundy.dto.auth.FanAuth;
 import com.ilovefundy.dto.auth.MyRegisteredFundingResponse;
@@ -16,6 +17,7 @@ import com.ilovefundy.dto.funding.FundingListResponse;
 import com.ilovefundy.dto.idol.IdolResponse;
 import com.ilovefundy.dto.user.*;
 import com.ilovefundy.security.JwtTokenProvider;
+import com.ilovefundy.utils.DeduplicationUtils;
 import com.ilovefundy.utils.EncryptionUtils;
 import com.ilovefundy.utils.SetterUtils;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,7 @@ public class UserService {
     private final IdolDao idolDao;
     private final FundingDao fundingDao;
     private final FundingRegisterDao fundingRegisterDao;
+    private final PayDao payDao;
     private final JwtTokenProvider jwtTokenProvider;
     private final S3UploaderService s3UploaderService;
 
@@ -149,7 +152,10 @@ public class UserService {
         for(PayInfo payInfo : userPayInfo) {
             FundingProject funding = payInfo.getFunding();
             User u = userDao.findByUserId(funding.getUserId());
-            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo, funding, u));
+            List<PayInfo> payInfoList = payDao.findByFundingAndPayAmountIsGreaterThan(funding, 0);
+            List<PayInfo> payParticipantsList = DeduplicationUtils.deduplication(payInfoList, PayInfo::getUser);
+            int participants = payParticipantsList.size();
+            myPayInfoResponseList.add(SetterUtils.setMyPayInfo(payInfo, funding, u, participants));
         }
         return myPayInfoResponseList;
     }

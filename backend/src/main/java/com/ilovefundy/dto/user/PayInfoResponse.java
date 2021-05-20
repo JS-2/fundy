@@ -21,6 +21,8 @@ public class PayInfoResponse {
     private String userLevel;
     @ApiModelProperty(example = "진행중")
     private String fundingStatement;
+    @ApiModelProperty(example = "\"https://ww.namu.la/s/58143f816267c648f2e3ddaff8a39fc73fa2aff08b5fbf4abcadf53e62c880c5e95d36bf8dccc46b63218f9810d51bfa1a0a3bc1ffbf084fc98b245747fd8337a9c83694a8f0ae80bbc717091b8a8c6c4a15d4d1a868a34af2ef3a1c05ec883d9cc7cdeb9c4941ab6cec8607d7ac6818\"")
+    private String fundingThumbnail;
     @ApiModelProperty(example = "2")
     private Integer paymentId;
     @ApiModelProperty(example = "5")
@@ -31,4 +33,10 @@ public class PayInfoResponse {
     private LocalDateTime payDatetime;
     @ApiModelProperty(example = "2021-05-17 06:36:35")
     private LocalDateTime fundingEndTime;
+    @ApiModelProperty(example = "100,000")
+    private String fundingAmount;
+    @ApiModelProperty(example = "35")
+    private Integer fundingAchievementRate;
+    @ApiModelProperty(example = "240")
+    private Integer fundingParticipants;
 }
