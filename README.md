@@ -118,24 +118,33 @@ cd backend
 
 협업 Tool
 
-- Notion
-- Framer
-- ERDCloud
+- [Notion](https://www.notion.so/)
+- [Framer](https://www.framer.com/)
+- [ERDCloud](https://www.erdcloud.com/)
 
 Language
 
-- Typescript
-- Java
+- [Typescript](https://www.typescriptlang.org/)
+- [Java](https://www.java.com/ko/)
 
 DBMS
 
-- MySQL
+- [MySQL](https://www.mysql.com/)
 
 Library
 
-- React
-- Redux
-- JWT
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [JWT](https://jwt.io/)
+
+Release
+
+- [Nginx](https://www.nginx.com/)
+- [AWS EC2](https://aws.amazon.com/ko/ec2/?ec2-whats-new.sort-by=item.additionalFields.postDateTime&ec2-whats-new.sort-order=desc)
+
+Storage
+
+- [AWS S3](https://aws.amazon.com/ko/s3/)
 
 <br/>
 
@@ -147,7 +156,7 @@ Library
   - `김재성` - [@JS-2](https://github.com/JS-2) - [kimjea23@naver.com](mailto:kimjea23@naver.com)
   - `이원찬` - [@chany219](https://github.com/chany219) - [chany219@naver.com](mailto:chany219@naver.com)
 - Backend Developer (github and email)
-  - `김윤성` - [@example](https://github.com/example) - [example@naver.com](example@naver.com)
+  - `김윤성` - [@msmf3](https://github.com/msmf3) - [msmf3@naver.com](mailto:msmf3@naver.com)
   - `이나영` - [@bokiri409](https://github.com/bokiri409) - [bokiri16@gmail.com](mailto:bokiri16@gmail.com)
 
 Project Link: https://www.ilovefundy.com/
