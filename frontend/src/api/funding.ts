@@ -89,9 +89,10 @@ export const completeFunding = (funding_id: number, auth_token: string) => {
 
 
 
-export const postPayment = (auth_token: string, funding_id: string, uid:number, payAmount:number) => {
+export const setPayment = (auth_token: string, funding_id: number, uid:string, money:number) => {
     return axiosInstance.post('/fundings/' + funding_id + '/pay',
-     { impUid: uid }, {
+     { impUid: uid,
+        payAmount: money}, {
         headers: {
             Authorization: auth_token
         }

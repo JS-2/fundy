@@ -9,9 +9,9 @@ const FundingBoard = (props: any) => {
       <h4>펀딩 공지사항</h4>
 
       {props.notices.length === 0 ? (
-        <div className="noBoardArea" style={{height:'300px', backgroundColor:'#cccccc', textAlign:'center',borderRadius:'20px', alignItems:'center'}}>
-        <h3 style={{color:"white", lineHeight:'300px'}}>
-          공지사항이 없습니다.
+        <div className="noBoardArea" style={{height:'300px', backgroundColor:'#ececec', textAlign:'center',borderRadius:'20px', alignItems:'center'}}>
+        <h3 style={{color:"#aaaaaa", lineHeight:'300px'}}>
+          아직 공지사항이 올라오지 않았습니다!
         </h3>
         </div>
       ) : (
