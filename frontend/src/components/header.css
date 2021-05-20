@@ -11,7 +11,6 @@
   color: #f74a64 !important;
   text-decoration: none !important;
   font-family: 'Shrikhand' !important;
-
 }
 @font-face {
   font-family: Shrikhand;
@@ -20,9 +19,7 @@
 .logo-nav {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
   font-size: 32px;
-  margin-left:6px;
 }
 
 .logo-container {
@@ -36,17 +33,14 @@
 }
 .nav-options {
   padding-left: 25px;
-  display: grid;
   grid-template-columns: repeat(6, auto);
   grid-gap: 50px;
   list-style-type: none;
 }
 
-
 .mobile-option {
   display: none;
 }
-
 
 .signin-up {
   display: flex;
@@ -71,9 +65,9 @@
 }
 .mobile-menu {
   display: none;
-  z-index:2;
+  z-index: 2;
 }
-@media (max-width: 648px) {
+@media (max-width: 760px) {
   /*Mobile View */
   .header {
     padding: 0px 10px;
@@ -94,23 +88,17 @@
     flex-direction: column;
     list-style-type: none;
     grid-gap: 0px;
-
   }
-  a{
+  a {
     text-decoration: none !important;
- 
   }
 
-
- 
-
-
-  a:hover{
-    color:black;
+  a:hover {
+    color: black;
   }
   .nav-options.active {
     background: #ffffff;
-    color:black;
+    color: black;
     left: 0;
     opacity: 1;
     transition: all 0.5s ease;
@@ -122,7 +110,7 @@
   .menu-icon {
     width: 45px;
     height: 45px;
-    color:#fc6b81;
+    color: #fc6b81;
     margin-top: 5px;
   }
   .option {
@@ -133,7 +121,6 @@
     padding: 30px 0px;
   }
   .sign-up {
-  
   }
 
   .signin-up {
