@@ -12,7 +12,7 @@ const PaidFunding = (props: Props) => {
 
   return (
     <div>
-      <Card className="p-3" variant="outlined">
+      <Card className="p-3 hover-big-s" variant="outlined">
         <CardContent>
           <Box display="flex" justifyContent="space-between">
             <Box
