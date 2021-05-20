@@ -94,14 +94,20 @@ const IdolInfo = (props: Props) => {
               }}
             >
               <Grid container alignItems="center" style={{ height: '100%' }}>
-                <Grid item xs={1} />
                 <Grid
                   item
                   container
                   xs={6}
-                  style={{ height: '100%', alignItems: 'center' }}
+                  style={{
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                  }}
                 >
-                  <Card className="idolCardImg" style={{ height: '90%' }}>
+                  <Card
+                    className="idolCardImg"
+                    style={{ height: '90%', width: '80%' }}
+                  >
                     <CardMedia
                       component="img"
                       image={props.idolInfo?.idolPicture}
@@ -109,75 +115,104 @@ const IdolInfo = (props: Props) => {
                     />
                   </Card>
                 </Grid>
-                <Grid item xs={1} />
+                <Grid item xs={1}></Grid>
                 <Grid
                   item
-                  xs={3}
+                  xs={5}
                   style={{
                     height: '100%',
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'flex-start',
                   }}
                 >
                   <Box>
                     <Box
                       className="nbg_bold font-smooth"
                       mb={3}
-                      style={{ color: 'white', fontSize: '4em' }}
+                      style={{ color: 'white', fontSize: '4em', opacity: 0.9 }}
                     >
                       {props.idolInfo?.idolName}
                     </Box>
                     {props.idolInfo?.idolAge === null ? (
                       <Box
-                        className="font-smooth"
-                        style={{ color: 'white', fontSize: '1.8em' }}
+                        className="nbg_m font-smooth"
+                        style={{
+                          color: 'white',
+                          fontSize: '1.7em',
+                          opacity: 0.8,
+                        }}
                       >
                         Since{' '}
                         {props.idolInfo?.idolBirthday?.replaceAll('-', '.')}
                       </Box>
                     ) : (
-                      <Box className="font-smooth">
+                      <Box className="nbg_m font-smooth">
                         <Box
                           mb={1}
-                          style={{ color: 'white', fontSize: '1.5em' }}
+                          style={{
+                            color: 'white',
+                            fontSize: '1.4em',
+                            opacity: 0.8,
+                          }}
                         >
                           나이 {props.idolInfo?.idolAge}
                         </Box>
                         <Box
                           mb={1}
-                          style={{ color: 'white', fontSize: '1.5em' }}
+                          style={{
+                            color: 'white',
+                            fontSize: '1.4em',
+                            opacity: 0.8,
+                          }}
                         >
                           생년월일{' '}
                           {props.idolInfo?.idolBirthday?.replaceAll('-', '.')}
                         </Box>
                         <Box
                           mb={1}
-                          style={{ color: 'white', fontSize: '1.5em' }}
+                          style={{
+                            color: 'white',
+                            fontSize: '1.4em',
+                            opacity: 0.8,
+                          }}
                         >
                           혈액형 {props.idolInfo?.idolBlood}
                         </Box>
                         <Box
                           mb={1}
-                          style={{ color: 'white', fontSize: '1.5em' }}
+                          style={{
+                            color: 'white',
+                            fontSize: '1.4em',
+                            opacity: 0.8,
+                          }}
                         >
                           키 {props.idolInfo?.idolHeight}cm
                         </Box>
                         <Box
                           mb={1}
-                          style={{ color: 'white', fontSize: '1.5em' }}
+                          style={{
+                            color: 'white',
+                            fontSize: '1.4em',
+                            opacity: 0.8,
+                          }}
                         >
                           몸무게 {props.idolInfo?.idolWeight}kg
                         </Box>
                         <Box
                           mb={1}
-                          style={{ color: 'white', fontSize: '1.5em' }}
+                          style={{
+                            color: 'white',
+                            fontSize: '1.4em',
+                            opacity: 0.8,
+                          }}
                         >
                           소속사 {props.idolInfo?.idolAgency}
                         </Box>
                       </Box>
                     )}
                   </Box>
-                  <Grid item xs={6} style={{ height: '90%' }}>
+                  <Grid item xs={2} style={{ height: '90%' }}>
                     {user === null ? (
                       <></>
                     ) : (
@@ -189,10 +224,13 @@ const IdolInfo = (props: Props) => {
                               style={{ fontSize: '4em' }}
                             ></FavoriteIcon>
                           ) : (
-                            <FavoriteBorderIcon
-                              color="secondary"
-                              style={{ fontSize: '4em' }}
-                            ></FavoriteBorderIcon>
+                            <FavoriteIcon
+                              style={{
+                                fontSize: '4em',
+                                color: 'white',
+                                opacity: 0.4,
+                              }}
+                            ></FavoriteIcon>
                           )}
                         </IconButton>
                       </Box>
