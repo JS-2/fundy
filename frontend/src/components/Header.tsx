@@ -50,18 +50,16 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="logo-nav" style={{ width: '100%' }}>
-        <div className="logo-container" style={{ marginRight: '30px' }}>
+      <div className="logo-nav">
+        <div className="logo-container" style={{ marginRight: '40px' }}>
           <Link id="logoAnchor" to="/" onClick={closeMobileMenu}>
             fundy
           </Link>
         </div>
-        <Box
-          width="100%"
-          display="flex"
-          justifyContent="space-between"
-          style={{ lineHeight: '80px' }}
+
+        <ul
           className={click ? 'nav-options active' : 'nav-options'}
+          style={{ marginTop: '5px' }}
         >
           <li className="option font-smooth" onClick={closeMobileMenu}>
             <Link style={{ fontSize: '0.55em' }} className="nbg" to="/funding">
@@ -132,78 +130,20 @@ const Header = () => {
         ) : (
           <>
             <Box
-              ml={2}
-              mr={5}
-              width="55px"
-              className="option font-smooth"
-              onClick={closeMobileMenu}
+              display="flex"
+              className="nbg_m font-smooth"
+              alignItems="center"
+              style={{ fontSize: '1em', position: 'absolute', right: '60px' }}
             >
-              <Link
-                style={{ fontSize: '0.55em' }}
-                className="nbg"
-                to="/funding"
-              >
-                펀딩
-              </Link>
+              <IconButton onClick={handleClick}>
+                <Avatar
+                  src={user.picture}
+                  style={{ width: '45px', height: '45px' }}
+                ></Avatar>
+              </IconButton>
             </Box>
-            <Box
-              mr={5}
-              width="70px"
-              className="option font-smooth"
-              onClick={closeMobileMenu}
-            >
-              <Link style={{ fontSize: '0.55em' }} className="nbg" to="/idol">
-                아이돌
-              </Link>
-            </Box>
-            <Box
-              width="85px"
-              className="option font-smooth"
-              onClick={closeMobileMenu}
-            >
-              <Link style={{ fontSize: '0.55em' }} className="nbg" to="/places">
-                후원기관
-              </Link>
-            </Box>
-          </Box>
-          {user === null ? (
-            <Box display="flex">
-              <Box
-                width="80px"
-                className="option font-smooth rightTo"
-                onClick={closeMobileMenu}
-              >
-                <Link
-                  style={{ fontSize: '0.48em' }}
-                  to="/login"
-                  className="nbg"
-                >
-                  로그인
-                </Link>
-              </Box>
-              <Box
-                width="85px"
-                className="option font-smooth "
-                onClick={closeMobileMenu}
-              >
-                <Link
-                  style={{ fontSize: '0.48em' }}
-                  to="/regist"
-                  className="nbg"
-                >
-                  회원가입
-                </Link>
-              </Box>
-            </Box>
-          ) : (
-            <IconButton onClick={handleClick}>
-              <Avatar
-                src={user.picture}
-                style={{ width: '50px', height: '50px' }}
-              ></Avatar>
-            </IconButton>
-          )}
-        </Box>
+          </>
+        )}
       </div>
 
       <div className="mobile-menu" onClick={handleClick2}>
