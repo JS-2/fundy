@@ -495,8 +495,9 @@ const FundingDetail = ({ match }: RouteComponentProps<MatchParams>) => {
                         variant="outlined"
                         className="boxbtn nbg_bold col-md-4 col-sm-12 col-xs-4"
                       >
-                        {' '}
-                        {Fund?.fundingRemainDay}일 남음
+                        {Number(Fund?.fundingRemainDay!) > 0
+                          ? Fund?.fundingRemainDay + '일 남음'
+                          : '펀딩 마감'}
                       </Button>
 
                       <Button
