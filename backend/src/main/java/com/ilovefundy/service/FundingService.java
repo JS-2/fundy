@@ -212,6 +212,10 @@ public class FundingService {
         int user_id = fundingProject.getUserId();
         User user = userDao.getOne(user_id);
         user.setFundingRegistCount(user.getFundingRegistCount()+1);
+        // 펀딩 이력이 5개 이상이면 유저 레벨을 플러스 시켜줌 A -> AA
+        if(User.Level.isNoPlus(user.getUserLevel()) && user.getFundingRegistCount()+1 >= 5) {
+            user.setUserLevel(User.Level.PlusAuth(user.getUserLevel()));
+        }
         userDao.save(user);
         return true;
     }
