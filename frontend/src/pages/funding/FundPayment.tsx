@@ -151,7 +151,6 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
 
   return (
     <div>
-      <div></div>
       <div
         className="titleArea"
         style={{ height: '158px' }} //background: `url(${Fund?.fundingThumbnail})`}}
@@ -179,26 +178,30 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
             <Alert severity="error">
               반드시 펀딩 스토리와 공지사항을 숙지하고 후원에 참여해주세요!
             </Alert>
-            <h3>펀딩: {Fund?.fundingName}</h3>
-            <div className="noticetxt">
+            <Box
+              mx={1}
+              my={2}
+              className="nbg_bold font-smooth"
+              fontSize="1.7em"
+            >
+              {Fund?.fundingName}
+            </Box>
+            <Box ml={1} className="nbg_m font-smooth" fontSize="1.3em">
               본 펀딩은 마감일 기준 목표 달성률에 도달하지 못할 경우 결제 금액이
-              전액 환불됩니다.
-            </div>
-            <div className="noticetxt">
-              {' '}
-              펀딩 목표 달성에 성공하였을 경우 펀딩 제작자에게 금액이 전달되고,
-            </div>
-            <div className="noticetxt">
-              {' '}
-              이후 펀디와의 연계를 통해 펀딩 진행 상황을 펀딩 공지사항으로
-              안내드립니다.
-            </div>
-            <div className="noticetxt">
-              {' '}
+              전액 환불됩니다. 펀딩 목표 달성에 성공하였을 경우 펀딩 제작자에게
+              금액이 전달되고, 이후 펀디와의 연계를 통해 펀딩 진행 상황을 펀딩
+              공지사항으로 안내드립니다.
+            </Box>
+            <Box ml={1} my={3}>
               해당 안내 사항에 동의 버튼을 눌러 펀딩을 진행할 수 있습니다.
-            </div>
+            </Box>
 
-            <div style={{ fontSize: '20px' }}>
+            <div
+              style={{
+                fontSize: '20px',
+                marginLeft: '10px',
+              }}
+            >
               <FormControlLabel
                 control={
                   <Checkbox
@@ -212,20 +215,23 @@ const FundPayment = ({ match }: RouteComponentProps<MatchParams>) => {
                 label="본 안내 사항에 동의합니다."
               />
             </div>
-
-            <TextField
-              value={money}
-              onChange={handlerMoney}
-              label="후원금"
-              type="number"
-            ></TextField>
-            <Button
-              className="btn_main"
-              variant="contained"
-              onClick={payment_test}
-            >
-              후원하기
-            </Button>
+            <Box display="flex" mt={4} ml={1}>
+              <TextField
+                variant="outlined"
+                value={money}
+                onChange={handlerMoney}
+                label="후원금"
+                type="number"
+              ></TextField>
+              <Button
+                className="btn_main"
+                variant="contained"
+                onClick={payment_test}
+                style={{ marginLeft: '5px', fontSize: '1.5em' }}
+              >
+                후원하기
+              </Button>
+            </Box>
           </div>
         </div>
 
