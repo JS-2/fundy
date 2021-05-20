@@ -5,6 +5,9 @@ import { getFavorite } from '../../../api/user';
 import { Idol, User } from '../../../common/types';
 import { rootState } from '../../../reducers';
 import IdolCard from '../../IdolCard';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper/core';
 
 const MyIdols = () => {
   const user: User = useSelector((state: rootState) => state.userReducer.user);
@@ -32,15 +35,19 @@ const MyIdols = () => {
       <Box my={3} className="nbg_bold font-smooth" style={{ fontSize: '2em' }}>
         나의 아이돌
       </Box>
-      <Grid container spacing={2}>
-        {idols?.map((idol, index) => {
-          return (
-            <Grid item container xs={3} justify="center">
-              <IdolCard idol={idol} key={index} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Swiper
+        spaceBetween={10}
+        slidesPerView={3.3}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+        style={{ height: '350px' }}
+      >
+        {idols?.map((idol) => (
+          <SwiperSlide key={idol.idolId}>
+            <IdolCard idol={idol} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       {idols?.length == 0 ? (
         <Box
           className="nbg_bold font-smooth"

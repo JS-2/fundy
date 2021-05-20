@@ -45,7 +45,7 @@ const placeItem = (place: any) => {
           </Box>
         </Grid>
         <Grid item xs={8} style={{ paddingRight: '30px' }}>
-          <Box className="nbg_bold font-smooth" mb={1} fontSize="2em">
+          <Box className="nbg_bold font-smooth" mt={1} mb={2} fontSize="1.5em">
             {place.placeName}
           </Box>
           <Box className="nbg_m font-smooth" fontSize="1em">

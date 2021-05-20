@@ -123,10 +123,18 @@ input {
 }
 
 .hover-big {
-  transition: all 0.2s ease-in-out !important;
+  transition: all 0.25s ease-in-out !important;
 }
 
 .hover-big:hover {
+  transform: scale(1.03) !important;
+}
+
+.hover-big-s {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.hover-big-s:hover {
   transform: scale(1.01) !important;
 }
 
