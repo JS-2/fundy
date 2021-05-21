@@ -1,0 +1,40 @@
+.uncert_icon {
+  font-size: 9em !important;
+  color: rgb(216, 216, 216);
+  opacity: 0.6;
+}
+
+.cert_icon {
+  font-size: 9em !important;
+  color: #2aff83;
+  opacity: 0.6;
+}
+
+.waiting_icon {
+  font-size: 9em !important;
+  opacity: 0.9;
+  color: #ffdc16e8;
+}
+
+.uncert_card {
+  margin-top: 5px !important;
+  color: whitesmoke !important;
+  background-color: grey !important;
+}
+
+.cert_card {
+  margin-top: 5px !important;
+  color: whitesmoke !important;
+  background-color: #2ecc71 !important;
+}
+
+.waiting_card {
+  margin-top: 5px !important;
+  color: whitesmoke !important;
+  background-color: #fcc200 !important;
+}
+
+.avatar {
+  width: 150px !important;
+  height: 150px !important;
+}

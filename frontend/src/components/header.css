@@ -1,0 +1,149 @@
+/*Desktop View*/
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 40px;
+  height: 88px;
+}
+
+#logoAnchor {
+  color: #f74a64 !important;
+  text-decoration: none !important;
+  font-family: 'Shrikhand' !important;
+}
+@font-face {
+  font-family: Shrikhand;
+  src: url(../assets/fonts/Shrikhand-Regular.ttf) format('truetype');
+}
+.logo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 32px;
+  margin-left: 6px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  width: 45px;
+  height: 45px;
+}
+.nav-options {
+  padding-left: 25px;
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  grid-gap: 50px;
+  list-style-type: none;
+}
+
+.mobile-option {
+  display: none;
+}
+
+.signin-up {
+  display: flex;
+  padding: 0px 5px;
+  list-style-type: none;
+}
+.sign-in {
+  padding-right: 50px;
+  align-self: center;
+}
+.sign-in :hover {
+  color: black;
+}
+.signup2-btn {
+  padding: 10px 10px;
+  height: 2.4rem;
+  border-radius: 3px;
+
+  color: white;
+  cursor: pointer;
+  align-items: center;
+}
+.mobile-menu {
+  display: none;
+  z-index: 2;
+}
+
+.login_box {
+  visibility: visible;
+}
+
+.reverse_login_box {
+  visibility: hidden;
+}
+@media (max-width: 991px) {
+  /*Mobile View */
+
+  .reverse_login_box {
+    visibility: visible;
+  }
+  .login_box {
+    visibility: hidden;
+  }
+  .header {
+    padding: 0px 10px;
+  }
+  .logo {
+    width: 45px;
+    height: 45px;
+  }
+  .nav-options {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    flex-direction: column;
+    list-style-type: none;
+    grid-gap: 0px;
+  }
+  a {
+    text-decoration: none !important;
+  }
+
+  a:hover {
+    color: black;
+  }
+  .nav-options.active {
+    background: #ffffff;
+    color: black;
+    left: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    z-index: 2;
+    align-content: center;
+    padding-left: 0px;
+  }
+
+  .menu-icon {
+    width: 45px;
+    height: 45px;
+    color: #fc6b81;
+    margin-top: 5px;
+  }
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vw;
+    padding: 30px 0px;
+  }
+  .sign-up {
+  }
+
+  .signin-up {
+    display: none;
+  }
+}
+.mobile-menu {
+  display: block;
+}

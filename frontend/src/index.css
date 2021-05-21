@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans Kr';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* transform: rotate(-0.03deg); */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+@font-face {
+  font-family: Shrikhand;
+  src: url(./assets/fonts/Shrikhand-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: NanumBarunGothic;
+  src: url(./assets/fonts/NanumBarunGothic.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: NanumBarunGothicBold;
+  src: url(./assets/fonts/NanumBarunGothicBold.ttf) format('truetype');
+}
+
+.logo {
+  font-family: Shrikhand;
+  text-align: center;
+  font-size: 2em;
+}
+
+.large_logo {
+  font-family: Shrikhand;
+  text-align: center;
+  font-size: 4em;
+}
+
+.mainArea {
+  padding: 0px 0px 0px 0px !important;
+  width: 100%;
+}
+
+.nbg {
+  font-family: 'Noto Sans KR' !important;
+  font-size: 1.8rem;
+}
+
+.nbg_bold {
+  font-family: 'Noto Sans KR' !important;
+  font-weight: bold;
+}
+
+.nbg_m {
+  font-family: NanumBarunGothic !important;
+  font-size: 1.6rem;
+}
+
+.btn_main {
+  background-color: #f74a64 !important;
+  color: white !important;
+}
+
+.main_color {
+  color: #f74a64 !important;
+}
+
+.disabled_input {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  font-family: 'Noto Sans KR' !important;
+}
+
+.font-smooth {
+  transform: rotate(-0.03deg) !important;
+}
+
+h1 {
+  font-size: 10px;
+}
+h2 {
+  font-size: 10px;
+}
+h3 {
+  font-size: 10px;
+}
+h4 {
+  font-size: 10px;
+}
+h5 {
+  font-size: 10px;
+}
+h6 {
+  font-size: 10px;
+}
+
+input {
+  font-size: 15px !important;
+}
+
+.MuiInputBase {
+  padding: 5px 5px 5px 5px !important;
+}
+
+.Muioption-popup {
+  font-size: 20px !important;
+}
+
+.hover-big {
+  transition: all 0.25s ease-in-out !important;
+}
+
+.hover-big:hover {
+  transform: scale(1.03) !important;
+}
+
+.hover-big-s {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.hover-big-s:hover {
+  transform: scale(1.01) !important;
+}
+
+.mypage-title {
+  background: linear-gradient(to top right, #2f696d, #476ed8d2);
+}
+
+.card-zone {
+  background: linear-gradient(to top left, #8018d4d2, #539ce0);
+  opacity: 1;
+}
+
+.mypage-btn {
+  opacity: 0.8;
+  background-color: #752bffaf !important;
+  border-radius: 20px !important;
+  width: 120px;
+  height: 40px;
+  color: white !important;
+  font-size: 1em !important;
+  margin-right: 10px !important;
+}

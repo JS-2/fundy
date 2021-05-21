@@ -1,0 +1,64 @@
+
+.user {
+  color: grey;
+  font-size: 0.9em;
+}
+.swiper-pagination{
+  bottom:10px;
+}
+.swiper-pagination-bullet{
+  background-color: rgb(255, 255, 255) !important;
+}
+.bannerBody{
+  height:500px;
+  width:100%;
+
+}
+.dialog{
+  padding: 0 0 0 0 !important;
+}
+.swiper-button-next{
+  color: red !important;
+  font-size: 10px !important;
+  padding: 30px !important;
+
+}
+
+.swiper-button-prev{
+  color: red !important;
+  font-size: 10px !important;
+  padding: 30px !important;
+}
+
+.swiper-container{
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 3vw;
+}
+
+/*
+.swiper-container{
+box-shadow: 0 8px 32px 0 rgba(58, 59, 75, 0.37);
+backdrop-filter: blur( 11.5px );
+-webkit-backdrop-filter: blur( 11.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+margin-bottom: 40px;
+margin-left:20px;
+padding-right: 10px;
+overflow: hidden;
+}
+*/
+
+.banner{
+
+  background-size: cover;
+  background-position: center;
+  
+  text-align: center;
+
+}
+
+.bannerImg{
+  width:inherit;
+}
