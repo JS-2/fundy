@@ -9,9 +9,12 @@
 
 <br/>
 
+<div align="center" style="font-weight: bold; font-size: 25px;"> 
+	<a href="https://www.ilovefundy.com/">접속 링크</a>
+</div>
+
 <div align="center" style="font-weight: bold;">
     <a href="https://framer.com/projects/nq3RKAROYiLd77SMeajY-gRgqD?node=fnXmMIrcT-page">UI/UX기획안</a> · <a href="https://drive.google.com/file/d/1Md6e8NxUM11q6FLsfwttKSz59WVhBOXa/view?usp=sharing">프로젝트 계획서</a></div>
-
 <br/>
 
 
@@ -158,7 +161,5 @@ Storage
 - Backend Developer (github and email)
   - `김윤성` - [@msmf3](https://github.com/msmf3) - [msmf3@naver.com](mailto:msmf3@naver.com)
   - `이나영` - [@bokiri409](https://github.com/bokiri409) - [bokiri16@gmail.com](mailto:bokiri16@gmail.com)
-
-Project Link: https://www.ilovefundy.com/
 
 
