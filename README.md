@@ -7,17 +7,12 @@
 </div>
 <div align="center">아이돌과 팬을 연결해주는 크라우드 펀딩 플랫폼</center></div>
 
-<br/>
-
-
-<div align="center" style="font-weight: bold; font-size: 25px;"> 
-	<a href="https://www.ilovefundy.com/">접속 링크</a>
-</div>
 
 <br/>
 
 <div align="center" style="font-weight: bold;">
-    <a href="./페이지 소개.md">페이지 소개</a> · <a href="https://drive.google.com/file/d/1Md6e8NxUM11q6FLsfwttKSz59WVhBOXa/view?usp=sharing">프로젝트 계획서</a></div>
+    <a href="https://www.ilovefundy.com/">접속 링크</a> · <a href="./페이지 소개.md">페이지 소개</a></div>
+
 
 <br/>
 
